@@ -34,8 +34,8 @@ package
 			//conversion en radians de l'angle de position sur le cercle(planete)
 			var angle:Number = ( Math.PI / 180 ) * m_pos;
 			
-			x = m_planet.m_center.x + Math.cos(angle) * m_distance - this.width /2;
-			y = m_planet.m_center.y - Math.sin(angle) * m_distance - this.height/2;
+			x = m_planet.center().x + Math.cos(angle) * m_distance - this.width /2;
+			y = m_planet.center().y - Math.sin(angle) * m_distance - this.height/2;
 		}
 		
 	}
