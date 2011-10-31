@@ -12,6 +12,7 @@ package
 		protected var planet:Planet;
 		protected var blobbies:Array;
 		protected var meteor:Meteor;
+		private var tree:Tree;
 		
 		public function PlayState() 
 		{
@@ -31,14 +32,17 @@ package
 			
 			for (var i:int = 0; i < sizeBlob ; i++) 
 			{
-				blob = new Blobby( tabBlobbiesPosition[i],planet.m_radius, planet);
+				blob = new Blobby( tabBlobbiesPosition[i],planet.radius(), planet);
 				blobbies.push(blob);
 				add(blob);
 			}
 			
 			//----------CREER LE METEOR-------------
-			meteor = new Meteor(0, planet.m_radius * 2, planet, blobbies);
+			meteor = new Meteor(0, planet.radius() * 2, planet, blobbies);
 			add(meteor);
+			
+			tree = new Tree(planet.center(), planet.radius());
+			add(tree);
 		}
 		
 		override public function create():void {

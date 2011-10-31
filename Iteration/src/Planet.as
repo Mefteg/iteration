@@ -10,8 +10,8 @@ package
 	{		
 		[Embed(source = "../bin/img/planet.png")] private var ImgPlnt:Class;
 		
-		public var m_center:Point;//centre de la planete
-		public var m_radius:Number; //son rayon
+		private var m_center:Point;//centre de la planete
+		private var m_radius:Number; //son rayon
 		
 		public function Planet(x:Number,y:Number) 
 		{
@@ -20,6 +20,15 @@ package
 			m_radius = this.height/2;
 		}
 		
+		public function center():Point
+		{
+			return m_center;
+		}
+		
+		public function radius():Number
+		{
+			return m_radius;
+		}
 	}
 
 }
