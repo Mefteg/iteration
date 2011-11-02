@@ -12,14 +12,20 @@ package
 		protected var planet:Planet;
 		protected var blobbies:Array;
 		protected var meteor:Meteor;
-		private var tree:Tree;
+		protected var tree:Tree;
+		
 		
 		protected var m_posCam:FlxPoint = new FlxPoint(0, 0);
 		protected var m_speedCam:int = 2;
 		protected var m_zoomCam:Number = 0.05;
 		
+		protected var text:FlxText;
+		
 		public function PlayState() 
 		{
+			//FPS
+			text = new FlxText(100, 100, 150, FlxG.framerate.toString());
+			add(text);
 			//------CREER LA PLANETE-----------------
 			planet = new Planet( FlxG.width/3 , FlxG.height/3, 100);
 			
@@ -29,7 +35,7 @@ package
 			blobbies = [];
 			
 			//tableau de positions des blobbies à créer
-			var tabBlobbiesPosition:Array = [ 2 , 90, 200 ];
+			var tabBlobbiesPosition:Array = [ 2 , 90, 200,21,300,44,88,145 ];
 											
 			var blob:Blobby;
 			var sizeBlob:uint = tabBlobbiesPosition.length; // optimisation
@@ -45,7 +51,7 @@ package
 			meteor = new Meteor(0, planet.radius() * 2, planet, blobbies);
 			add(meteor);
 			
-			tree = new Tree(planet.center(), planet.radius());
+			tree = new Tree(planet.center(), planet.radius(),planet);
             add(tree);
 			
 			// On affiche la souris
@@ -62,12 +68,13 @@ package
 			// FlxG.bgColor = 0xffecebb3;
 			
 			// On charge la map
-			// var map1:Map = new Map("map/test.xml");
+			//var map1:Map = new Map("map/test.xml");
 			
 			FlxG.camera.setBounds(-640, -480, 4*640, 4*480, true);
 		}
 		
 		override public function update():void {
+			text.text = FlxG.framerate.toString()+" fps";
 			// On replace la caméra
 			if ( FlxG.mouse.screenX*FlxG.camera.zoom < 30 ) {
 				m_posCam.x -= m_speedCam;

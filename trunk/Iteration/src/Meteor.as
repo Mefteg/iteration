@@ -15,7 +15,8 @@ package
 		public function Meteor(pos:Number,distance:Number,planet:Planet,blobbies:Array) 
 		{
 			super(pos, distance, planet);
-			loadRotatedGraphic(ImgMeteor);
+			//Créer l'image
+			loadGraphic(ImgMeteor, false, false, 67, 67);
 			//dimensionner le météore par rapport a la planete
 			this.scale.x = (0.2 * planet.getHeight())/width;
 			this.scale.y = (0.2 * planet.getWidth())/height;
@@ -25,7 +26,7 @@ package
 		
 		override public function update():void {
 			//si l'utilisateur clique sur le météore
-			if (FlxG.mouse.justPressed()) {
+			if (onClick()) {
 				//on fait tomber le météore
 				m_fall = true;
 			}
@@ -36,7 +37,29 @@ package
 			m_pos += m_speed;
 			//placer le météore
 			place();
+			//le faire tourner
+			angle--;
 			super.update();
+			
+			//si le météore atteint la planete ::
+			if (m_distance <= m_planet.radius())
+				explode();
+		}
+		
+		public function explode():void {
+			//vérifier la collision du météore avec les blobbies
+			for each (var b:Blobby in m_blobbies) {
+				//les killer si c'est le cas
+				if (FlxG.overlap(this, b))
+					b.destroy();
+			}
+			//Detruire le météore
+			destroy();
+		}
+		
+		override public function destroy():void {
+			super.destroy();
+			m_blobbies = null;
 		}
 		
 	}

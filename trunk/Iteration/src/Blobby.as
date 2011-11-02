@@ -16,7 +16,11 @@ package
 		public function Blobby(pos:Number, distance:Number , planet:Planet) 
 		{
 			super(pos, distance, planet);
-			loadGraphic(ImgAlien, true);
+			//Créer l'image
+			loadGraphic(ImgAlien, true, false, 16, 16);
+			//créer l'animation
+			addAnimation("Default", [0, 1, 0, 2], 6 + FlxG.random() * 4);	
+			play("Default");
 			place();
 		}
 		
@@ -26,8 +30,7 @@ package
 			// placer le blobby
 			place(); 
 			//afficher
-			super.update();
-			
+			super.update();	
 		}
 		
 		public function changeDirection():void 
@@ -43,6 +46,8 @@ package
 				}
 				//incrémenter le timer
 				m_timerMove ++;
+				//rotation pour mettre le bas du sprite sur la surface de la planete
+				rotateToPlanet();
 				//s'arrêter là
 				return;
 			}
