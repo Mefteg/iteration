@@ -1,5 +1,6 @@
 package  
 {
+	import flash.display.MovieClip;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
 	import flash.geom.Point;
@@ -8,16 +9,19 @@ package
 	 * ...
 	 * @author Alexandre Laurent
 	 */
-	public class Tree extends FlxSprite
+	public class Tree extends Element
 	{
 		[Embed(source = "../bin/img/tree.png")] private var ImgTree:Class;
 		
 		private var m_roots:TreeRoot;
 		
-		public function Tree(origin:Point, length:Number) 
+		public function Tree(origin:Point, length:Number,planet:Planet) 
 		{
+			super(0, length, planet);
 			m_roots = new TreeRoot(origin, 255, 255, 255, 0, 255, 0, length);
-			loadRotatedGraphic(ImgTree, 360);
+			loadGraphic(ImgTree,true,false,100,100);
+			addAnimation("Grow", [0, 1, 2, 3, 4], 1.5, false);
+			play("Grow");
 		}
 		
 		override public function draw():void 
@@ -33,6 +37,7 @@ package
 		{
 			super.update();
 			
+			
 			m_roots.update();
 			if ( !m_roots.isGrowing() )
 			{
@@ -42,6 +47,7 @@ package
 				
 				this.x += this.width / 2;
 				this.y += this.height / 2;
+				
 			}
 		}
 		

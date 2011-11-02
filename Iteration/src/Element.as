@@ -1,6 +1,6 @@
 package  
 {
-	import org.flixel.FlxSprite;
+	import org.flixel.*;
 	/**
 	 * ...
 	 * @author ...
@@ -19,15 +19,14 @@ package
 		// params : pos = angle par rapport au cerlcle de la planete 
 		//			distance = distance par rapport au centre de la planete
 		//			planet = ben... la reference vers la planete quoi
-		public function Element(pos:Number, distance:Number , planet:Planet, Graphic:Class = null ) 
+		public function Element(pos:Number, distance:Number , planet:Planet ) 
 		{
-			super(x, y, Graphic);
-			
+			super(x, y);
 			m_planet = planet ;
 			m_distance = distance;
 			m_pos = pos;
 		}
-		
+				
 		//place un élément en calculant sa position par rapport a la planete
 		public function place():void {
 			
@@ -36,6 +35,32 @@ package
 			
 			x = m_planet.center().x + Math.cos(angle) * m_distance - this.width /2;
 			y = m_planet.center().y - Math.sin(angle) * m_distance - this.height/2;
+		}
+		//effectue une rotation pour placer le bas du sprite sur la surface de la planete
+		public function rotateToPlanet() :void{
+			this.angle = -m_pos + 90;
+		}
+		
+		public function onClick():Boolean {
+			//si click de la souris
+			if (FlxG.mouse.justPressed()) {
+				var mouseX:int = FlxG.mouse.x;
+				var mouseY:int = FlxG.mouse.y;
+				//et si la souris se trouve sur le sprite
+				if ( ( mouseX < x + width) && (mouseX > x) ) {
+					if ( (mouseY < y + height) && (mouseY > y) ) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		
+		override public function destroy():void {
+			super.destroy();
+			m_planet = null;
+			m_dead = true;
+			this.kill();
 		}
 		
 	}
