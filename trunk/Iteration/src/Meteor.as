@@ -17,8 +17,8 @@ package
 			super(pos, distance, planet);
 			loadRotatedGraphic(ImgMeteor);
 			//dimensionner le météore par rapport a la planete
-			this.scale.x = (0.2 * planet.height)/width;
-			this.scale.y = (0.2 * planet.width)/height;
+			this.scale.x = (0.2 * planet.getHeight())/width;
+			this.scale.y = (0.2 * planet.getWidth())/height;
 			
 			m_blobbies = blobbies;
 		}

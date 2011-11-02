@@ -16,7 +16,7 @@ package
 		
 		public function Tree(origin:Point, length:Number) 
 		{
-			m_roots = new TreeRoot(origin, 0, 128, 0, 0, 255, 0, length);
+			m_roots = new TreeRoot(origin, 255, 255, 255, 0, 255, 0, length);
 			loadRotatedGraphic(ImgTree, 360);
 		}
 		

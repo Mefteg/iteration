@@ -72,7 +72,7 @@ package
 				if ( distance * distance < m_lengthMax * m_lengthMax )
 				{
 					var str:FlxSprite = new FlxSprite();
-					str = str.makeGraphic(2, 2, FlxU.makeColor(MathUtils.interpolate(m_baseColourR, m_endColourR,interpolation),
+					str = str.makeGraphic(1, 1, FlxU.makeColor(MathUtils.interpolate(m_baseColourR, m_endColourR,interpolation),
 												MathUtils.interpolate(m_baseColourG, m_endColourG,interpolation),
 												MathUtils.interpolate(m_baseColourB, m_endColourB, interpolation)));
 					

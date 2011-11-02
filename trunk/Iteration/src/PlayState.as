@@ -21,7 +21,7 @@ package
 		public function PlayState() 
 		{
 			//------CREER LA PLANETE-----------------
-			planet = new Planet( FlxG.width/3 , FlxG.height/3);
+			planet = new Planet( FlxG.width/3 , FlxG.height/3, 100);
 			
 			add(planet);
 			
@@ -51,17 +51,18 @@ package
 			// On affiche la souris
 			FlxG.mouse.show();
 			// On positionne la caméra au centre de la planete
-			var p:FlxPoint = new FlxPoint();
-			planet.getMidpoint(p);
+			var p:FlxPoint = planet.getMidpoint();
+			// planet.getMidpoint(p);
 			m_posCam.x = p.x;
 			m_posCam.y = p.y;
 		}
 		
 		override public function create():void {
-			FlxG.bgColor = 0xffaaaaaa;
+			FlxG.bgColor = 0xff0a216b;
+			// FlxG.bgColor = 0xffecebb3;
 			
 			// On charge la map
-			var map1:Map = new Map("map/test.xml");
+			// var map1:Map = new Map("map/test.xml");
 			
 			FlxG.camera.setBounds(-640, -480, 4*640, 4*480, true);
 		}
