@@ -5,6 +5,7 @@ package
 	 * @author Moi
 	 */
 	
+	import Game.Ideas.Idea;
 	import Game.Objects.Blobby;
 	import Game.Objects.Planet;
 	import Game.States.PlayState;
@@ -16,10 +17,14 @@ package
 		private var m_planet:Planet;
 		//Game
 		private var m_scene:PlayState;
+		//idées
+		protected var ideas:Array;
+		protected var m_currentIdea:Idea;
 		//Timers
 		private var timer:FlxTimer ;
 		private var timerDeath:FlxTimer;//timer pour la mort
 		private var timerBirth:FlxTimer;//timer pour la naissance
+		private var timerIdea:FlxTimer; //timer pour les idées
 		
 		private var iterTime:Number = 10;
 		private var iterNumber:int = 0;
@@ -29,7 +34,10 @@ package
 		private var nbBirths:int;
 		//variables comptant le nombre de D/B par itération
 		private var countDeaths:int=0;
-		private var countBirths:int=0;
+		private var countBirths:int = 0;
+		//variables pour le taux de mortalité/natalité
+		private var ratioDeath:Number = 0.25;
+		private var ratioBirth:Number = 0.50;
 		
 		public function Iteration(state:PlayState, planet:Planet) 
 		{
@@ -47,6 +55,13 @@ package
 			timerBirth = new FlxTimer();
 			startBirthTimer();
 			
+			//IDEES
+			ideas = new Array();
+			var idea:Idea = new Idea(0, 0, 10, 0, planet);
+			ideas.push(idea);
+			timerIdea = new FlxTimer();
+			startIdeaTimer();
+			
 			calcStats();
 			
 		}
@@ -59,15 +74,23 @@ package
 			//redémarrer les timers
 			startDeathTimer();
 			startBirthTimer();
+			startIdeaTimer();
 								
 			timer.start(iterTime);
+		}
+		
+		public function createIdea():void {
+			//
+			m_currentIdea = ideas[0];
+			m_planet.getBlobbies()[0].setIdea(m_currentIdea);
+			m_scene.add(m_currentIdea);
 		}
 		
 		//calcule le nombre de morts et de naissances
 		private function calcStats():void {
 			var rand:Number = Math.random();
-			nbDeaths = m_planet.getBlobbies().length * 0.25; // 25% de morts
-			nbBirths = m_planet.getBlobbies().length * 0.50; //50% de naissances
+			nbDeaths = m_planet.getBlobbies().length * ratioDeath; // 25% de morts
+			nbBirths = m_planet.getBlobbies().length * ratioBirth; //50% de naissances
 		}
 		
 		//calcule un temps aléatoire pour la prochaine mort
@@ -81,13 +104,28 @@ package
 		private function startBirthTimer():void {
 			timerBirth.start( Math.random() * (iterTime / nbBirths) );
 		}
-		
+		//calcule le temps aléatoire pour la prochaine idée
+		private function startIdeaTimer():void {
+			timerIdea.start(Math.random() * iterTime);
+		}
 		public function getElapsedTime():Number {
 			return timer.time;
 		}
 		
 		public function getIterations() :int{
 			return iterNumber;
+		}
+		
+		public function changeDeathRatio(val:Number):void {
+			ratioDeath += val;
+			if (ratioDeath > 1)
+				ratioDeath = 1;
+		}
+		
+		public function changeBirthRation(val:Number):void {
+			ratioBirth += val;
+			if (ratioBirth > 1)
+				ratioBirth = 1;
 		}
 		
 		public function update() :void {
@@ -123,6 +161,9 @@ package
 				countBirths++;
 				startBirthTimer();
 			}
+			//GESTION DES IDEES
+			if (timerIdea.finished)
+				createIdea();
 				
 		}
 		

@@ -1,5 +1,6 @@
 package Game.Objects
 {
+	import Game.Ideas.Idea;
 	import org.flixel.FlxG;
 	import org.flixel.FlxU;
 	
@@ -13,6 +14,8 @@ package Game.Objects
 	{		
 		protected var m_timerMove:int = 0; //variable timer pour les déplacements
 		protected var m_limitMove:int = 0; //temps limite pour le mouvement
+		
+		protected var m_idea:Idea;
 		
 		public function Blobby(pos:Number, distance:Number , planet:Planet) 
 		{
@@ -28,6 +31,8 @@ package Game.Objects
 		}
 		
 		override public function update():void {
+			if (m_idea)
+				m_idea.update();
 			// gérer aléatoirement les déplacements
 			changeDirection();
 			// placer le blobby
@@ -74,6 +79,12 @@ package Game.Objects
 		override public function destroy():void {
 			m_planet.addResources(80);
 			super.destroy();
+		}
+		
+		public function setIdea(idea:Idea):void {
+			m_idea = idea;
+			m_idea.setDistance(this.m_distance + this.height);
+			m_idea.setPos(this.m_pos);
 		}
 		
 	}
