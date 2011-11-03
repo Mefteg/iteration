@@ -55,9 +55,6 @@ package  Game.States
 			meteor = new Meteor(0, planet.radius() * 2, planet, blobbies);
 			add(meteor);
 			
-			tree = new Tree(planet.center(), planet.radius()-2,planet);
-            add(tree);
-			
 			// On affiche la souris
 			FlxG.mouse.show();
 			// On positionne la caméra au centre de la planete
@@ -74,7 +71,10 @@ package  Game.States
 			// On charge la map
 			//var map1:Map = new Map("map/test.xml");
 			
-			FlxG.camera.setBounds(-640, -480, 4*640, 4*480, true);
+			FlxG.camera.setBounds( -640, -480, 4 * 640, 4 * 480, true);
+			
+			tree = new Tree(planet.center(), planet.radius()-2,planet);
+            add(tree);
 		}
 		
 		override public function update():void {
