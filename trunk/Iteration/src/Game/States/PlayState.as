@@ -55,7 +55,7 @@ package  Game.States
 			meteor = new Meteor(0, planet.radius() * 2, planet, blobbies);
 			add(meteor);
 			
-			tree = new Tree(planet.center(), planet.radius(),planet);
+			tree = new Tree(planet.center(), planet.radius()-2,planet);
             add(tree);
 			
 			// On affiche la souris

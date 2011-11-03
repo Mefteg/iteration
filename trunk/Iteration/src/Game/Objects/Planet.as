@@ -36,11 +36,12 @@ package Game.Objects
 			super.update();
 			
 			
-			var pulse:Number = (Math.sin(m_elapsedTime * 2) / 2) / (Math.cos(m_elapsedTime / 4) * 2) / 32;
+			var pulse:Number = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
 			// var pulse:Number = (Math.sin(m_elapsedTime*4)/2)/(Math.cos(m_elapsedTime-4)*8);
 			m_heart.scale.x = pulse + 1;
 			m_heart.scale.y = pulse + 1;
-			m_elapsedTime += FlxG.elapsed * 16;
+			// Change the speed of the pulse
+			m_elapsedTime += FlxG.elapsed * 8;
 		}
 		
 		public function center():Point
