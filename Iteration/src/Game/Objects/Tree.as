@@ -5,7 +5,7 @@ package Game.Objects
 	import flash.geom.Point;
 	
 	/**
-	 * ...
+	 * Tree implementation
 	 * @author Alexandre Laurent
 	 */
 	public class Tree extends Element
@@ -14,10 +14,14 @@ package Game.Objects
 		
 		private var m_roots:TreeRoot;
 		
-		public function Tree(origin:Point, length:Number,planet:Planet) 
+		/**
+		 * @param	origin	The point where the root starts
+		 * @param	planet where the tree will grow
+		 */
+		public function Tree(origin:Point,planet:Planet) 
 		{
-			super(0, length*1.5, planet);
-			m_roots = new TreeRoot(origin, 255, 255, 255, 0, 255, 0, length);
+			super(0, planet.radius()*1.5, planet);
+			m_roots = new TreeRoot(origin, 255, 255, 255, 0, 255, 0, planet.radius());
 			//charger l'image de l'arbre
 			loadGraphic(ImgTree, true, false, 120, 130);
 			//créerle tableau de frames pour les feuilles
@@ -58,10 +62,10 @@ package Game.Objects
 			//gérer l'animation
 			animate();
 			
-			
 			m_roots.update();
 			if ( !m_roots.isGrowing() )
 			{
+				// Place the tree
 				m_pos = m_roots.endAngle();
 				this.place();
 				this.rotateToPlanet();				
