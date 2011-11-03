@@ -34,11 +34,11 @@ package Game.Objects
 		
 		override public function draw():void 
 		{
+			m_roots.draw();
 			if ( !m_roots.isGrowing() )
 			{
 				super.draw();
 			}
-			m_roots.draw();
 		}
 		
 		//gère les enchainements d'animations
