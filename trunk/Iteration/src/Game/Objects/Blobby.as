@@ -1,4 +1,4 @@
-package  
+package Game.Objects
 {
 	import org.flixel.FlxG;
 	import org.flixel.FlxU;
@@ -8,7 +8,7 @@ package
 	 */
 	public class Blobby extends Element
 	{
-		[Embed(source = "../bin/img/alien.png")] private var ImgAlien:Class;
+		[Embed(source = "../../../bin/img/alien.png")] private var ImgAlien:Class;
 		
 		protected var m_timerMove:int = 0; //variable timer pour les déplacements
 		protected var m_limitMove:int = 0; //temps limite pour le mouvement

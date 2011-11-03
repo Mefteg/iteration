@@ -1,4 +1,4 @@
-package  
+package Game.Objects
 {
 	import org.flixel.*;
 	/**
