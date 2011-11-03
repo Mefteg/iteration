@@ -29,8 +29,9 @@ package  Game.States
 		protected var meteor:Meteor;
 		protected var trees:Array;
 		
+		//itération
 		protected var m_iteration:Iteration;
-		
+		//variables caméra
 		protected var text:FlxText;
 		
 		public function PlayState() 
@@ -50,7 +51,7 @@ package  Game.States
 			//-------CREER LES BLOBBIES--------------			
 			
 			//tableau de positions des blobbies à créer
-			var tabBlobbiesPosition:Array = [ 2 , 90, 200,21,300,44,88,145 ];
+			var tabBlobbiesPosition:Array = [ 2 , 90, 200,21 ];
 											
 			var blob:Blobby;
 			var sizeBlob:uint = tabBlobbiesPosition.length; // optimisation

@@ -15,6 +15,8 @@ package Resources
 		
 		[Embed(source = "../../bin/img/tree.png")] public static var ImgTree:Class;
 		
+		[Embed(source = "../../bin/img/idee_guerre.png")] public static var ImgIdeaWar:Class;
+		
 		
 	}
 

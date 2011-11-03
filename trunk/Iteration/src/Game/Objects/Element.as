@@ -63,6 +63,14 @@ package Game.Objects
 			this.kill();
 		}
 		
+		public function setPos(pos:Number):void {
+			m_pos = pos;
+		}
+		
+		public function setDistance(distance:Number) :void{
+			m_distance = distance;
+		}
+		
 	}
 
 }
