@@ -74,6 +74,7 @@ package Game.Objects
 			m_length = 0;
 			m_lengthMax = length;
 			
+			// Random angle at start (between -180 - 180)
 			m_angle = FlxG.random() * 180 - 360;
 			
 			lastUpdate = 0;
@@ -87,16 +88,24 @@ package Game.Objects
 		{
 			if ( m_grow )
 			{
-				// super.update();
+				// Calculates the distance from here to the center
 				var distance:int = Point.distance(m_actualPoint, m_origin);
+				
+				// Calculates a interpolation factor for the colours grade
 				var interpolation:Number = (distance * distance) / (m_lengthMax * m_lengthMax);
+				
+				// If still not reached the end
 				if ( distance * distance < m_lengthMax * m_lengthMax )
 				{
+					// New little sprite (the root is a set of sprites)
 					var str:FlxSprite = new FlxSprite();
+					
+					// Make the sprite colour / square
 					str = str.makeGraphic(1, 1, FlxU.makeColor(MathUtils.interpolate(m_baseColourR, m_endColourR,interpolation),
 												MathUtils.interpolate(m_baseColourG, m_endColourG,interpolation),
 												MathUtils.interpolate(m_baseColourB, m_endColourB, interpolation)));
 					
+					// After some times, we change the direction
 					if ( lastUpdate - lastRandUpdate > FlxG.random() * 30 )
 					{
 						if ( FlxG.random() < 0.5 )
@@ -111,10 +120,11 @@ package Game.Objects
 						lastRandUpdate = lastUpdate;
 					}
 					
+					// Update of the root position
 					if ( direction )
 					{
 						m_angle ++;
-						if ( m_angle > 180 )
+						if ( m_angle > 180 ) // modulo of the angle
 						{
 							m_angle -= 360;
 						}
@@ -122,7 +132,7 @@ package Game.Objects
 					else 
 					{
 						m_angle --;
-						if ( m_angle < 180 )
+						if ( m_angle < 180 ) // modulo of the angle
 						{
 							m_angle += 360;
 						}
@@ -147,21 +157,37 @@ package Game.Objects
 			}
 		}
 		
+		/**
+		 * Returns if the root still grow
+		 * @return true if the root is growing
+		 */
 		public function isGrowing():Boolean
 		{
 			return m_grow;
 		}
 		
+		/**
+		 * Returns the point of the start of the root
+		 * @return the start
+		 */
 		public function startPoint():Point
 		{
 			return m_origin;
 		}
 		
+		/**
+		 * Returns the end of the root (where it reached the surface)
+		 * @return the end
+		 */
 		public function endPoint():Point
 		{
 			return m_actualPoint;
 		}
 		
+		/**
+		 * Returns the final angle that the root used
+		 * @return the angle
+		 */
 		public function endAngle():Number
 		{
 			return m_angle;
