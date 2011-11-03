@@ -8,7 +8,7 @@ package Game.Objects
 	 */
 	public class Blobby extends Element
 	{
-		[Embed(source = "../../../bin/img/alien.png")] private var ImgAlien:Class;
+		[Embed(source = "../../../bin/img/blobby.png")] private var ImgAlien:Class;
 		
 		protected var m_timerMove:int = 0; //variable timer pour les déplacements
 		protected var m_limitMove:int = 0; //temps limite pour le mouvement
@@ -16,10 +16,12 @@ package Game.Objects
 		public function Blobby(pos:Number, distance:Number , planet:Planet) 
 		{
 			super(pos, distance, planet);
+			//Diminuer les ressources
+			m_planet.removeResources(100);
 			//Créer l'image
-			loadGraphic(ImgAlien, true, false, 16, 16);
+			loadGraphic(ImgAlien, true, false, 30, 30);
 			//créer l'animation
-			addAnimation("Default", [0, 1, 0, 2], 6 + FlxG.random() * 4);	
+			addAnimation("Default", [0, 1, 2,3,4,5,6,7], 6 + FlxG.random() * 4);	
 			play("Default");
 			place();
 		}
@@ -32,6 +34,7 @@ package Game.Objects
 			//afficher
 			super.update();	
 		}
+		
 		
 		public function changeDirection():void 
 		{
@@ -65,6 +68,11 @@ package Game.Objects
 			
 			m_timerMove = 0;//réinitialiser le compteur
 			m_limitMove = FlxU.srand(rand)*100 +32; //définir un temps aléatoire de déplacement de l'objet
+		}
+		
+		override public function destroy():void {
+			m_planet.addResources(80);
+			super.destroy();
 		}
 		
 	}
