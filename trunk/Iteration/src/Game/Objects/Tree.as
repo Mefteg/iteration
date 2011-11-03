@@ -42,7 +42,8 @@ package Game.Objects
 		}
 		
 		//gère les enchainements d'animations
-		public function animate() {
+		public function animate():void
+		{
 			if (this._curAnim.name == "GrowTrunk") {
 				if (_curIndex ==_curAnim.frames.length - 1)
 					play("GrowLeaves");

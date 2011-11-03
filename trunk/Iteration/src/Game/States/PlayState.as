@@ -1,11 +1,15 @@
 package  Game.States
 {
+	import flash.media.Sound;
 	import Game.Objects.Blobby;
 	import Game.Objects.Meteor;
 	import Game.Objects.Planet;
 	import Game.Objects.Tree;
 	import mx.core.FlexSprite;
 	import org.flixel.*;
+	import Resources.SoundResources;
+	import SoundEngine.SoundBank;
+	import SoundEngine.Sound;
 	
 	/**
 	 * ...
@@ -13,6 +17,8 @@ package  Game.States
 	 */
 	public class PlayState extends FlxState
 	{		
+		private var m_soundBank:SoundBank = new SoundBank();
+		
 		protected var planet:Planet;
 		protected var blobbies:Array;
 		protected var meteor:Meteor;
@@ -54,6 +60,10 @@ package  Game.States
 			//----------CREER LE METEOR-------------
 			meteor = new Meteor(0, planet.radius() * 2, planet, blobbies);
 			add(meteor);
+			
+			var m_sound:SoundEngine.Sound = new SoundEngine.Sound(SoundResources.backgroundMusic, true);
+			m_soundBank.add(m_sound, "Background");
+			m_soundBank.get("Background").play();
 			
 			// On affiche la souris
 			FlxG.mouse.show();
