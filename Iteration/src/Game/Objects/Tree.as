@@ -17,7 +17,7 @@ package Game.Objects
 		
 		public function Tree(origin:Point, length:Number,planet:Planet) 
 		{
-			super(0, length, planet);
+			super(0, length*1.5, planet);
 			m_roots = new TreeRoot(origin, 255, 255, 255, 0, 255, 0, length);
 			loadGraphic(ImgTree,true,false,100,100);
 			addAnimation("Grow", [0, 1, 2, 3, 4], 1.5, false);
@@ -41,13 +41,9 @@ package Game.Objects
 			m_roots.update();
 			if ( !m_roots.isGrowing() )
 			{
-				this.x = m_roots.endPoint().x - this.width / 2;
-				this.y = m_roots.endPoint().y - this.height;
-				this.angle = -m_roots.endAngle() + 90;
-				
-				this.x += this.width / 2;
-				this.y += this.height / 2;
-				
+				m_pos = m_roots.endAngle();
+				this.place();
+				this.rotateToPlanet();				
 			}
 		}
 		
