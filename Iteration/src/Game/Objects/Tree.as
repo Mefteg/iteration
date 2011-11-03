@@ -1,4 +1,4 @@
-package  
+package Game.Objects
 {
 	import flash.display.MovieClip;
 	import org.flixel.FlxGroup;
@@ -11,7 +11,7 @@ package
 	 */
 	public class Tree extends Element
 	{
-		[Embed(source = "../bin/img/tree.png")] private var ImgTree:Class;
+		[Embed(source = "../../../bin/img/tree.png")] private var ImgTree:Class;
 		
 		private var m_roots:TreeRoot;
 		

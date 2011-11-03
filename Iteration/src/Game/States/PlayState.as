@@ -1,5 +1,9 @@
-package  
+package  Game.States
 {
+	import Game.Objects.Blobby;
+	import Game.Objects.Meteor;
+	import Game.Objects.Planet;
+	import Game.Objects.Tree;
 	import mx.core.FlexSprite;
 	import org.flixel.*;
 	

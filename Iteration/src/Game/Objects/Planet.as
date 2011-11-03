@@ -1,4 +1,4 @@
-package  
+package Game.Objects
 {
 	import flash.geom.Point;
 	import org.flixel.*;
@@ -8,8 +8,8 @@ package
 	 */
 	public class Planet extends FlxGroup
 	{		
-		[Embed(source = "../bin/img/planete2.png")] private var ImgPlnt:Class;
-		[Embed(source = "../bin/img/heart4.png")] private var ImgHeart:Class;
+		[Embed(source = "../../../bin/img/planete2.png")] private var ImgPlnt:Class;
+		[Embed(source = "../../../bin/img/heart4.png")] private var ImgHeart:Class;
 		
 		private var m_planet:FlxSprite;
 		private var m_heart:FlxSprite;

@@ -1,4 +1,4 @@
-package  
+package Game.Objects
 {
 	import flash.geom.Point;
 	import org.flixel.*;
@@ -8,7 +8,7 @@ package
 	 */
 	public class Meteor extends Element
 	{
-		[Embed(source = "../bin/img/meteor.gif")] private var ImgMeteor:Class;
+		[Embed(source = "../../../bin/img/meteor.gif")] private var ImgMeteor:Class;
 		protected var m_blobbies:Array;
 		protected var m_fall:Boolean = false;
 		
