@@ -97,7 +97,7 @@ package  Game.States
 			var tree:Tree;
 			for (var j:int = 0; j < 4; j++) 
 			{
-				tree = new Tree(planet.center(), planet.radius() - 2, planet);
+				tree = new Tree(planet.center(), planet);
 				trees.push(tree);
 				add(tree);
 			}

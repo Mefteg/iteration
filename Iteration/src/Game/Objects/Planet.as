@@ -2,15 +2,14 @@ package Game.Objects
 {
 	import flash.geom.Point;
 	import org.flixel.*;
+	
+	import Resources.SpriteResources;
 	/**
 	 * ...
 	 * @author ...
 	 */
 	public class Planet extends FlxGroup
-	{		
-		[Embed(source = "../../../bin/img/planete2.png")] private var ImgPlnt:Class;
-		[Embed(source = "../../../bin/img/heart4.png")] private var ImgHeart:Class;
-		
+	{				
 		private var m_planet:FlxSprite;
 		private var m_heart:FlxSprite;
 		
@@ -26,10 +25,10 @@ package Game.Objects
 		
 		public function Planet(x:Number, y:Number, offsetSurface:Number, blobbies:Array,trees:Array ) 
 		{
-			m_planet = new FlxSprite(x, y, ImgPlnt);
+			m_planet = new FlxSprite(x, y, SpriteResources.ImgPlnt);
 			add(m_planet);
 			
-			m_heart = new FlxSprite(x+offsetSurface/2, y+offsetSurface/2, ImgHeart);
+			m_heart = new FlxSprite(x+offsetSurface/2, y+offsetSurface/2, SpriteResources.ImgHeart);
 			add(m_heart);
 			
 			m_center = new Point(x + m_planet.width / 2, y + m_planet.height / 2);

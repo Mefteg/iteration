@@ -4,14 +4,14 @@ package Game.Objects
 	import org.flixel.*;
 	import flash.geom.Point;
 	
+	import Resources.SpriteResources;
+	
 	/**
 	 * Tree implementation
 	 * @author Alexandre Laurent
 	 */
 	public class Tree extends Element
-	{
-		[Embed(source = "../../../bin/img/tree.png")] private var ImgTree:Class;
-		
+	{		
 		private var m_roots:TreeRoot;
 		
 		/**
@@ -20,10 +20,10 @@ package Game.Objects
 		 */
 		public function Tree(origin:Point,planet:Planet) 
 		{
-			super(0, planet.radius()*1.5, planet);
-			m_roots = new TreeRoot(origin, 255, 255, 255, 0, 255, 0, planet.radius());
+			super(0, (planet.radius()-2)*1.5, planet);
+			m_roots = new TreeRoot(origin, 255, 255, 255, 0, 255, 0, planet.radius()-2);
 			//charger l'image de l'arbre
-			loadGraphic(ImgTree, true, false, 120, 130);
+			loadGraphic(SpriteResources.ImgTree, true, false, 120, 130);
 			//créerle tableau de frames pour les feuilles
 			var growTab:Array= new Array();
 			for (var i:int = 7; i < frames; i++) 
