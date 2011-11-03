@@ -2,13 +2,15 @@ package Game.Objects
 {
 	import flash.geom.Point;
 	import org.flixel.*;
+	
+	import Resources.SpriteResources;
 	/**
 	 * ...
 	 * @author ...
 	 */
 	public class Meteor extends Element
 	{
-		[Embed(source = "../../../bin/img/meteor.gif")] private var ImgMeteor:Class;
+		
 		
 		protected var m_fall:Boolean = false;
 		
@@ -16,7 +18,7 @@ package Game.Objects
 		{
 			super(pos, distance, planet);
 			//Créer l'image
-			loadGraphic(ImgMeteor, false, false, 67, 67);
+			loadGraphic(SpriteResources.ImgMeteor, false, false, 67, 67);
 			m_speed = 0.3;
 			//dimensionner le météore par rapport a la planete
 			this.scale.x = (0.1 * planet.getHeight())/width;

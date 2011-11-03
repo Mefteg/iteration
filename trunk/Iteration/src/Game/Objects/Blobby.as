@@ -2,14 +2,15 @@ package Game.Objects
 {
 	import org.flixel.FlxG;
 	import org.flixel.FlxU;
+	
+	import Resources.SpriteResources;
+	
 	/**
 	 * ...
 	 * @author ...
 	 */
 	public class Blobby extends Element
-	{
-		[Embed(source = "../../../bin/img/blobby.png")] private var ImgAlien:Class;
-		
+	{		
 		protected var m_timerMove:int = 0; //variable timer pour les déplacements
 		protected var m_limitMove:int = 0; //temps limite pour le mouvement
 		
@@ -19,7 +20,7 @@ package Game.Objects
 			//Diminuer les ressources
 			m_planet.removeResources(100);
 			//Créer l'image
-			loadGraphic(ImgAlien, true, false, 30, 30);
+			loadGraphic(SpriteResources.ImgAlien, true, false, 30, 30);
 			//créer l'animation
 			addAnimation("Default", [0, 1, 2,3,4,5,6,7], 6 + FlxG.random() * 4);	
 			play("Default");
