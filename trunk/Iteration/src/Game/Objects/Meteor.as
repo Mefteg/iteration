@@ -9,19 +9,19 @@ package Game.Objects
 	public class Meteor extends Element
 	{
 		[Embed(source = "../../../bin/img/meteor.gif")] private var ImgMeteor:Class;
-		protected var m_blobbies:Array;
+		
 		protected var m_fall:Boolean = false;
 		
-		public function Meteor(pos:Number,distance:Number,planet:Planet,blobbies:Array) 
+		public function Meteor(pos:Number,distance:Number,planet:Planet) 
 		{
 			super(pos, distance, planet);
 			//Créer l'image
 			loadGraphic(ImgMeteor, false, false, 67, 67);
+			m_speed = 0.3;
 			//dimensionner le météore par rapport a la planete
-			this.scale.x = (0.2 * planet.getHeight())/width;
-			this.scale.y = (0.2 * planet.getWidth())/height;
+			this.scale.x = (0.1 * planet.getHeight())/width;
+			this.scale.y = (0.1 * planet.getWidth()) / height;
 			
-			m_blobbies = blobbies;
 		}
 		
 		override public function update():void {
@@ -32,26 +32,33 @@ package Game.Objects
 			}
 			//réduire la distance entre le météore et la planète
 			if (m_fall)
-				m_distance -= m_speed;
+				m_distance -= m_speed * (1 / m_distance * 250 );
 			//faire tourner le météore en orbite
 			m_pos += m_speed;
 			//placer le météore
 			place();
-			//le faire tourner
+			//le faire tourner sur lui meme
 			angle--;
+			
 			super.update();
 			
-			//si le météore atteint la planete ::
+			//si le météore atteint la planete :: il explose
 			if (m_distance <= m_planet.radius())
 				explode();
 		}
 		
 		public function explode():void {
 			//vérifier la collision du météore avec les blobbies
-			for each (var b:Blobby in m_blobbies) {
+			for each (var b:Blobby in m_planet.getBlobbies()) {
 				//les killer si c'est le cas
 				if (FlxG.overlap(this, b))
 					b.destroy();
+			}
+			//vérifier la collision du météore avec les arbres
+			for each (var t:Tree in m_planet.getTrees()) {
+				//les killer si c'est le cas
+				if (FlxG.overlap(this, t))
+					t.destroy();
 			}
 			//Detruire le météore
 			destroy();
@@ -59,7 +66,6 @@ package Game.Objects
 		
 		override public function destroy():void {
 			super.destroy();
-			m_blobbies = null;
 		}
 		
 	}

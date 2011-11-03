@@ -1,8 +1,7 @@
 package Game.Objects
 {
 	import flash.display.MovieClip;
-	import org.flixel.FlxGroup;
-	import org.flixel.FlxSprite;
+	import org.flixel.*;
 	import flash.geom.Point;
 	
 	/**
@@ -19,6 +18,7 @@ package Game.Objects
 		{
 			super(0, length*1.5, planet);
 			m_roots = new TreeRoot(origin, 255, 255, 255, 0, 255, 0, length);
+			//charger l'image de l'arbre
 			loadGraphic(ImgTree, true, false, 120, 130);
 			//créerle tableau de frames pour les feuilles
 			var growTab:Array= new Array();
@@ -42,10 +42,12 @@ package Game.Objects
 		}
 		
 		//gère les enchainements d'animations
-		public function animate():void
-		{
+		public function animate() : void {
+			//Si anim du tronc en cours
 			if (this._curAnim.name == "GrowTrunk") {
-				if (_curIndex ==_curAnim.frames.length - 1)
+				//et si l'anim est finie
+				if (_curIndex == _curAnim.frames.length - 1)
+					//jouer l'anim des feuilles
 					play("GrowLeaves");
 			}
 		}
@@ -64,6 +66,11 @@ package Game.Objects
 				this.place();
 				this.rotateToPlanet();				
 			}
+		}
+		
+		override public function destroy():void {
+			m_planet.removeResources(300);
+			super.destroy();
 		}
 		
 	}

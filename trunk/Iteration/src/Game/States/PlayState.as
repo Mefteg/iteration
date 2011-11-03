@@ -1,5 +1,6 @@
 package  Game.States
 {
+	import flash.utils.Timer;
 	import flash.media.Sound;
 	import Game.Objects.Blobby;
 	import Game.Objects.Meteor;
@@ -17,13 +18,16 @@ package  Game.States
 	 */
 	public class PlayState extends FlxState
 	{		
+		
 		private var m_soundBank:SoundBank = new SoundBank();
 		
+		//objets
 		protected var planet:Planet;
 		protected var blobbies:Array;
 		protected var meteor:Meteor;
-		protected var tree:Tree;
+		protected var trees:Array;
 		
+		protected var m_iteration:Iteration;
 		
 		protected var m_posCam:FlxPoint = new FlxPoint(0, 0);
 		protected var m_speedCam:int = 2;
@@ -33,16 +37,19 @@ package  Game.States
 		
 		public function PlayState() 
 		{
+			//initialisations
+			blobbies = new Array();
+			trees = new Array();
 			//FPS
 			text = new FlxText(100, 100, 150, FlxG.framerate.toString());
 			add(text);
 			//------CREER LA PLANETE-----------------
-			planet = new Planet( FlxG.width/3 , FlxG.height/3, 100);
-			
+			planet = new Planet( FlxG.width/3 , FlxG.height/3, 100 ,blobbies,trees);
 			add(planet);
+			//-------CREER LA CLASSE D'ITERATION-----
+			m_iteration = new Iteration(this,planet);
 			
 			//-------CREER LES BLOBBIES--------------			
-			blobbies = [];
 			
 			//tableau de positions des blobbies à créer
 			var tabBlobbiesPosition:Array = [ 2 , 90, 200,21,300,44,88,145 ];
@@ -56,11 +63,13 @@ package  Game.States
 				blobbies.push(blob);
 				add(blob);
 			}
-			
+								
+						
 			//----------CREER LE METEOR-------------
-			meteor = new Meteor(0, planet.radius() * 2, planet, blobbies);
+			meteor = new Meteor(0, planet.radius() * 2, planet);
 			add(meteor);
 			
+			//SON
 			var m_sound:SoundEngine.Sound = new SoundEngine.Sound(SoundResources.backgroundMusic, true);
 			m_soundBank.add(m_sound, "Background");
 			m_soundBank.get("Background").play();
@@ -72,23 +81,34 @@ package  Game.States
 			// planet.getMidpoint(p);
 			m_posCam.x = p.x;
 			m_posCam.y = p.y;
+			
 		}
 		
 		override public function create():void {
-			FlxG.bgColor = 0xff0a216b;
-			// FlxG.bgColor = 0xffecebb3;
+			FlxG.bgColor =  0xff0a216b ;
+			//FlxG.bgColor = 0xffecebb3;
 			
 			// On charge la map
 			//var map1:Map = new Map("map/test.xml");
 			
 			FlxG.camera.setBounds( -640, -480, 4 * 640, 4 * 480, true);
 			
-			tree = new Tree(planet.center(), planet.radius()-2,planet);
-            add(tree);
+			//----------CREER LES ARBRES------------
+			var tree:Tree;
+			for (var j:int = 0; j < 4; j++) 
+			{
+				tree = new Tree(planet.center(), planet.radius() - 2, planet);
+				trees.push(tree);
+				add(tree);
+			}
 		}
 		
 		override public function update():void {
-			text.text = FlxG.framerate.toString()+" fps";
+			//update le texte
+			text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies";
+			//mettre a jour l'itération
+			m_iteration.update();
+			
 			// On replace la caméra
 			if ( FlxG.mouse.screenX*FlxG.camera.zoom < 30 ) {
 				m_posCam.x -= m_speedCam;
