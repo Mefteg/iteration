@@ -6,6 +6,12 @@ package Utils
 	 */
 	public class Debug 
 	{
+		/**
+		 * If the expression is false, the program will stop and display a message about the error
+		 * true, nothing happens
+		 * @param	expression the expression to check
+		 * @param	msg message to print as error message
+		 */
 		CONFIG::debug
 		public static function assert(expression:Boolean, msg:String = ""):void
 		{
