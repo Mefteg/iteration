@@ -14,27 +14,48 @@ package Game.Objects
 	 */
 	public class TreeRoot extends FlxGroup 
 	{
+		// Center of the planet (where to start)
 		private var m_origin:Point;
+		
+		// Colour at the start of the root
 		private var m_baseColourR:uint;
 		private var m_baseColourG:uint;
 		private var m_baseColourB:uint;
+		
+		// Colour at the end of the root (near the tree)
 		private var m_endColourR:uint;
 		private var m_endColourG:uint;
 		private var m_endColourB:uint;
 		
+		// Length of the root
 		private var m_length:uint;
-		private var m_lengthMax:uint;
+		private var m_lengthMax:uint; // Length where the root will stop to grow
 		
+		// Angle (to position the point in the planet)
 		private var m_angle:int;
 		
+		// Actual point of the root's growth
 		private var m_actualPoint:Point;
 		
+		// Time for the direction update (curve growth)
 		private var lastUpdate:uint;
 		private var lastRandUpdate:uint;
 		private var direction:Boolean;
 		
+		// true if the root is still growing
 		private var m_grow:Boolean;
 		
+		/**
+		 * 
+		 * @param	origin	Normally, the center of the planet
+		 * @param	baseColourR	Red component for the start of the root
+		 * @param	baseColourG Green component for the start of the root
+		 * @param	baseColourB Blue component for the start of the root
+		 * @param	endColourR Red component for the end of the root
+		 * @param	endColourG Green component for the end of the root
+		 * @param	endColourB Blue component for the end of the root
+		 * @param	length length of the root
+		 */
 		public function TreeRoot(origin:Point, baseColourR:uint, baseColourG:uint, baseColourB:uint, 
 											   endColourR:uint,endColourG:uint,endColourB:uint, length:int) 
 		{
