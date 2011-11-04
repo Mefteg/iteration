@@ -28,19 +28,34 @@ package Game.Objects
 			addAnimation("Default", [0, 1, 2,3,4,5,6,7], 6 + FlxG.random() * 4);	
 			play("Default");
 			place();
+			m_state = "walk";
 		}
 		
 		override public function update():void {
-			if (m_idea)
-				m_idea.update();
-			// gérer aléatoirement les déplacements
-			changeDirection();
+			switch( m_state ) {
+				case("walk"):
+					walk();
+					break;
+				case("eat"):
+					eat();
+					break;
+				default:
+					break;
+			}
+			
 			// placer le blobby
-			place(); 
+			place();
 			//afficher
-			super.update();	
+			super.update();
 		}
 		
+		protected function walk() {
+			changeDirection();
+		}
+		
+		protected function eat() {
+			changeDirection();
+		}
 		
 		public function changeDirection():void 
 		{

@@ -16,6 +16,8 @@ package Game.Objects
 		
 		public var m_planet:Planet; // référence vers la planete pour diverses raisons
 		
+		protected var m_state:String; // Etat de l'élément
+		
 		// params : pos = angle par rapport au cerlcle de la planete 
 		//			distance = distance par rapport au centre de la planete
 		//			planet = ben... la reference vers la planete quoi
