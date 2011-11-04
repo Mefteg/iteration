@@ -14,11 +14,11 @@ package Game.Objects
 		
 		protected var m_fall:Boolean = false;
 		
-		public function Meteor(pos:Number,distance:Number,planet:Planet) 
+		public function Meteor(sprite:Class,pos:Number,distance:Number,planet:Planet) 
 		{
 			super(pos, distance, planet);
 			//Créer l'image
-			loadGraphic(SpriteResources.ImgMeteor, false, false, 67, 67);
+			loadRotatedGraphic(sprite, 360);
 			m_speed = 0.3;
 			//dimensionner le météore par rapport a la planete
 			this.scale.x = (0.1 * planet.getHeight())/width;

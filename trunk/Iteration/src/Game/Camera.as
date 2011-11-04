@@ -16,7 +16,7 @@ package Game
 		
 		public function Camera(startPos:FlxPoint, X:Number = 0, Y:Number = 0, Width:Number = 0, Height:Number = 0, UpdateWorld:Boolean = false) 
 		{
-			FlxG.camera.setBounds(X, Y, Width, Height, UpdateWorld);
+			// FlxG.camera.setBounds(X, Y, Width, Height, UpdateWorld);
 			m_initPos = new FlxPoint(startPos.x, startPos.y);
 			m_posCam.x = startPos.x;
 			m_posCam.y = startPos.y;

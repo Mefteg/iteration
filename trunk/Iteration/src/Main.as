@@ -1,8 +1,9 @@
 package 
 {
 	import Game.States.PlayState;
+	import Globals.GameParams;
 	import org.flixel.*;
-	[SWF(width="640", height="480", backgroundColor="#000000")]
+	[SWF(width="1024", height="768", backgroundColor="#000000")]
 	
 	/**
 	 * ...
@@ -13,7 +14,7 @@ package
 		
 		public function Main():void 
 		{
-			super(640,480,PlayState,1);
+			super(GameParams.width,GameParams.height,PlayState,1);
 		}
 		
 	}
