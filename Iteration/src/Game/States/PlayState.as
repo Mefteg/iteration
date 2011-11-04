@@ -7,8 +7,11 @@ package  Game.States
 	import Game.Objects.Meteor;
 	import Game.Objects.Planet;
 	import Game.Objects.Tree;
+	import Game.Objects.Cloud;
+	import Globals.GameParams;
 	import mx.core.FlexSprite;
 	import org.flixel.*;
+	import Resources.SpriteResources;
 	import Resources.SoundResources;
 	import SoundEngine.SoundBank;
 	import SoundEngine.Sound;
@@ -24,10 +27,12 @@ package  Game.States
 		private var m_soundBank:SoundBank = new SoundBank();
 				
 		//objets
+		protected var background:FlxSprite;
 		protected var planet:Planet;
 		protected var blobbies:Array;
 		protected var meteor:Meteor;
 		protected var trees:Array;
+		protected var clouds:Array;
 		
 		//itération
 		protected var m_iteration:Iteration;
@@ -36,14 +41,21 @@ package  Game.States
 		
 		public function PlayState() 
 		{
+			// Background init
+			background = new FlxSprite( -37, 147, SpriteResources.ImgBackground);	// HACK TODO FIX THIS
+			background.scale.x = GameParams.scale;
+			background.scale.y = GameParams.scale;
+			add(background);
+			
 			//initialisations
 			blobbies = new Array();
 			trees = new Array();
+			clouds = new Array();
 			//FPS
 			text = new FlxText(100, 100, 150, FlxG.framerate.toString());
 			add(text);
 			//------CREER LA PLANETE-----------------
-			planet = new Planet( FlxG.width/3 , FlxG.height/3, 100 ,blobbies,trees);
+			planet = new Planet( FlxG.width/2 , FlxG.height/2, 64 ,blobbies,trees);
 			add(planet);
 			//-------CREER LA CLASSE D'ITERATION-----
 			m_iteration = new Iteration(this,planet);
@@ -65,7 +77,7 @@ package  Game.States
 								
 						
 			//----------CREER LE METEOR-------------
-			meteor = new Meteor(0, planet.radius() * 2, planet);
+			meteor = new Meteor(SpriteResources.ImgMeteor,0, planet.radius() * 2, planet);
 			add(meteor);
 			
 			//SON
@@ -84,15 +96,25 @@ package  Game.States
 			// On charge la map
 			//var map1:Map = new Map("map/test.xml");
 
-			m_camera = new Camera(planet.getMidpoint(), -640, -480, 4 * 640, 4 * 480, true);
+			m_camera = new Camera(planet.getMidpoint(), 0, 0, FlxG.width*2, FlxG.height*2, true);
 			
+			var j:int = 0;
 			//----------CREER LES ARBRES------------
 			var tree:Tree;
-			for (var j:int = 0; j < 4; j++) 
+			for (j = 0; j < 4; j++) 
 			{
 				tree = new Tree(planet.center(), planet);
 				trees.push(tree);
 				add(tree);
+			}
+			
+			// Clouds init
+			var cloud:Cloud;
+			for (j = 0 ; j < GameParams.nbTree ; j++ )
+			{
+				cloud = new Cloud(planet.radius() +10, planet);
+				clouds.push(cloud);
+				add(cloud);
 			}
 		}
 		

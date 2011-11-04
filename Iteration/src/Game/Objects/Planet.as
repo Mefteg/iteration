@@ -1,6 +1,7 @@
 package Game.Objects
 {
 	import flash.geom.Point;
+	import Globals.GameParams;
 	import org.flixel.*;
 	
 	import Resources.SpriteResources;
@@ -26,9 +27,13 @@ package Game.Objects
 		public function Planet(x:Number, y:Number, offsetSurface:Number, blobbies:Array,trees:Array ) 
 		{
 			m_planet = new FlxSprite(x, y, SpriteResources.ImgPlnt);
+			m_planet.scale.x = GameParams.scale;
+			m_planet.scale.y = GameParams.scale;
 			add(m_planet);
 			
-			m_heart = new FlxSprite(x+offsetSurface/2, y+offsetSurface/2, SpriteResources.ImgHeart);
+			m_heart = new FlxSprite(m_planet.width / 2, m_planet.height / 2, SpriteResources.ImgHeart);
+			m_heart.scale.x = GameParams.scale;
+			m_heart.scale.y = GameParams.scale;
 			add(m_heart);
 			
 			m_center = new Point(x + m_planet.width / 2, y + m_planet.height / 2);
@@ -59,11 +64,16 @@ package Game.Objects
 		
 		public function radius():Number
 		{
-			return m_radius;
+			return m_radius * GameParams.scale;
 		}
 		
 		public function getMidpoint():FlxPoint
 		{
+			var planetMid:FlxPoint = new FlxPoint();
+			//planetMid.x = m_planet.x + (m_planet.width * GameParams.scale) / 2
+			//planetMid.y = m_planet.y + (m_planet.height * GameParams.scale) / 2
+			planetMid.x = m_planet.x;
+			planetMid.x = m_planet.y;
 			return m_planet.getMidpoint();
 		}
 		
