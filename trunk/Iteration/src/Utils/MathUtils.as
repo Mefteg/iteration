@@ -1,5 +1,6 @@
 package Utils 
 {
+	import flash.geom.Point;
 	/**
 	 * ...
 	 * @author Alexandre Laurent
@@ -17,6 +18,10 @@ package Utils
 		public static function degToRan(angle:Number):Number
 		{
             return angle * pi180;
+		}
+		
+		public static function det(v1:Point, v2:Point):Number {
+			return v1.x * v2.y - v2.x * v1.y;
 		}
 		
 	}

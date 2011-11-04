@@ -69,8 +69,25 @@ package Game.Objects
 			m_pos = pos;
 		}
 		
+		public function getPos():Number {
+			return m_pos;
+		}
+		
 		public function setDistance(distance:Number) :void{
 			m_distance = distance;
+		}
+		
+		
+		public function setState(state:String):void {
+			m_state = state;
+		}
+		
+		public function getState():String {
+			return m_state;
+		}
+		
+		public function animIsFinished():Boolean {
+			return _curIndex == _curAnim.frames.length - 1 ;
 		}
 		
 	}
