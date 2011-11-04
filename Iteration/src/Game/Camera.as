@@ -24,7 +24,7 @@ package Game
 		
 		public function update():void
 		{
-			// On replace la caméra
+			// On replace la camÃ©ra
 			if ( FlxG.mouse.screenX * FlxG.camera.zoom < 30 ) 
 			{
 				m_posCam.x -= m_speedCam;
@@ -42,7 +42,7 @@ package Game
 				m_posCam.y += m_speedCam;
 			}
 			FlxG.camera.focusOn(m_posCam);
-			// On gère le zoom
+			// On gÃ¨re le zoom
 			if ( FlxG.keys.Z && FlxG.camera.zoom < 3 ) 
 			{
 				FlxG.camera.zoom += m_zoomCam;				
@@ -51,7 +51,7 @@ package Game
 			{
 				FlxG.camera.zoom -= m_zoomCam;
 			}
-			// On replace la caméra au centre de la planete
+			// On replace la camÃ©ra au centre de la planete
 			if ( FlxG.keys.SPACE ) 
 			{
 				FlxG.camera.zoom = 1;

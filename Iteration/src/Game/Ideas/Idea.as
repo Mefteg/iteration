@@ -1,5 +1,6 @@
 package Game.Ideas 
 {
+	import Game.Objects.Blobby;
 	import Game.Objects.Element;
 	import Game.Objects.Planet;
 	import org.flixel.FlxTimer;
@@ -11,14 +12,12 @@ package Game.Ideas
 	 */
 	public class Idea extends Element
 	{
-		[Embed(source = "../../../bin/img/blobby.png")] private var ImgAlien:Class;
+		
+		private var m_blobby:Blobby; //reference vers le blobby possédant l'idée
 		
 		private var m_effectDeath:Number;//effet sur la mortalité
 		private var m_effectBirth:Number;//Effet sur la natalité
-		
-		private var killed:Boolean = false; // à true si l'idée a été tuée dans l'oeuf
-		private var spread:Boolean = false; // à true si l'idée s'est répandue
-		
+				
 		private var timer:FlxTimer = new FlxTimer(); // timer pour la solidification de l'idée
 		
 		public function Idea(pos:Number, distance:Number,effectDeath:int, effectBirth:int, planet:Planet ) 
@@ -29,8 +28,17 @@ package Game.Ideas
 			loadGraphic(SpriteResources.ImgIdeaWar, false, false, 15, 14);
 		}
 		
+		public function setBlobby(blobby:Blobby):void {
+			m_blobby = blobby;
+		}
+				
 		override public function update():void {
 			super.update();
+			//déplacer l'idée par rapport au blobby
+			m_pos = m_blobby.getPos();
+			//rotater l'idée
+			rotateToPlanet();
+			//placer l'idée sur la planete
 			place();
 		}
 		

@@ -50,7 +50,7 @@ package Game.Objects
 			//Si anim du tronc en cours
 			if (this._curAnim.name == "GrowTrunk") {
 				//et si l'anim est finie
-				if (_curIndex == _curAnim.frames.length - 1)
+				if (animIsFinished())
 					//jouer l'anim des feuilles
 					play("GrowLeaves");
 			}

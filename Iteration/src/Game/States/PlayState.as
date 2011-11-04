@@ -22,7 +22,7 @@ package  Game.States
 		private var m_camera:Camera;
 		
 		private var m_soundBank:SoundBank = new SoundBank();
-		
+				
 		//objets
 		protected var planet:Planet;
 		protected var blobbies:Array;
