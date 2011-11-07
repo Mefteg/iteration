@@ -30,8 +30,8 @@ package Game.Objects
 		}
 				
 		//place un élément en calculant sa position par rapport a la planete
-		public function place():void 
-		{
+		public function place():void {
+			
 			//conversion en radians de l'angle de position sur le cercle(planete)
 			var angle:Number = ( Math.PI / 180 ) * m_pos;
 			

@@ -75,7 +75,7 @@ package Game.Objects
 			m_lengthMax = length;
 			
 			// Random angle at start (between -180 - 180)
-			m_angle = FlxG.random() * 360 - 180;
+			m_angle = FlxG.random() * 180 - 360;
 			
 			lastUpdate = 0;
 			lastRandUpdate = 0;
