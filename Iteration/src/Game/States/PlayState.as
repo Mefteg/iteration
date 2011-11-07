@@ -39,6 +39,12 @@ package  Game.States
 		//variables caméra
 		protected var m_text:FlxText;
 		
+		// FPS calculation
+		private var m_lastTime:Number = 0;
+		private var m_FPSCounter:Number = 0;
+		private var m_FPS:Number = 0;
+		
+		
 		public function PlayState() 
 		{
 			// Background init
@@ -122,15 +128,27 @@ package  Game.States
 			}
 		}
 		
-		override public function update():void {
+		override public function update():void 
+		{			
+			var now:Date = new Date();
+			
 			//update le texte
-			m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies \n" + FlxG.framerate.toString()+" fps";
+			m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies \n" + m_FPS.toString()+" fps";
 			//mettre a jour l'itération
 			//m_iteration.update();
 			
 			m_camera.update();
 			
 			super.update();
+			
+			// trace(now.getTime());
+			m_FPSCounter ++;
+			if ( m_lastTime != now.getTime() )
+			{
+				m_FPS = m_FPSCounter;
+				m_FPSCounter = 0;
+				m_lastTime = now.getTime();
+			}
 		}
 	}
 
