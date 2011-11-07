@@ -55,8 +55,8 @@ package Game.Objects
 		{
 			super.update();
 			
-			m_heart2.angle-=0.3;
-			m_heart3.angle+=0.3;
+			m_heart2.angle-=0.1;
+			m_heart3.angle+=0.1;
 						
 			var pulse:Number = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
 			// var pulse:Number = (Math.sin(m_elapsedTime*4)/2)/(Math.cos(m_elapsedTime-4)*8);

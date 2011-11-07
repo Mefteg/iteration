@@ -11,7 +11,8 @@ package Globals
 		static public var scale:Number = 0.4096;
 		static public var scaleCloud:Number = 0.6;
 		
-		static public var nbTree:uint = 5;
+		static public var nbTree:uint = 4;
+		static public var nbClouds:uint = 6;
 		
 		static public var planetRadius:uint = 350;
 	}
