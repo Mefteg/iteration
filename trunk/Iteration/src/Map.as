@@ -32,7 +32,5 @@ package
 			m_xml = new XML(e.target.data);
 			m_planetSize = m_xml.planet.@size;
 		}
-		
 	}
-
 }
