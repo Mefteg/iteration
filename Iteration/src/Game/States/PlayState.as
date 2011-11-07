@@ -93,7 +93,7 @@ package  Game.States
 			//SON
 			var m_sound:SoundEngine.Sound = new SoundEngine.Sound(SoundResources.backgroundMusic, true);
 			m_soundBank.add(m_sound, "Background");
-			m_soundBank.get("Background").play();
+			//m_soundBank.get("Background").play();
 			
 			// On affiche la souris
 			FlxG.mouse.show();			
@@ -106,7 +106,7 @@ package  Game.States
 			// On charge la map
 			//var map1:Map = new Map("map/test.xml");
 
-			m_camera = new Camera(planet.getMidpoint(), 0, 0, FlxG.width*2, FlxG.height*2, true);
+			m_camera = new Camera(planet.getMidpoint(), 0, 0, FlxG.width * 2, FlxG.height * 2, true);
 			
 			var j:int = 0;
 			//----------CREER LES ARBRES------------
@@ -132,6 +132,15 @@ package  Game.States
 		{			
 			var now:Date = new Date();
 			
+			// On regle le scale des elements en fonction du zoom de la camera
+			var elements:Array = getElements();
+			// Pour chaque element
+			for (var i:int = 0; i < elements.length; i++) {
+				// On gere le scale/zoom
+				//elements[i].setScale(new FlxPoint(GameParams.worldZoom, GameParams.worldZoom));
+				//elements[i].setDistance(elements[i].getDistance() * m_zoom);
+			}
+			
 			//update le texte
 			m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies \n" + m_FPS.toString()+" fps"
 			//mettre a jour l'itération
@@ -149,6 +158,16 @@ package  Game.States
 				m_FPSCounter = 0;
 				m_lastTime = now.getTime();
 			}
+		}
+		
+		public function getElements():Array {
+			var elements:Array = new Array();
+			elements = elements.concat(blobbies);
+			elements = elements.concat(trees);
+			elements = elements.concat(clouds);
+			elements.push(planet);
+			
+			return elements;
 		}
 	}
 

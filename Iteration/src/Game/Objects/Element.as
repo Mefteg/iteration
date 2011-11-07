@@ -1,5 +1,6 @@
 package Game.Objects
 {
+	import Globals.GameParams;
 	import org.flixel.*;
 	/**
 	 * ...
@@ -28,6 +29,12 @@ package Game.Objects
 			m_distance = distance;
 			m_pos = pos;
 		}
+		
+		override public function update():void {
+			super.update();
+			
+			scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
+		}
 				
 		//place un élément en calculant sa position par rapport a la planete
 		public function place():void {
@@ -35,8 +42,8 @@ package Game.Objects
 			//conversion en radians de l'angle de position sur le cercle(planete)
 			var angle:Number = ( Math.PI / 180 ) * m_pos;
 			
-			x = m_planet.center().x + Math.cos(angle) * m_distance - this.width /2;
-			y = m_planet.center().y - Math.sin(angle) * m_distance - this.height/2;
+			x = m_planet.center().x + Math.cos(angle) * (m_distance)*GameParams.worldZoom - this.width /2;
+			y = m_planet.center().y - Math.sin(angle) * (m_distance)*GameParams.worldZoom - this.height/2;
 		}
 		//effectue une rotation pour placer le bas du sprite sur la surface de la planete
 		public function rotateToPlanet() :void{
@@ -77,6 +84,9 @@ package Game.Objects
 			m_distance = distance;
 		}
 		
+		public function getDistance() {
+			return m_distance;
+		}
 		
 		public function setState(state:String):void {
 			m_state = state;
@@ -90,6 +100,10 @@ package Game.Objects
 			return _curIndex == _curAnim.frames.length - 1 ;
 		}
 		
+		public function setScale(value:FlxPoint):void {
+			scale = value;
+		}
+	
 	}
 
 }

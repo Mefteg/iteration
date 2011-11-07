@@ -1,6 +1,7 @@
 package Game.Objects
 {
 	import flash.geom.Point;
+	import Globals.GameParams;
 	import org.flixel.*;
 	
 	import Resources.SpriteResources;
@@ -24,6 +25,7 @@ package Game.Objects
 		private var m_radius:Number; //son rayon
 		
 		private var m_resources:int; // ressources de la planete
+		private var m_distance = 0;
 		
 		public function Planet(x:Number, y:Number, offsetSurface:Number, blobbies:Array,trees:Array ) 
 		{
@@ -54,14 +56,18 @@ package Game.Objects
 		override public function update():void 
 		{
 			super.update();
+			m_planet.scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
 			
-			m_heart2.angle-=0.1;
-			m_heart3.angle+=0.1;
+			m_heart2.angle-= 0.1;
+			m_heart2.scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
+			m_heart3.angle += 0.1;
+			m_heart3.scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
+
 						
 			var pulse:Number = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
 			// var pulse:Number = (Math.sin(m_elapsedTime*4)/2)/(Math.cos(m_elapsedTime-4)*8);
-			m_heart.scale.x = pulse + (m_resources/10000)*0.4096;
-			m_heart.scale.y = pulse + (m_resources/10000)*0.4096;
+			m_heart.scale.x = (pulse + (m_resources/10000)*0.4096) * GameParams.worldZoom;
+			m_heart.scale.y = (pulse + (m_resources/10000)*0.4096) * GameParams.worldZoom;
 			// Change the speed of the pulse
 			m_elapsedTime += FlxG.elapsed * 8;
 		}
@@ -109,6 +115,18 @@ package Game.Objects
 		
 		public function removeResources(n:int):void {
 			m_resources -= n;
+		}
+		
+		public function setScale(value:FlxPoint):void {
+			m_planet.scale = value;
+		}
+		
+		public function getDistance() {
+			return m_distance;
+		}
+		
+		public function setDistance(value:Number) {
+			m_distance = value;
 		}
 	}
 
