@@ -15,7 +15,8 @@ package Resources
 		[Embed(source = "../../bin/img/heart2.png")] public static var ImgHeart2:Class;
 		[Embed(source = "../../bin/img/heart3.png")] public static var ImgHeart3:Class;
 		
-		[Embed(source = "../../bin/img/cloud2.png")] public static var ImgCloud:Class;
+		[Embed(source = "../../bin/img/cloud1.png")] public static var ImgCloud:Class;
+		[Embed(source = "../../bin/img/cloud2.png")] public static var ImgCloud2:Class;
 		
 		[Embed(source = "../../bin/img/tree.png")] public static var ImgTree:Class;
 		

@@ -120,7 +120,7 @@ package  Game.States
 			
 			// Clouds init
 			var cloud:Cloud;
-			for (j = 0 ; j < GameParams.nbTree ; j++ )
+			for (j = 0 ; j < GameParams.nbClouds ; j++ )
 			{
 				cloud = new Cloud(planet.radius() +10, planet);
 				clouds.push(cloud);
