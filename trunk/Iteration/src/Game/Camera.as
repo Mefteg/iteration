@@ -18,7 +18,7 @@ package Game
 		
 		public function Camera(startPos:FlxPoint, X:Number = 0, Y:Number = 0, Width:Number = 0, Height:Number = 0, UpdateWorld:Boolean = false) 
 		{
-			var zoom:Number = 1;
+			var zoom:Number = 0.3;
 			//m_camera = new FlxCamera(0, 0, 640 / 2, 480, 1);
 			//FlxG.addCamera(m_camera);
 			m_camera = new FlxCamera(0, 0, FlxG.width + FlxG.width / zoom, FlxG.height + FlxG.height / zoom, zoom);
