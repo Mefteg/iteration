@@ -12,6 +12,8 @@ package Game.Objects
 	{				
 		private var m_planet:FlxSprite;
 		private var m_heart:FlxSprite;
+		private var m_heart2:FlxSprite;
+		private var m_heart3:FlxSprite;
 		
 		protected var m_blobbies:Array;
 		protected var m_trees:Array;
@@ -28,8 +30,17 @@ package Game.Objects
 			m_planet = new FlxSprite(x, y, SpriteResources.ImgPlnt);
 			add(m_planet);
 			
-			m_heart = new FlxSprite(x+offsetSurface/2, y+offsetSurface/2, SpriteResources.ImgHeart);
+			m_heart = new FlxSprite(x + offsetSurface / 2, y + offsetSurface / 2, SpriteResources.ImgHeart);
+			m_heart2 = new FlxSprite(x + offsetSurface / 2, y + offsetSurface / 2, SpriteResources.ImgHeart2);
+			m_heart2.scale.x = 0.4096;
+			m_heart2.scale.y = 0.4096;
+			m_heart3 = new FlxSprite(x + offsetSurface / 2, y + offsetSurface / 2, SpriteResources.ImgHeart3);
+			m_heart3.scale.x = 0.4096;
+			m_heart3.scale.y = 0.4096;
+			
 			add(m_heart);
+			add(m_heart2);
+			add(m_heart3);
 			
 			m_center = new Point(x + m_planet.width / 2, y + m_planet.height / 2);
 			m_radius = (m_planet.height - offsetSurface) / 2;
@@ -43,11 +54,14 @@ package Game.Objects
 		override public function update():void 
 		{
 			super.update();
+			
+			m_heart2.angle-=0.3;
+			m_heart3.angle+=0.3;
 						
 			var pulse:Number = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
 			// var pulse:Number = (Math.sin(m_elapsedTime*4)/2)/(Math.cos(m_elapsedTime-4)*8);
-			m_heart.scale.x = pulse + (m_resources/10000)*1.18;
-			m_heart.scale.y = pulse + (m_resources/10000)*1.18;
+			m_heart.scale.x = pulse + (m_resources/10000)*0.4096;
+			m_heart.scale.y = pulse + (m_resources/10000)*0.4096;
 			// Change the speed of the pulse
 			m_elapsedTime += FlxG.elapsed * 8;
 		}

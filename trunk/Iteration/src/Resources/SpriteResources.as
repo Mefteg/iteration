@@ -11,7 +11,9 @@ package Resources
 		[Embed(source = "../../bin/img/meteor.gif")] public static var ImgMeteor:Class;
 		
 		[Embed(source = "../../bin/img/planet.png")] public static var ImgPlnt:Class;
-		[Embed(source = "../../bin/img/heart4.png")] public static var ImgHeart:Class;
+		[Embed(source = "../../bin/img/heart.png")] public static var ImgHeart:Class;
+		[Embed(source = "../../bin/img/heart2.png")] public static var ImgHeart2:Class;
+		[Embed(source = "../../bin/img/heart3.png")] public static var ImgHeart3:Class;
 		
 		[Embed(source = "../../bin/img/cloud2.png")] public static var ImgCloud:Class;
 		
