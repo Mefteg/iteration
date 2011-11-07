@@ -75,7 +75,7 @@ package
 			startDeathTimer();
 			startBirthTimer();
 			startIdeaTimer();
-								
+			//redémarrer le timer principal					
 			m_timer.start(m_iterTime);
 		}
 		
@@ -143,7 +143,20 @@ package
 			//Si le timer de mort arrive a échéance
 			if ( (m_timerDeath.finished) && (m_countDeaths < m_nbDeaths) ) {
 				//supprimer un blobby
-				m_planet.getBlobbies().pop().destroy();
+				var indexDelete:int = Math.random() * (m_planet.getBlobbies().length -1);
+				var blobby:Blobby = m_planet.getBlobbies()[indexDelete];
+				//si le blobby n'est pas en discussion
+				if (blobby.getState() != "discuss") {
+					blobby.setState("die");
+				}else {
+					if (indexDelete + 1 > m_planet.getBlobbies().length -1)
+						indexDelete --;
+					else	
+						indexDelete ++;
+					blobby.setState("die");
+				}
+				m_planet.getBlobbies()[indexDelete].setState("die");	
+				m_planet.getBlobbies().splice(indexDelete, 1);
 				//incrémentere le compteur de morts
 				m_countDeaths++;
 				//redémarrer le timer pour les morts

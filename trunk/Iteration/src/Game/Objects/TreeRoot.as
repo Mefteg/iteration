@@ -146,7 +146,7 @@ package Game.Objects
 					str.x = m_actualPoint.x;
 					str.y = m_actualPoint.y;
 					
-					add(str);
+					// add(str);
 					
 					lastUpdate++;
 				}

@@ -54,8 +54,9 @@ package  Game.States
 			trees = new Array();
 			clouds = new Array();
 			//FPS
-			m_text = new FlxText(10, 10, 150, FlxG.framerate.toString());
+			m_text = new FlxText(10, 10, 500, FlxG.framerate.toString());
 			m_text.scrollFactor = new FlxPoint(0, 0);
+			m_text.size = 50;
 			add(m_text);
 			//------CREER LA PLANETE-----------------
 			planet = new Planet( FlxG.width/2 , FlxG.height/2, 64 ,blobbies,trees);
@@ -123,9 +124,9 @@ package  Game.States
 		
 		override public function update():void {
 			//update le texte
-			m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies";
+			m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies \n" + FlxG.framerate.toString()+" fps";
 			//mettre a jour l'itération
-			m_iteration.update();
+			//m_iteration.update();
 			
 			m_camera.update();
 			

@@ -3,7 +3,7 @@ package
 	import Game.States.PlayState;
 	import Globals.GameParams;
 	import org.flixel.*;
-	[SWF(width="1024", height="768", backgroundColor="#000000")]
+	[SWF(width="1280", height="720", backgroundColor="#000000")]
 	
 	/**
 	 * ...
