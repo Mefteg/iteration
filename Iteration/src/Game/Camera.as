@@ -22,8 +22,9 @@ package Game
 			var zoom:Number = 0.3;
 			//m_camera = new FlxCamera(0, 0, 640 / 2, 480, 1);
 			//FlxG.addCamera(m_camera);
-			m_camera2 = new FlxCamera(0, 0, 640+640/zoom, 480 + 480/zoom, zoom);
-			FlxG.addCamera(m_camera2);
+			m_camera = new FlxCamera(0, 0, FlxG.width + FlxG.width / zoom, FlxG.height + FlxG.height / zoom, zoom);
+			m_camera.setBounds( -5000, -5000, 10000, 10000 );
+			FlxG.addCamera(m_camera);
 			FlxG.cameras.shift();
 			trace(FlxG.cameras.length);
 			//FlxG.camera.setBounds(X, Y, Width, Height, UpdateWorld);
@@ -56,15 +57,15 @@ package Game
 			{
 				m_posCam.y += m_speedCam;
 			}
-			//FlxG.camera.focusOn(m_posCam);
+			m_camera.focusOn(m_posCam);
 			// On gere le zoom
-			if ( FlxG.keys.Z && FlxG.camera.zoom < 10 ) 
+			if ( FlxG.keys.Z && m_camera.zoom < 1 ) 
 			{
-				//FlxG.camera.zoom += m_zoomCam;
+				m_camera.zoom += m_zoomCam;
 			}
-			if ( FlxG.keys.S && FlxG.camera.zoom > 1 ) 
+			if ( FlxG.keys.S && m_camera.zoom > 0.2 ) 
 			{
-				//FlxG.camera.zoom -= m_zoomCam;
+				m_camera.zoom -= m_zoomCam;
 			}
 			// On replace la camera au centre de la planete
 			if ( FlxG.keys.SPACE ) 

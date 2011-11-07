@@ -34,6 +34,8 @@ package Game.Objects
 			addAnimation("GrowTrunk", [0, 1, 2, 3, 4, 5, 6], 2.4, false);
 			addAnimation("GrowLeaves", growTab, 10, false);
 			play("GrowTrunk");
+			
+			m_state = "growup";
 		}
 		
 		override public function draw():void 
@@ -58,11 +60,25 @@ package Game.Objects
 		
 		override public function update():void
 		{
-			super.update();
+			super.update();			
+			m_roots.update();
+
+			switch(m_state) {
+				case("growup"):
+					growup();
+					break;
+				case("feed"):
+					break;
+				case("die"):
+					break;
+				default:
+					break;
+			}
+		}
+		
+		protected function growup():void {
 			//gérer l'animation
 			animate();
-			
-			m_roots.update();
 			if ( !m_roots.isGrowing() )
 			{
 				// Place the tree
@@ -70,6 +86,7 @@ package Game.Objects
 				this.place();
 				this.rotateToPlanet();				
 			}
+			
 		}
 		
 		override public function destroy():void {

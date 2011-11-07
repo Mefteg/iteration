@@ -37,7 +37,7 @@ package  Game.States
 		//itération
 		protected var m_iteration:Iteration;
 		//variables caméra
-		protected var text:FlxText;
+		protected var m_text:FlxText;
 		
 		public function PlayState() 
 		{
@@ -54,8 +54,9 @@ package  Game.States
 			trees = new Array();
 			clouds = new Array();
 			//FPS
-			text = new FlxText(100, 100, 150, FlxG.framerate.toString());
-			add(text);
+			m_text = new FlxText(10, 10, 150, FlxG.framerate.toString());
+			m_text.scrollFactor = new FlxPoint(0, 0);
+			add(m_text);
 			//------CREER LA PLANETE-----------------
 			planet = new Planet( FlxG.width/2 , FlxG.height/2, 64 ,blobbies,trees);
 			add(planet);
@@ -122,7 +123,7 @@ package  Game.States
 		
 		override public function update():void {
 			//update le texte
-			text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies";
+			m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies";
 			//mettre a jour l'itération
 			m_iteration.update();
 			
