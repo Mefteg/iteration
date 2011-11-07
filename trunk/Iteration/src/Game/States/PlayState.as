@@ -133,7 +133,7 @@ package  Game.States
 			var now:Date = new Date();
 			
 			//update le texte
-			m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies \n" + m_FPS.toString()+" fps";
+			m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies \n" + m_FPS.toString()+" fps"
 			//mettre a jour l'itération
 			//m_iteration.update();
 			
@@ -143,7 +143,7 @@ package  Game.States
 			
 			// trace(now.getTime());
 			m_FPSCounter ++;
-			if ( m_lastTime != now.getTime() )
+			if ( now.getTime() - m_lastTime > 1000  )
 			{
 				m_FPS = m_FPSCounter;
 				m_FPSCounter = 0;
