@@ -11,7 +11,7 @@ package Game.Objects
 		protected var m_direction:int = 0; //variable de mouvement; 0:stationnaire, 1:a droite; 2:a gauche
 		protected var m_distance:Number = 0; //éloignement par rapport au centre de la planete
 		
-		public var m_speed:Number = 0.15; // vitesse de déplacement
+		public var m_speed:Number = 0.1; // vitesse de déplacement
 		public var m_dead:Boolean = false; // mort du sprite
 		
 		public var m_planet:Planet; // référence vers la planete pour diverses raisons

@@ -33,8 +33,9 @@ package Game.Objects
 			//Diminuer les ressources
 			m_planet.removeResources(100);
 			//Créer l'image
-			loadGraphic(SpriteResources.ImgAlien, true, false, 30, 30);
-			//créer l'animation
+			loadGraphic(SpriteResources.ImgAlien, true, false, 300, 300);
+			m_distance += 100;
+			//créer les animation
 			addAnimation("Default", [0, 1, 2,3,4,5,6,7], 6 + FlxG.random() * 4);	
 			play("Default");
 			place();
@@ -57,8 +58,11 @@ package Game.Objects
 					validate();
 					break;
 				case("idle"):
+					idle();
 					break;
 				case("die"):
+					die();
+					return;
 					break;
 				case("duplicate"):
 					break;
@@ -81,6 +85,12 @@ package Game.Objects
 			changeDirection();
 		}
 		
+		protected function idle():void {
+			//si le temps de mouvement est terminé
+			if (m_timerMove > m_limitMove) {
+				setState("walk");
+			}
+		}
 		protected function eat() :void{
 			changeDirection();
 		}
@@ -100,6 +110,8 @@ package Game.Objects
 				m_idea.setState("spread");
 				//vider la variable d'idée
 				m_idea = null;
+				//changer le sprite
+				color = 0xF5721B;
 			}
 		}
 		
@@ -122,6 +134,10 @@ package Game.Objects
 				m_pos += m_speed;
 			}
 			m_idea.update();
+		}
+		
+		public function die():void {
+			this.destroy();
 		}
 		
 		public function changeDirection():void 
@@ -159,8 +175,10 @@ package Game.Objects
 		
 		override public function destroy():void {
 			m_blobTarget = null;
+			//si il possédait une idée, la killer
 			if (m_idea)
 				m_idea.setState("killed");
+			//ajouter des ressources a la planete
 			m_planet.addResources(80);
 			super.destroy();
 		}

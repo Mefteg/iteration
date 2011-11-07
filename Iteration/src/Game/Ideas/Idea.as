@@ -25,7 +25,7 @@ package Game.Ideas
 			super(pos, distance, planet);
 			m_effectBirth = effectBirth/100;
 			m_effectDeath = effectDeath / 100;
-			loadGraphic(SpriteResources.ImgIdeaWar, false, false, 15, 14);
+			loadGraphic(SpriteResources.ImgIdeaWar, false, false, 174, 156);
 		}
 		
 		public function setBlobby(blobby:Blobby):void {
