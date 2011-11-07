@@ -16,21 +16,21 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'04/11/2011'</value>
+      <value>'07/11/2011'</value>
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>C:\Documents and Settings\LittleWhite\Bureau\Iteration\Iteration\src</path-element>
+      <path-element>C:\Documents and Settings\LittleWhite\Bureau\Iteration_Revert\Iteration\src</path-element>
       <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Documents and Settings\LittleWhite\Bureau\Iteration\Iteration\src\Main.as</path-element>
+    <path-element>C:\Documents and Settings\LittleWhite\Bureau\Iteration_Revert\Iteration\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>
   <default-size>
-    <width>1024</width>
-    <height>768</height>
+    <width>800</width>
+    <height>600</height>
   </default-size>
 </flex-config>

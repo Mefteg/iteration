@@ -42,10 +42,12 @@ package  Game.States
 		public function PlayState() 
 		{
 			// Background init
+			/*
 			background = new FlxSprite( -37, 147, SpriteResources.ImgBackground);	// HACK TODO FIX THIS
 			background.scale.x = GameParams.scale;
 			background.scale.y = GameParams.scale;
 			add(background);
+			*/
 			
 			//initialisations
 			blobbies = new Array();
@@ -77,7 +79,7 @@ package  Game.States
 								
 						
 			//----------CREER LE METEOR-------------
-			meteor = new Meteor(SpriteResources.ImgMeteor,0, planet.radius() * 2, planet);
+			meteor = new Meteor(0, planet.radius() * 2, planet);
 			add(meteor);
 			
 			//SON
