@@ -20,10 +20,12 @@ package Game.Objects
 		 */
 		public function Tree(origin:Point,planet:Planet) 
 		{
-			super(0, (planet.radius()-2)*1.5, planet);
+			super(0, planet.radius(), planet);
 			m_roots = new TreeRoot(origin, 255, 255, 255, 0, 255, 0, planet.radius()-2);
 			//charger l'image de l'arbre
 			loadGraphic(SpriteResources.ImgTree, true, false, 120, 130);
+			//ajout de la taille de l'image pour coller au sol de la planete
+			m_distance += height;
 			//créerle tableau de frames pour les feuilles
 			var growTab:Array= new Array();
 			for (var i:int = 7; i < frames; i++) 
