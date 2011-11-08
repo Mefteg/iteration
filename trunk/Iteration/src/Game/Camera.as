@@ -52,18 +52,18 @@ package Game
 			}
 			m_camera.focusOn(m_posCam);
 			// On gere le zoom
-			if ( FlxG.keys.Z && GameParams.worldZoom < 1 ) 
+			if ( FlxG.keys.Z && GameParams.worldZoom < GameParams.worldZoomMax ) 
 			{
 				GameParams.worldZoom += m_zoomCam;
 			}
-			if ( FlxG.keys.S && GameParams.worldZoom > 0.2 ) 
+			if ( FlxG.keys.S && GameParams.worldZoom > GameParams.worldZoomMin ) 
 			{
 				GameParams.worldZoom -= m_zoomCam;
 			}
 			// On replace la camera au centre de la planete
 			if ( FlxG.keys.SPACE ) 
 			{
-				GameParams.worldZoom = 1;
+				GameParams.worldZoom = GameParams.worldZoomMin;
 				m_posCam = m_initPos;
 			}
 		}

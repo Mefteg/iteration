@@ -6,6 +6,9 @@ package Resources
 	 */
 	public class SpriteResources 
 	{
+		//background
+		[Embed(source = "../../bin/img/fond.jpg")] public static var ImgBackground:Class;
+		
 		//blobby
 		[Embed(source = "../../bin/img/blobby_walk.png")] public static var ImgBlobbyWalk:Class;
 		[Embed(source = "../../bin/img/blobby_idle.png")] public static var ImgBlobbyIdle:Class;

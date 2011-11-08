@@ -16,7 +16,10 @@ package Globals
 		
 		static public var planetRadius:uint = 350;
 		
-		static public var worldZoom:Number = 0.5;
+		static public var worldZoomMax:Number = 1;
+		static public var worldZoomMin:Number = 0.3;
+		static public var worldZoom:Number = worldZoomMin;
+
 	}
 
 }
