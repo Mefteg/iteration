@@ -16,6 +16,7 @@ package  Game.States
 	import Resources.SoundResources;
 	import SoundEngine.SoundBank;
 	import SoundEngine.Sound;
+	import Utils.MathUtils;
 	
 	/**
 	 * ...
@@ -30,6 +31,7 @@ package  Game.States
 		protected var nbAnimBlob:int = 4;
 		protected var blobbyAnimWalk:Array;
 		protected var blobbyAnimIdle:Array;
+		protected var blobbyAnimDiscuss:Array;
 				
 		//objets
 		protected var background:FlxSprite;
@@ -57,6 +59,7 @@ package  Game.States
 			blobbies = new Array();
 			blobbyAnimWalk = new Array();
 			blobbyAnimIdle = new Array();
+			blobbyAnimDiscuss = new Array();
 			trees = new Array();
 			clouds = new Array();
 	
@@ -98,7 +101,8 @@ package  Game.States
 				//animation de marche
 				sprite = new NewSprite();
 				sprite.loadGraphic(SpriteResources.ImgBlobbyWalk, true, false, 300, 300);
-				sprite.addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7], 4 + FlxG.random() * 4, true);
+				sprite.addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7], 2 + FlxG.random() * 2, true);
+				sprite.addAnimation("search", [0, 1, 2, 3, 4, 5, 6, 7], 4 + FlxG.random() * 4, true);
 				blobbyAnimWalk.push(sprite);
 				//animation de idle
 				sprite = new NewSprite();
@@ -108,8 +112,10 @@ package  Game.States
 				//animation de discussion
 				sprite = new NewSprite();
 				sprite.loadGraphic(SpriteResources.ImgBlobbyTalk, true, false, 300, 300);
-				sprite.addAnimation("idle", [0, 1, 2, 3, 4, 5], 0.2+FlxG.random() * 2, true);
-				blobbyAnimIdle.push(sprite);
+				sprite.addAnimation("discuss", MathUtils.getArrayofNumbers(0, 19) , 5 +FlxG.random() * 2, true);
+				//a supprimer plus tard
+				sprite.addAnimation("validate", [0, 1, 2, 3, 4, 5], 5 +FlxG.random() * 2, true);
+				blobbyAnimDiscuss.push(sprite);
 				
 			}
 			m_state = "Creation";
@@ -143,10 +149,7 @@ package  Game.States
 			//update le texte
 			updateFPS();
 			m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies \n" + m_FPS.toString()+" fps"
-			
-			//mettre a jour l'itération
-			//m_iteration.update();
-			
+			//mettre a jour la camera
 			m_camera.update();
 			
 			super.update();			
@@ -166,6 +169,8 @@ package  Game.States
 					}
 					break;
 				case "Life":
+					//mettre a jour l'itération
+					m_iteration.update();
 					break;
 			}
 		}
@@ -182,11 +187,15 @@ package  Game.States
 		//fonctions retournant une animation donnée pour un blob
 		public function getAnimBlobWalk(): NewSprite
 		{
-			return blobbyAnimWalk[FlxU.round( Math.random() * nbAnimBlob)];
+			return blobbyAnimWalk[FlxU.round( Math.random() * (nbAnimBlob-1))];
 		}
 		public function getAnimBlobIdle(): NewSprite
 		{
-			return blobbyAnimIdle[FlxU.round( Math.random() * nbAnimBlob)];
+			return blobbyAnimIdle[FlxU.round( Math.random() * (nbAnimBlob-1))];
+		}
+		public function getAnimBlobDiscuss(): NewSprite
+		{
+			return blobbyAnimDiscuss[FlxU.round( Math.random() * (nbAnimBlob-1))];
 		}
 		
 		public function initBlobies():void
@@ -199,7 +208,7 @@ package  Game.States
 			for (var i:int = 0; i < sizeBlob ; i++) 
 			{
 				blob = new Blobby( tabBlobbiesPosition[i], planet.radius(), planet);
-				blob.setAnimations(blobbyAnimWalk[i % (nbAnimBlob-1)], blobbyAnimIdle[i % (nbAnimBlob-1)]);
+				blob.setAnimations(getAnimBlobWalk(), getAnimBlobIdle(),getAnimBlobDiscuss() );
 				blobbies.push(blob);
 				add(blob);
 			}

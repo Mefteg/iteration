@@ -51,7 +51,7 @@ package Game.Objects
 					break;
 				case "Crashing":
 					//réduire la distance entre le météore et la planète
-					m_distance -= (m_speed * (1 / m_distance * 250 ))*6;
+					m_distance -= (m_speed * (1 / m_distance * 250 ))*50;
 					
 					//si le météore atteint la planete :: il explose
 					if (m_distance <= m_planet.radius())
