@@ -189,6 +189,20 @@ package  Game.States
 				case "Life":
 					//mettre a jour l'itération*
 					m_iteration.update();
+					if ( m_iteration.cycleFinished() )	// We must call this function
+					{
+						if ( meteor == null )	// But if we already have a meteor, we will not have two :p
+						{
+							meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet);
+							add(meteor);
+						}
+					}
+					if ( meteor != null && meteor.hasExploded() )
+					{
+						meteor.destroy();
+						remove(meteor);
+						meteor = null;
+					}
 					
 					if ( planet.isDead() || blobbies.length > 100 )
 					{

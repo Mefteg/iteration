@@ -153,16 +153,6 @@ package Game.Objects
 			if (m_blobTarget.getState() =="die")
 				searchNearestBlobby();
 			
-			/*
-			var v1:Point = new Point(x - m_planet.center().x, y - m_planet.center().y);
-			var v2:Point = new Point(m_blobTarget.x - m_planet.center().x, m_blobTarget.y - m_planet.center().y);
-			var det:Number = MathUtils.det(v1, v2);
-			if (det > 0) {
-				m_pos -= m_speed;
-			}else {
-				m_pos += m_speed;
-			}
-			*/
 			if ( ((this.m_pos + 180) % 360) - ((m_blobTarget.m_pos + 180) % 360) < 0 )
 			{
 				m_pos += m_speed;
@@ -282,13 +272,15 @@ package Game.Objects
 			return (m_state == "search") || (m_state == "validate") || (m_state == "discuss");
 		}
 		
-		public function collideWithBlobby(blobby:Blobby):Boolean {
+		public function collideWithBlobby(blobby:Blobby):Boolean 
+		{
 			if (!blobby) return false;
-			var posRad:Number = MathUtils.degToRan(m_pos);
-			var posMin:Number = MathUtils.degToRan(blobby.getPos()-10);
-			var posMax:Number = MathUtils.degToRan(blobby.getPos()+10);
 			
-			return ( posRad > posMin && posRad < posMax );
+			if ( Math.abs(((this.m_pos + 180) % 360) - ((blobby.m_pos + 180) % 360)) < 7 )
+			{
+				return true;
+			}
+			return false;
 		}
 		
 		override public function draw():void 
