@@ -153,6 +153,7 @@ package Game.Objects
 			if (m_blobTarget.getState() =="die")
 				searchNearestBlobby();
 			
+			/*
 			var v1:Point = new Point(x - m_planet.center().x, y - m_planet.center().y);
 			var v2:Point = new Point(m_blobTarget.x - m_planet.center().x, m_blobTarget.y - m_planet.center().y);
 			var det:Number = MathUtils.det(v1, v2);
@@ -160,6 +161,15 @@ package Game.Objects
 				m_pos -= m_speed;
 			}else {
 				m_pos += m_speed;
+			}
+			*/
+			if ( ((this.m_pos + 180) % 360) - ((m_blobTarget.m_pos + 180) % 360) < 0 )
+			{
+				m_pos += m_speed;
+			}
+			else 
+			{
+				m_pos -= m_speed;
 			}
 			m_idea.update();
 		}
@@ -228,29 +238,42 @@ package Game.Objects
 		{
 			var blobbies:Array = m_planet.getBlobbies(); //tous les blobbies
 			var size:int = blobbies.length; //nombre de blobbies
+			
 			var nearest:Blobby; //blobby le plus proche
 			var distMin:Number = 1000; //distance du blobby le plus proche
-			var b:Blobby; var dist:Number;
+			var b:Blobby;
+			var dist:Number;
 			//parcourir tous les blobbies
 			for (var i:int = 0; i < size ; i++) 
 			{
 				//pour ce blobby
 				b = blobbies[i];
+				
 				//si c'est le même on passe au suivant
 				if (b == this)
 					continue;
-				//calculer la distance entre les deux positions 
-				dist = Math.sqrt( Math.pow((this.x - b.x), 2) + Math.pow( (this.y - b.y), 2) ) ;
-				//si la distance est la plus petite
-				if (dist < distMin) {
-					//changer la distance minimum
+					
+				dist = Math.abs(((this.m_pos+180)%360) - ((b.m_pos+180)%360));
+				if ( dist < distMin )
+				{
 					distMin = dist;
 					//changer le blob le plus près
 					nearest = b;
-				}				
+					
+					/* Useless code since it is done in search 
+					if ( ((this.m_pos + 180) % 360) - ((b.m_pos + 180) % 360) < 0 )
+					{
+						m_direction = 2;
+					}
+					else
+					{
+						m_direction = 1;
+					}
+					*/
+				}		
 			}
 			
-			m_blobTarget =  b;
+			m_blobTarget = nearest;
 			m_blobTarget.color = 0xFF0080;
 			this.color = 0x0618F9;
 		}
