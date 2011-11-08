@@ -31,7 +31,15 @@ package Game.Ideas
 		public function setBlobby(blobby:Blobby):void {
 			m_blobby = blobby;
 		}
-				
+			
+		public function getDeathEffect():Number {
+			return m_effectDeath;
+		}
+		
+		public function getBirthEffect():Number {
+			return m_effectBirth;
+		}
+		
 		override public function update():void {
 			super.update();
 			//déplacer l'idée par rapport au blobby

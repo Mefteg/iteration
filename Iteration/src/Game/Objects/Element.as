@@ -2,6 +2,7 @@ package Game.Objects
 {
 	import Globals.GameParams;
 	import org.flixel.*;
+	import Utils.MathUtils;
 	/**
 	 * ...
 	 * @author ...
@@ -40,10 +41,11 @@ package Game.Objects
 		public function place():void {
 			
 			//conversion en radians de l'angle de position sur le cercle(planete)
-			var angle:Number = ( Math.PI / 180 ) * m_pos;
-			
+			var angle:Number = (Math.PI / 180) * m_pos ;
+
 			x = m_planet.center().x + Math.cos(angle) * (m_distance)*GameParams.worldZoom - this.width /2;
 			y = m_planet.center().y - Math.sin(angle) * (m_distance)*GameParams.worldZoom - this.height/2;
+
 		}
 		//effectue une rotation pour placer le bas du sprite sur la surface de la planete
 		public function rotateToPlanet() :void{
