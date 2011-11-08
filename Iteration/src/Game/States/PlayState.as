@@ -4,6 +4,7 @@ package  Game.States
 	import flash.media.Sound;
 	import Game.Camera;
 	import Game.NewSprite;
+	import Game.Background;
 	import Game.Objects.Blobby;
 	import Game.Objects.Meteor;
 	import Game.Objects.Planet;
@@ -34,12 +35,14 @@ package  Game.States
 		protected var blobbyAnimDiscuss:Array;
 				
 		//objets
-		protected var background:FlxSprite;
 		protected var planet:Planet;
 		protected var blobbies:Array;
 		protected var meteor:Meteor;
 		protected var trees:Array;
 		protected var clouds:Array;
+				
+		//Background
+		private var m_background:Background;
 		
 		private var m_state:String = "";
 		
@@ -51,8 +54,7 @@ package  Game.States
 		// FPS calculation
 		private var m_lastTime:Number = 0;
 		private var m_FPSCounter:Number = 0;
-		private var m_FPS:Number = 0;
-		
+		private var m_FPS:Number = 0;	
 		
 		public function PlayState() 
 		{
@@ -84,11 +86,19 @@ package  Game.States
 			FlxG.bgColor =  0xff0a216b ;
 			//FlxG.bgColor = 0xffecebb3;
 			
+
+			
 			// On charge la map
 			//var map1:Map = new Map("map/test.xml");
 			
 			//------CREER LA PLANETE-----------------
-			planet = new Planet( FlxG.width/2 , FlxG.height/2 ,blobbies,trees);
+			planet = new Planet( FlxG.width / 2 , FlxG.height / 2, blobbies, trees);
+			
+			//------CREER LE BACKGROUND--------------
+			m_background = new Game.Background(new FlxPoint(0, 0), SpriteResources.ImgBackground, planet);
+			add(m_background);
+			
+			// On affiche la planete apres le background
 			add(planet);
 			
 			//-------CREER LA CLASSE D'ITERATION-----

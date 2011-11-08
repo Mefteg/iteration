@@ -3,7 +3,9 @@ package Game.Objects
 	import flash.geom.Point;
 	import Game.Ideas.Idea;
 	import Game.NewSprite;
+	import Globals.GameParams;
 	import org.flixel.FlxG;
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxSave;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTimer;
@@ -37,6 +39,7 @@ package Game.Objects
 		public function Blobby(pos:Number, distance:Number , planet:Planet) 
 		{
 			super(pos, distance, planet);
+			scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
 			//tailles du blobby
 			this.width = 300; this.height = 300;
 			//instancier le timer de discussion
