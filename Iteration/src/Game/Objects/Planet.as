@@ -127,6 +127,16 @@ package Game.Objects
 			m_distance = value;
 		}
 		
+		//supprime un blobby
+		public function removeBlobby(blobby:Blobby):void {
+			var index:int = m_blobbies.indexOf(blobby);
+			m_blobbies[index].setState("die");
+			m_blobbies.splice(index, 1);
+		}
+		public function removeBlobbyAt(index:int):void {
+			m_blobbies[index].setState("die");
+			m_blobbies.splice(index, 1);
+		}
 		public function isDead():Boolean
 		{
 			if ( m_resources < 0 )

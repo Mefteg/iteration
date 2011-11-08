@@ -36,7 +36,7 @@ package Game.Objects
 			switch (m_state)
 			{
 				case "Incoming":
-					m_distance-= 2;
+					m_distance-= 4;
 					if ( m_distance <= m_roamingDistance )
 					{
 						m_state = "Roaming";
@@ -52,7 +52,7 @@ package Game.Objects
 					break;
 				case "Crashing":
 					//réduire la distance entre le météore et la planète
-					m_distance -= (m_speed * (1 / m_distance * 250 ))*50;
+					m_distance -= (m_speed * (1 / m_distance * 250 ))*150;
 					
 					//si le météore atteint la planete :: il explose
 					if (m_distance <= m_planet.radius())
@@ -89,6 +89,27 @@ package Game.Objects
 			}
 			
 			m_hasExploded = true;
+		}
+		
+		public function checkBlobbiesCollision():void {
+			var blobbies:Array = m_planet.getBlobbies();
+			var size:int = blobbies.length;
+			var blob:Blobby;
+			for (var i:int = 0; i < size; i++) 
+			{
+				blob = blobbies[i];
+				if (checkBlobbyCollision(blob))
+					m_planet.removeBlobby(blob);
+			}
+		}
+		
+		private function checkBlobbyCollision(blobby:Blobby):Boolean {
+			if (!blobby) return false;
+			if ( Math.abs(((this.m_pos + 180) % 360) - ((blobby.getPos() + 180) % 360)) < 10 )
+			{
+				return true;
+			}
+			return false;
 		}
 		
 		override public function destroy():void 
