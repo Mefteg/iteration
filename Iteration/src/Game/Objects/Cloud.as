@@ -30,9 +30,6 @@ package Game.Objects
 			cloud.scale.x = 1 * FlxG.random() /	50 + 1;
 			cloud.scale.y = 1 * FlxG.random()/50 + 1;
 			
-			trace(cloud.scale.x);
-			trace(cloud.scale.y);
-			
 			if ( FlxG.random() < 0.5 )
 			{
 				m_direction = 1;
