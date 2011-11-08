@@ -22,12 +22,12 @@ package Game.Objects
 			m_roamingDistance = roamingDistance;
 			//Créer l'image
 			loadGraphic(sprite, false, false, 67, 67);
-			m_speed = 0.3;
+			m_speed = 3;
 			//dimensionner le météore par rapport a la planete
 			this.scale.x = (0.1 * planet.getHeight())/width;
 			this.scale.y = (0.1 * planet.getWidth()) / height;
 			
-			m_state = "Incoming";
+			m_state = "Roaming";
 		}
 		
 		override public function update():void 

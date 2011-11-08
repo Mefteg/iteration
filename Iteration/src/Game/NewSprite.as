@@ -23,10 +23,19 @@ package Game
 			return _curAnim;
 		}
 		
+		public function animIsFinished():Boolean {
+			return _curIndex == _curAnim.frames.length - 1 ;
+		}
+		
 		override public function update():void {
 			super.postUpdate();
 			super.update();
 			super.postUpdate();
+		}
+		
+		override public function destroy():void {
+			super.destroy();
+			kill();
 		}
 	}
 

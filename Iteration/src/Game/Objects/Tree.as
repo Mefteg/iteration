@@ -1,8 +1,10 @@
 package Game.Objects
 {
 	import flash.display.MovieClip;
+	import Game.NewSprite;
 	import org.flixel.*;
 	import flash.geom.Point;
+	import Utils.MathUtils;
 	
 	import Resources.SpriteResources;
 	
@@ -13,7 +15,10 @@ package Game.Objects
 	public class Tree extends Element
 	{		
 		private var m_roots:TreeRoot;
+		private var m_spriteTrunk:NewSprite;
+		private var m_spriteTree:NewSprite;
 		
+		private var m_spriteCurrent:NewSprite;
 		/**
 		 * @param	origin	The point where the root starts
 		 * @param	planet where the tree will grow
@@ -22,41 +27,32 @@ package Game.Objects
 		{
 			super(0, planet.radius(), planet);
 			m_roots = new TreeRoot(origin, 255, 255, 255, 0, 255, 0, planet.radius()-2);
-			//charger l'image de l'arbre
-			loadGraphic(SpriteResources.ImgTree, true, false, 120, 130);
-			//ajout de la taille de l'image pour coller au sol de la planete
-			m_distance += height;
-			//créerle tableau de frames pour les feuilles
-			var growTab:Array= new Array();
-			for (var i:int = 7; i < frames; i++) 
-			{
-				growTab.push(i);
-			}
-			
-			addAnimation("GrowTrunk", [0, 1, 2, 3, 4, 5, 6], 2.4, false);
-			addAnimation("GrowLeaves", growTab, 10, false);
-			play("GrowTrunk");
-			
 			m_state = "growup";
+		}
+		
+		public function setAnimations(trunk:NewSprite,tree:NewSprite):void {
+			m_spriteTrunk = trunk;
+			m_spriteTree = tree;
+			m_spriteCurrent = m_spriteTrunk;
+			//tailles de l'arbre
+			this.width = m_spriteCurrent.width; this.height = m_spriteCurrent.height;
+			m_pos = Math.random()*360;
+			m_distance += 155;
 		}
 		
 		override public function draw():void 
 		{
-			m_roots.draw();
+			//m_roots.draw();
 			if ( !m_roots.isGrowing() )
-			{
-				super.draw();
-			}
-		}
-		
-		//gère les enchainements d'animations
-		public function animate() : void {
-			//Si anim du tronc en cours
-			if (this._curAnim.name == "GrowTrunk") {
-				//et si l'anim est finie
-				if (animIsFinished())
-					//jouer l'anim des feuilles
-					play("GrowLeaves");
+			{ 
+				//mettre a jour les propriétés du sprite courant
+				m_spriteCurrent.x = x;
+				m_spriteCurrent.y = y;
+				m_spriteCurrent.angle = angle;
+				m_spriteCurrent.scale = scale;
+				m_spriteCurrent.color = color;
+				//le dessiner
+				m_spriteCurrent.draw();
 			}
 		}
 		
@@ -64,10 +60,16 @@ package Game.Objects
 		{
 			super.update();			
 			m_roots.update();
+			m_spriteCurrent.update();
 
 			switch(m_state) {
 				case("growup"):
 					growup();
+					break;
+				case("growTrunk"):
+					growTrunk();
+					break;
+				case("growTree"):
 					break;
 				case("feed"):
 					break;
@@ -76,18 +78,27 @@ package Game.Objects
 				default:
 					break;
 			}
+			
+			// Place the tree
+			this.place();
+			this.rotateToPlanet();
+		}
+		
+		private function growTrunk():void 
+		{
+			if (m_spriteCurrent.animIsFinished())
+				setState("growTree");
+		}
+		
+		private function growTree():void {
+			
 		}
 		
 		protected function growup():void {
-			//gérer l'animation
-			animate();
+			
 			if ( !m_roots.isGrowing() )
-			{
-				// Place the tree
-				m_pos = m_roots.endAngle();
-				this.place();
-				this.rotateToPlanet();	
-				
+			{	
+				setState("growTrunk");
 			}
 			
 		}
@@ -97,6 +108,27 @@ package Game.Objects
 			super.destroy();
 		}
 		
+		override public function setState(state:String):void {
+			m_state = state;
+			
+			switch(m_state) {
+				case("growup"):
+					break;
+				case("growTrunk"):
+					m_spriteCurrent = m_spriteTrunk;
+					break;
+				case("growTree"):
+					m_spriteCurrent = m_spriteTree;
+					m_spriteTrunk = null;
+					break;
+				case("die"):
+					break;
+				default:
+					break;
+			}
+			
+			m_spriteCurrent.play(m_state);
+		}
 	}
 
 }

@@ -50,7 +50,7 @@ package Game.Objects
 			m_timerMove.start(1);
 			//Diminuer les ressources
 			m_planet.removeResources(100);
-			m_distance += 70;
+			m_distance += 43;
 						
 			//initialisation de l'animation
 			m_state = "walk";
