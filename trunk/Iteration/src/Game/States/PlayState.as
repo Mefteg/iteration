@@ -33,6 +33,9 @@ package  Game.States
 		protected var blobbyAnimWalk:Array;
 		protected var blobbyAnimIdle:Array;
 		protected var blobbyAnimDiscuss:Array;
+		//animations pour arbre
+		protected var m_animTrunk:NewSprite;
+		protected var m_animTree:NewSprite
 				
 		//objets
 		protected var planet:Planet;
@@ -62,7 +65,11 @@ package  Game.States
 			blobbyAnimWalk = new Array();
 			blobbyAnimIdle = new Array();
 			blobbyAnimDiscuss = new Array();
+			
 			trees = new Array();
+			m_animTree = new NewSprite();
+			m_animTrunk = new NewSprite();
+			
 			clouds = new Array();
 	
 			//FPS
@@ -245,22 +252,30 @@ package  Game.States
 		}
 		
 		public function createWorld():void
-		{
-			//-------CREER LES BLOBBIES--------------			
-			initBlobies();
-			
+		{			
 			//----------CREER LES ARBRES------------
 			initTrees();
+			
+			//-------CREER LES BLOBBIES--------------			
+			initBlobies();
 		}
 		
 		public function initTrees():void
 		{
 			var j:int = 0;
 			var tree:Tree;
+			//loader les anim
+			m_animTrunk.loadGraphic(SpriteResources.ImgTree1, true, false, 405, 376);
+			m_animTree.loadGraphic(SpriteResources.ImgTree2, true, false, 405, 376);
+			
+			//créer les animations
+			m_animTrunk.addAnimation("growTrunk", MathUtils.getArrayofNumbers(0,29), 6, false);
+			m_animTree.addAnimation("growTree", MathUtils.getArrayofNumbers(0, 32), 6, false);
 			
 			for (j = 0; j < 4; j++) 
 			{
 				tree = new Tree(planet.center(), planet);
+				tree.setAnimations(m_animTrunk, m_animTree);
 				trees.push(tree);
 				add(tree);
 			}			
@@ -273,7 +288,7 @@ package  Game.States
 			
 			for (j = 0 ; j < GameParams.nbClouds ; j++ )
 			{
-				cloud = new Cloud(planet.radius() +10, planet);
+				cloud = new Cloud(planet.radius() +50, planet);
 				clouds.push(cloud);
 				add(cloud);
 			}
