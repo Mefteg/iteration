@@ -87,7 +87,7 @@ package  Game.States
 								
 						
 			//----------CREER LE METEOR-------------
-			meteor = new Meteor(0, planet.radius() * 2, planet);
+			meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet);
 			add(meteor);
 			
 			//SON
