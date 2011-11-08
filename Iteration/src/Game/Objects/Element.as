@@ -1,5 +1,6 @@
 package Game.Objects
 {
+	import flash.geom.Point;
 	import Globals.GameParams;
 	import org.flixel.*;
 	import Utils.MathUtils;
@@ -55,11 +56,14 @@ package Game.Objects
 		public function onClick():Boolean {
 			//si click de la souris
 			if (FlxG.mouse.justPressed()) {
-				var mouseX:int = FlxG.mouse.x;
-				var mouseY:int = FlxG.mouse.y;
+				
+				var mouseX:int = FlxG.mouse.x ;
+				var mouseY:int = FlxG.mouse.y ;
+				var screenXY:FlxPoint = getScreenXY(new FlxPoint(x, y), GameParams.camera);
+				
 				//et si la souris se trouve sur le sprite
-				if ( ( mouseX < x + width) && (mouseX > x) ) {
-					if ( (mouseY < y + height) && (mouseY > y) ) {
+				if ( ( mouseX < screenXY.x + width) && (mouseX > screenXY.x) ) {
+					if ( (mouseY < screenXY.y + height) && (mouseY > screenXY.y) ) {
 						return true;
 					}
 				}

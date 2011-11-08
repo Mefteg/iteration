@@ -1,11 +1,14 @@
 package Globals 
 {
+	import flash.media.Camera;
+	import org.flixel.FlxCamera;
 	/**
 	 * ...
 	 * @author LittleWhite
 	 */
 	public class GameParams 
 	{
+		static public var camera:FlxCamera;
 		static public var width:uint = 1280;
 		static public var height:uint = 720;
 		static public var scale:Number = 0.4096;

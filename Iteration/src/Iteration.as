@@ -7,6 +7,7 @@ package
 	
 	import Game.Ideas.Idea;
 	import Game.Objects.Blobby;
+	import Game.Objects.Meteor;
 	import Game.Objects.Planet;
 	import Game.States.PlayState;
 	import org.flixel.*;
@@ -15,7 +16,10 @@ package
 	{
 		//Planet
 		private var m_planet:Planet;
+		//blobbies
 		private var m_blobbies:Array;
+		//meteor
+		private var m_meteor:Meteor;
 		//Game
 		private var m_scene:PlayState;
 		//idées
