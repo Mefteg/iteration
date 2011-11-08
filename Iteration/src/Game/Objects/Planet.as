@@ -25,7 +25,7 @@ package Game.Objects
 		private var m_radius:Number; //son rayon
 		
 		private var m_resources:int; // ressources de la planete
-		private var m_distance = 0;
+		private var m_distance:Number = 0;
 		
 		public function Planet(x:Number, y:Number, offsetSurface:Number, blobbies:Array,trees:Array ) 
 		{
@@ -121,12 +121,21 @@ package Game.Objects
 			m_planet.scale = value;
 		}
 		
-		public function getDistance() {
+		public function getDistance():Number {
 			return m_distance;
 		}
 		
-		public function setDistance(value:Number) {
+		public function setDistance(value:Number):void {
 			m_distance = value;
+		}
+		
+		public function isDead():Boolean
+		{
+			if ( m_resources < 0 )
+			{
+				return true;
+			}
+			return false;
 		}
 	}
 

@@ -166,7 +166,8 @@ package
 			
 			//GESTION DES NAISSANCES
 			//si le timer de naissances arrive a échéance
-			if ( (m_timerBirth.finished) && (m_countBirths < m_nbBirths) ) {
+			if ( (m_timerBirth.finished) && (m_countBirths < m_nbBirths) ) 
+			{
 				//créer un nouveau blobby
 				var blobby:Blobby = new Blobby(Math.random() * 360, m_planet.radius(), m_planet);
 				blobby.setAnimations(m_scene.getAnimBlobWalk(), m_scene.getAnimBlobIdle());

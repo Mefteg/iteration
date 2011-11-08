@@ -86,7 +86,8 @@ package Game.Objects
 			m_distance = distance;
 		}
 		
-		public function getDistance() {
+		public function getDistance():Number 
+		{
 			return m_distance;
 		}
 		

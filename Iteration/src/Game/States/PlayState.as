@@ -39,6 +39,8 @@ package  Game.States
 		protected var trees:Array;
 		protected var clouds:Array;
 		
+		private var m_state:String = "";
+		
 		//itération
 		protected var m_iteration:Iteration;
 		//variables caméra
@@ -52,15 +54,6 @@ package  Game.States
 		
 		public function PlayState() 
 		{
-			// Background init
-			/*
-			background = new FlxSprite( -37, 147, SpriteResources.ImgBackground);	// HACK TODO FIX THIS
-			background.scale.x = GameParams.scale;
-			background.scale.y = GameParams.scale;
-			add(background);
-			*/
-			
-			//initialisations
 			blobbies = new Array();
 			blobbyAnimWalk = new Array();
 			blobbyAnimIdle = new Array();
@@ -83,7 +76,8 @@ package  Game.States
 			FlxG.mouse.show();			
 		}
 		
-		override public function create():void {
+		override public function create():void 
+		{
 			FlxG.bgColor =  0xff0a216b ;
 			//FlxG.bgColor = 0xffecebb3;
 			
@@ -93,10 +87,10 @@ package  Game.States
 			//------CREER LA PLANETE-----------------
 			planet = new Planet( FlxG.width/2 , FlxG.height/2, 64 ,blobbies,trees);
 			add(planet);
+			
 			//-------CREER LA CLASSE D'ITERATION-----
 			m_iteration = new Iteration(this,planet);
 			
-			//-------CREER LES BLOBBIES--------------			
 			var sprite:NewSprite;
 			//talbeau d'animations de blobbies
 			for (var k:int = 0; k < nbAnimBlob; k++) 
@@ -118,77 +112,61 @@ package  Game.States
 				blobbyAnimIdle.push(sprite);
 				
 			}
-			//tableau de positions des blobbies à créer
-			var tabBlobbiesPosition:Array = [ 2  , 90, 200, 21 , 34, 123, 300, 214 ,444,5,9,4 ];
-											
-			var blob:Blobby;
-			var sizeBlob:uint = tabBlobbiesPosition.length; // optimisation
-			
-			for (var i:int = 0; i < sizeBlob ; i++) 
-			{
-				blob = new Blobby( tabBlobbiesPosition[i], planet.radius(), planet);
-				blob.setAnimations(blobbyAnimWalk[i % (nbAnimBlob-1)], blobbyAnimIdle[i % (nbAnimBlob-1)]);
-				blobbies.push(blob);
-				add(blob);
-			}
-								
+			m_state = "Creation";
 						
 			//----------CREER LE METEOR-------------
+			// poncepermis
 			meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet);
 			add(meteor);
 			
+			initClouds();
+			
+			// On affiche la souris
+			FlxG.mouse.show();	
 			
 			m_camera = new Camera(planet.getMidpoint(), 0, 0, FlxG.width * 2, FlxG.height * 2, true);
-			
-			var j:int = 0;
-			//----------CREER LES ARBRES------------
-			var tree:Tree;
-			for (j = 0; j < 4; j++) 
-			{
-				tree = new Tree(planet.center(), planet);
-				trees.push(tree);
-				add(tree);
-			}
-			
-			// Clouds init
-			var cloud:Cloud;
-			for (j = 0 ; j < GameParams.nbClouds ; j++ )
-			{
-				cloud = new Cloud(planet.radius() +10, planet);
-				clouds.push(cloud);
-				add(cloud);
-			}
 		}
 		
 		override public function update():void 
 		{			
-			var now:Date = new Date();
-			
 			// On regle le scale des elements en fonction du zoom de la camera
 			var elements:Array = getElements();
+			
 			// Pour chaque element
-			for (var i:int = 0; i < elements.length; i++) {
+			for (var i:int = 0; i < elements.length; i++) 
+			{
 				// On gere le scale/zoom
 				//elements[i].setScale(new FlxPoint(GameParams.worldZoom, GameParams.worldZoom));
 				//elements[i].setDistance(elements[i].getDistance() * m_zoom);
 			}
 			
 			//update le texte
+			updateFPS();
 			m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies \n" + m_FPS.toString()+" fps"
+			
 			//mettre a jour l'itération
 			//m_iteration.update();
 			
 			m_camera.update();
 			
-			super.update();
+			super.update();			
 			
-			// trace(now.getTime());
-			m_FPSCounter ++;
-			if ( now.getTime() - m_lastTime > 1000  )
+			switch (m_state)
 			{
-				m_FPS = m_FPSCounter;
-				m_FPSCounter = 0;
-				m_lastTime = now.getTime();
+				case "Creation":
+					if ( meteor.hasExploded() )
+					{
+						meteor.destroy();
+						remove(meteor);
+						meteor = null;
+						
+						createWorld();
+						
+						m_state = "Life";
+					}
+					break;
+				case "Life":
+					break;
 			}
 		}
 		
@@ -202,11 +180,77 @@ package  Game.States
 			return elements;
 		}
 		//fonctions retournant une animation donnée pour un blob
-		public function getAnimBlobWalk(): NewSprite{
+		public function getAnimBlobWalk(): NewSprite
+		{
 			return blobbyAnimWalk[FlxU.round( Math.random() * nbAnimBlob)];
 		}
-		public function getAnimBlobIdle(): NewSprite{
+		public function getAnimBlobIdle(): NewSprite
+		{
 			return blobbyAnimIdle[FlxU.round( Math.random() * nbAnimBlob)];
+		}
+		
+		public function initBlobies():void
+		{
+			var blob:Blobby;
+			//tableau de positions des blobbies à créer
+			var tabBlobbiesPosition:Array = [ 2 , 90, 200,21 ];
+			var sizeBlob:uint = tabBlobbiesPosition.length; // optimisation
+			
+			for (var i:int = 0; i < sizeBlob ; i++) 
+			{
+				blob = new Blobby( tabBlobbiesPosition[i], planet.radius(), planet);
+				blob.setAnimations(blobbyAnimWalk[i % (nbAnimBlob-1)], blobbyAnimIdle[i % (nbAnimBlob-1)]);
+				blobbies.push(blob);
+				add(blob);
+			}
+		}
+		
+		public function createWorld():void
+		{
+			//-------CREER LES BLOBBIES--------------			
+			initBlobies();
+			
+			//----------CREER LES ARBRES------------
+			initTrees();
+		}
+		
+		public function initTrees():void
+		{
+			var j:int = 0;
+			var tree:Tree;
+			
+			for (j = 0; j < 4; j++) 
+			{
+				tree = new Tree(planet.center(), planet);
+				trees.push(tree);
+				add(tree);
+			}			
+		}
+		
+		public function initClouds():void
+		{
+			var j:int = 0;
+			var cloud:Cloud;
+			
+			for (j = 0 ; j < GameParams.nbClouds ; j++ )
+			{
+				cloud = new Cloud(planet.radius() +10, planet);
+				clouds.push(cloud);
+				add(cloud);
+			}
+		}
+		
+		public function updateFPS():void
+		{
+			var now:Date = new Date();
+			
+			m_FPSCounter ++;
+			if ( now.getTime() - m_lastTime > 1000  )
+			{
+				m_FPS = m_FPSCounter;
+				m_FPSCounter = 0;
+				m_lastTime = now.getTime();
+			}
 		}
 	}
 
