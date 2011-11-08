@@ -33,6 +33,41 @@ package Utils
 			return tab;
 		}
 		
+		public static function calculateDistance(angle1:Number, angle2:Number)
+		{
+			if ( angle1 > 360 || angle1 < 0 )
+			{
+				trace ("You are using this function wrongly");
+			}
+			else if ( angle2 > 360 || angle2 < 0 )
+			{
+				trace ("You are using this function wrongly");
+			}
+			
+			var d1:Number = Math.abs(angle1 - angle2);
+			var d2:Number;
+			if ( angle1 < 180 && angle2 > 180 )
+			{
+				d2 = 360 - angle2 + angle1;
+			}
+			else if ( angle1 > 180 && angle2 < 180 )
+			{
+				d2 = 360 - angle1 + angle2;
+			}
+			else
+			{
+				return d1;
+			}
+			if ( d1 < d2 )
+			{
+				return d1;
+			}
+			else
+			{
+				return d2;
+			}
+		}
+		
 	}
 
 }

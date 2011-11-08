@@ -213,8 +213,11 @@ package  Game.States
 					
 					if ( planet.isDead() || blobbies.length > 100 )
 					{
-						meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet);
-						add(meteor);
+						if ( meteor == null )
+						{
+							meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet);
+							add(meteor);
+						}
 						
 						while ( blobbies.length != 0 )
 						{

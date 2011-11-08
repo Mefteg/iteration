@@ -154,15 +154,26 @@ package Game.Objects
 			//si le blobby cible est mort, en chercher un autre
 			if (m_blobTarget.getState() =="die")
 				searchNearestBlobby();
-			
-			if ( ((this.m_pos + 180) % 360) - ((m_blobTarget.m_pos + 180) % 360) < 0 )
-			{
-				m_pos += m_speed;
-			}
-			else 
+				
+				
+			var dist:Number = this.m_pos - m_blobTarget.m_pos;
+			if ( dist > -180 || dist < 180 )
 			{
 				m_pos -= m_speed;
+				if ( m_pos > 360 ) // modulo of the angle
+				{
+					m_pos -= 360;
+				}
 			}
+			else
+			{
+				m_pos += m_speed;
+				if ( m_pos < 00 ) // modulo of the angle
+				{
+					m_pos += 360;
+				}
+			}
+						
 			m_idea.update();
 		}
 		
@@ -175,12 +186,26 @@ package Game.Objects
 			//si le timer est toujours en cours
 			if (! m_timerMove.finished) {
 				//bouger le sprite
-				switch(m_direction) {
+				switch(m_direction) 
+				{
 					case 0: break;
-					case 1: m_pos += m_speed; break;
-					case 2: m_pos -= m_speed; break;
+				case 1: 
+					m_pos += m_speed; 
+					if ( m_pos > 360 ) // modulo of the angle
+					{
+						m_pos -= 360;
+					}
+					break;
+				case 2: 
+					m_pos -= m_speed;
+					if ( m_pos < 00 ) // modulo of the angle
+					{
+						m_pos += 360;
+					}
+					break;
 					default:break;
 				}
+				
 				//s'arrêter là
 				return;
 			}
@@ -245,7 +270,7 @@ package Game.Objects
 				if (b == this)
 					continue;
 					
-				dist = Math.abs(((this.m_pos+180)%360) - ((b.m_pos+180)%360));
+				dist = MathUtils.calculateDistance(this.m_pos, b.m_pos);
 				if ( dist < distMin )
 				{
 					distMin = dist;
