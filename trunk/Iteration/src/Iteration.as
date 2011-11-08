@@ -15,6 +15,7 @@ package
 	{
 		//Planet
 		private var m_planet:Planet;
+		private var m_blobbies:Array;
 		//Game
 		private var m_scene:PlayState;
 		//idées
@@ -43,7 +44,7 @@ package
 		{
 			m_planet = planet;
 			m_scene = state;
-			
+			m_blobbies = m_planet.getBlobbies();
 			//instancier le timer
 			m_timer = new FlxTimer();
 			//et le démarrer immédiatement
@@ -80,6 +81,7 @@ package
 		}
 		
 		public function createIdea():void {
+			if (m_ideas.length == 0) return;
 			//prendrer une idée au hasard
 			m_currentIdea = m_ideas[  FlxU.round(Math.random() * (m_ideas.length -1))];
 			//prendre un blobby au hasard
@@ -142,18 +144,17 @@ package
 			//GESTION MORTS
 			//Si le timer de mort arrive a échéance
 			if ( (m_timerDeath.finished) && (m_countDeaths < m_nbDeaths) ) {
-				//supprimer un blobby
-				var indexDelete:int = Math.random() * (m_planet.getBlobbies().length -1);
-				var blobby:Blobby = m_planet.getBlobbies()[indexDelete];
-				//si le blobby n'est pas en discussion
-				if (blobby.getState() != "discuss") {
-					blobby.setState("die");
-				}else {
-					if (indexDelete + 1 > m_planet.getBlobbies().length -1)
-						indexDelete --;
-					else	
-						indexDelete ++;
-					blobby.setState("die");
+				
+				var gotBlobby:Boolean = false; // a true si on a trouvé un blobby a supprimer
+				var indexDelete:int; //index du blobby a supprimer
+				
+				while(!gotBlobby){
+					//choisir un blobby au hasard
+					indexDelete = Math.random() * (m_planet.getBlobbies().length -1);
+					//si le blobby n'est pas en discussion
+					if(! m_planet.getBlobbies()[indexDelete].isInvincible()){
+						gotBlobby = true;
+					}
 				}
 				m_planet.getBlobbies()[indexDelete].setState("die");	
 				m_planet.getBlobbies().splice(indexDelete, 1);
@@ -168,21 +169,38 @@ package
 			if ( (m_timerBirth.finished) && (m_countBirths < m_nbBirths) ) {
 				//créer un nouveau blobby
 				var blobby:Blobby = new Blobby(Math.random() * 360, m_planet.radius(), m_planet);
+				blobby.setAnimations(m_scene.getAnimBlobWalk(), m_scene.getAnimBlobIdle());
 				//ajouter le blobby a la liste
 				m_planet.getBlobbies().push(blobby);
 				//ajouter le blobby a la scene
 				m_scene.add(blobby);
-				
+				//incrémenter le compteur de naissances
 				m_countBirths++;
+				//redémarrer le timer
 				startBirthTimer();
 			}
+			
 			//GESTION DES IDEES
+			//si le timer à idée est terminé et qu'aucune idée n'est encore créée
 			if (m_timerIdea.finished && !m_currentIdea)
-				createIdea();
+				createIdea();//creer une idée
 				
+			//si une idée est en cours	
 			if (m_currentIdea) {
-				if (m_currentIdea.getState() == "spread")
+				//et qu'elle a été diffusée
+				if (m_currentIdea.getState() == "spread") {
+					//on applique les changements sur l'environnement
+					m_ratioBirth += m_currentIdea.getBirthEffect();
+					m_ratioDeath += m_currentIdea.getDeathEffect();
+					trace(m_ratioBirth, m_ratioDeath);
+					//on la supprime de la liste
+					m_ideas.splice(m_ideas.indexOf(m_currentIdea), 1);
+					//on la supprime de la scene
 					m_currentIdea.destroy();
+					m_currentIdea = null;
+					//mettre le timer en pause
+					m_timerIdea.pause();
+				}
 			}
 				
 		}

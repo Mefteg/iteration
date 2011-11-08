@@ -24,6 +24,15 @@ package Utils
 			return v1.x * v2.y - v2.x * v1.y;
 		}
 		
+		public static function getArrayofNumbers(init:int, n:int ):Array {
+			var tab:Array = new Array();
+			for (var i:int = init; i <= n ; i++) 
+			{
+				tab.push(i);
+			}
+			return tab;
+		}
+		
 	}
 
 }

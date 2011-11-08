@@ -122,6 +122,11 @@ package org.flixel
 			return this;
 		}
 		
+		//::Modified
+		public function pause():void {
+			paused = true;
+			finished = false;
+		}
 		/**
 		 * Stops the timer and removes it from the timer manager.
 		 */

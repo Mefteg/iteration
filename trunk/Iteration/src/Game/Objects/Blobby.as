@@ -2,7 +2,10 @@ package Game.Objects
 {
 	import flash.geom.Point;
 	import Game.Ideas.Idea;
+	import Game.NewSprite;
 	import org.flixel.FlxG;
+	import org.flixel.FlxSave;
+	import org.flixel.FlxSprite;
 	import org.flixel.FlxTimer;
 	import org.flixel.FlxU;
 	import Utils.MathUtils;
@@ -15,9 +18,14 @@ package Game.Objects
 	 */
 	public class Blobby extends Element
 	{		
-		protected var m_timerMove:int = 0; //variable timer pour les déplacements
-		protected var m_limitMove:int = 0; //temps limite pour le mouvement
+		//SPRITES
+		protected var m_spriteCurrent:NewSprite;
+		protected var m_spriteWalk:NewSprite;
+		protected var m_spriteIdle:NewSprite;
 		
+		//timer pour le mouvement
+		protected var m_timerMove:FlxTimer;
+		//idée
 		protected var m_idea:Idea;
 		//timer pour la discussion
 		protected var m_timerDiscuss:FlxTimer;
@@ -28,25 +36,37 @@ package Game.Objects
 		public function Blobby(pos:Number, distance:Number , planet:Planet) 
 		{
 			super(pos, distance, planet);
+			//tailles du blobby
+			this.width = 300; this.height = 300;
 			//instancier le timer de discussion
 			m_timerDiscuss = new FlxTimer();
+			m_speed = 0.2;
+			//instancier le timer de mouvement
+			m_timerMove = new FlxTimer();
+			m_timerMove.start(1);
 			//Diminuer les ressources
 			m_planet.removeResources(100);
-			//Créer l'image
-			loadGraphic(SpriteResources.ImgAlien, true, false, 300, 300);
-			m_distance += 100;
-			//créer les animation
-			addAnimation("Default", [0, 1, 2,3,4,5,6,7], 6 + FlxG.random() * 4);	
-			play("Default");
-			place();
+			m_distance += 70;
+						
+			//initialisation de l'animation
 			m_state = "walk";
+			
+			place();			
 		}
 		
+		public function setAnimations(walk:NewSprite,idle:NewSprite) : void{
+			m_spriteWalk = walk;
+			m_spriteIdle = idle;
+			m_spriteCurrent = m_spriteWalk;
+		}
 		override public function update():void {
-
+			//mettre a jour le sprite courant
+			m_spriteCurrent.update();
+			
 			switch( m_state ) {
 				case("walk"):
 					walk();
+					m_spriteCurrent = m_spriteWalk;
 					break;
 				case("search"):
 					search();
@@ -59,6 +79,7 @@ package Game.Objects
 					break;
 				case("idle"):
 					idle();
+					m_spriteCurrent = m_spriteIdle;
 					break;
 				case("die"):
 					die();
@@ -86,10 +107,7 @@ package Game.Objects
 		}
 		
 		protected function idle():void {
-			//si le temps de mouvement est terminé
-			if (m_timerMove > m_limitMove) {
-				setState("walk");
-			}
+			changeDirection();
 		}
 		protected function eat() :void{
 			changeDirection();
@@ -98,20 +116,24 @@ package Game.Objects
 		protected function discuss() :void{
 			if (m_timerDiscuss.finished) {
 				setState("validate");
+				m_blobTarget.setState("validate");
 			}
 		}
 		
 		private function validate():void {
 			if (animIsFinished()) {
-				//remettre les états des deux blobs
-				setState("idle");
-				m_blobTarget.setState("idle");
-				//l'idée est diffusée
-				m_idea.setState("spread");
-				//vider la variable d'idée
-				m_idea = null;
-				//changer le sprite
-				color = 0xF5721B;
+				if(m_blobTarget){
+					//remettre les états des deux blobs
+					setState("idle");
+					m_blobTarget.setState("idle");
+					//l'idée est diffusée
+					m_idea.setState("spread");
+					//vider la variable d'idée
+					m_idea = null;
+					//changer le sprite
+					color = 0x0080FF;
+					m_blobTarget.color = 0x0080FF;
+				}
 			}
 		}
 		
@@ -144,7 +166,7 @@ package Game.Objects
 		{
 				
 			//si le timer est toujours en cours
-			if (m_timerMove <= m_limitMove) {
+			if (! m_timerMove.finished) {
 				//bouger le sprite
 				switch(m_direction) {
 					case 0: break;
@@ -152,25 +174,24 @@ package Game.Objects
 					case 2: m_pos -= m_speed; break;
 					default:break;
 				}
-				//incrémenter le timer
-				m_timerMove ++;
 				//s'arrêter là
 				return;
 			}
-			
 			//sinon on réinitialise le compteur avec une direction aléatoire
 			var rand:Number = Math.random();
 			
 			if (rand < .5) {
 				m_direction = 0;
+				setState("idle");
 			}else if (rand < .75) {
 				m_direction = 1;
+				setState("walk");
 			}else {
 				m_direction = 2;
+				setState("walk");
 			}
 			
-			m_timerMove = 0;//réinitialiser le compteur
-			m_limitMove = FlxU.srand(rand)*100 +32; //définir un temps aléatoire de déplacement de l'objet
+			m_timerMove.start(FlxU.srand(rand)*4 +0.5); //définir un temps aléatoire de déplacement de l'objet
 		}
 		
 		override public function destroy():void {
@@ -225,6 +246,24 @@ package Game.Objects
 			m_blobTarget.scale.y = 2;
 		}
 		
+		public function isInvincible() : Boolean{
+			return (m_state == "search") || (m_state == "validate") || (m_state == "discuss");
+		}
+		
+		override public function draw():void {
+			m_spriteCurrent.play(m_state);
+			//mettre a jour les propriétés du sprite courant
+			m_spriteCurrent.x = x;
+			m_spriteCurrent.y = y;
+			m_spriteCurrent.angle = angle;
+			m_spriteCurrent.scale = scale;
+			//le dessiner
+			m_spriteCurrent.draw();
+		}
+		
+		override public function animIsFinished():Boolean {
+			return ( m_spriteCurrent.getCurIndex() == m_spriteCurrent.getCurAnim().frames.length - 1) ;
+		}
 	}
 
 }

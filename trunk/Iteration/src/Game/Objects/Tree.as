@@ -83,7 +83,6 @@ package Game.Objects
 			animate();
 			if ( !m_roots.isGrowing() )
 			{
-				
 				// Place the tree
 				m_pos = m_roots.endAngle();
 				this.place();
