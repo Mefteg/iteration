@@ -29,6 +29,8 @@ package Game
 			m_initPos = new FlxPoint(startPos.x, startPos.y);
 			m_posCam.x = m_initPos.x;
 			m_posCam.y = m_initPos.y;
+			
+			GameParams.camera = m_camera;
 		}
 		
 		public function update():void

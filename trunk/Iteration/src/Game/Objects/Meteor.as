@@ -22,16 +22,17 @@ package Game.Objects
 			m_roamingDistance = roamingDistance;
 			//Créer l'image
 			loadGraphic(sprite, false, false, 67, 67);
-			m_speed = 3;
+			m_speed = 0.1;
 			//dimensionner le météore par rapport a la planete
 			this.scale.x = (0.1 * planet.getHeight())/width;
 			this.scale.y = (0.1 * planet.getWidth()) / height;
 			
-			m_state = "Roaming";
+			m_state = "Incoming";
 		}
 		
 		override public function update():void 
 		{
+			//trace(m_state);
 			switch (m_state)
 			{
 				case "Incoming":
@@ -43,11 +44,11 @@ package Game.Objects
 					break;
 				case "Roaming":
 					//si l'utilisateur clique sur le météore
-					//if (onClick()) 
-					//{
+					if (onClick()) 
+					{
 						//on fait tomber le météore
 						m_state = "Crashing";
-					//}
+					}
 					break;
 				case "Crashing":
 					//réduire la distance entre le météore et la planète

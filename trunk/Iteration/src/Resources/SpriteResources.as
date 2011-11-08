@@ -13,6 +13,7 @@ package Resources
 		[Embed(source = "../../bin/img/blobby_walk.png")] public static var ImgBlobbyWalk:Class;
 		[Embed(source = "../../bin/img/blobby_idle.png")] public static var ImgBlobbyIdle:Class;
 		[Embed(source = "../../bin/img/blobby_talk.png")] public static var ImgBlobbyTalk:Class;
+		[Embed(source = "../../bin/img/blobby_idea_validate.png")] public static var ImgBlobbyValidate:Class;
 				
 		//meteor
 		[Embed(source = "../../bin/img/meteor.gif")] public static var ImgMeteor:Class;
