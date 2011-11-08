@@ -21,7 +21,7 @@ package Game
 		
 		public function Camera(startPos:FlxPoint, X:Number = 0, Y:Number = 0, Width:Number = 0, Height:Number = 0, UpdateWorld:Boolean = false) 
 		{
-			m_camera = new FlxCamera(0, 0, FlxG.width, FlxG.height, GameParams.worldZoom);
+			m_camera = new FlxCamera(0, 0, FlxG.width, FlxG.height, 1);
 			m_camera.setBounds( -5000, -5000, 10000, 10000 );
 			FlxG.addCamera(m_camera);
 			FlxG.cameras.shift();

@@ -15,7 +15,7 @@ package Game.Objects
 	{		
 		public function Cloud(distance:Number, planet:Planet) 
 		{
-			super(0, (FlxG.random() * 50) + (distance + 100), planet);
+			super(0, (FlxG.random() * 50) + (distance + 200), planet);
 			
 			var cloud:FlxSprite;
 			if ( FlxG.random() < 0.5 )
@@ -43,6 +43,10 @@ package Game.Objects
 		
 		override public function update():void 
 		{
+			super.update();
+			scale.x *= GameParams.scale * GameParams.scaleCloud;
+			scale.y *= GameParams.scale * GameParams.scaleCloud;
+			
 			if ( m_direction == 1 )
 			{
 				m_pos+=m_speed;
