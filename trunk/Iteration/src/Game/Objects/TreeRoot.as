@@ -81,7 +81,7 @@ package Game.Objects
 			lastRandUpdate = 0;
 			direction = true;
 			
-			m_grow = true;
+			m_grow = false;
 		}
 		
 		override public function update():void

@@ -17,13 +17,14 @@ package Game.Objects
 		{
 			super(0, (FlxG.random() * 50) + (distance + 100), planet);
 			
+			var cloud:FlxSprite;
 			if ( FlxG.random() < 0.5 )
 			{
-				var cloud:FlxSprite = loadGraphic(SpriteResources.ImgCloud, false, false, 417, 187);
+				cloud = loadGraphic(SpriteResources.ImgCloud, false, false, 417, 187);
 			}
 			else
 			{
-				var cloud:FlxSprite = loadGraphic(SpriteResources.ImgCloud2, false, false, 461, 214);
+				cloud = loadGraphic(SpriteResources.ImgCloud2, false, false, 461, 214);
 			}
 			cloud.scale.x = GameParams.scale * GameParams.scaleCloud;
 			cloud.scale.y = GameParams.scale * GameParams.scaleCloud;

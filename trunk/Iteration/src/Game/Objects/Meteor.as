@@ -10,9 +10,11 @@ package Game.Objects
 	 */
 	public class Meteor extends Element
 	{
-		private var m_roamingDistance;
+		private var m_roamingDistance:Number;
 		
 		protected var m_fall:Boolean = false;
+		
+		private var m_hasExploded:Boolean = false;
 		
 		public function Meteor(sprite:Class,roamingDistance:Number,planet:Planet) 
 		{
@@ -33,8 +35,7 @@ package Game.Objects
 			switch (m_state)
 			{
 				case "Incoming":
-					m_distance-= 1;
-					trace (m_distance);
+					m_distance-= 2;
 					if ( m_distance <= m_roamingDistance )
 					{
 						m_state = "Roaming";
@@ -42,15 +43,15 @@ package Game.Objects
 					break;
 				case "Roaming":
 					//si l'utilisateur clique sur le météore
-					if (onClick()) 
-					{
+					//if (onClick()) 
+					//{
 						//on fait tomber le météore
 						m_state = "Crashing";
-					}
+					//}
 					break;
 				case "Crashing":
 					//réduire la distance entre le météore et la planète
-					m_distance -= m_speed * (1 / m_distance * 250 );
+					m_distance -= (m_speed * (1 / m_distance * 250 ))*6;
 					
 					//si le météore atteint la planete :: il explose
 					if (m_distance <= m_planet.radius())
@@ -85,12 +86,18 @@ package Game.Objects
 				if (FlxG.overlap(this, t))
 					t.destroy();
 			}
-			//Detruire le météore
-			destroy();
+			
+			m_hasExploded = true;
 		}
 		
-		override public function destroy():void {
+		override public function destroy():void 
+		{
 			super.destroy();
+		}
+		
+		public function hasExploded():Boolean
+		{
+			return m_hasExploded;
 		}
 		
 	}

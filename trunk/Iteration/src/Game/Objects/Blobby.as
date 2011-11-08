@@ -194,7 +194,8 @@ package Game.Objects
 			m_timerMove.start(FlxU.srand(rand)*4 +0.5); //définir un temps aléatoire de déplacement de l'objet
 		}
 		
-		override public function destroy():void {
+		override public function destroy():void 
+		{
 			m_blobTarget = null;
 			//si il possédait une idée, la killer
 			if (m_idea)
@@ -204,7 +205,8 @@ package Game.Objects
 			super.destroy();
 		}
 		
-		public function setIdea(idea:Idea):void {
+		public function setIdea(idea:Idea):void 
+		{
 			//l'idée referene ce blobby
 			idea.setBlobby(this);
 			//nouvelle idée
@@ -217,7 +219,8 @@ package Game.Objects
 			this.setState("search");
 		}
 		
-		public function searchNearestBlobby():void {
+		public function searchNearestBlobby():void 
+		{
 			var blobbies:Array = m_planet.getBlobbies(); //tous les blobbies
 			var size:int = blobbies.length; //nombre de blobbies
 			var nearest:Blobby; //blobby le plus proche
@@ -250,7 +253,8 @@ package Game.Objects
 			return (m_state == "search") || (m_state == "validate") || (m_state == "discuss");
 		}
 		
-		override public function draw():void {
+		override public function draw():void 
+		{
 			m_spriteCurrent.play(m_state);
 			//mettre a jour les propriétés du sprite courant
 			m_spriteCurrent.x = x;
@@ -261,7 +265,8 @@ package Game.Objects
 			m_spriteCurrent.draw();
 		}
 		
-		override public function animIsFinished():Boolean {
+		override public function animIsFinished():Boolean 
+		{
 			return ( m_spriteCurrent.getCurIndex() == m_spriteCurrent.getCurAnim().frames.length - 1) ;
 		}
 	}

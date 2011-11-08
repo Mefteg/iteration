@@ -12,7 +12,6 @@ package Utils
 		 * @param	expression the expression to check
 		 * @param	msg message to print as error message
 		 */
-		CONFIG::debug
 		public static function assert(expression:Boolean, msg:String = ""):void
 		{
 			CONFIG::debug
