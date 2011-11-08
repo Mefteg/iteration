@@ -170,7 +170,7 @@ package
 			{
 				//créer un nouveau blobby
 				var blobby:Blobby = new Blobby(Math.random() * 360, m_planet.radius(), m_planet);
-				blobby.setAnimations(m_scene.getAnimBlobWalk(), m_scene.getAnimBlobIdle());
+				blobby.setAnimations(m_scene.getAnimBlobWalk(), m_scene.getAnimBlobIdle(),m_scene.getAnimBlobDiscuss());
 				//ajouter le blobby a la liste
 				m_planet.getBlobbies().push(blobby);
 				//ajouter le blobby a la scene

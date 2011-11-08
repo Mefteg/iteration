@@ -22,6 +22,7 @@ package Game.Objects
 		protected var m_spriteCurrent:NewSprite;
 		protected var m_spriteWalk:NewSprite;
 		protected var m_spriteIdle:NewSprite;
+		protected var m_spriteDiscuss:NewSprite;
 		
 		//timer pour le mouvement
 		protected var m_timerMove:FlxTimer;
@@ -29,7 +30,7 @@ package Game.Objects
 		protected var m_idea:Idea;
 		//timer pour la discussion
 		protected var m_timerDiscuss:FlxTimer;
-		protected var m_discussTime:Number = 2;
+		protected var m_discussTime:Number = 5;
 		
 		protected var m_blobTarget:Blobby;
 		
@@ -54,9 +55,10 @@ package Game.Objects
 			place();			
 		}
 		
-		public function setAnimations(walk:NewSprite,idle:NewSprite) : void{
+		public function setAnimations(walk:NewSprite, idle:NewSprite, disc:NewSprite) : void {
 			m_spriteWalk = walk;
 			m_spriteIdle = idle;
+			m_spriteDiscuss = disc;
 			m_spriteCurrent = m_spriteWalk;
 		}
 		override public function update():void {
@@ -73,6 +75,7 @@ package Game.Objects
 					break;
 				case("discuss"):
 					discuss();
+					m_spriteCurrent = m_spriteDiscuss;
 					break;
 				case("validate"):
 					validate();
@@ -113,7 +116,7 @@ package Game.Objects
 			changeDirection();
 		}
 				
-		protected function discuss() :void{
+		protected function discuss() :void {
 			if (m_timerDiscuss.finished) {
 				setState("validate");
 				m_blobTarget.setState("validate");
@@ -145,8 +148,11 @@ package Game.Objects
 				//démarrer le timer de discussion
 				m_timerDiscuss.start(m_discussTime);
 			}
-			
-			searchNearestBlobby();
+			//si le blobby cible est mort, en chercher un autre
+			if(!m_blobTarget)
+				searchNearestBlobby();
+			//immobiliser le blobby cible
+			m_blobTarget.setState("idle");
 			var v1:Point = new Point(x - m_planet.center().x, y - m_planet.center().y);
 			var v2:Point = new Point(m_blobTarget.x - m_planet.center().x, m_blobTarget.y - m_planet.center().y);
 			var det:Number = MathUtils.det(v1, v2);
@@ -216,7 +222,7 @@ package Game.Objects
 			m_idea.setPos(this.m_pos);
 			//chercher le blobby le plus près
 			searchNearestBlobby();
-			this.setState("search");
+			setState("search");
 		}
 		
 		public function searchNearestBlobby():void 
@@ -246,7 +252,8 @@ package Game.Objects
 			}
 			
 			m_blobTarget =  b;
-			m_blobTarget.scale.y = 2;
+			m_blobTarget.color = 0xFF0080;
+			this.color = 0x0618F9;
 		}
 		
 		public function isInvincible() : Boolean{
@@ -255,12 +262,12 @@ package Game.Objects
 		
 		override public function draw():void 
 		{
-			m_spriteCurrent.play(m_state);
 			//mettre a jour les propriétés du sprite courant
 			m_spriteCurrent.x = x;
 			m_spriteCurrent.y = y;
 			m_spriteCurrent.angle = angle;
 			m_spriteCurrent.scale = scale;
+			m_spriteCurrent.color = color;
 			//le dessiner
 			m_spriteCurrent.draw();
 		}
@@ -268,6 +275,36 @@ package Game.Objects
 		override public function animIsFinished():Boolean 
 		{
 			return ( m_spriteCurrent.getCurIndex() == m_spriteCurrent.getCurAnim().frames.length - 1) ;
+		}
+		
+		override public function setState(state:String):void {
+			m_state = state;
+			switch( state ) {
+				case("walk"):
+					m_spriteCurrent = m_spriteWalk;
+					break;
+				case("search"):
+					m_spriteCurrent = m_spriteWalk;
+					break;
+				case("discuss"):
+					m_spriteCurrent = m_spriteDiscuss;
+					break;
+				case("validate"):
+					break;
+				case("idle"):
+					m_spriteCurrent = m_spriteIdle;
+					break;
+				case("die"):
+					return;
+					break;
+				case("duplicate"):
+					break;
+				case("eat"):
+					break;
+				default:
+					break;
+			}
+			m_spriteCurrent.play(m_state);
 		}
 	}
 
