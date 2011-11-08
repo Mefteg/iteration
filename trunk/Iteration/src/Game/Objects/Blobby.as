@@ -25,6 +25,7 @@ package Game.Objects
 		protected var m_spriteWalk:NewSprite;
 		protected var m_spriteIdle:NewSprite;
 		protected var m_spriteDiscuss:NewSprite;
+		protected var m_spriteValidate:NewSprite;
 		
 		//timer pour le mouvement
 		protected var m_timerMove:FlxTimer;
@@ -58,10 +59,11 @@ package Game.Objects
 			place();			
 		}
 		
-		public function setAnimations(walk:NewSprite, idle:NewSprite, disc:NewSprite) : void {
+		public function setAnimations(walk:NewSprite, idle:NewSprite, disc:NewSprite, validate:NewSprite) : void {
 			m_spriteWalk = walk;
 			m_spriteIdle = idle;
 			m_spriteDiscuss = disc;
+			m_spriteValidate = validate;
 			m_spriteCurrent = m_spriteWalk;
 		}
 		override public function update():void 
@@ -313,6 +315,7 @@ package Game.Objects
 					m_spriteCurrent = m_spriteDiscuss;
 					break;
 				case("validate"):
+					m_spriteCurrent = m_spriteValidate;
 					break;
 				case("idle"):
 					m_spriteCurrent = m_spriteIdle;

@@ -33,6 +33,7 @@ package  Game.States
 		protected var blobbyAnimWalk:Array;
 		protected var blobbyAnimIdle:Array;
 		protected var blobbyAnimDiscuss:Array;
+		protected var blobbyAnimValidate:Array;
 		//animations pour arbre
 		protected var m_animTrunk:NewSprite;
 		protected var m_animTree:NewSprite
@@ -65,6 +66,7 @@ package  Game.States
 			blobbyAnimWalk = new Array();
 			blobbyAnimIdle = new Array();
 			blobbyAnimDiscuss = new Array();
+			blobbyAnimValidate = new Array();
 			
 			trees = new Array();
 			m_animTree = new NewSprite();
@@ -130,9 +132,12 @@ package  Game.States
 				sprite = new NewSprite();
 				sprite.loadGraphic(SpriteResources.ImgBlobbyTalk, true, false, 300, 300);
 				sprite.addAnimation("discuss", MathUtils.getArrayofNumbers(0, 19) , 5 +FlxG.random() * 2, true);
-				//a supprimer plus tard
-				sprite.addAnimation("validate", MathUtils.getArrayofNumbers(0, 19), 5 +FlxG.random() * 2, false);
 				blobbyAnimDiscuss.push(sprite);
+				//animation de validation d'une idée
+				sprite = new NewSprite();
+				sprite.loadGraphic(SpriteResources.ImgBlobbyValidate, true, false, 300, 300);
+				sprite.addAnimation("validate", MathUtils.getArrayofNumbers(0, 9), 5 +FlxG.random() * 2, false);
+				blobbyAnimValidate.push(sprite);
 				
 			}
 			m_state = "Creation";
@@ -248,6 +253,10 @@ package  Game.States
 		{
 			return blobbyAnimDiscuss[FlxU.round( Math.random() * (nbAnimBlob-1))];
 		}
+		public function getAnimBlobValidate(): NewSprite
+		{
+			return blobbyAnimValidate[FlxU.round( Math.random() * (nbAnimBlob-1))];
+		}
 		
 		public function initBlobies():void
 		{
@@ -259,7 +268,7 @@ package  Game.States
 			for (var i:int = 0; i < sizeBlob ; i++) 
 			{
 				blob = new Blobby( tabBlobbiesPosition[i], planet.radius(), planet);
-				blob.setAnimations(getAnimBlobWalk(), getAnimBlobIdle(),getAnimBlobDiscuss() );
+				blob.setAnimations(getAnimBlobWalk(), getAnimBlobIdle(),getAnimBlobDiscuss(),getAnimBlobValidate() );
 				blobbies.push(blob);
 				add(blob);
 			}
