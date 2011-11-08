@@ -61,7 +61,8 @@ package Game.Objects
 			m_spriteDiscuss = disc;
 			m_spriteCurrent = m_spriteWalk;
 		}
-		override public function update():void {
+		override public function update():void 
+		{
 			//mettre a jour le sprite courant
 			m_spriteCurrent.update();
 			

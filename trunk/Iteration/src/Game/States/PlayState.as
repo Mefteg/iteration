@@ -88,7 +88,7 @@ package  Game.States
 			//var map1:Map = new Map("map/test.xml");
 			
 			//------CREER LA PLANETE-----------------
-			planet = new Planet( FlxG.width/2 , FlxG.height/2, 64 ,blobbies,trees);
+			planet = new Planet( FlxG.width/2 , FlxG.height/2 ,blobbies,trees);
 			add(planet);
 			
 			//-------CREER LA CLASSE D'ITERATION-----
@@ -164,13 +164,33 @@ package  Game.States
 						meteor = null;
 						
 						createWorld();
+						planet.live();
 						
 						m_state = "Life";
 					}
 					break;
 				case "Life":
-					//mettre a jour l'itération
+					//mettre a jour l'itération*
 					m_iteration.update();
+					
+					if ( planet.isDead() || blobbies.length > 100 )
+					{
+						meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet);
+						add(meteor);
+						
+						while ( blobbies.length != 0 )
+						{
+							blobbies.pop().destroy();
+						}
+						
+						while ( trees.length != 0 )
+						{
+							trees.pop().destroy();
+						}
+						
+						planet.explosion();
+						m_state = "Creation";
+					}
 					break;
 			}
 		}

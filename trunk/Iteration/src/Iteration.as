@@ -86,8 +86,11 @@ package
 			m_currentIdea = m_ideas[  FlxU.round(Math.random() * (m_ideas.length -1))];
 			//prendre un blobby au hasard
 			var blob:Blobby = m_planet.getBlobbies()[FlxU.round(Math.random() * ( m_planet.getBlobbies().length -1 ) )];
-			blob.setIdea(m_currentIdea);
-			m_scene.add(m_currentIdea);
+			if ( blob != null )
+			{
+				blob.setIdea(m_currentIdea);
+				m_scene.add(m_currentIdea);
+			}
 		}
 		
 		//calcule le nombre de morts et de naissances
