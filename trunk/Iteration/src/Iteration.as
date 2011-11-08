@@ -44,6 +44,9 @@ package
 		private var m_ratioDeath:Number = 0.25;
 		private var m_ratioBirth:Number = 0.50;
 		
+		// Information on iteration for outside the class
+		private var m_iterationTick:Boolean = false;
+		
 		public function Iteration(state:PlayState, planet:Planet) 
 		{
 			m_planet = planet;
@@ -144,6 +147,8 @@ package
 			if (m_timer.finished) {
 				//incrémenter le nombre d'itérations
 				m_iterNumber++;
+				
+				m_iterationTick = true;
 				//relancer le timer
 				restart();
 			}
@@ -210,7 +215,13 @@ package
 					m_timerIdea.pause();
 				}
 			}
-				
+		}
+		
+		public function cycleFinished():Boolean
+		{
+			var m_TMPState:Boolean = m_iterationTick;
+			m_iterationTick = false;
+			return m_TMPState;
 		}
 		
 	}
