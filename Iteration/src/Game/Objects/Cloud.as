@@ -15,7 +15,7 @@ package Game.Objects
 	{		
 		public function Cloud(distance:Number, planet:Planet) 
 		{
-			super(0, (FlxG.random() * 50) + (distance + 400), planet);
+			super(0, (FlxG.random() * 50) + (distance + 350), planet);
 			
 			var cloud:FlxSprite;
 			if ( FlxG.random() < 0.5 )
@@ -26,8 +26,12 @@ package Game.Objects
 			{
 				cloud = loadGraphic(SpriteResources.ImgCloud2, false, false, 461, 214);
 			}
-			cloud.scale.x = GameParams.scale * GameParams.scaleCloud;
-			cloud.scale.y = GameParams.scale * GameParams.scaleCloud;
+
+			cloud.scale.x = 1 * FlxG.random() /	50 + 1;
+			cloud.scale.y = 1 * FlxG.random()/50 + 1;
+			
+			trace(cloud.scale.x);
+			trace(cloud.scale.y);
 			
 			if ( FlxG.random() < 0.5 )
 			{
@@ -44,9 +48,7 @@ package Game.Objects
 		override public function update():void 
 		{
 			super.update();
-			scale.x *= GameParams.scale * GameParams.scaleCloud;
-			scale.y *= GameParams.scale * GameParams.scaleCloud;
-			
+
 			if ( m_direction == 1 )
 			{
 				m_pos+=m_speed;

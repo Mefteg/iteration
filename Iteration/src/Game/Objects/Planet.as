@@ -56,8 +56,8 @@ package Game.Objects
 							
 				var pulse:Number = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
 				// var pulse:Number = (Math.sin(m_elapsedTime*4)/2)/(Math.cos(m_elapsedTime-4)*8);
-				m_heart.scale.x = (pulse + (m_resources/10000)*0.4096) * GameParams.worldZoom;
-				m_heart.scale.y = (pulse + (m_resources/10000)*0.4096) * GameParams.worldZoom;
+				m_heart.scale.x = (pulse + (m_resources/10000)*0.7096) * GameParams.worldZoom;
+				m_heart.scale.y = (pulse + (m_resources/10000)*0.7096) * GameParams.worldZoom;
 				// Change the speed of the pulse
 				m_elapsedTime += FlxG.elapsed * 8;
 				
