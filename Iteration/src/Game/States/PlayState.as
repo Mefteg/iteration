@@ -114,7 +114,7 @@ package  Game.States
 				sprite.loadGraphic(SpriteResources.ImgBlobbyTalk, true, false, 300, 300);
 				sprite.addAnimation("discuss", MathUtils.getArrayofNumbers(0, 19) , 5 +FlxG.random() * 2, true);
 				//a supprimer plus tard
-				sprite.addAnimation("validate", [0, 1, 2, 3, 4, 5], 5 +FlxG.random() * 2, true);
+				sprite.addAnimation("validate", MathUtils.getArrayofNumbers(0, 19), 5 +FlxG.random() * 2, false);
 				blobbyAnimDiscuss.push(sprite);
 				
 			}

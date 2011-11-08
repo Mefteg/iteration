@@ -68,21 +68,18 @@ package Game.Objects
 			switch( m_state ) {
 				case("walk"):
 					walk();
-					m_spriteCurrent = m_spriteWalk;
 					break;
 				case("search"):
 					search();
 					break;
 				case("discuss"):
 					discuss();
-					m_spriteCurrent = m_spriteDiscuss;
 					break;
 				case("validate"):
 					validate();
 					break;
 				case("idle"):
 					idle();
-					m_spriteCurrent = m_spriteIdle;
 					break;
 				case("die"):
 					die();
@@ -141,7 +138,7 @@ package Game.Objects
 		}
 		
 		public function search():void {
-			if (this.overlaps(m_blobTarget)) {
+			if ( collideWithBlobby(m_blobTarget) ) {
 				//changer les états des deux blobby en "discussion"
 				m_blobTarget.setState("discuss");
 				this.setState("discuss");
@@ -149,10 +146,9 @@ package Game.Objects
 				m_timerDiscuss.start(m_discussTime);
 			}
 			//si le blobby cible est mort, en chercher un autre
-			if(!m_blobTarget)
+			if (m_blobTarget.getState() =="die")
 				searchNearestBlobby();
-			//immobiliser le blobby cible
-			m_blobTarget.setState("idle");
+			
 			var v1:Point = new Point(x - m_planet.center().x, y - m_planet.center().y);
 			var v2:Point = new Point(m_blobTarget.x - m_planet.center().x, m_blobTarget.y - m_planet.center().y);
 			var det:Number = MathUtils.det(v1, v2);
@@ -170,7 +166,6 @@ package Game.Objects
 		
 		public function changeDirection():void 
 		{
-				
 			//si le timer est toujours en cours
 			if (! m_timerMove.finished) {
 				//bouger le sprite
@@ -258,6 +253,15 @@ package Game.Objects
 		
 		public function isInvincible() : Boolean{
 			return (m_state == "search") || (m_state == "validate") || (m_state == "discuss");
+		}
+		
+		public function collideWithBlobby(blobby:Blobby):Boolean {
+			if (!blobby) return false;
+			var posRad:Number = MathUtils.degToRan(m_pos);
+			var posMin:Number = MathUtils.degToRan(blobby.getPos()-10);
+			var posMax:Number = MathUtils.degToRan(blobby.getPos()+10);
+			
+			return ( posRad > posMin && posRad < posMax );
 		}
 		
 		override public function draw():void 
