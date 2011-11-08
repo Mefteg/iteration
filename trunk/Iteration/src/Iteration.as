@@ -144,7 +144,7 @@ package
 		
 		public function update() :void {
 			//si le timer principal de l'itération est terminé
-			if (m_timer.finished) {
+			if (m_timer.finished && !m_currentIdea) {
 				//incrémenter le nombre d'itérations
 				m_iterNumber++;
 				
@@ -168,8 +168,8 @@ package
 						gotBlobby = true;
 					}
 				}
-				m_planet.getBlobbies()[indexDelete].setState("die");	
-				m_planet.getBlobbies().splice(indexDelete, 1);
+				//supprimer le blobby
+				m_planet.removeBlobbyAt(indexDelete);
 				//incrémentere le compteur de morts
 				m_countDeaths++;
 				//redémarrer le timer pour les morts

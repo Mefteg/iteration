@@ -202,8 +202,10 @@ package  Game.States
 							add(meteor);
 						}
 					}
+					//sile mechant meteor explose sur la planete
 					if ( meteor != null && meteor.hasExploded() )
 					{
+						meteor.checkBlobbiesCollision();
 						meteor.destroy();
 						remove(meteor);
 						meteor = null;
@@ -262,7 +264,7 @@ package  Game.States
 		{
 			var blob:Blobby;
 			//tableau de positions des blobbies à créer
-			var tabBlobbiesPosition:Array = [ 2 , 90, 200,21 ];
+			var tabBlobbiesPosition:Array = [ 2 , 90, 200,21,54,22,160,140,100,35,222,270 ];
 			var sizeBlob:uint = tabBlobbiesPosition.length; // optimisation
 			
 			for (var i:int = 0; i < sizeBlob ; i++) 
