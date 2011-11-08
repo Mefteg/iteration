@@ -32,7 +32,8 @@ package Game.Objects
 			m_planet = new FlxSprite(x, y, SpriteResources.ImgPlnt);
 			add(m_planet);
 			
-			m_heart = new FlxSprite(x + offsetSurface / 2, y + offsetSurface / 2, SpriteResources.ImgHeart);
+			//m_heart = new FlxSprite(x + offsetSurface / 2, y + offsetSurface / 2, SpriteResources.ImgHeart);
+			m_heart = new FlxSprite(x, y, SpriteResources.ImgHeart);
 			m_heart2 = new FlxSprite(x + offsetSurface / 2, y + offsetSurface / 2, SpriteResources.ImgHeart2);
 			m_heart2.scale.x = 0.4096;
 			m_heart2.scale.y = 0.4096;
@@ -40,9 +41,10 @@ package Game.Objects
 			m_heart3.scale.x = 0.4096;
 			m_heart3.scale.y = 0.4096;
 			
-			add(m_heart);
 			add(m_heart2);
 			add(m_heart3);
+			add(m_heart);
+
 			
 			m_center = new Point(x + m_planet.width / 2, y + m_planet.height / 2);
 			m_radius = (m_planet.height - offsetSurface) / 2;
@@ -58,6 +60,7 @@ package Game.Objects
 			super.update();
 			m_planet.scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
 			
+			m_heart.angle -= 0.1;
 			m_heart2.angle-= 0.1;
 			m_heart2.scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
 			m_heart3.angle += 0.1;
@@ -70,6 +73,13 @@ package Game.Objects
 			m_heart.scale.y = (pulse + (m_resources/10000)*0.4096) * GameParams.worldZoom;
 			// Change the speed of the pulse
 			m_elapsedTime += FlxG.elapsed * 8;
+			
+			m_heart.x = center().x + Math.cos(m_heart.angle) * (m_distance)*GameParams.worldZoom - m_heart.width /2;
+			m_heart.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.worldZoom - m_heart.height / 2;
+			m_heart2.x = center().x + Math.cos(m_heart2.angle) * (m_distance)*GameParams.worldZoom - m_heart2.width /2;
+			m_heart2.y = center().y - Math.sin(m_heart2.angle) * (m_distance) * GameParams.worldZoom - m_heart2.height / 2;
+			m_heart3.x = center().x + Math.cos(m_heart3.angle) * (m_distance)*GameParams.worldZoom - m_heart3.width /2;
+			m_heart3.y = center().y - Math.sin(m_heart3.angle) * (m_distance)*GameParams.worldZoom - m_heart3.height/2;
 		}
 		
 		public function center():Point
