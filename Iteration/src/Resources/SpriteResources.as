@@ -19,6 +19,7 @@ package Resources
 				
 		//meteor
 		[Embed(source = "../../bin/img/meteor.gif")] public static var ImgMeteor:Class;
+		[Embed(source = "../../bin/img/explosion_meteor.png")] public static var ImgExplosionMeteor:Class;
 		
 		//Planet
 		[Embed(source = "../../bin/img/planet.png")] public static var ImgPlnt:Class;

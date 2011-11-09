@@ -1,6 +1,7 @@
 package Game.Objects
 {
 	import flash.geom.Point;
+	import flash.text.engine.ElementFormat;
 	import Game.Ideas.Idea;
 	import Globals.GameParams;
 	import org.flixel.FlxG;
