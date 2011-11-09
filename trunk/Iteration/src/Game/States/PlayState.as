@@ -304,9 +304,9 @@ package  Game.States
 			m_animTrunk.addAnimation("growTrunk", MathUtils.getArrayofNumbers(0,29), 6, false);
 			m_animTree.addAnimation("growTree", MathUtils.getArrayofNumbers(0, 32), 6, false);
 			
-			for (j = 0; j < 4; j++) 
+			for (j = 0; j < GameParams.nbTree; j++) 
 			{
-				tree = new Tree(planet.center(), planet);
+				tree = new Tree(planet.center(), planet, trees);
 				tree.setAnimations(m_animTrunk, m_animTree);
 				trees.push(tree);
 				add(tree);
