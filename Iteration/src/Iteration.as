@@ -63,15 +63,56 @@ package
 			m_timerBirth = new FlxTimer();
 			startBirthTimer();
 			
-			//IDEES
-			m_ideas = new Array();
-			var idea:Idea = new Idea(0, 0, 10, 0, planet);
-			m_ideas.push(idea);
+			initIdeas();
+			
 			m_timerIdea = new FlxTimer();
-			startIdeaTimer();
+			
 			
 			calcStats();
 			
+		}
+		
+		public function initIdeas():void
+		{
+			if ( m_ideas != null )
+			{
+				while (m_ideas.length != 0 )
+				{
+					m_ideas.pop().destroy();
+				}
+			}
+			
+			//IDEES
+			m_ideas = new Array();
+			var idea:Idea = new Idea(0, 0, 10, 0, m_planet);
+			var idea2:Idea = new Idea(0, 0, 10, 0, m_planet);
+			var idea3:Idea = new Idea(0, 0, 10, 0, m_planet);
+			var idea4:Idea = new Idea(0, 0, 10, 0, m_planet);
+			var idea5:Idea = new Idea(0, 0, 10, 0, m_planet);
+			var idea6:Idea = new Idea(0, 0, 10, 0, m_planet);
+			var idea7:Idea = new Idea(0, 0, 10, 0, m_planet);
+			m_ideas.push(idea);
+			m_ideas.push(idea2);
+			m_ideas.push(idea3);
+			m_ideas.push(idea4);
+			m_ideas.push(idea5);
+			m_ideas.push(idea6);
+			m_ideas.push(idea7);
+		}
+		
+		public function reInit():void
+		{
+			m_iterNumber = 0;
+			
+			m_ratioDeath = 0.25;
+			m_ratioBirth = 0.50;
+			
+			initIdeas();
+			
+			m_timer.start(m_iterTime);
+			startIdeaTimer();
+			startDeathTimer();
+			startBirthTimer();
 		}
 		
 		public function restart() : void {
@@ -79,6 +120,7 @@ package
 			calcStats();
 			m_countBirths = 0;
 			m_countDeaths = 0;
+			
 			//redémarrer les timers
 			startDeathTimer();
 			startBirthTimer();
