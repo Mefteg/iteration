@@ -1,7 +1,9 @@
 package Game.Objects
 {
 	import flash.geom.Point;
+	import flash.text.engine.ElementFormat;
 	import org.flixel.*;
+	import Utils.MathUtils;
 	
 	import Resources.SpriteResources;
 	/**
@@ -10,6 +12,9 @@ package Game.Objects
 	 */
 	public class Meteor extends Element
 	{
+		//sprite d'explosion
+		protected var m_explosion:Element;
+		
 		private var m_roamingDistance:Number;
 		
 		protected var m_fall:Boolean = false;
@@ -26,6 +31,11 @@ package Game.Objects
 			//dimensionner le météore par rapport a la planete
 			this.scale.x = (0.1 * planet.getHeight())/width;
 			this.scale.y = (0.1 * planet.getWidth()) / height;
+			//créer l'explosion
+			m_explosion = new Element(m_pos, planet.radius()+270, planet);
+			m_explosion.loadGraphic(SpriteResources.ImgExplosionMeteor, true, false, 662, 709);
+			m_explosion.addAnimation("explode", MathUtils.getArrayofNumbers(0, 13), 6, false);
+			m_explosion.visible = false;
 			
 			m_state = "Incoming";
 		}
@@ -56,9 +66,28 @@ package Game.Objects
 					m_distance -= (m_speed * (1 / m_distance * 250 ))*150;
 					
 					//si le météore atteint la planete :: il explose
-					if (m_distance <= m_planet.radius())
-						m_hasExploded = true;
+					if (m_distance <= m_planet.radius()) {
+						m_speed = 0;
+						visible = false;
+						//placer l'explosion
+						m_explosion.setPos(m_pos);
+						m_explosion.place();
+						m_explosion.rotateToPlanet();
+						//
+						m_state = "Exploding";
+						//rendre l'explosion visible
+						m_explosion.visible = true;
+						//jouer l'anim d'explosion
+						m_explosion.play("explode");
+						
+					}
 					break;
+				case "Exploding":
+					m_explosion.place();
+					m_explosion.rotateToPlanet();
+					if (m_explosion.finished){
+						m_hasExploded = true;
+					}
 			}
 			
 			//faire tourner le météore en orbite
@@ -87,7 +116,7 @@ package Game.Objects
 		
 		private function checkBlobbyCollision(blobby:Blobby):Boolean {
 			if (!blobby) return false;
-			if ( Math.abs(((this.m_pos + 180) % 360) - ((blobby.getPos() + 180) % 360)) < 10 )
+			if ( Math.abs(((m_explosion.getPos() + 180) % 360) - ((blobby.getPos() + 180) % 360)) < 10 )
 			{
 				return true;
 			}
@@ -108,16 +137,22 @@ package Game.Objects
 		
 		private function checkTreeCollision(tree:Tree):Boolean {
 			if (!tree) return false;
-			if ( Math.abs(((this.m_pos + 180) % 360) - ((tree.getPos() + 180) % 360)) < 10 )
+			if ( Math.abs(((m_explosion.getPos() + 180) % 360) - ((tree.getPos() + 180) % 360)) < 10 )
 			{
 				return true;
 			}
 			return false;
 		}
 		
+		public function getExplosion():Element {
+			return m_explosion;
+		}
+		
 		
 		override public function destroy():void 
 		{
+			m_explosion.destroy();
+			m_explosion = null;
 			super.destroy();
 		}
 		

@@ -33,9 +33,15 @@ package Game.Objects
 		}
 		
 		override public function update():void {
+			if (!visible) return;
 			super.update();
 			
 			scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
+		}
+		
+		override public function draw():void {
+			if (!visible) return;
+			super.draw();
 		}
 				
 		//place un élément en calculant sa position par rapport a la planete

@@ -102,6 +102,7 @@ package  Game.States
 			// poncepermis
 			meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet);
 			add(meteor);
+			add(meteor.getExplosion());
 			
 			initClouds();
 			
@@ -186,6 +187,7 @@ package  Game.States
 						}
 						meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet);
 						add(meteor);
+						add(meteor.getExplosion());
 						
 						while ( blobbies.length != 0 )
 						{
