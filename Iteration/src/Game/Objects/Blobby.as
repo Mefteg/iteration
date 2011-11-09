@@ -319,17 +319,6 @@ package Game.Objects
 					distMin = dist;
 					//changer le blob le plus près
 					nearest = b;
-					
-					/* Useless code since it is done in search 
-					if ( ((this.m_pos + 180) % 360) - ((b.m_pos + 180) % 360) < 0 )
-					{
-						m_direction = 2;
-					}
-					else
-					{
-						m_direction = 1;
-					}
-					*/
 				}		
 			}
 			
