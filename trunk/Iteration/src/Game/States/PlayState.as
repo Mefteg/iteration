@@ -84,7 +84,7 @@ package  Game.States
 			//SON
 			var m_sound:SoundEngine.Sound = new SoundEngine.Sound(SoundResources.backgroundMusic, true);
 			m_soundBank.add(m_sound, "Background");
-			//m_soundBank.get("Background").play();
+			m_soundBank.get("Background").play();
 			
 			// On affiche la souris
 			FlxG.mouse.show();			
@@ -211,7 +211,7 @@ package  Game.States
 						meteor = null;
 					}
 					
-					if ( planet.isDead() || blobbies.length > 100 )
+					if ( planet.isDead() || blobbies.length > 100 || blobbies.length < 4 )
 					{
 						if ( meteor == null )
 						{
@@ -267,7 +267,7 @@ package  Game.States
 		{
 			var blob:Blobby;
 			//tableau de positions des blobbies à créer
-			var tabBlobbiesPosition:Array = [ 2 , 90, 200,21,54,22,160,140,100,35,222,270 ];
+			var tabBlobbiesPosition:Array = [ 2 , 90, 200,21];
 			var sizeBlob:uint = tabBlobbiesPosition.length; // optimisation
 			
 			for (var i:int = 0; i < sizeBlob ; i++) 

@@ -157,7 +157,7 @@ package Game.Objects
 				
 				
 			var dist:Number = this.m_pos - m_blobTarget.m_pos;
-			if ( dist > -180 || dist < 180 )
+			if ( this.m_pos > m_blobTarget.m_pos )
 			{
 				m_pos -= m_speed;
 				if ( m_pos > 360 ) // modulo of the angle
@@ -198,7 +198,7 @@ package Game.Objects
 					break;
 				case 2: 
 					m_pos -= m_speed;
-					if ( m_pos < 00 ) // modulo of the angle
+					if ( m_pos < 0 ) // modulo of the angle
 					{
 						m_pos += 360;
 					}
