@@ -135,7 +135,7 @@ package Game.Objects
 					//l'idée est diffusée
 					m_idea.setState("spread");
 					//vider la variable d'idée
-					m_idea = null;
+					// m_idea = null;
 					//changer le sprite
 					color = 0x0080FF;
 					m_blobTarget.color = 0x0080FF;
@@ -155,22 +155,65 @@ package Game.Objects
 			if (m_blobTarget.getState() =="die")
 				searchNearestBlobby();
 				
-				
+			
 			var dist:Number = this.m_pos - m_blobTarget.m_pos;
-			if ( this.m_pos > m_blobTarget.m_pos )
+			if ( this.m_pos > 270 && m_blobTarget.m_pos < 180 )
 			{
-				m_pos -= m_speed;
-				if ( m_pos > 360 ) // modulo of the angle
+				var angle:Number = this.m_pos + 180 % 360;
+				if ( angle < m_blobTarget.m_pos )
 				{
-					m_pos -= 360;
+					m_pos -= m_speed;
+					if ( m_pos > 360 ) // modulo of the angle
+					{
+						m_pos -= 360;
+					}
+				}
+				else
+				{
+					m_pos += m_speed;
+					if ( m_pos < 0 ) // modulo of the angle
+					{
+						m_pos += 360;
+					}
+				}
+			}
+			else if ( m_blobTarget.m_pos > 270 && this.m_pos < 180 )
+			{
+				var angle:Number = m_blobTarget.m_pos + 180 % 360;
+				if ( angle > this.m_pos )
+				{
+					m_pos -= m_speed;
+					if ( m_pos > 360 ) // modulo of the angle
+					{
+						m_pos -= 360;
+					}
+				}
+				else
+				{
+					m_pos += m_speed;
+					if ( m_pos < 00 ) // modulo of the angle
+					{
+						m_pos += 360;
+					}
 				}
 			}
 			else
 			{
-				m_pos += m_speed;
-				if ( m_pos < 00 ) // modulo of the angle
+				if ( dist > 0 )
 				{
-					m_pos += 360;
+					m_pos -= m_speed;
+					if ( m_pos > 360 ) // modulo of the angle
+					{
+						m_pos -= 360;
+					}
+				}
+				else
+				{
+					m_pos += m_speed;
+					if ( m_pos < 00 ) // modulo of the angle
+					{
+						m_pos += 360;
+					}
 				}
 			}
 						

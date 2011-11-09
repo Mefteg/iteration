@@ -188,6 +188,8 @@ package  Game.States
 						createWorld();
 						planet.live();
 						
+						m_iteration.reInit();
+						
 						m_state = "Life";
 					}
 					break;
@@ -211,7 +213,7 @@ package  Game.States
 						meteor = null;
 					}
 					
-					if ( planet.isDead() || blobbies.length > 100 || blobbies.length < 4 )
+					if ( planet.isDead() || blobbies.length > 100 || (blobbies.length < 4 && m_iteration.getIterations() > 2))
 					{
 						if ( meteor == null )
 						{
