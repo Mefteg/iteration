@@ -174,9 +174,7 @@ package  Game.States
 			updateFPS();
 			m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies \n" + m_FPS.toString()+" fps"
 			//mettre a jour la camera
-			m_camera.update();
-			
-			super.update();			
+			m_camera.update();		
 			
 			switch (m_state)
 			{
@@ -206,10 +204,11 @@ package  Game.States
 							add(meteor);
 						}
 					}
-					//sile mechant meteor explose sur la planete
+					//si le mechant meteor explose sur la planete
 					if ( meteor != null && meteor.hasExploded() )
 					{
 						meteor.checkBlobbiesCollision();
+						meteor.checkTreesCollision();
 						meteor.destroy();
 						remove(meteor);
 						meteor = null;
@@ -240,6 +239,8 @@ package  Game.States
 					}
 					break;
 			}
+			
+			super.update();	
 		}
 		
 		public function getElements():Array {
