@@ -28,7 +28,7 @@ package Game.Objects
 			}
 
 			cloud.scale.x = 1 * FlxG.random() /	50 + 1;
-			cloud.scale.y = 1 * FlxG.random()/50 + 1;
+			cloud.scale.y = 1 * FlxG.random() / 50 + 1;
 			
 			if ( FlxG.random() < 0.5 )
 			{
@@ -39,7 +39,7 @@ package Game.Objects
 				m_direction = 2;
 			}
 			m_pos = FlxG.random() * 360 - 180;
-			m_speed = FlxG.random() / 16;		
+			m_speed = FlxG.random() / 16 + 0.02;		
 		}	
 		
 		override public function update():void 
