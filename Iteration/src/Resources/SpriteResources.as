@@ -14,6 +14,8 @@ package Resources
 		[Embed(source = "../../bin/img/blobby_idle.png")] public static var ImgBlobbyIdle:Class;
 		[Embed(source = "../../bin/img/blobby_talk.png")] public static var ImgBlobbyTalk:Class;
 		[Embed(source = "../../bin/img/blobby_idea_validate.png")] public static var ImgBlobbyValidate:Class;
+		[Embed(source = "../../bin/img/Blobby_Sprites.png")] public static var ImgBlobby:Class;
+		
 				
 		//meteor
 		[Embed(source = "../../bin/img/meteor.gif")] public static var ImgMeteor:Class;

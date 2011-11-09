@@ -1,7 +1,6 @@
 package Game.Objects
 {
 	import flash.display.MovieClip;
-	import Game.NewSprite;
 	import org.flixel.*;
 	import flash.geom.Point;
 	import Utils.MathUtils;
@@ -15,10 +14,7 @@ package Game.Objects
 	public class Tree extends Element
 	{		
 		private var m_roots:TreeRoot;
-		private var m_spriteTrunk:NewSprite;
-		private var m_spriteTree:NewSprite;
 		
-		private var m_spriteCurrent:NewSprite;
 		/**
 		 * @param	origin	The point where the root starts
 		 * @param	planet where the tree will grow
@@ -56,38 +52,30 @@ package Game.Objects
 					
 					dist = distMin;
 				}
-				this.m_pos = randomPos
+				this.m_pos = randomPos;
+				m_distance += 155;
+				loadGraphic(SpriteResources.ImgTree1, true, false, 405, 376);
+				addAnimation("growTrunk", MathUtils.getArrayofNumbers(0,29), 6, false);
 			}
 			
 			// m_roots = new TreeRoot(origin, 255, 255, 255, 0, 255, 0, planet.radius()-2);
 			m_state = "growup";
 		}
-		
-		public function setAnimations(trunk:NewSprite,tree:NewSprite):void {
-			m_spriteTrunk = trunk;
-			m_spriteTree = tree;
-			m_spriteCurrent = m_spriteTrunk;
-			//tailles de l'arbre
-			this.width = m_spriteCurrent.width; this.height = m_spriteCurrent.height;
-			//m_pos = Math.random()*360;
-			m_distance += 155;
-		}
-		
+				
 		override public function draw():void 
 		{
-			m_spriteCurrent.x = x;
-			m_spriteCurrent.y = y;
-			m_spriteCurrent.angle = angle;
-			m_spriteCurrent.scale = scale;
-			m_spriteCurrent.color = color;
-
-			m_spriteCurrent.draw();
+			if (!visible) return;
+			//m_roots.draw();
+			/*if ( !m_roots.isGrowing() )
+			{ */
+				super.draw();
+			//}
 		}
 		
 		override public function update():void
 		{
-			super.update();			
-			m_spriteCurrent.update();
+			if (!visible) return;
+			super.update();		
 
 			switch(m_state) {
 				case("growup"):
@@ -115,7 +103,7 @@ package Game.Objects
 		
 		private function growTrunk():void 
 		{
-			if (m_spriteCurrent.animIsFinished())
+			if (finished)
 				setState("growTree");
 		}
 		
@@ -135,25 +123,8 @@ package Game.Objects
 		}
 		
 		override public function setState(state:String):void {
-			m_state = state;
-			
-			switch(m_state) {
-				case("growup"):
-					break;
-				case("growTrunk"):
-					m_spriteCurrent = m_spriteTrunk;
-					break;
-				case("growTree"):
-					m_spriteCurrent = m_spriteTree;
-					m_spriteTrunk = null;
-					break;
-				case("die"):
-					break;
-				default:
-					break;
-			}
-			
-			m_spriteCurrent.play(m_state);
+			m_state = state; 
+			play(m_state);
 		}
 		
 		public function die():void 
