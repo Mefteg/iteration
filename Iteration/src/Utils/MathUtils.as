@@ -33,7 +33,7 @@ package Utils
 			return tab;
 		}
 		
-		public static function calculateDistance(angle1:Number, angle2:Number)
+		public static function calculateDistance(angle1:Number, angle2:Number):Number
 		{
 			if ( angle1 > 360 || angle1 < 0 )
 			{

@@ -137,6 +137,14 @@ package Game.Objects
 			m_blobbies[index].setState("die");
 			m_blobbies.splice(index, 1);
 		}
+		
+		// tree deletion
+		public function removeTree(tree:Tree):void {
+			var index:int = m_trees.indexOf(tree);
+			m_trees[index].setState("die");
+			m_trees.splice(index, 1);
+		}
+		
 		public function isDead():Boolean
 		{
 			if ( m_resources < 0 )

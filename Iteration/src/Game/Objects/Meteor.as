@@ -56,7 +56,7 @@ package Game.Objects
 					
 					//si le météore atteint la planete :: il explose
 					if (m_distance <= m_planet.radius())
-						explode();
+						m_hasExploded = true;
 					break;
 			}
 			
@@ -70,25 +70,6 @@ package Game.Objects
 			angle--;
 			
 			super.update();
-		}
-		
-		public function explode():void {
-			//vérifier la collision du météore avec les blobbies
-			for each (var b:Blobby in m_planet.getBlobbies()) 
-			{
-				//les killer si c'est le cas
-				if (FlxG.overlap(this, b))
-					b.destroy();
-			}
-			//vérifier la collision du météore avec les arbres
-			for each (var t:Tree in m_planet.getTrees()) 
-			{
-				//les killer si c'est le cas
-				if (FlxG.overlap(this, t))
-					t.destroy();
-			}
-			
-			m_hasExploded = true;
 		}
 		
 		public function checkBlobbiesCollision():void {
@@ -111,6 +92,28 @@ package Game.Objects
 			}
 			return false;
 		}
+		
+		public function checkTreesCollision():void {
+			var trees:Array = m_planet.getTrees();
+			var size:int = trees.length;
+			var tree:Tree;
+			for (var i:int = 0; i < size; i++) 
+			{
+				tree = trees[i];
+				if (checkTreeCollision(tree))
+					m_planet.removeTree(tree);
+			}
+		}
+		
+		private function checkTreeCollision(tree:Tree):Boolean {
+			if (!tree) return false;
+			if ( Math.abs(((this.m_pos + 180) % 360) - ((tree.getPos() + 180) % 360)) < 10 )
+			{
+				return true;
+			}
+			return false;
+		}
+		
 		
 		override public function destroy():void 
 		{

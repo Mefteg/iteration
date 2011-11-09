@@ -31,7 +31,7 @@ package Game.Objects
 			var size:int = trees.length;
 			if ( size > 0 )
 			{
-				var randomPos = FlxG.random() * 360;
+				var randomPos:Number = FlxG.random() * 360;
 				
 				var t:Tree; // nearest tree (the closer one)
 				var distMin:Number = 1000; // distance of the nearest tree
@@ -101,6 +101,8 @@ package Game.Objects
 				case("feed"):
 					break;
 				case("die"):
+					die();
+					return;
 					break;
 				default:
 					break;
@@ -152,6 +154,11 @@ package Game.Objects
 			}
 			
 			m_spriteCurrent.play(m_state);
+		}
+		
+		public function die():void 
+		{
+			this.destroy();
 		}
 	}
 
