@@ -152,7 +152,9 @@ package  Game.States
 			// On affiche la souris
 			FlxG.mouse.show();	
 			
+			//----------CREER LA CAMERA-------------
 			m_camera = new Camera(planet.getMidpoint(), 0, 0, FlxG.width * 2, FlxG.height * 2, true);
+			m_camera.setPosPlanet(planet.getMidpoint());
 		}
 		
 		override public function update():void 

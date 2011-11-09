@@ -14,19 +14,19 @@ package Game
 		
 		public function Background(pos:FlxPoint, sprite:Class, planet:Planet) {
 			super(pos.x, pos.y, sprite);
-			//scale = scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
+			scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
 			m_planet = planet;
 		}
 		
 		override public function update():void {
 			super.update();
-			//scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
+			scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
 			place();
 		}
 		
 		protected function place():void {
-			x = (m_planet.center().x - (this.width / 2)) * GameParams.worldZoom;
-			y = (m_planet.center().y - (this.height/ 2)) * GameParams.worldZoom;
+			x = (m_planet.center().x - (this.width / 2));
+			y = (m_planet.center().y - (this.height/ 2));
 		}
 		
 	}
