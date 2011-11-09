@@ -48,6 +48,7 @@ package Game.Objects
 					{
 						//on fait tomber le météore
 						m_state = "Crashing";
+						m_speed = m_speed * 1.2;
 					}
 					break;
 				case "Crashing":

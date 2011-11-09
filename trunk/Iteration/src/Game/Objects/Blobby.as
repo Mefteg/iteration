@@ -2,7 +2,6 @@ package Game.Objects
 {
 	import flash.geom.Point;
 	import Game.Ideas.Idea;
-	import Game.NewSprite;
 	import Globals.GameParams;
 	import org.flixel.FlxG;
 	import org.flixel.FlxPoint;
@@ -19,14 +18,7 @@ package Game.Objects
 	 * @author ...
 	 */
 	public class Blobby extends Element
-	{		
-		//SPRITES
-		protected var m_spriteCurrent:NewSprite;
-		protected var m_spriteWalk:NewSprite;
-		protected var m_spriteIdle:NewSprite;
-		protected var m_spriteDiscuss:NewSprite;
-		protected var m_spriteValidate:NewSprite;
-		
+	{				
 		//timer pour le mouvement
 		protected var m_timerMove:FlxTimer;
 		//idée
@@ -36,13 +28,12 @@ package Game.Objects
 		protected var m_discussTime:Number = 5;
 		
 		protected var m_blobTarget:Blobby;
+		protected var m_blobbyBirth:Blobby;
 		
-		public function Blobby(pos:Number, distance:Number , planet:Planet) 
+		public function Blobby(pos:Number, distance:Number, planet:Planet) 
 		{
 			super(pos, distance, planet);
 			scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
-			//tailles du blobby
-			this.width = 300; this.height = 300;
 			//instancier le timer de discussion
 			m_timerDiscuss = new FlxTimer();
 			m_speed = 0.2;
@@ -55,21 +46,25 @@ package Game.Objects
 						
 			//initialisation de l'animation
 			m_state = "walk";
+			generateAnimations();
 			
 			place();			
 		}
 		
-		public function setAnimations(walk:NewSprite, idle:NewSprite, disc:NewSprite, validate:NewSprite) : void {
-			m_spriteWalk = walk;
-			m_spriteIdle = idle;
-			m_spriteDiscuss = disc;
-			m_spriteValidate = validate;
-			m_spriteCurrent = m_spriteWalk;
+		//génère les animations qui doivent etre propres au blobby
+		public function generateAnimations():void {	
+			loadGraphic(SpriteResources.ImgBlobby, true, false, 300, 300);
+			addAnimation("idle", [0, 1, 2, 3, 4, 5], 0.2+FlxG.random() * 2, true);
+			addAnimation("walk", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 2, true);
+			addAnimation("validate", MathUtils.getArrayofNumbers(24, 32), 5 +FlxG.random() * 2, false);
+			addAnimation("duplicate", MathUtils.getArrayofNumbers(33, 41), 4 , false)
+			addAnimation("discuss", MathUtils.getArrayofNumbers(15, 21) , 5 +FlxG.random() * 2, true);
 		}
+		
 		override public function update():void 
 		{
-			//mettre a jour le sprite courant
-			m_spriteCurrent.update();
+			if (!visible) return;
+			super.update();
 			
 			switch( m_state ) {
 				case("walk"):
@@ -92,6 +87,7 @@ package Game.Objects
 					return;
 					break;
 				case("duplicate"):
+					duplicate();
 					break;
 				case("eat"):
 					eat();
@@ -104,8 +100,6 @@ package Game.Objects
 			place();
 			//rotation pour mettre le bas du sprite sur la surface de la planete
 			rotateToPlanet();
-			//afficher
-			super.update();
 		}
 		
 		protected function walk() :void{
@@ -118,6 +112,21 @@ package Game.Objects
 		protected function eat() :void{
 			changeDirection();
 		}
+		
+		protected function duplicate():void {
+			//si l'anim de mitose est finie
+			if (finished) {
+				//placer le nouveau blobby
+				m_blobbyBirth.setPos(getPos() - 5.5);
+				setPos(getPos() + 4.5);
+				m_blobbyBirth.color = 0xFFFF00;
+				m_blobbyBirth.visible = true;
+				m_blobbyBirth.setState("idle");
+				m_blobbyBirth = null;
+				//passer à l'état idle
+				setState("idle");
+			}
+		}
 				
 		protected function discuss() :void {
 			if (m_timerDiscuss.finished) {
@@ -127,7 +136,7 @@ package Game.Objects
 		}
 		
 		private function validate():void {
-			if (animIsFinished()) {
+			if (finished) {
 				if(m_blobTarget){
 					//remettre les états des deux blobs
 					setState("idle");
@@ -294,6 +303,11 @@ package Game.Objects
 			setState("search");
 		}
 		
+		public function setBlobbyBirth(blobby:Blobby):void {
+			m_blobbyBirth = blobby;
+			setState("duplicate");
+		}
+		
 		public function searchNearestBlobby():void 
 		{
 			var blobbies:Array = m_planet.getBlobbies(); //tous les blobbies
@@ -328,7 +342,11 @@ package Game.Objects
 		}
 		
 		public function isInvincible() : Boolean{
-			return (m_state == "search") || (m_state == "validate") || (m_state == "discuss");
+			return (m_state == "search") || (m_state == "validate") || (m_state == "discuss") || (m_state == "duplicate");
+		}
+		
+		public function isBusy():Boolean {
+			return (m_state != "walk") && (m_state != "idle") ; 
 		}
 		
 		public function collideWithBlobby(blobby:Blobby):Boolean 
@@ -344,50 +362,14 @@ package Game.Objects
 		
 		override public function draw():void 
 		{
-			//mettre a jour les propriétés du sprite courant
-			m_spriteCurrent.x = x;
-			m_spriteCurrent.y = y;
-			m_spriteCurrent.angle = angle;
-			m_spriteCurrent.scale = scale;
-			m_spriteCurrent.color = color;
-			//le dessiner
-			m_spriteCurrent.draw();
+			if (!visible) return;
+			super.draw();
 		}
 		
-		override public function animIsFinished():Boolean 
-		{
-			return ( m_spriteCurrent.getCurIndex() == m_spriteCurrent.getCurAnim().frames.length - 1) ;
-		}
-		
+				
 		override public function setState(state:String):void {
 			m_state = state;
-			switch( state ) {
-				case("walk"):
-					m_spriteCurrent = m_spriteWalk;
-					break;
-				case("search"):
-					m_spriteCurrent = m_spriteWalk;
-					break;
-				case("discuss"):
-					m_spriteCurrent = m_spriteDiscuss;
-					break;
-				case("validate"):
-					m_spriteCurrent = m_spriteValidate;
-					break;
-				case("idle"):
-					m_spriteCurrent = m_spriteIdle;
-					break;
-				case("die"):
-					return;
-					break;
-				case("duplicate"):
-					break;
-				case("eat"):
-					break;
-				default:
-					break;
-			}
-			m_spriteCurrent.play(m_state);
+			play(m_state);
 		}
 	}
 

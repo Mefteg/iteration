@@ -42,7 +42,7 @@ package
 		private var m_countBirths:int = 0;
 		//variables pour le taux de mortalité/natalité
 		private var m_ratioDeath:Number = 0.25;
-		private var m_ratioBirth:Number = 0.50;
+		private var m_ratioBirth:Number = 0.60;
 		
 		// Information on iteration for outside the class
 		private var m_iterationTick:Boolean = false;
@@ -103,7 +103,6 @@ package
 		public function reInit():void
 		{
 			m_iterNumber = 0;
-			
 			m_ratioDeath = 0.25;
 			m_ratioBirth = 0.50;
 			
@@ -131,14 +130,21 @@ package
 		
 		public function createIdea():void {
 			if (m_ideas.length == 0) return;
+	
 			//prendrer une idée au hasard
 			m_currentIdea = m_ideas[  FlxU.round(Math.random() * (m_ideas.length -1))];
-			//prendre un blobby au hasard
-			var blob:Blobby = m_planet.getBlobbies()[FlxU.round(Math.random() * ( m_planet.getBlobbies().length -1 ) )];
-			if ( blob != null )
-			{
-				blob.setIdea(m_currentIdea);
-				m_scene.add(m_currentIdea);
+			//pour savoir si une idée a été trouvée
+			var gotIt:Boolean = false;
+			
+			while(!gotIt){
+				//prendre un blobby au hasard
+				var blob:Blobby = m_planet.getBlobbies()[FlxU.round(Math.random() * ( m_planet.getBlobbies().length -1 ) )];
+				if ( ! blob.isBusy() )
+				{
+					blob.setIdea(m_currentIdea);
+					m_scene.add(m_currentIdea);
+					gotIt = true;
+				}
 			}
 		}
 		
@@ -205,7 +211,7 @@ package
 				while(!gotBlobby){
 					//choisir un blobby au hasard
 					indexDelete = Math.random() * (m_planet.getBlobbies().length -1);
-					//si le blobby n'est pas en discussion
+					//si le blobby n'est pas invincible
 					if(! m_planet.getBlobbies()[indexDelete].isInvincible()){
 						gotBlobby = true;
 					}
@@ -224,9 +230,24 @@ package
 			{
 				//créer un nouveau blobby
 				var blobby:Blobby = new Blobby(Math.random() * 360, m_planet.radius(), m_planet);
-				blobby.setAnimations(m_scene.getAnimBlobWalk(), m_scene.getAnimBlobIdle(), m_scene.getAnimBlobDiscuss(), m_scene.getAnimBlobValidate() );
+				//le rendre invisible
+				blobby.visible = false;
+				
+				//chercher un blobby inoccupé pour la mitose
+				var gotBlob:Boolean = false; // a true si on a trouvé un blobby a supprimer
+				var indexCreate:int;
+				while(!gotBlob){
+					//choisir un blobby au hasard
+					indexCreate = Math.random() * (m_planet.getBlobbies().length -1);
+					//si le blobby n'est pas occupé
+					if(! m_planet.getBlobbies()[indexCreate].isBusy()){
+						gotBlob = true;
+					}
+				}
+				//allouer le blobby a créer au blobby source
+				m_blobbies[indexCreate].setBlobbyBirth(blobby);
 				//ajouter le blobby a la liste
-				m_planet.getBlobbies().push(blobby);
+				m_blobbies.push(blobby);
 				//ajouter le blobby a la scene
 				m_scene.add(blobby);
 				//incrémenter le compteur de naissances

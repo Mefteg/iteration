@@ -3,7 +3,6 @@ package  Game.States
 	import flash.utils.Timer;
 	import flash.media.Sound;
 	import Game.Camera;
-	import Game.NewSprite;
 	import Game.Background;
 	import Game.Objects.Blobby;
 	import Game.Objects.Meteor;
@@ -13,6 +12,7 @@ package  Game.States
 	import Globals.GameParams;
 	import mx.core.FlexSprite;
 	import org.flixel.*;
+	import org.flixel.system.FlxAnim;
 	import Resources.SpriteResources;
 	import Resources.SoundResources;
 	import SoundEngine.SoundBank;
@@ -30,13 +30,6 @@ package  Game.States
 		private var m_soundBank:SoundBank = new SoundBank();
 		//animations pour blobby
 		protected var nbAnimBlob:int = 4;
-		protected var blobbyAnimWalk:Array;
-		protected var blobbyAnimIdle:Array;
-		protected var blobbyAnimDiscuss:Array;
-		protected var blobbyAnimValidate:Array;
-		//animations pour arbre
-		protected var m_animTrunk:NewSprite;
-		protected var m_animTree:NewSprite
 				
 		//objets
 		protected var planet:Planet;
@@ -63,14 +56,8 @@ package  Game.States
 		public function PlayState() 
 		{
 			blobbies = new Array();
-			blobbyAnimWalk = new Array();
-			blobbyAnimIdle = new Array();
-			blobbyAnimDiscuss = new Array();
-			blobbyAnimValidate = new Array();
 			
 			trees = new Array();
-			m_animTree = new NewSprite();
-			m_animTrunk = new NewSprite();
 			
 			clouds = new Array();
 	
@@ -109,37 +96,6 @@ package  Game.States
 			
 			// On affiche la planete apres le background
 			add(planet);
-			
-			//-------CREER LA CLASSE D'ITERATION-----
-			m_iteration = new Iteration(this,planet);
-			
-			var sprite:NewSprite;
-			//talbeau d'animations de blobbies
-			for (var k:int = 0; k < nbAnimBlob; k++) 
-			{
-				//animation de marche
-				sprite = new NewSprite();
-				sprite.loadGraphic(SpriteResources.ImgBlobbyWalk, true, false, 300, 300);
-				sprite.addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7], 2 + FlxG.random() * 2, true);
-				sprite.addAnimation("search", [0, 1, 2, 3, 4, 5, 6, 7], 4 + FlxG.random() * 4, true);
-				blobbyAnimWalk.push(sprite);
-				//animation de idle
-				sprite = new NewSprite();
-				sprite.loadGraphic(SpriteResources.ImgBlobbyIdle, true, false, 300, 300);
-				sprite.addAnimation("idle", [0, 1, 2, 3, 4, 5], 0.2+FlxG.random() * 2, true);
-				blobbyAnimIdle.push(sprite);
-				//animation de discussion
-				sprite = new NewSprite();
-				sprite.loadGraphic(SpriteResources.ImgBlobbyTalk, true, false, 300, 300);
-				sprite.addAnimation("discuss", MathUtils.getArrayofNumbers(0, 19) , 5 +FlxG.random() * 2, true);
-				blobbyAnimDiscuss.push(sprite);
-				//animation de validation d'une idée
-				sprite = new NewSprite();
-				sprite.loadGraphic(SpriteResources.ImgBlobbyValidate, true, false, 300, 300);
-				sprite.addAnimation("validate", MathUtils.getArrayofNumbers(0, 9), 5 +FlxG.random() * 2, false);
-				blobbyAnimValidate.push(sprite);
-				
-			}
 			m_state = "Creation";
 						
 			//----------CREER LE METEOR-------------
@@ -152,6 +108,11 @@ package  Game.States
 			// On affiche la souris
 			FlxG.mouse.show();	
 			
+			//----------CREER LES ARBRES------------
+			initTrees();
+			
+			//-------CREER LES BLOBBIES--------------			
+			initBlobies();
 			//----------CREER LA CAMERA-------------
 			m_camera = new Camera(planet.getMidpoint(), 0, 0, FlxG.width * 2, FlxG.height * 2, true);
 			m_camera.setPosPlanet(planet.getMidpoint());
@@ -170,9 +131,6 @@ package  Game.States
 				//elements[i].setDistance(elements[i].getDistance() * m_zoom);
 			}
 			
-			//update le texte
-			updateFPS();
-			m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources()+" resources \n" + planet.getBlobbies().length + " blobbies \n" + m_FPS.toString()+" fps"
 			//mettre a jour la camera
 			m_camera.update();		
 			
@@ -188,6 +146,8 @@ package  Game.States
 						createWorld();
 						planet.live();
 						
+						//-------CREER LA CLASSE D'ITERATION-----
+						m_iteration = new Iteration(this, planet);
 						m_iteration.reInit();
 						
 						m_state = "Life";
@@ -196,6 +156,9 @@ package  Game.States
 				case "Life":
 					//mettre a jour l'itération*
 					m_iteration.update();
+					//update le texte
+					updateFPS();
+					m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources() + " resources \n" + planet.getBlobbies().length + " blobbies \n" + m_FPS.toString() + " fps";
 					if ( m_iteration.cycleFinished() )	// We must call this function
 					{
 						if ( meteor == null )	// But if we already have a meteor, we will not have two :p
@@ -252,69 +215,52 @@ package  Game.States
 			
 			return elements;
 		}
-		//fonctions retournant une animation donnée pour un blob
-		public function getAnimBlobWalk(): NewSprite
-		{
-			return blobbyAnimWalk[FlxU.round( Math.random() * (nbAnimBlob-1))];
-		}
-		public function getAnimBlobIdle(): NewSprite
-		{
-			return blobbyAnimIdle[FlxU.round( Math.random() * (nbAnimBlob-1))];
-		}
-		public function getAnimBlobDiscuss(): NewSprite
-		{
-			return blobbyAnimDiscuss[FlxU.round( Math.random() * (nbAnimBlob-1))];
-		}
-		public function getAnimBlobValidate(): NewSprite
-		{
-			return blobbyAnimValidate[FlxU.round( Math.random() * (nbAnimBlob-1))];
-		}
-		
-		public function initBlobies():void
-		{
-			var blob:Blobby;
-			//tableau de positions des blobbies à créer
-			var tabBlobbiesPosition:Array = [ 2 , 90, 200,21];
-			var sizeBlob:uint = tabBlobbiesPosition.length; // optimisation
-			
-			for (var i:int = 0; i < sizeBlob ; i++) 
-			{
-				blob = new Blobby( tabBlobbiesPosition[i], planet.radius(), planet);
-				blob.setAnimations(getAnimBlobWalk(), getAnimBlobIdle(),getAnimBlobDiscuss(),getAnimBlobValidate() );
-				blobbies.push(blob);
-				add(blob);
-			}
-		}
 		
 		public function createWorld():void
 		{			
-			//----------CREER LES ARBRES------------
-			initTrees();
-			
-			//-------CREER LES BLOBBIES--------------			
-			initBlobies();
+			var size:int = blobbies.length;
+			for (var i:int = 0; i < size; i++) 
+
+			{
+				blobbies[i].visible = true;
+			}
+			size = trees.length;
+			for (var j:int = 0; j < size; j++) 
+			{
+				trees[j].visible = true;
+			}
 		}
 		
 		public function initTrees():void
 		{
 			var j:int = 0;
 			var tree:Tree;
-			//loader les anim
-			m_animTrunk.loadGraphic(SpriteResources.ImgTree1, true, false, 405, 376);
-			m_animTree.loadGraphic(SpriteResources.ImgTree2, true, false, 405, 376);
-			
-			//créer les animations
-			m_animTrunk.addAnimation("growTrunk", MathUtils.getArrayofNumbers(0,29), 6, false);
-			m_animTree.addAnimation("growTree", MathUtils.getArrayofNumbers(0, 32), 6, false);
 			
 			for (j = 0; j < GameParams.nbTree; j++) 
 			{
 				tree = new Tree(planet.center(), planet, trees);
-				tree.setAnimations(m_animTrunk, m_animTree);
+				tree.visible = false;
 				trees.push(tree);
 				add(tree);
 			}			
 		}
+		
+		public function initBlobies():void
+		{
+			var blob:Blobby;
+			//tableau de positions des blobbies à créer
+			var tabBlobbiesPosition:Array = [ 2  , 90, 200, 21 ];
+			var sizeBlob:uint = tabBlobbiesPosition.length; // optimisation
+			
+			for (var i:int = 0; i < sizeBlob ; i++) 
+			{
+				blob = new Blobby( tabBlobbiesPosition[i], planet.radius(), planet);
+				blob.visible = false;
+				blobbies.push(blob);
+				add(blob);
+			}
+		}
+		
 		
 		public function initClouds():void
 		{
