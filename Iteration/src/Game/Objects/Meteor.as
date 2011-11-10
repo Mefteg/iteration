@@ -51,13 +51,10 @@ package Game.Objects
 			switch (m_state)
 			{
 				case "Incoming":
-<<<<<<< .mine
 					//le faire tourner sur lui meme
 					angle--;
-					m_distance-= 4;
-=======
 					m_distance-= MathUtils.interpolate(6.0, 0.1, ((m_roamingDistance * 2) - m_distance) / m_roamingDistance);
->>>>>>> .r69
+
 					if ( m_distance <= m_roamingDistance )
 					{
 						m_state = "Roaming";
