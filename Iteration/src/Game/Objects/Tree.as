@@ -55,8 +55,8 @@ package Game.Objects
 					dist = distMin;
 				}
 				this.m_pos = randomPos;
-				m_distance += 155;
-				loadGraphic2(SpriteResources.ImgTree, true, false, 405, 376);
+				m_distance += 175;
+				loadGraphic2(SpriteResources.ImgTreeGrow, true, false, 405, 376);
 				addAnimation("grow", MathUtils.getArrayofNumbers(0,62), 20, false);
 			}
 			
@@ -79,12 +79,11 @@ package Game.Objects
 			if (!visible) return;
 			super.update();		
 			
-			/*if (onClick()) {
-				loadGraphic(SpriteResources.ImgTreeDie, true, false, 405, 376);
-				addAnimation("die", MathUtils.getArrayofNumbers(0,75), 20, false);
-				setState("die");
-			}*/
-
+			// Place the tree
+			this.place();
+			this.rotateToPlanet();
+			
+			
 			switch(m_state) {
 				case("growup"):
 					growup();
@@ -102,9 +101,6 @@ package Game.Objects
 					break;
 			}
 			
-			// Place the tree
-			this.place();
-			this.rotateToPlanet();
 		}
 		
 		private function grow():void 
@@ -127,14 +123,21 @@ package Game.Objects
 		}
 		
 		override public function setState(state:String):void {
+			
+			if (state == "die" && m_state != "die") {
+				loadGraphic2(SpriteResources.ImgTreeDie, true, false, 405, 376);
+				addAnimation("die", MathUtils.getArrayofNumbers(0,75), 20, false);
+			}
 			m_state = state; 
 			play(m_state);
 		}
 		
 		public function die():void 
 		{
-			if(finished)
-				this.destroy();
+			if (finished) {
+				this.visible = false;
+				m_planet.removeTree(this);
+			}
 		}
 	}
 

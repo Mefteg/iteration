@@ -30,7 +30,7 @@ package Game.Objects
 			super(0, roamingDistance * 2, planet);
 			m_roamingDistance = roamingDistance;
 			//Créer l'image
-			loadGraphic(sprite, false, false, 67, 67);
+			loadGraphic(sprite, false, false, 351, 333);
 			m_speed = 0.1;
 			//dimensionner le météore par rapport a la planete
 			this.scale.x = (0.1 * planet.getHeight())/width;
@@ -162,7 +162,7 @@ package Game.Objects
 			{
 				tree = trees[i];
 				if (checkTreeCollision(tree))
-					m_planet.removeTree(tree);
+					tree.setState("die");
 			}
 		}
 		
