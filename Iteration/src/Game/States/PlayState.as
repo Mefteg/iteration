@@ -9,6 +9,7 @@ package  Game.States
 	import Game.Objects.Planet;
 	import Game.Objects.Tree;
 	import Game.Objects.Cloud;
+	import Game.Objects.TreeGenerator;
 	import Globals.GameParams;
 	import mx.core.FlexSprite;
 	import org.flixel.*;
@@ -35,7 +36,7 @@ package  Game.States
 		protected var planet:Planet;
 		protected var blobbies:Array;
 		protected var meteor:Meteor;
-		protected var trees:Array;
+		protected var m_treeGenerator:TreeGenerator;
 		protected var clouds:Array;
 				
 		//Background
@@ -56,8 +57,6 @@ package  Game.States
 		public function PlayState() 
 		{
 			blobbies = new Array();
-			
-			trees = new Array();
 			
 			clouds = new Array();
 	
@@ -88,7 +87,12 @@ package  Game.States
 			//var map1:Map = new Map("map/test.xml");
 			
 			//------CREER LA PLANETE-----------------
-			planet = new Planet( FlxG.width / 2 , FlxG.height / 2, blobbies, trees);
+			planet = new Planet( FlxG.width / 2 , FlxG.height / 2, blobbies);
+			
+			m_treeGenerator = new TreeGenerator(planet, this);
+			add(m_treeGenerator);
+			
+			planet.setTrees(m_treeGenerator.trees());
 			
 			//------CREER LE BACKGROUND--------------
 			m_background = new Game.Background(new FlxPoint(0, 0), SpriteResources.ImgBackground, planet);
@@ -108,9 +112,6 @@ package  Game.States
 			
 			// On affiche la souris
 			FlxG.mouse.show();	
-			
-			//----------CREER LES ARBRES------------
-			initTrees();
 			
 			//-------CREER LES BLOBBIES--------------			
 			initBlobies();
@@ -133,7 +134,7 @@ package  Game.States
 			}
 			
 			//mettre a jour la camera
-			m_camera.update();		
+			m_camera.update();
 			
 			switch (m_state)
 			{
@@ -194,9 +195,9 @@ package  Game.States
 							blobbies.pop().destroy();
 						}
 						
-						while ( trees.length != 0 )
+						while ( m_treeGenerator.trees().length != 0 )
 						{
-							trees.pop().destroy();
+							m_treeGenerator.clear();
 						}
 						
 						planet.explosion();
@@ -211,7 +212,7 @@ package  Game.States
 		public function getElements():Array {
 			var elements:Array = new Array();
 			elements = elements.concat(blobbies);
-			elements = elements.concat(trees);
+			elements = elements.concat(m_treeGenerator);
 			elements = elements.concat(clouds);
 			elements.push(planet);
 			
@@ -226,25 +227,24 @@ package  Game.States
 			{
 				blobbies[i].visible = true;
 			}
-			size = trees.length;
+			
+			initTrees();
+			/*
+			size = m_treeGenerator.trees().length;
+			var trees:Array = m_treeGenerator.trees();
 			for (var j:int = 0; j < size; j++) 
 			{
-				trees[j].visible = true;
+				if ( trees[j] != null )
+				{
+					trees[j].visible = true;
+				}
 			}
+			*/
 		}
 		
 		public function initTrees():void
 		{
-			var j:int = 0;
-			var tree:Tree;
-			
-			for (j = 0; j < GameParams.nbTree; j++) 
-			{
-				tree = new Tree(planet.center(), planet, trees);
-				tree.visible = false;
-				trees.push(tree);
-				add(tree);
-			}			
+			m_treeGenerator.regenerate();			
 		}
 		
 		public function initBlobies():void

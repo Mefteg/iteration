@@ -42,6 +42,8 @@ package Game.Objects
 					{
 						//pour ce blobby
 						t = trees[i];
+						if ( t == null )
+							continue;
 							
 						dist = MathUtils.calculateDistance(randomPos, t.m_pos);
 						if ( dist < distMin )

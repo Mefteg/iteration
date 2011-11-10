@@ -36,9 +36,6 @@ package Game
 		
 		public function update():void
 		{
-			trace("posPlanet: " + m_posPlanet.x + ", " + m_posPlanet.y);
-			trace("initPos: " + m_initPos.x + ", " + m_initPos.y);
-
 			cameraMovement();
 			cameraZoom();
 			replaceCameraIfNecessary();
