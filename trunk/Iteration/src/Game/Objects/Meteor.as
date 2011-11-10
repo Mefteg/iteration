@@ -23,8 +23,9 @@ package Game.Objects
 		private var m_crashTime:Number = 0.0;
 		
 		private var m_hasExploded:Boolean = false;
+		private var m_giveLife:Boolean ;
 		
-		public function Meteor(sprite:Class,roamingDistance:Number,planet:Planet) 
+		public function Meteor(sprite:Class,roamingDistance:Number,planet:Planet,glife:Boolean) 
 		{
 			super(0, roamingDistance * 2, planet);
 			m_roamingDistance = roamingDistance;
@@ -39,6 +40,7 @@ package Game.Objects
 			m_explosion.loadGraphic(SpriteResources.ImgExplosionMeteor, true, false, 662, 709);
 			m_explosion.addAnimation("explode", MathUtils.getArrayofNumbers(0, 13), 6, false);
 			m_explosion.visible = false;
+			m_giveLife = glife;
 			
 			m_state = "Incoming";
 		}
@@ -49,13 +51,21 @@ package Game.Objects
 			switch (m_state)
 			{
 				case "Incoming":
+<<<<<<< .mine
+					//le faire tourner sur lui meme
+					angle--;
+					m_distance-= 4;
+=======
 					m_distance-= MathUtils.interpolate(6.0, 0.1, ((m_roamingDistance * 2) - m_distance) / m_roamingDistance);
+>>>>>>> .r69
 					if ( m_distance <= m_roamingDistance )
 					{
 						m_state = "Roaming";
 					}
 					break;
 				case "Roaming":
+					//le faire tourner sur lui meme
+					angle--;
 					//si l'utilisateur clique sur le météore
 					if (onClick()) 
 					{
@@ -65,6 +75,8 @@ package Game.Objects
 					}
 					break;
 				case "Crashing":
+					//le faire tourner sur lui meme
+					angle--;
 					//réduire la distance entre le météore et la planète
 					m_distance -= MathUtils.interpolate(0.1, 6, m_crashTime);;
 					m_crashTime += 0.003;
@@ -72,26 +84,39 @@ package Game.Objects
 					//si le météore atteint la planete :: il explose
 					if (m_distance <= m_planet.radius()) {
 						m_speed = 0;
-						visible = false;
 						//placer l'explosion
 						m_explosion.setPos(m_pos);
 						m_explosion.place();
 						m_explosion.rotateToPlanet();
-						//
-						m_state = "Exploding";
+						
 						//rendre l'explosion visible
 						m_explosion.visible = true;
 						//jouer l'anim d'explosion
 						m_explosion.play("explode");
+						if (m_giveLife = true) {
+							m_state = "Digging"
+						}else {
+							visible = false;
+							m_state = "Exploding";
+						}
 						
 					}
 					break;
+				case "Digging":
+					//réduire la distance entre le météore et la planète
+					m_distance -= 1.2;
+					if (m_explosion.finished){
+						m_explosion.visible = false;
+					}
+					if (m_distance < 0.1)
+						m_state = "Exploding";
+					break;
 				case "Exploding":
-					m_explosion.place();
-					m_explosion.rotateToPlanet();
+					visible = false;
 					if (m_explosion.finished){
 						m_hasExploded = true;
 					}
+					break;
 			}
 			
 			//faire tourner le météore en orbite
@@ -99,9 +124,6 @@ package Game.Objects
 			
 			//placer le météore
 			place();
-			
-			//le faire tourner sur lui meme
-			angle--;
 			
 			super.update();
 		}
@@ -120,7 +142,7 @@ package Game.Objects
 		
 		private function checkBlobbyCollision(blobby:Blobby):Boolean {
 			if (!blobby) return false;
-			if ( Math.abs(((m_explosion.getPos() + 180) % 360) - ((blobby.getPos() + 180) % 360)) < 10 )
+			if ( Math.abs(((m_explosion.getPos() + 180) % 360) - ((blobby.getPos() + 180) % 360)) < 30 )
 			{
 				return true;
 			}
@@ -141,7 +163,7 @@ package Game.Objects
 		
 		private function checkTreeCollision(tree:Tree):Boolean {
 			if (!tree) return false;
-			if ( Math.abs(((m_explosion.getPos() + 180) % 360) - ((tree.getPos() + 180) % 360)) < 10 )
+			if ( Math.abs(((m_explosion.getPos() + 180) % 360) - ((tree.getPos() + 180) % 360)) < 30 )
 			{
 				return true;
 			}
@@ -165,6 +187,13 @@ package Game.Objects
 			return m_hasExploded;
 		}
 		
+		public function isExploding():Boolean {
+			return m_state == "Exploding";
+		}
+		
+		public function giveLife():Boolean {
+			return m_giveLife;
+		}
 	}
 
 }
