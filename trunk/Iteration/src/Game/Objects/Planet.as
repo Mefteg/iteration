@@ -13,10 +13,8 @@ package Game.Objects
 	{				
 		private var m_planet:FlxSprite;
 		private var m_heart:FlxSprite;
-		private var m_heart2:FlxSprite;
-		private var m_hscale2:Number = 1.4;
-		private var m_heart3:FlxSprite;
-		private var m_hscale3:Number = 1.4;
+		private var m_heartHalo:FlxSprite;
+		private var m_heartBack:FlxSprite;
 		
 		protected var m_blobbies:Array;
 		protected var m_trees:Array;
@@ -40,6 +38,10 @@ package Game.Objects
 			m_blobbies = blobbies;
 			
 			m_resources = 10000;
+			
+			m_heart = new FlxSprite(m_planet.x, m_planet.y, SpriteResources.ImgHeart);
+			m_heartHalo = new FlxSprite(m_planet.x / 2, m_planet.y / 2, SpriteResources.ImgHeartHalo);
+			m_heartBack = new FlxSprite(m_planet.x / 2, m_planet.y / 2, SpriteResources.ImgHeartBack);
 		}
 		
 		override public function update():void 
@@ -47,27 +49,29 @@ package Game.Objects
 			super.update();
 			m_planet.scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
 			
-			if ( m_heart != null && m_heart2 != null && m_heart3 != null )
+			if ( m_heart != null && m_heartHalo != null && m_heartBack != null )
 			{
-				m_heart2.angle-= 0.1;
-				m_heart2.scale = new FlxPoint(GameParams.worldZoom * m_hscale2, GameParams.worldZoom * m_hscale2);
-				m_heart3.angle += 0.1;
-				m_heart3.scale = new FlxPoint(GameParams.worldZoom * m_hscale3, GameParams.worldZoom * m_hscale3);
-
+				m_heartHalo.angle-= 0.03;
+				m_heartBack.angle += 0.03;
 							
 				var pulse:Number = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
+				var pulseScale:Number = (pulse + (m_resources / 10000) * 0.7096) * GameParams.worldZoom;
 				// var pulse:Number = (Math.sin(m_elapsedTime*4)/2)/(Math.cos(m_elapsedTime-4)*8);
-				m_heart.scale.x = (pulse + (m_resources/10000)*0.7096) * GameParams.worldZoom;
-				m_heart.scale.y = (pulse + (m_resources/10000)*0.7096) * GameParams.worldZoom;
+				m_heart.scale.x = pulseScale;
+				m_heart.scale.y = pulseScale;
+				m_heartHalo.scale.x = pulseScale;
+				m_heartHalo.scale.y = pulseScale;
+				m_heartBack.scale.x = pulseScale;
+				m_heartBack.scale.y = pulseScale;
 				// Change the speed of the pulse
 				m_elapsedTime += FlxG.elapsed * 8;
 				
 				m_heart.x = center().x + Math.cos(m_heart.angle) * (m_distance)*GameParams.worldZoom - m_heart.width /2;
 				m_heart.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.worldZoom - m_heart.height / 2;
-				m_heart2.x = center().x + Math.cos(m_heart2.angle) * (m_distance)*GameParams.worldZoom - m_heart2.width /2;
-				m_heart2.y = center().y - Math.sin(m_heart2.angle) * (m_distance) * GameParams.worldZoom - m_heart2.height / 2;
-				m_heart3.x = center().x + Math.cos(m_heart3.angle) * (m_distance)*GameParams.worldZoom - m_heart3.width /2;
-				m_heart3.y = center().y - Math.sin(m_heart3.angle) * (m_distance) * GameParams.worldZoom - m_heart3.height / 2;
+				m_heartHalo.x = center().x + Math.cos(m_heartHalo.angle) * (m_distance)*GameParams.worldZoom - m_heartHalo.width /2;
+				m_heartHalo.y = center().y - Math.sin(m_heartHalo.angle) * (m_distance) * GameParams.worldZoom - m_heartHalo.height / 2;
+				m_heartBack.x = center().x + Math.cos(m_heartBack.angle) * (m_distance)*GameParams.worldZoom - m_heartBack.width /2;
+				m_heartBack.y = center().y - Math.sin(m_heartBack.angle) * (m_distance) * GameParams.worldZoom - m_heartBack.height / 2;
 			}
 		}
 		
@@ -164,28 +168,16 @@ package Game.Objects
 		{
 			m_resources = 10000;
 			
-			m_heart = new FlxSprite(m_planet.x, m_planet.y, SpriteResources.ImgHeart);
-			m_heart2 = new FlxSprite(m_planet.x / 2, m_planet.y / 2, SpriteResources.ImgHeart2);
-			m_heart3 = new FlxSprite(m_planet.x / 2, m_planet.y / 2, SpriteResources.ImgHeart3);
-			
-			add(m_heart2);
-			add(m_heart3);
+			add(m_heartHalo);
+			add(m_heartBack);
 			add(m_heart);
 		}
 		
 		public function explosion():void
 		{
 			remove(m_heart);
-			remove(m_heart2);
-			remove(m_heart3);
-			
-			m_heart.destroy();
-			m_heart2.destroy();
-			m_heart3.destroy();
-			
-			m_heart = null;
-			m_heart2 = null;
-			m_heart3 = null;
+			remove(m_heartHalo);
+			remove(m_heartBack);
 		}
 	}
 
