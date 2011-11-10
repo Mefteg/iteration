@@ -18,6 +18,9 @@ package Game.Objects
 		private var m_roamingDistance:Number;
 		
 		protected var m_fall:Boolean = false;
+		protected var m_fallSpeed:Number = 1.0;
+		
+		private var m_crashTime:Number = 0.0;
 		
 		private var m_hasExploded:Boolean = false;
 		
@@ -46,7 +49,7 @@ package Game.Objects
 			switch (m_state)
 			{
 				case "Incoming":
-					m_distance-= 4;
+					m_distance-= MathUtils.interpolate(6.0, 0.1, ((m_roamingDistance * 2) - m_distance) / m_roamingDistance);
 					if ( m_distance <= m_roamingDistance )
 					{
 						m_state = "Roaming";
@@ -58,12 +61,13 @@ package Game.Objects
 					{
 						//on fait tomber le météore
 						m_state = "Crashing";
-						m_speed = m_speed * 1.2;
+                        // mspeed = m_speed * 1.2;
 					}
 					break;
 				case "Crashing":
 					//réduire la distance entre le météore et la planète
-					m_distance -= (m_speed * (1 / m_distance * 250 ))*150;
+					m_distance -= MathUtils.interpolate(0.1, 6, m_crashTime);;
+					m_crashTime += 0.003;
 					
 					//si le météore atteint la planete :: il explose
 					if (m_distance <= m_planet.radius()) {
