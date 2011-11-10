@@ -1,5 +1,6 @@
 package Resources 
 {
+	import flash.text.engine.EastAsianJustifier;
 	import org.flixel.FlxExtBitmap;
 	/**
 	 * ...
@@ -7,16 +8,15 @@ package Resources
 	 */
 	public class SpriteResources 
 	{
-		public static var ImgTree:FlxExtBitmap;
+		public static var ImgTreeGrow:FlxExtBitmap;
+		public static var ImgTreeDie:FlxExtBitmap;
+		public static var ImgBlobby:FlxExtBitmap;
 		//background
 		[Embed(source = "../../bin/img/fond.jpg")] public static var ImgBackground:Class;
-		
-		//blobby
-		[Embed(source = "../../bin/img/Blobby_Sprites.png")] public static var ImgBlobby:Class;
-		
+				
 				
 		//meteor
-		[Embed(source = "../../bin/img/meteor.gif")] public static var ImgMeteor:Class;
+		[Embed(source = "../../bin/img/meteor.png")] public static var ImgMeteor:Class;
 		[Embed(source = "../../bin/img/explosion_meteor.png")] public static var ImgExplosionMeteor:Class;
 		
 		//Planet
@@ -29,9 +29,6 @@ package Resources
 		[Embed(source = "../../bin/img/cloud1.png")] public static var ImgCloud:Class;
 		[Embed(source = "../../bin/img/cloud2.png")] public static var ImgCloud2:Class;
 
-		
-		//[Embed(source = "../../bin/img/tree_anim_grow.png")] public static var ImgTreeGrow:Class;
-		//[Embed(source = "../../bin/img/tree_anim_dead.png")] public static var ImgTreeDie:Class;
 		
 		[Embed(source = "../../bin/img/idee_guerre.png")] public static var ImgIdeaWar:Class;
 		

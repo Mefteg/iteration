@@ -55,7 +55,7 @@ package Game.Objects
 		
 		//génère les animations qui doivent etre propres au blobby
 		public function generateAnimations():void {	
-			loadGraphic(SpriteResources.ImgBlobby, true, false, 300, 300);
+			loadGraphic2(SpriteResources.ImgBlobby, true, false, 300, 300);
 			addAnimation("idle", [0, 1, 2, 3, 4, 5], 0.2+FlxG.random() * 2, true);
 			addAnimation("walk", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 2, true);
 			addAnimation("validate", MathUtils.getArrayofNumbers(24, 32), 5 +FlxG.random() * 2, false);
