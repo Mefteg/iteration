@@ -212,10 +212,7 @@ package  Game.States
 							blobbies.pop().destroy();
 						}
 						
-						while ( m_treeGenerator.trees().length != 0 )
-						{
-							m_treeGenerator.clear();
-						}
+						m_treeGenerator.clear();
 						
 						planet.explosion();
 						m_state = "Creation";

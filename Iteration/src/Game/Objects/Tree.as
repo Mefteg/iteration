@@ -96,6 +96,7 @@ package Game.Objects
 					break;
 				case("die"):
 					die();
+					return;
 					break;
 				default:
 					break;

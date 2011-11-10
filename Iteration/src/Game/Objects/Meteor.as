@@ -75,7 +75,7 @@ package Game.Objects
 					//le faire tourner sur lui meme
 					angle--;
 					//réduire la distance entre le météore et la planète
-					m_distance -= MathUtils.interpolate(0.1, 6, m_crashTime);;
+					m_distance -= MathUtils.interpolate(0.1, 6, m_crashTime);
 					m_crashTime += 0.003;
 					
 					//si le météore atteint la planete :: il explose
@@ -90,9 +90,13 @@ package Game.Objects
 						m_explosion.visible = true;
 						//jouer l'anim d'explosion
 						m_explosion.play("explode");
-						if (m_giveLife = true) {
+						if (m_giveLife == true) 
+						{
+							m_crashTime = 0;
 							m_state = "Digging"
-						}else {
+						}
+						else 
+						{
 							visible = false;
 							m_state = "Exploding";
 						}
@@ -100,9 +104,13 @@ package Game.Objects
 					}
 					break;
 				case "Digging":
+					// Creusement
 					//réduire la distance entre le météore et la planète
-					m_distance -= 1.2;
-					if (m_explosion.finished){
+					m_distance -= MathUtils.interpolate(6, 1.2, m_crashTime);
+					m_crashTime += 0.004;
+					
+					if (m_explosion.finished)
+					{
 						m_explosion.visible = false;
 					}
 					if (m_distance < 0.1)
