@@ -33,6 +33,7 @@ package Game.Objects
 		
 		public function Blobby(pos:Number, distance:Number, planet:Planet) 
 		{
+			if (onClick()) setState("die");
 			super(pos, distance, planet);
 			scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
 			//instancier le timer de discussion
@@ -60,12 +61,19 @@ package Game.Objects
 			addAnimation("validate", MathUtils.getArrayofNumbers(24, 32), 5 +FlxG.random() * 2, false);
 			addAnimation("duplicate", MathUtils.getArrayofNumbers(33, 41), 4 , false)
 			addAnimation("discuss", MathUtils.getArrayofNumbers(15, 21) , 5 +FlxG.random() * 2, true);
+			addAnimation("eat", MathUtils.getArrayofNumbers(42,48) , 5 +FlxG.random() * 2, true);
+			addAnimation("swallow",[48,47,46,45,44,43,42] , 5 +FlxG.random() * 2, true);
+			addAnimation("die", MathUtils.getArrayofNumbers(54,62) , 2 +FlxG.random() * 2, true);
 		}
 		
 		override public function update():void 
 		{
 			if (!visible) return;
 			super.update();
+			// placer le blobby
+			place();
+			//rotation pour mettre le bas du sprite sur la surface de la planete
+			rotateToPlanet();
 			
 			switch( m_state ) {
 				case("walk"):
@@ -85,7 +93,6 @@ package Game.Objects
 					break;
 				case("die"):
 					die();
-					return;
 					break;
 				case("duplicate"):
 					duplicate();
@@ -93,14 +100,12 @@ package Game.Objects
 				case("eat"):
 					eat();
 					break;
+				case("swallow"):
+					break;
 				default:
 					break;
 			}
 			
-			// placer le blobby
-			place();
-			//rotation pour mettre le bas du sprite sur la surface de la planete
-			rotateToPlanet();
 		}
 		
 		protected function walk() :void{
@@ -231,7 +236,10 @@ package Game.Objects
 		}
 		
 		public function die():void {
-			this.destroy();
+			if (finished) {
+				this.visible = false;
+				this.destroy();
+			}
 		}
 		
 		public function changeDirection():void 
@@ -343,7 +351,7 @@ package Game.Objects
 		}
 		
 		public function isInvincible() : Boolean{
-			return (m_state == "search") || (m_state == "validate") || (m_state == "discuss") || (m_state == "duplicate");
+			return (m_state == "search") || (m_state == "validate") || (m_state == "discuss") || (m_state == "duplicate") ;
 		}
 		
 		public function isBusy():Boolean {

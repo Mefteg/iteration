@@ -56,8 +56,8 @@ package Game.Objects
 				}
 				this.m_pos = randomPos;
 				m_distance += 155;
-				loadGraphic(SpriteResources.ImgTree1, true, false, 405, 376);
-				addAnimation("growTrunk", MathUtils.getArrayofNumbers(0,29), 6, false);
+				loadGraphic2(SpriteResources.ImgTree, true, false, 405, 376);
+				addAnimation("grow", MathUtils.getArrayofNumbers(0,62), 20, false);
 			}
 			
 			// m_roots = new TreeRoot(origin, 255, 255, 255, 0, 255, 0, planet.radius()-2);
@@ -78,21 +78,24 @@ package Game.Objects
 		{
 			if (!visible) return;
 			super.update();		
+			
+			/*if (onClick()) {
+				loadGraphic(SpriteResources.ImgTreeDie, true, false, 405, 376);
+				addAnimation("die", MathUtils.getArrayofNumbers(0,75), 20, false);
+				setState("die");
+			}*/
 
 			switch(m_state) {
 				case("growup"):
 					growup();
 					break;
-				case("growTrunk"):
-					growTrunk();
-					break;
-				case("growTree"):
+				case("grow"):
+					grow();
 					break;
 				case("feed"):
 					break;
 				case("die"):
 					die();
-					return;
 					break;
 				default:
 					break;
@@ -103,10 +106,8 @@ package Game.Objects
 			this.rotateToPlanet();
 		}
 		
-		private function growTrunk():void 
+		private function grow():void 
 		{
-			if (finished)
-				setState("growTree");
 		}
 		
 		private function growTree():void {
@@ -115,7 +116,7 @@ package Game.Objects
 		
 		protected function growup():void 
 		{
-			setState("growTrunk");
+			setState("grow");
 		}
 		
 		override public function destroy():void 
@@ -131,7 +132,8 @@ package Game.Objects
 		
 		public function die():void 
 		{
-			this.destroy();
+			if(finished)
+				this.destroy();
 		}
 	}
 

@@ -59,6 +59,7 @@ package  Game.States
 			blobbies = new Array();
 			
 			clouds = new Array();
+			
 	
 			//FPS
 			m_text = new FlxText(10, 10, 500, FlxG.framerate.toString());
@@ -70,14 +71,15 @@ package  Game.States
 			//SON
 			var m_sound:SoundEngine.Sound = new SoundEngine.Sound(SoundResources.backgroundMusic, true);
 			m_soundBank.add(m_sound, "Background");
-			m_soundBank.get("Background").play();
+			//m_soundBank.get("Background").play();
 			
 			// On affiche la souris
-			FlxG.mouse.show();			
+			FlxG.mouse.show();		
 		}
 		
 		override public function create():void 
 		{
+					
 			FlxG.bgColor =  0xff0a216b ;
 			//FlxG.bgColor = 0xffecebb3;
 			
@@ -98,13 +100,23 @@ package  Game.States
 			m_background = new Game.Background(new FlxPoint(0, 0), SpriteResources.ImgBackground, planet);
 			add(m_background);
 			
-			// On affiche la planete apres le background
-			add(planet);
+			
 			m_state = "Creation";
 						
+			//----------CREER LES ARBRES------------
+			//initTrees();
+			
+			// On affiche la planete apres le background
+			add(planet);
+			
+			//-------CREER LES BLOBBIES--------------			
+			initBlobies();
+			//------CREER LES ARBRES--------------
+			initTrees();
+			
 			//----------CREER LE METEOR-------------
 			// poncepermis
-			meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet);
+			meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet,true);
 			add(meteor);
 			add(meteor.getExplosion());
 			
@@ -113,11 +125,15 @@ package  Game.States
 			// On affiche la souris
 			FlxG.mouse.show();	
 			
-			//-------CREER LES BLOBBIES--------------			
-			initBlobies();
+<<<<<<< .mine
+			
+=======
+>>>>>>> .r69
 			//----------CREER LA CAMERA-------------
 			m_camera = new Camera(planet.getMidpoint(), 0, 0, FlxG.width * 2, FlxG.height * 2, true);
 			m_camera.setPosPlanet(planet.getMidpoint());
+			
+			
 		}
 		
 		override public function update():void 
@@ -141,6 +157,7 @@ package  Game.States
 				case "Creation":
 					if ( meteor.hasExploded() )
 					{
+						remove(meteor.getExplosion());
 						meteor.destroy();
 						remove(meteor);
 						meteor = null;
@@ -165,28 +182,34 @@ package  Game.States
 					{
 						if ( meteor == null )	// But if we already have a meteor, we will not have two :p
 						{
-							meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet);
+							meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet, false);
+							
 							add(meteor);
+							add(meteor.getExplosion());
 						}
 					}
 					//si le mechant meteor explose sur la planete
-					if ( meteor != null && meteor.hasExploded() )
+					if ( meteor != null && meteor.isExploding() && !meteor.giveLife() )
 					{
 						meteor.checkBlobbiesCollision();
 						meteor.checkTreesCollision();
-						meteor.destroy();
-						remove(meteor);
-						meteor = null;
+						if(meteor.hasExploded()){
+							remove(meteor.getExplosion());
+							meteor.destroy();
+							remove(meteor);
+							meteor = null;
+						}
 					}
 					
 					if ( planet.isDead() || blobbies.length > 100 || (blobbies.length < 4 && m_iteration.getIterations() > 2))
 					{
 						if ( meteor != null )
 						{
+							remove(meteor.getExplosion());
 							remove(meteor);
 							meteor.destroy();
 						}
-						meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet);
+						meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet,true);
 						add(meteor);
 						add(meteor.getExplosion());
 						

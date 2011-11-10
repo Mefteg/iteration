@@ -1,19 +1,17 @@
 package Resources 
 {
+	import org.flixel.FlxExtBitmap;
 	/**
 	 * ...
 	 * @author LittleWhite
 	 */
 	public class SpriteResources 
 	{
+		public static var ImgTree:FlxExtBitmap;
 		//background
 		[Embed(source = "../../bin/img/fond.jpg")] public static var ImgBackground:Class;
 		
 		//blobby
-		[Embed(source = "../../bin/img/blobby_walk.png")] public static var ImgBlobbyWalk:Class;
-		[Embed(source = "../../bin/img/blobby_idle.png")] public static var ImgBlobbyIdle:Class;
-		[Embed(source = "../../bin/img/blobby_talk.png")] public static var ImgBlobbyTalk:Class;
-		[Embed(source = "../../bin/img/blobby_idea_validate.png")] public static var ImgBlobbyValidate:Class;
 		[Embed(source = "../../bin/img/Blobby_Sprites.png")] public static var ImgBlobby:Class;
 		
 				
@@ -32,8 +30,8 @@ package Resources
 		[Embed(source = "../../bin/img/cloud2.png")] public static var ImgCloud2:Class;
 
 		
-		[Embed(source = "../../bin/img/tree_anim_part1.png")] public static var ImgTree1:Class;
-		[Embed(source = "../../bin/img/tree_anim_part2.png")] public static var ImgTree2:Class;
+		//[Embed(source = "../../bin/img/tree_anim_grow.png")] public static var ImgTreeGrow:Class;
+		//[Embed(source = "../../bin/img/tree_anim_dead.png")] public static var ImgTreeDie:Class;
 		
 		[Embed(source = "../../bin/img/idee_guerre.png")] public static var ImgIdeaWar:Class;
 		

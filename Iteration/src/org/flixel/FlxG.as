@@ -1015,6 +1015,52 @@ package org.flixel
 			return Plugin;
 		}
 		
+		public static function addBitmapFromObject(Graphic:Object, Reverse:Boolean = false, Unique:Boolean = false, Key:String = null):BitmapData {
+			var needReverse:Boolean = false;
+			var key:String = Key;
+			if(key == null) {
+				if(Graphic is FlxExtBitmap) {
+					key = (Graphic as FlxExtBitmap).path;
+				} else {
+					key = String(Graphic);
+				}
+
+				if(Unique && (_cache[key] != undefined) && (_cache[key] != null)) {
+					//Generate a unique key
+					var inc:uint = 0;
+					var ukey:String;
+					do {
+						ukey = key + inc++;
+					} while((_cache[ukey] != undefined) && (_cache[ukey] != null));
+					key = ukey;
+				}
+			}
+			//If there is no data for this key, generate the requested graphic
+			if(!checkBitmapCache(key)) {
+				if(Graphic is FlxExtBitmap) {
+					_cache[key] = (Graphic as FlxExtBitmap).bitmap.bitmapData;
+				} else {
+					_cache[key] = (new Graphic).bitmapData;
+				}
+
+				if(Reverse)
+					needReverse = true;
+			}
+			var pixels:BitmapData = _cache[key];
+			if(!needReverse && Reverse && (pixels.width == _cache[key].width))
+				needReverse = true;
+			if(needReverse) {
+				var newPixels:BitmapData = new BitmapData(pixels.width << 1, pixels.height, true, 0x00000000);
+				newPixels.draw(pixels);
+				var mtx:Matrix = new Matrix();
+				mtx.scale(-1, 1);
+				mtx.translate(newPixels.width, 0);
+				newPixels.draw(pixels, mtx);
+				pixels = newPixels;
+			}
+			return pixels;
+		}
+		
 		/**
 		 * Retrieves a plugin based on its class name from the global plugin array.
 		 * 

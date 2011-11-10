@@ -274,6 +274,35 @@ package org.flixel
 			return this;
 		}
 		
+		public function loadGraphic2(Graphic:Object,Animated:Boolean=false,Reverse:Boolean=false,Width:uint=0,Height:uint=0,Unique:Boolean=false):FlxSprite
+		{
+			_bakedRotation = 0;
+			_pixels = FlxG.addBitmapFromObject(Graphic,Reverse,Unique);
+			if(Reverse)
+				_flipped = _pixels.width>>1;
+			else
+				_flipped = 0;
+			if(Width == 0)
+			{
+				if(Animated)
+					Width = _pixels.height;
+				else if(_flipped > 0)
+					Width = _pixels.width/2;
+				else
+					Width = _pixels.width;
+			}
+			width = frameWidth = Width;
+			if(Height == 0)
+			{
+				if(Animated)
+					Height = width;
+				else
+					Height = _pixels.height;
+			}
+			height = frameHeight = Height;
+			resetHelpers();
+			return this;
+		}
 		/**
 		 * Create a pre-rotated sprite sheet from a simple sprite.
 		 * This can make a huge difference in graphical performance!
