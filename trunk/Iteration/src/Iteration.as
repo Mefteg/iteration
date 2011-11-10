@@ -208,13 +208,21 @@ package
 				var gotBlobby:Boolean = false; // a true si on a trouvé un blobby a supprimer
 				var indexDelete:int; //index du blobby a supprimer
 				
-				while(!gotBlobby){
+				// Hardcore fix (for Hardgame)
+				// HACK HACK ! 
+				// To avoid the infinit loop
+				var i:uint = 0;
+				var nbBlobbies:uint = m_planet.getBlobbies().length;
+				
+				while(!gotBlobby && i < nbBlobbies){
 					//choisir un blobby au hasard
-					indexDelete = Math.random() * (m_planet.getBlobbies().length -1);
+					indexDelete = Math.random() * (nbBlobbies-1);
 					//si le blobby n'est pas invincible
 					if(! m_planet.getBlobbies()[indexDelete].isInvincible()){
 						gotBlobby = true;
 					}
+					
+					i++;
 				}
 				//supprimer le blobby
 				m_planet.removeBlobbyAt(indexDelete);

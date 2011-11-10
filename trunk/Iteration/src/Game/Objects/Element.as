@@ -45,15 +45,16 @@ package Game.Objects
 		}
 				
 		//place un élément en calculant sa position par rapport a la planete
-		public function place():void {
+		public function place():void 
+		{
 			
 			//conversion en radians de l'angle de position sur le cercle(planete)
 			var angle:Number = (Math.PI / 180) * m_pos ;
 
 			x = m_planet.center().x + Math.cos(angle) * (m_distance)*GameParams.worldZoom - this.width /2;
 			y = m_planet.center().y - Math.sin(angle) * (m_distance)*GameParams.worldZoom - this.height/2;
-
 		}
+		
 		//effectue une rotation pour placer le bas du sprite sur la surface de la planete
 		public function rotateToPlanet() :void{
 			this.angle = -m_pos + 90;
