@@ -14,7 +14,9 @@ package Game.Objects
 		private var m_planet:FlxSprite;
 		private var m_heart:FlxSprite;
 		private var m_heart2:FlxSprite;
+		private var m_hscale2:Number = 1.4;
 		private var m_heart3:FlxSprite;
+		private var m_hscale3:Number = 1.4;
 		
 		protected var m_blobbies:Array;
 		protected var m_trees:Array;
@@ -27,7 +29,7 @@ package Game.Objects
 		private var m_resources:int; // ressources de la planete
 		private var m_distance:Number = 0;
 		
-		public function Planet(x:Number, y:Number, blobbies:Array,trees:Array ) 
+		public function Planet(x:Number, y:Number, blobbies:Array) 
 		{
 			m_planet = new FlxSprite(x, y, SpriteResources.ImgPlnt);
 			add(m_planet);
@@ -36,7 +38,6 @@ package Game.Objects
 			m_radius = (m_planet.height) / 2;
 			
 			m_blobbies = blobbies;
-			m_trees = trees;
 			
 			m_resources = 10000;
 		}
@@ -49,9 +50,9 @@ package Game.Objects
 			if ( m_heart != null && m_heart2 != null && m_heart3 != null )
 			{
 				m_heart2.angle-= 0.1;
-				m_heart2.scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
+				m_heart2.scale = new FlxPoint(GameParams.worldZoom * m_hscale2, GameParams.worldZoom * m_hscale2);
 				m_heart3.angle += 0.1;
-				m_heart3.scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
+				m_heart3.scale = new FlxPoint(GameParams.worldZoom * m_hscale3, GameParams.worldZoom * m_hscale3);
 
 							
 				var pulse:Number = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
@@ -97,6 +98,11 @@ package Game.Objects
 		
 		public function getBlobbies():Array {
 			return m_blobbies;
+		}
+		
+		public function setTrees(trees:Array):void
+		{
+			m_trees = trees;
 		}
 		
 		public function getTrees():Array {
@@ -160,11 +166,7 @@ package Game.Objects
 			
 			m_heart = new FlxSprite(m_planet.x, m_planet.y, SpriteResources.ImgHeart);
 			m_heart2 = new FlxSprite(m_planet.x / 2, m_planet.y / 2, SpriteResources.ImgHeart2);
-			m_heart2.scale.x = 0.4096;
-			m_heart2.scale.y = 0.4096;
 			m_heart3 = new FlxSprite(m_planet.x / 2, m_planet.y / 2, SpriteResources.ImgHeart3);
-			m_heart3.scale.x = 0.4096;
-			m_heart3.scale.y = 0.4096;
 			
 			add(m_heart2);
 			add(m_heart3);
