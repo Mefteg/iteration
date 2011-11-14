@@ -255,7 +255,7 @@ package
 				//allouer le blobby a créer au blobby source
 				m_blobbies[indexCreate].setBlobbyBirth(blobby);
 				//ajouter le blobby a la liste
-				m_blobbies.push(blobby);
+				m_planet.addBlobby(blobby);
 				//ajouter le blobby a la scene
 				m_scene.add(blobby);
 				//incrémenter le compteur de naissances
@@ -271,6 +271,7 @@ package
 				
 			//si une idée est en cours	
 			if (m_currentIdea) {
+				trace(m_currentIdea.getState());
 				//et qu'elle a été diffusée
 				if (m_currentIdea.getState() == "spread") {
 					//on applique les changements sur l'environnement
@@ -284,6 +285,10 @@ package
 					m_currentIdea = null;
 					//mettre le timer en pause
 					m_timerIdea.pause();
+				}else if (m_currentIdea.getState() == "killed") {
+					//si elle a été killée, elle peut réapparaitre donc on la sort juste de la scene
+					m_currentIdea.setState("waiting");
+					m_scene.remove(m_currentIdea);
 				}
 			}
 		}
