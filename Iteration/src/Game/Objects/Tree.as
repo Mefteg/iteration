@@ -33,7 +33,9 @@ package Game.Objects
 				var distMin:Number = 1000; // distance of the nearest tree
 				var dist:Number = 0;
 				
-				while ( dist < 25 )
+				var nbIteration:uint = 0;
+				
+				while ( dist < 25 && nbIteration < 25)
 				{
 					randomPos = FlxG.random() * 360;
 					distMin = 1000;
@@ -53,7 +55,14 @@ package Game.Objects
 					}
 					
 					dist = distMin;
+					nbIteration++;
 				}
+				
+				if ( nbIteration >= 25 )
+				{
+					return;
+				}
+				
 				this.m_pos = randomPos;
 				m_distance += 175;
 				loadGraphic2(SpriteResources.ImgTreeGrow, true, false, 405, 376);
