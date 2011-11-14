@@ -24,15 +24,13 @@ package Resources
 		
 		public static var ImgCloud:FlxExtBitmap;
 		public static var ImgCloud2:FlxExtBitmap;
-		//public static var ImgIdeaWar:FlxExtBitmap;
+		
+		public static var ImgIdeaBubble:FlxExtBitmap;
 		
 		public static var BufferTreeGrow:Tree;
 		//background
 		[Embed(source = "../../bin/img/fond.jpg")] public static var ImgBackground:Class;
-						
-		
-		[Embed(source = "../../bin/img/idee_guerre.png")] public static var ImgIdeaWar:Class;
-		
+				
 		
 	}
 
