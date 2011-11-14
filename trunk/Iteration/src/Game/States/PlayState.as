@@ -109,7 +109,7 @@ package  Game.States
 			
 			//----------CREER LE METEOR-------------
 			// poncepermis
-			meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet,true);
+			meteor = new Meteor( planet.radius() * 2, planet,true);
 			add(meteor);
 			add(meteor.getExplosion());
 			
@@ -171,7 +171,7 @@ package  Game.States
 					{
 						if ( meteor == null )	// But if we already have a meteor, we will not have two :p
 						{
-							meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet, false);
+							meteor = new Meteor( planet.radius() * 2, planet, false);
 							
 							add(meteor);
 							add(meteor.getExplosion());
@@ -198,7 +198,7 @@ package  Game.States
 							remove(meteor);
 							meteor.destroy();
 						}
-						meteor = new Meteor(SpriteResources.ImgMeteor, planet.radius() * 2, planet,true);
+						meteor = new Meteor(planet.radius() * 2, planet,true);
 						add(meteor);
 						add(meteor.getExplosion());
 						

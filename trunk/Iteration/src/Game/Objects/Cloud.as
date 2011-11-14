@@ -20,11 +20,11 @@ package Game.Objects
 			var cloud:FlxSprite;
 			if ( FlxG.random() < 0.5 )
 			{
-				cloud = loadGraphic(SpriteResources.ImgCloud, false, false, 417, 187);
+				cloud = loadGraphic2(SpriteResources.ImgCloud, false, false, 417, 187);
 			}
 			else
 			{
-				cloud = loadGraphic(SpriteResources.ImgCloud2, false, false, 461, 214);
+				cloud = loadGraphic2(SpriteResources.ImgCloud2, false, false, 461, 214);
 			}
 
 			cloud.scale.x = 1 * FlxG.random() /	50 + 1;
