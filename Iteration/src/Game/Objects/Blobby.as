@@ -60,6 +60,7 @@ package Game.Objects
 			loadGraphic2(SpriteResources.ImgBlobby, true, false, 300, 300);
 			addAnimation("idle", [0, 1, 2, 3, 4, 5], 0.2+FlxG.random() * 2, true);
 			addAnimation("walk", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 2, true);
+			addAnimation("search", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 3, true);
 			addAnimation("validate", MathUtils.getArrayofNumbers(24, 33), 5 +FlxG.random() * 2, false);
 			addAnimation("duplicate", MathUtils.getArrayofNumbers(36, 44), 4 , false)
 			addAnimation("discuss", MathUtils.getArrayofNumbers(15, 21) , 5 +FlxG.random() * 2, true);
@@ -127,18 +128,23 @@ package Game.Objects
 			if (finished) {
 				//placer le nouveau blobby
 				m_blobbyBirth.setPos(getPos() - 5.5);
-				setPos(getPos() + 4.5);
+				setPos(getPos() + 5);
 				m_blobbyBirth.color = 0xFFFF00;
 				m_blobbyBirth.visible = true;
-				m_blobbyBirth.setState("idle");
+				m_blobbyBirth.play(m_blobbyBirth.getState());
+				//si le blobby n'a pas été choisi pour une quelconque action
+				if ( !m_blobbyBirth.isBusy())
+					//le passer en idle
+					m_blobbyBirth.setState("idle");
+				//supprimer sa référence
 				m_blobbyBirth = null;
-				//passer à l'état idle
+				//même chose pour ce blobby
 				setState("idle");
 			}
 		}
 				
 		protected function discuss() :void {
-			if (m_timerDiscuss.finished) {
+			if (m_timerDiscuss.finished && m_blobTarget) {
 				setState("validate");
 				m_blobTarget.setState("validate");
 			}
@@ -153,24 +159,27 @@ package Game.Objects
 					//l'idée est diffusée
 					m_idea.setState("spread");
 					//vider la variable d'idée
-					// m_idea = null;
+					m_idea = null;
 					//changer le sprite
 					color = 0x0080FF;
 					m_blobTarget.color = 0x0080FF;
+					//et supprimer sa référence
+					m_blobTarget = null;
 				}
 			}
 		}
 		
 		public function search():void {
 			if ( collideWithBlobby(m_blobTarget) ) {
+				//démarrer le timer de discussion
+				m_timerDiscuss.start(m_discussTime);
 				//changer les états des deux blobby en "discussion"
 				m_blobTarget.setState("discuss");
 				this.setState("discuss");
-				//démarrer le timer de discussion
-				m_timerDiscuss.start(m_discussTime);
+				m_idea.setState("discussed");
 			}
 			//si le blobby cible est mort, en chercher un autre
-			if (m_blobTarget.getState() =="die")
+			if (m_blobTarget && m_blobTarget.getState() =="die")
 				searchNearestBlobby();
 				
 			
@@ -240,6 +249,9 @@ package Game.Objects
 		
 		public function die():void {
 			if (finished) {
+				if (m_idea) {
+					m_idea.setState("killed");
+				}
 				this.visible = false;
 				this.destroy();
 			}

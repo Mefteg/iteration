@@ -141,6 +141,9 @@ package Game.Objects
 			m_distance = value;
 		}
 		
+		public function addBlobby(blobby:Blobby):void {
+			m_blobbies.push(blobby);
+		}
 		//supprime un blobby
 		public function removeBlobby(blobby:Blobby):void {
 			var index:int = m_blobbies.indexOf(blobby);
