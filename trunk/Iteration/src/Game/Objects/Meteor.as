@@ -1,6 +1,7 @@
 package Game.Objects
 {
 	import flash.geom.Point;
+	import Globals.GameParams;
 	import flash.text.engine.ElementFormat;
 	import org.flixel.*;
 	import Utils.MathUtils;
@@ -31,7 +32,8 @@ package Game.Objects
 			m_roamingDistance = roamingDistance;
 			//Créer l'image
 			loadGraphic(sprite, false, false, 351, 333);
-			m_speed = 0.1;
+			m_speed = GameParams.map.m_meteorSpeed;
+
 			//dimensionner le météore par rapport a la planete
 			this.scale.x = (0.1 * planet.getHeight())/width;
 			this.scale.y = (0.1 * planet.getWidth()) / height;
