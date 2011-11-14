@@ -58,7 +58,7 @@ package Game
 			}
 			//sinon
 			else {
-				m_posCam.x += (m_posPlanet.x - FlxG.width * 0.5) - tmp;
+				m_posCam.x += (m_posPlanet.x - FlxG.width * 0.5) - tmp - m_speedCam;
 			}
 			
 			tmp = m_posCam.x + m_speedCam + (FlxG.width * (1 - GameParams.map.zoom - GameParams.map.zoomMin));
@@ -84,18 +84,20 @@ package Game
 			}
 			//sinon
 			else {
-				m_posCam.y += (m_posPlanet.y - FlxG.height*0.5) - tmp;
+				m_posCam.y += (m_posPlanet.y - FlxG.height*0.5) - tmp - m_speedCam;
 			}
 			
+			tmp = m_posCam.y + m_speedCam + (FlxG.height * (1 - GameParams.worldZoom - GameParams.worldZoomMin));
 			//si je ne depasse pas la frontiere inferieure
-			if ( m_posCam.y + m_speedCam + (FlxG.height * (1 - GameParams.map.zoom - GameParams.map.zoomMin)) < m_initPos.y + FlxG.height*0.5 ) 
+			if ( tmp < m_initPos.y + FlxG.height*0.5 ) 
+
 			{
 				if (FlxG.mouse.screenY * FlxG.camera.zoom > FlxG.height - 30 || FlxG.keys.DOWN) {
 					m_posCam.y += m_speedCam;
 				}
 			}
 			else {
-				m_posCam.y -= m_posCam.y + m_speedCam + (FlxG.height * (1 - GameParams.map.zoom - GameParams.map.zoomMin)) - (m_initPos.y + FlxG.height*0.5);
+				m_posCam.y -= tmp - (m_initPos.y + FlxG.height*0.5);
 			}
 		}
 		
