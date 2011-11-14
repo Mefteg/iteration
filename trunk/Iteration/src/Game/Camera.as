@@ -87,7 +87,7 @@ package Game
 				m_posCam.y += (m_posPlanet.y - FlxG.height*0.5) - tmp - m_speedCam;
 			}
 			
-			tmp = m_posCam.y + m_speedCam + (FlxG.height * (1 - GameParams.worldZoom - GameParams.worldZoomMin));
+			tmp = m_posCam.y + m_speedCam + (FlxG.height * (1 - GameParams.map.zoom - GameParams.map.zoomMin));
 			//si je ne depasse pas la frontiere inferieure
 			if ( tmp < m_initPos.y + FlxG.height*0.5 ) 
 
