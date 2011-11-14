@@ -51,7 +51,7 @@ package Game.Objects
 		override public function update():void 
 		{
 			super.update();
-			m_planet.scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
+			m_planet.scale = new FlxPoint(GameParams.map.zoom, GameParams.map.zoom);
 			
 			if ( m_heart != null && m_heartHalo != null && m_heartBack != null )
 			{
@@ -59,7 +59,7 @@ package Game.Objects
 				m_heartBack.angle += 0.03;
 							
 				var pulse:Number = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
-				var pulseScale:Number = (pulse + (m_resources / 10000) * 0.7096) * GameParams.worldZoom;
+				var pulseScale:Number = (pulse + (m_resources / 10000) * 0.7096) * GameParams.map.zoom;
 				// var pulse:Number = (Math.sin(m_elapsedTime*4)/2)/(Math.cos(m_elapsedTime-4)*8);
 				m_heart.scale.x = pulseScale;
 				m_heart.scale.y = pulseScale;
@@ -70,12 +70,12 @@ package Game.Objects
 				// Change the speed of the pulse
 				m_elapsedTime += FlxG.elapsed * 8;
 				
-				m_heart.x = center().x + Math.cos(m_heart.angle) * (m_distance)*GameParams.worldZoom - m_heart.width /2;
-				m_heart.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.worldZoom - m_heart.height / 2;
-				m_heartHalo.x = center().x + Math.cos(m_heartHalo.angle) * (m_distance)*GameParams.worldZoom - m_heartHalo.width /2;
-				m_heartHalo.y = center().y - Math.sin(m_heartHalo.angle) * (m_distance) * GameParams.worldZoom - m_heartHalo.height / 2;
-				m_heartBack.x = center().x + Math.cos(m_heartBack.angle) * (m_distance)*GameParams.worldZoom - m_heartBack.width /2;
-				m_heartBack.y = center().y - Math.sin(m_heartBack.angle) * (m_distance) * GameParams.worldZoom - m_heartBack.height / 2;
+				m_heart.x = center().x + Math.cos(m_heart.angle) * (m_distance)* GameParams.map.zoom - m_heart.width /2;
+				m_heart.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.map.zoom - m_heart.height / 2;
+				m_heartHalo.x = center().x + Math.cos(m_heartHalo.angle) * (m_distance)* GameParams.map.zoom - m_heartHalo.width /2;
+				m_heartHalo.y = center().y - Math.sin(m_heartHalo.angle) * (m_distance) * GameParams.map.zoom - m_heartHalo.height / 2;
+				m_heartBack.x = center().x + Math.cos(m_heartBack.angle) * (m_distance)* GameParams.map.zoom - m_heartBack.width /2;
+				m_heartBack.y = center().y - Math.sin(m_heartBack.angle) * (m_distance) * GameParams.map.zoom - m_heartBack.height / 2;
 			}
 		}
 		

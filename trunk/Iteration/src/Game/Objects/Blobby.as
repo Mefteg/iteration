@@ -35,7 +35,7 @@ package Game.Objects
 		{
 			if (onClick()) setState("die");
 			super(pos, distance, planet);
-			scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
+			scale = new FlxPoint(GameParams.map.zoom,GameParams.map.zoom);
 			//instancier le timer de discussion
 			m_timerDiscuss = new FlxTimer();
 			m_speed = 0.2;
@@ -65,7 +65,7 @@ package Game.Objects
 			addAnimation("discuss", MathUtils.getArrayofNumbers(15, 21) , 5 +FlxG.random() * 2, true);
 			addAnimation("eat", MathUtils.getArrayofNumbers(42,48) , 5 +FlxG.random() * 2, true);
 			addAnimation("swallow",[48,47,46,45,44,43,42] , 5 +FlxG.random() * 2, true);
-			addAnimation("die", MathUtils.getArrayofNumbers(54,62) , 2 +FlxG.random() * 2, true);
+			addAnimation("die", MathUtils.getArrayofNumbers(54,61) , 2 +FlxG.random() * 2, true);
 		}
 		
 		override public function update():void 

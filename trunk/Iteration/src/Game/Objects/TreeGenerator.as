@@ -23,8 +23,8 @@ package Game.Objects
 
 		public function TreeGenerator(planet:Planet,playState:PlayState)
 		{
-			m_trees = new Array(GameParams.nbTrees);
-			m_treeTimer = new Array(GameParams.nbTrees);
+			m_trees = new Array(GameParams.map.m_treeNumber);
+			m_treeTimer = new Array(GameParams.map.m_treeNumber);
 			
 			m_playState = playState;
 			
@@ -33,7 +33,7 @@ package Game.Objects
 		
 		override public function draw():void 
 		{
-			for ( var i:uint = 0 ; i < GameParams.nbTrees ; i++ )
+			for ( var i:uint = 0 ; i < GameParams.map.m_treeNumber ; i++ )
 			{
 				if ( m_trees[i] != null )
 				{
@@ -46,7 +46,7 @@ package Game.Objects
 		{
 			super.update();
 			
-			for ( var i:uint = 0 ; i < GameParams.nbTrees ; i++ )
+			for ( var i:uint = 0 ; i < GameParams.map.m_treeNumber ; i++ )
 			{
 				if ( m_treeTimer[i] != null )
 				{
@@ -88,7 +88,7 @@ package Game.Objects
 		{
 			this.clear();
 			
-			for ( var i:uint = 0 ; i < GameParams.nbTrees ; i++ )
+			for ( var i:uint = 0 ; i < GameParams.map.m_treeNumber ; i++ )
 			{
 				m_treeTimer[i] = new FlxTimer();
 				m_treeTimer[i].start(FlxG.random() * 20);
