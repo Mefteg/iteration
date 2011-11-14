@@ -3,5 +3,5 @@
 	<planet size="10" resources="10000" />
 	<blobby initNb="4" speed="0.1" lifetime="3" />
 	<tree nbFruitMax="3" lifetime="5" />
-	<meteor nbByCycle="1" speed="0.5" />
+	<meteor nbByCycle="1" speed="0.1" />
 </data>
