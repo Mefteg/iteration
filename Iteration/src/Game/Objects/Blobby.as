@@ -45,6 +45,8 @@ package Game.Objects
 			//Diminuer les ressources
 			m_planet.removeResources(100);
 			m_distance += 43;
+			//vitesse
+			m_speed = GameParams.map.m_blobbySpeed;
 						
 			//initialisation de l'animation
 			m_state = "walk";

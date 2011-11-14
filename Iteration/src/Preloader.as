@@ -2,6 +2,7 @@ package
 {
 	import flash.events.Event;
 	import Game.Objects.Element;
+	import Globals.GameParams;
 	import org.flixel.FlxExtBitmap;
 	import org.flixel.FlxSave;
 	import org.flixel.FlxSprite;
@@ -31,6 +32,8 @@ package
 			//loader l'image du blobby
 			SpriteResources.ImgBlobby = new FlxExtBitmap("img/Blobby_Sprites.png");
 			SpriteResources.ImgBlobby.load();
+			
+			GameParams.map = new Map("xml/map1.xml");
 			
 			//création des sprites
 			//Add stuff to the buffer...

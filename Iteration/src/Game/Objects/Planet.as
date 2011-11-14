@@ -37,7 +37,7 @@ package Game.Objects
 			
 			m_blobbies = blobbies;
 			
-			m_resources = 10000;
+			m_resources = GameParams.map.m_planetResources;
 			
 			m_heart = new FlxSprite(m_planet.x, m_planet.y, SpriteResources.ImgHeart);
 			m_heartHalo = new FlxSprite(m_planet.x / 2, m_planet.y / 2, SpriteResources.ImgHeartHalo);
@@ -166,7 +166,7 @@ package Game.Objects
 		
 		public function live():void
 		{
-			m_resources = 10000;
+			m_resources = GameParams.map.m_planetResources;
 			
 			add(m_heartHalo);
 			add(m_heartBack);
