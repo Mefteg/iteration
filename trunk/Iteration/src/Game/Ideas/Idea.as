@@ -4,6 +4,7 @@ package Game.Ideas
 	import Game.Objects.Element;
 	import Game.Objects.Planet;
 	import org.flixel.FlxTimer;
+	import Utils.MathUtils;
 	
 	import Resources.SpriteResources;
 	/**
@@ -23,9 +24,12 @@ package Game.Ideas
 		public function Idea(pos:Number, distance:Number,effectDeath:int, effectBirth:int, planet:Planet ) 
 		{
 			super(pos, distance, planet);
+			setDistance(m_planet.radius() + 200);
 			m_effectBirth = effectBirth/100;
 			m_effectDeath = effectDeath / 100;
-			loadGraphic(SpriteResources.ImgIdeaWar, false, false, 277, 264);
+			loadGraphic2(SpriteResources.ImgIdeaBubble, true, false, 300, 300);
+			addAnimation("popping", MathUtils.getArrayofNumbers(0, 14), 10, false);
+			setState("waiting");
 		}
 		
 		public function setBlobby(blobby:Blobby):void {
@@ -40,15 +44,45 @@ package Game.Ideas
 			return m_effectBirth;
 		}
 		
-		override public function update():void {
-			super.update();
+		public function followBlobby() : void{
 			//déplacer l'idée par rapport au blobby
-			m_pos = m_blobby.getPos();
+			m_pos = m_blobby.getPos()+5;
+			
 			//rotater l'idée
 			rotateToPlanet();
 			//placer l'idée sur la planete
 			place();
 		}
+		
+		public function pop():void {
+			followBlobby();
+			if (finished)
+				setState("popped");
+		}
+		
+		override public function setState(state:String):void {
+			m_state = state;
+			if ( (m_state == "popping") || (m_state == "discussed"))
+				play(m_state);
+				
+		}
+		
+		override public function update():void {
+			super.update();
+			switch(m_state) {
+				case "waiting":
+					break;
+				case "popping":
+					pop();
+					break;
+				case "popped":
+					followBlobby();
+					break;
+				case "discussed":
+					break;
+			}
+		}
+		
 		
 	}
 

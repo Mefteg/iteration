@@ -55,6 +55,9 @@ package
 			SpriteResources.ImgCloud.load();
 			SpriteResources.ImgCloud2 = new FlxExtBitmap("img/cloud2.png");
 			SpriteResources.ImgCloud2.load();
+			//idées
+			SpriteResources.ImgIdeaBubble = new FlxExtBitmap("img/IdeaBubble.png");
+			SpriteResources.ImgIdeaBubble.load();
 			
 			
 			GameParams.map = new Map("xml/map1.xml");

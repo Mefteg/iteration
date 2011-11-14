@@ -60,12 +60,13 @@ package Game.Objects
 			loadGraphic2(SpriteResources.ImgBlobby, true, false, 300, 300);
 			addAnimation("idle", [0, 1, 2, 3, 4, 5], 0.2+FlxG.random() * 2, true);
 			addAnimation("walk", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 2, true);
-			addAnimation("validate", MathUtils.getArrayofNumbers(24, 32), 5 +FlxG.random() * 2, false);
-			addAnimation("duplicate", MathUtils.getArrayofNumbers(33, 41), 4 , false)
+			addAnimation("validate", MathUtils.getArrayofNumbers(24, 33), 5 +FlxG.random() * 2, false);
+			addAnimation("duplicate", MathUtils.getArrayofNumbers(36, 44), 4 , false)
 			addAnimation("discuss", MathUtils.getArrayofNumbers(15, 21) , 5 +FlxG.random() * 2, true);
-			addAnimation("eat", MathUtils.getArrayofNumbers(42,48) , 5 +FlxG.random() * 2, true);
-			addAnimation("swallow",[48,47,46,45,44,43,42] , 5 +FlxG.random() * 2, true);
-			addAnimation("die", MathUtils.getArrayofNumbers(54,61) , 2 +FlxG.random() * 2, true);
+			addAnimation("eat", MathUtils.getArrayofNumbers(45,51) , 5 +FlxG.random() * 2, false);
+			addAnimation("swallow",[51,50,49,48,47,46,45] , 5 +FlxG.random() * 2, false);
+			addAnimation("die", MathUtils.getArrayofNumbers(54,62) , 2 +FlxG.random() * 2, false);
+
 		}
 		
 		override public function update():void 
@@ -306,8 +307,8 @@ package Game.Objects
 			idea.setBlobby(this);
 			//nouvelle idée
 			m_idea = idea;
+			m_idea.setState("popping");
 			//Placer l'idée au dessus du blobby
-			m_idea.setDistance(this.m_distance + this.height);
 			m_idea.setPos(this.m_pos);
 			//chercher le blobby le plus près
 			searchNearestBlobby();
