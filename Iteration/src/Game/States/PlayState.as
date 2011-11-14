@@ -278,7 +278,7 @@ package  Game.States
 			var j:int = 0;
 			var cloud:Cloud;
 			
-			for (j = 0 ; j < GameParams.nbClouds ; j++ )
+			for (j = 0 ; j < GameParams.map.cloudsNumber ; j++ )
 			{
 				cloud = new Cloud(planet.radius() +50, planet);
 				clouds.push(cloud);

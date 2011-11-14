@@ -48,7 +48,7 @@ package Game
 			var tmp:Number;
 			
 			// On replace la camera
-			tmp = m_posCam.x - m_speedCam - (FlxG.width * (1 - GameParams.worldZoom - GameParams.worldZoomMin));
+			tmp = m_posCam.x - m_speedCam - (FlxG.width * (1 - GameParams.map.zoom - GameParams.map.zoomMin));
 			//si je ne depasse pas la frontiere gauche
 			if ( tmp > m_initPos.x - FlxG.width*0.5 ) 
 			{
@@ -61,7 +61,7 @@ package Game
 				m_posCam.x += (m_posPlanet.x - FlxG.width * 0.5) - tmp;
 			}
 			
-			tmp = m_posCam.x + m_speedCam + (FlxG.width * (1 - GameParams.worldZoom - GameParams.worldZoomMin));
+			tmp = m_posCam.x + m_speedCam + (FlxG.width * (1 - GameParams.map.zoom - GameParams.map.zoomMin));
 			//si je ne depasse pas la frontiere droite
 			if (  tmp < m_posPlanet.x + FlxG.width*0.5 ) 
 			{
@@ -73,11 +73,12 @@ package Game
 				m_posCam.x -= tmp - (m_posPlanet.x + FlxG.width * 0.5);
 			}
 			
-			tmp = m_posCam.y - m_speedCam - (FlxG.height * (1 - GameParams.worldZoom - GameParams.worldZoomMin));
+			tmp = m_posCam.y - m_speedCam - (FlxG.height * (1 - GameParams.map.zoom - GameParams.map.zoomMin));
 			//si je ne depasse pas la frontiere gauche
 			if (  tmp > m_posPlanet.y - FlxG.height*0.5 ) 
 			{
-				if (FlxG.mouse.screenY * FlxG.camera.zoom < 30 || FlxG.keys.UP) {
+				if (FlxG.mouse.screenY * FlxG.camera.zoom < 30 || FlxG.keys.UP) 
+				{
 					m_posCam.y -= m_speedCam;
 				}
 			}
@@ -87,26 +88,26 @@ package Game
 			}
 			
 			//si je ne depasse pas la frontiere inferieure
-			if ( m_posCam.y + m_speedCam + (FlxG.height * (1 - GameParams.worldZoom - GameParams.worldZoomMin)) < m_initPos.y + FlxG.height*0.5 ) 
+			if ( m_posCam.y + m_speedCam + (FlxG.height * (1 - GameParams.map.zoom - GameParams.map.zoomMin)) < m_initPos.y + FlxG.height*0.5 ) 
 			{
 				if (FlxG.mouse.screenY * FlxG.camera.zoom > FlxG.height - 30 || FlxG.keys.DOWN) {
 					m_posCam.y += m_speedCam;
 				}
 			}
 			else {
-				m_posCam.y -= m_posCam.y + m_speedCam + (FlxG.height * (1 - GameParams.worldZoom - GameParams.worldZoomMin)) - (m_initPos.y + FlxG.height*0.5);
+				m_posCam.y -= m_posCam.y + m_speedCam + (FlxG.height * (1 - GameParams.map.zoom - GameParams.map.zoomMin)) - (m_initPos.y + FlxG.height*0.5);
 			}
 		}
 		
 		// Gere le zoom de la camera
 		protected function cameraZoom():void {
-			if ( FlxG.keys.Z && GameParams.worldZoom < GameParams.worldZoomMax ) 
+			if ( FlxG.keys.Z && GameParams.map.zoom < GameParams.map.zoomMax ) 
 			{
-				GameParams.worldZoom += m_zoomCam;
+				GameParams.map.zoom += m_zoomCam;
 			}
-			if ( FlxG.keys.S && GameParams.worldZoom > GameParams.worldZoomMin ) 
+			if ( FlxG.keys.S && GameParams.map.zoom > GameParams.map.zoomMin ) 
 			{
-				GameParams.worldZoom -= m_zoomCam;
+				GameParams.map.zoom -= m_zoomCam;
 			}
 		}
 		
@@ -115,7 +116,7 @@ package Game
 			// On replace la camera au centre de la planete
 			if ( FlxG.keys.SPACE ) 
 			{
-				//GameParams.worldZoom = GameParams.worldZoomMin;
+				//GameParams.map.zoom = GameParams.map.zoomMin;
 				//m_posCam = m_initPos;
 				//m_posCam = m_posPlanet;
 			}

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
+	<zoom min="0.3" max="1" actual="0.3" />
 	<planet size="10" resources="10000" />
 	<blobby initNb="4" speed="0.1" lifetime="3" />
-	<tree nbFruitMax="3" lifetime="5" />
+	<tree number="10" nbFruitMax="3" lifetime="5" />
+	<cloud number="6" scale="1" />
 	<meteor nbByCycle="1" speed="0.1" />
 </data>

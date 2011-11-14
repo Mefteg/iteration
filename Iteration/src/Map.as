@@ -19,13 +19,26 @@ package
 	public class Map extends EventDispatcher
 	{
 		public var m_xml:XML;
+		
+		
+		public var zoom:Number;
+		public var zoomMin:Number;
+		public var zoomMax:Number;
+		
 		public var m_planetSize:Number;
 		public var m_planetResources:int;
+		
 		public var m_blobbyLifetime:int;
 		public var m_blobbySpeed:Number;
 		public var m_blobbyInitNb:int;
+		
+		public var m_treeNumber:int;
 		public var m_treeNbFruitMax:int;
 		public var m_treeLifetime:int;
+		
+		public var cloudsNumber:uint;
+		public var cloudsScale:Number;
+		
 		public var m_meteorNbByCycle:int;
 		public var m_meteorSpeed:Number;
 		
@@ -49,13 +62,25 @@ package
 		private function onComplete(e:Event):void
 		{
 			m_xml = new XML(e.target.data);
+			
+			zoomMin = m_xml.zoom.@min;
+			zoomMax = m_xml.zoom.@max;
+			zoom = m_xml.zoom.@actual;
+			
 			m_planetSize = m_xml.planet.@size;
 			m_planetResources = m_xml.planet.@resources;
+			
 			m_blobbyLifetime = m_xml.blobby.@lifetime;
 			m_blobbySpeed = m_xml.blobby.@speed;
 			m_blobbyInitNb = m_xml.blobby.@initNb;
+			
+			m_treeNumber = m_xml.tree.@number;
 			m_treeLifetime = m_xml.tree.@lifetime;
 			m_treeNbFruitMax = m_xml.tree.@nbFruitMax;
+			
+			cloudsNumber = m_xml.cloud.@number;
+			cloudsScale = m_xml.cloud.@scale;
+			
 			m_meteorNbByCycle = m_xml.meteor.@nbByCycle;
 			m_meteorSpeed = m_xml.meteor.@speed;
 			

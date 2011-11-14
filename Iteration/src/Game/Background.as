@@ -14,13 +14,13 @@ package Game
 		
 		public function Background(pos:FlxPoint, sprite:Class, planet:Planet) {
 			super(pos.x, pos.y, sprite);
-			scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
+			scale = new FlxPoint(GameParams.map.zoom+0.5, GameParams.map.zoom+0.5);
 			m_planet = planet;
 		}
 		
 		override public function update():void {
 			super.update();
-			scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
+			scale = new FlxPoint(GameParams.map.zoom+0.5, GameParams.map.zoom+0.5);
 			place();
 		}
 		

@@ -36,7 +36,7 @@ package Game.Objects
 			if (!visible) return;
 			super.update();
 			
-			scale = new FlxPoint(GameParams.worldZoom, GameParams.worldZoom);
+			scale = new FlxPoint(GameParams.map.zoom,GameParams.map.zoom);
 		}
 		
 		override public function draw():void {
@@ -51,8 +51,8 @@ package Game.Objects
 			//conversion en radians de l'angle de position sur le cercle(planete)
 			var angle:Number = (Math.PI / 180) * m_pos ;
 
-			x = m_planet.center().x + Math.cos(angle) * (m_distance)*GameParams.worldZoom - this.width /2;
-			y = m_planet.center().y - Math.sin(angle) * (m_distance)*GameParams.worldZoom - this.height/2;
+			x = m_planet.center().x + Math.cos(angle) * (m_distance)* GameParams.map.zoom - this.width /2;
+			y = m_planet.center().y - Math.sin(angle) * (m_distance)* GameParams.map.zoom - this.height/2;
 		}
 		
 		//effectue une rotation pour placer le bas du sprite sur la surface de la planete
