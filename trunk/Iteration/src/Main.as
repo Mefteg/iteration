@@ -13,8 +13,7 @@ package
 	{
 		
 		public function Main():void 
-		{
-			
+		{			
 			super(GameParams.width,GameParams.height,PlayState,1);
 		}
 			

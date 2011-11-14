@@ -9,6 +9,7 @@ package Globals
 	public class GameParams 
 	{
 		static public var camera:FlxCamera;
+		static public var map:Map;
 		static public var width:uint = 1280;
 		static public var height:uint = 720;
 		static public var scale:Number = 0.4096;
@@ -20,7 +21,7 @@ package Globals
 		static public var planetRadius:uint = 350;
 		
 		static public var worldZoomMax:Number = 1;
-		static public var worldZoomMin:Number = 0.4;
+		static public var worldZoomMin:Number = 0.3;
 		static public var worldZoom:Number = worldZoomMin;
 
 	}

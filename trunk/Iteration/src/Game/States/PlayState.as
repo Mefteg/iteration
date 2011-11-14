@@ -42,6 +42,7 @@ package  Game.States
 		//Background
 		private var m_background:Background;
 		
+		//State
 		private var m_state:String = "";
 		
 		//itération
@@ -81,12 +82,6 @@ package  Game.States
 		{
 					
 			FlxG.bgColor =  0xff0a216b ;
-			//FlxG.bgColor = 0xffecebb3;
-			
-
-			
-			// On charge la map
-			//var map1:Map = new Map("map/test.xml");
 			
 			//------CREER LA PLANETE-----------------
 			planet = new Planet( FlxG.width / 2 , FlxG.height / 2, blobbies);
