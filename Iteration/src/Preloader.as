@@ -1,7 +1,7 @@
 package  
 {
 	import flash.events.Event;
-	import Game.Objects.Element;
+	import Game.Objects.*;
 	import Globals.GameParams;
 	import org.flixel.FlxExtBitmap;
 	import org.flixel.FlxSave;
@@ -24,6 +24,15 @@ package
 		}
 		
 		override protected function create():void {
+			//loader la planete
+			SpriteResources.ImgPlnt = new FlxExtBitmap("img/planet.png");
+			SpriteResources.ImgPlnt.load();
+			SpriteResources.ImgHeart = new FlxExtBitmap("img/heart.png");
+			SpriteResources.ImgHeart.load();
+			SpriteResources.ImgHeartHalo = new FlxExtBitmap("img/heartHalo.png");
+			SpriteResources.ImgHeartHalo.load();
+			SpriteResources.ImgHeartBack = new FlxExtBitmap("img/heartBack.png");
+			SpriteResources.ImgHeartBack.load();
 			//loader l'image de l'arbre 
 			SpriteResources.ImgTreeGrow = new FlxExtBitmap("img/tree_anim_grow.png");
 			SpriteResources.ImgTreeGrow.load();
@@ -32,6 +41,21 @@ package
 			//loader l'image du blobby
 			SpriteResources.ImgBlobby = new FlxExtBitmap("img/Blobby_Sprites.png");
 			SpriteResources.ImgBlobby.load();
+			//loader l'image du meteor
+			SpriteResources.ImgMeteor = new FlxExtBitmap("img/meteor.png");
+			SpriteResources.ImgMeteor.load();
+			//loader l'image du meteor de vie
+			SpriteResources.ImgMeteorLife = new FlxExtBitmap("img/meteor_vie.png");
+			SpriteResources.ImgMeteorLife.load();
+			//loader l'image de l'explosion du meteor
+			SpriteResources.ImgExplosionMeteor = new FlxExtBitmap("img/explosion_meteor.png");
+			SpriteResources.ImgExplosionMeteor.load();
+			//nuages
+			SpriteResources.ImgCloud = new FlxExtBitmap("img/cloud1.png");
+			SpriteResources.ImgCloud.load();
+			SpriteResources.ImgCloud2 = new FlxExtBitmap("img/cloud2.png");
+			SpriteResources.ImgCloud2.load();
+			
 			
 			GameParams.map = new Map("xml/map1.xml");
 			
@@ -43,6 +67,7 @@ package
 		override protected function update(Percent:Number):void {
 			//Update the graphics...
 			super.update(Percent);		
+			
 		}
 		
 		

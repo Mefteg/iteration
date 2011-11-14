@@ -1,34 +1,35 @@
 package Resources 
 {
 	import flash.text.engine.EastAsianJustifier;
+	import Game.Objects.*;
 	import org.flixel.FlxExtBitmap;
+	import org.flixel.FlxSprite;
 	/**
 	 * ...
 	 * @author LittleWhite
 	 */
 	public class SpriteResources 
 	{
+		public static var ImgPlnt:FlxExtBitmap;
+		public static var ImgHeart:FlxExtBitmap;
+		public static var ImgHeartHalo:FlxExtBitmap;
+		public static var ImgHeartBack:FlxExtBitmap;
+		
 		public static var ImgTreeGrow:FlxExtBitmap;
 		public static var ImgTreeDie:FlxExtBitmap;
 		public static var ImgBlobby:FlxExtBitmap;
+		public static var ImgMeteor:FlxExtBitmap;
+		public static var ImgMeteorLife:FlxExtBitmap;
+		public static var ImgExplosionMeteor:FlxExtBitmap;
+		
+		public static var ImgCloud:FlxExtBitmap;
+		public static var ImgCloud2:FlxExtBitmap;
+		//public static var ImgIdeaWar:FlxExtBitmap;
+		
+		public static var BufferTreeGrow:Tree;
 		//background
 		[Embed(source = "../../bin/img/fond.jpg")] public static var ImgBackground:Class;
-				
-				
-		//meteor
-		[Embed(source = "../../bin/img/meteor.png")] public static var ImgMeteor:Class;
-		[Embed(source = "../../bin/img/explosion_meteor.png")] public static var ImgExplosionMeteor:Class;
-		
-		//Planet
-		[Embed(source = "../../bin/img/planet.png")] public static var ImgPlnt:Class;
-		[Embed(source = "../../bin/img/heart.png")] public static var ImgHeart:Class;
-		[Embed(source = "../../bin/img/heartHalo.png")] public static var ImgHeartHalo:Class;
-		[Embed(source = "../../bin/img/heartBack.png")] public static var ImgHeartBack:Class;
-		
-
-		[Embed(source = "../../bin/img/cloud1.png")] public static var ImgCloud:Class;
-		[Embed(source = "../../bin/img/cloud2.png")] public static var ImgCloud2:Class;
-
+						
 		
 		[Embed(source = "../../bin/img/idee_guerre.png")] public static var ImgIdeaWar:Class;
 		

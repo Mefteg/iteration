@@ -29,7 +29,8 @@ package Game.Objects
 		
 		public function Planet(x:Number, y:Number, blobbies:Array) 
 		{
-			m_planet = new FlxSprite(x, y, SpriteResources.ImgPlnt);
+			m_planet = new FlxSprite(x, y);
+			m_planet.loadGraphic2( SpriteResources.ImgPlnt,false,false,1400,1400);
 			add(m_planet);
 			
 			m_center = new Point(x + m_planet.width / 2, y + m_planet.height / 2);
@@ -39,9 +40,12 @@ package Game.Objects
 			
 			m_resources = GameParams.map.m_planetResources;
 			
-			m_heart = new FlxSprite(m_planet.x, m_planet.y, SpriteResources.ImgHeart);
-			m_heartHalo = new FlxSprite(m_planet.x / 2, m_planet.y / 2, SpriteResources.ImgHeartHalo);
-			m_heartBack = new FlxSprite(m_planet.x / 2, m_planet.y / 2, SpriteResources.ImgHeartBack);
+			m_heart = new FlxSprite(m_planet.x, m_planet.y);
+			m_heart.loadGraphic2( SpriteResources.ImgHeart,false,false,1600,1600);
+			m_heartHalo = new FlxSprite(m_planet.x / 2, m_planet.y / 2);
+			m_heartHalo.loadGraphic2( SpriteResources.ImgHeartHalo,false,false,1600,1600);
+			m_heartBack = new FlxSprite(m_planet.x / 2, m_planet.y / 2);
+			m_heartBack.loadGraphic2( SpriteResources.ImgHeartBack,false,false,1600,1600);
 		}
 		
 		override public function update():void 

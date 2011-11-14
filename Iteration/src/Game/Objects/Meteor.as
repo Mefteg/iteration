@@ -26,12 +26,15 @@ package Game.Objects
 		private var m_hasExploded:Boolean = false;
 		private var m_giveLife:Boolean ;
 		
-		public function Meteor(sprite:Class,roamingDistance:Number,planet:Planet,glife:Boolean) 
+		public function Meteor(roamingDistance:Number,planet:Planet,glife:Boolean) 
 		{
 			super(0, roamingDistance * 2, planet);
 			m_roamingDistance = roamingDistance;
 			//Créer l'image
-			loadGraphic(sprite, false, false, 351, 333);
+			if (glife)
+				loadGraphic2(SpriteResources.ImgMeteorLife, false, false, 166,171);
+			else
+				loadGraphic2(SpriteResources.ImgMeteor, false, false, 351, 333);
 			m_speed = GameParams.map.m_meteorSpeed;
 
 			//dimensionner le météore par rapport a la planete
@@ -39,7 +42,7 @@ package Game.Objects
 			this.scale.y = (0.1 * planet.getWidth()) / height;
 			//créer l'explosion
 			m_explosion = new Element(m_pos, planet.radius()+270, planet);
-			m_explosion.loadGraphic(SpriteResources.ImgExplosionMeteor, true, false, 662, 709);
+			m_explosion.loadGraphic2(SpriteResources.ImgExplosionMeteor, true, false, 662, 709);
 			m_explosion.addAnimation("explode", MathUtils.getArrayofNumbers(0, 13), 6, false);
 			m_explosion.visible = false;
 			m_giveLife = glife;
