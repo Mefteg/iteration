@@ -53,7 +53,7 @@ package Game.Objects
 					if ( m_treeTimer[i].finished )
 					{
 						m_trees[i] = new Tree(m_planet.center(), m_planet , m_trees);
-						m_playState.add(m_trees[i]);
+						// m_playState.add(m_trees[i]);
 						m_treeTimer[i].destroy;
 						m_treeTimer[i] = null;
 					}

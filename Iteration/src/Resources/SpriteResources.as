@@ -18,7 +18,10 @@ package Resources
 		
 		public static var ImgTreeGrow:FlxExtBitmap;
 		public static var ImgTreeDie:FlxExtBitmap;
+		public static var ImgTreeRoots:FlxExtBitmap;
+		
 		public static var ImgBlobby:FlxExtBitmap;
+		
 		public static var ImgMeteor:FlxExtBitmap;
 		public static var ImgMeteorLife:FlxExtBitmap;
 		public static var ImgExplosionMeteor:FlxExtBitmap;
