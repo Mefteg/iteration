@@ -49,7 +49,7 @@ package Game.Objects
 			m_speed = GameParams.map.m_blobbySpeed;
 						
 			//initialisation de l'animation
-			m_state = "walk";
+			m_state = "idle";
 			generateAnimations();
 			
 			place();			
@@ -62,7 +62,7 @@ package Game.Objects
 			addAnimation("walk", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 2, true);
 			addAnimation("search", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 3, true);
 			addAnimation("validate", MathUtils.getArrayofNumbers(24, 33), 5 +FlxG.random() * 2, false);
-			addAnimation("duplicate", MathUtils.getArrayofNumbers(36, 44), 4 , false)
+			addAnimation("duplicate", MathUtils.getArrayofNumbers(36, 44), 5 , false)
 			addAnimation("discuss", MathUtils.getArrayofNumbers(15, 21) , 5 +FlxG.random() * 2, true);
 			addAnimation("eat", MathUtils.getArrayofNumbers(45,51) , 5 +FlxG.random() * 2, false);
 			addAnimation("swallow",[51,50,49,48,47,46,45] , 5 +FlxG.random() * 2, false);
@@ -128,6 +128,11 @@ package Game.Objects
 			//si l'anim de mitose est finie
 			if (finished) 
 			{
+				if (m_blobbyBirth == null) {
+					//même chose pour ce blobby
+					setState("idle");
+					return;
+				}
 				//placer le nouveau blobby
 				m_blobbyBirth.setPos(getPos() - 5.5);
 				setPos(getPos() + 5);
@@ -140,8 +145,6 @@ package Game.Objects
 					m_blobbyBirth.setState("idle");
 				//supprimer sa référence
 				m_blobbyBirth = null;
-				//même chose pour ce blobby
-				setState("idle");
 			}
 		}
 				
@@ -172,18 +175,22 @@ package Game.Objects
 		}
 		
 		public function search():void {
+			
+			//si le blobby cible est mort ou occupé, en chercher un autre
+			if (!m_blobTarget)
+				searchNearestBlobby();
+				
 			if ( collideWithBlobby(m_blobTarget) ) {
+				//si le blobby est occupé on attend
+				if (m_blobTarget.isBusy()) return;
 				//démarrer le timer de discussion
 				m_timerDiscuss.start(m_discussTime);
 				//changer les états des deux blobby en "discussion"
 				m_blobTarget.setState("discuss");
 				this.setState("discuss");
+				//sigifier a l'idée qu'elle est discutée
 				m_idea.setState("discussed");
 			}
-			//si le blobby cible est mort, en chercher un autre
-			if (m_blobTarget && m_blobTarget.getState() =="die")
-				searchNearestBlobby();
-				
 			
 			var dist:Number = this.m_pos - m_blobTarget.m_pos;
 			if ( this.m_pos > 270 && m_blobTarget.m_pos < 180 )
@@ -372,7 +379,7 @@ package Game.Objects
 		}
 		
 		public function isBusy():Boolean {
-			return (m_state != "walk") && (m_state != "idle") ; 
+			return ((m_state != "walk") && (m_state != "idle")) || !visible ; 
 		}
 		
 		public function collideWithBlobby(blobby:Blobby):Boolean 

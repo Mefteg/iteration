@@ -15,20 +15,22 @@ package Game.Ideas
 	{
 		
 		private var m_blobby:Blobby; //reference vers le blobby possédant l'idée
-		
+		private var m_name:String; //nom de l'idée, aussi utilisé pour charger l'image
 		private var m_effectDeath:Number;//effet sur la mortalité
 		private var m_effectBirth:Number;//Effet sur la natalité
 				
 		private var timer:FlxTimer = new FlxTimer(); // timer pour la solidification de l'idée
 		
-		public function Idea(pos:Number, distance:Number,effectDeath:int, effectBirth:int, planet:Planet ) 
+		public function Idea(pos:Number, distance:Number, name:String, effectDeath:int, effectBirth:int, planet:Planet ) 
 		{
 			super(pos, distance, planet);
 			setDistance(m_planet.radius() + 200);
+			m_name = name;
 			m_effectBirth = effectBirth/100;
 			m_effectDeath = effectDeath / 100;
 			loadGraphic2(SpriteResources.ImgIdeaBubble, true, false, 300, 300);
 			addAnimation("popping", MathUtils.getArrayofNumbers(0, 14), 10, false);
+			addAnimation("discussed", MathUtils.getArrayofNumbers(0, 14), 10, false);
 			setState("waiting");
 		}
 		
@@ -55,20 +57,18 @@ package Game.Ideas
 		}
 		
 		public function pop():void {
-			followBlobby();
 			if (finished)
 				setState("popped");
 		}
 		
 		override public function setState(state:String):void {
 			m_state = state;
-			if ( (m_state == "popping") || (m_state == "discussed"))
-				play(m_state);
-				
+			play(m_state);
 		}
 		
 		override public function update():void {
 			super.update();
+			followBlobby();
 			switch(m_state) {
 				case "waiting":
 					break;

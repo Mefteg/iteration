@@ -84,13 +84,13 @@ package
 			
 			//IDEES
 			m_ideas = new Array();
-			var idea:Idea = new Idea(0, 0, 10, 0, m_planet);
-			var idea2:Idea = new Idea(0, 0, 10, 0, m_planet);
-			var idea3:Idea = new Idea(0, 0, 10, 0, m_planet);
-			var idea4:Idea = new Idea(0, 0, 10, 0, m_planet);
-			var idea5:Idea = new Idea(0, 0, 10, 0, m_planet);
-			var idea6:Idea = new Idea(0, 0, 10, 0, m_planet);
-			var idea7:Idea = new Idea(0, 0, 10, 0, m_planet);
+			var idea:Idea = new Idea(0, 0, "war",10, 0, m_planet);
+			var idea2:Idea = new Idea(0, 0,"medicine", 10, 0, m_planet);
+			var idea3:Idea = new Idea(0, 0,"fire", 10, 0, m_planet);
+			var idea4:Idea = new Idea(0, 0,"electricity",10, 0, m_planet);
+			var idea5:Idea = new Idea(0, 0,"hospital", 10, 0, m_planet);
+			var idea6:Idea = new Idea(0, 0,"peace", 10, 0, m_planet);
+			var idea7:Idea = new Idea(0, 0,"religion", 10, 0, m_planet);
 			m_ideas.push(idea);
 			m_ideas.push(idea2);
 			m_ideas.push(idea3);
@@ -271,7 +271,6 @@ package
 				
 			//si une idée est en cours	
 			if (m_currentIdea) {
-				trace(m_currentIdea.getState());
 				//et qu'elle a été diffusée
 				if (m_currentIdea.getState() == "spread") {
 					//on applique les changements sur l'environnement
