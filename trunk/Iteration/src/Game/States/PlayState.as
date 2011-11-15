@@ -179,7 +179,8 @@ package  Game.States
 					{
 						meteor.checkBlobbiesCollision();
 						meteor.checkTreesCollision();
-						if(meteor.hasExploded()){
+						if (meteor.hasExploded())
+						{
 							remove(meteor.getExplosion());
 							meteor.destroy();
 							remove(meteor);
@@ -187,24 +188,35 @@ package  Game.States
 						}
 					}
 					
+					// Planet death condition
 					if ( planet.isDead() || blobbies.length > 100 || (blobbies.length < 4 && m_iteration.getIterations() > 2))
 					{
+						// If we have a meteor roaming ... we delete it
 						if ( meteor != null )
 						{
 							remove(meteor.getExplosion());
 							remove(meteor);
 							meteor.destroy();
 						}
+						
+						// Create the birth meteor
 						meteor = new Meteor(planet.radius() * 2, planet,true);
 						add(meteor);
 						add(meteor.getExplosion());
 						
+						// Delete all the elements
 						while ( blobbies.length != 0 )
 						{
 							blobbies.pop().destroy();
 						}
-						
-						m_treeGenerator.clear();
+			
+						var trees:Array = m_treeGenerator.trees();
+						while ( trees.length != 0 )
+						{
+							var tree:Tree = trees.pop();
+							remove(tree);
+							tree.destroy();
+						}
 						
 						planet.explosion();
 						m_state = "Creation";

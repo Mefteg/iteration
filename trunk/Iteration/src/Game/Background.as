@@ -32,16 +32,12 @@ package Game
 		
 		public function drawBackground():void 
 		{
-			/*
-			m_backgroundSprite.scale.x = GameParams.map.zoom;
-			m_backgroundSprite.scale.y = GameParams.map.zoom;
-			*/
-			for ( var i:int = -1; i < 5 ; i++ )
+			for ( var i:int = -1; i < 6 ; i++ )
 			{
-				for ( var j:int = -1 ; j < 5 ; j++ )
+				for ( var j:int = 0 ; j < 4 ; j++ )
 				{
-					m_backgroundSprite.x = i * 512 /** GameParams.map.zoom*/;
-					m_backgroundSprite.y = j * 512 /** GameParams.map.zoom*/;
+					m_backgroundSprite.x = 1000 + i * 512;
+					m_backgroundSprite.y = j * 512;
 					m_backgroundSprite.draw();
 				}
 			}
