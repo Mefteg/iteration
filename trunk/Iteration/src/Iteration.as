@@ -140,7 +140,7 @@ package
 			{
 				//prendre un blobby au hasard
 				var blob:Blobby = m_planet.getBlobbies()[FlxU.round(Math.random() * ( m_planet.getBlobbies().length -1 ) )];
-				if ( blob != null && !blob.isBusy() )
+				if ( blob != null && !blob.isBusy() && !blob.isScholar() )
 				{
 					blob.setIdea(m_currentIdea);
 					m_scene.add(m_currentIdea);
