@@ -220,6 +220,7 @@ package  Game.States
 						
 						planet.explosion();
 						m_state = "Creation";
+						initBlobies();
 					}
 					break;
 			}

@@ -24,6 +24,7 @@ package Game.Objects
 		protected var m_timerMove:FlxTimer;
 		//idée
 		protected var m_idea:Idea;
+		protected var m_scholar:Boolean = false; // si le blobby a déjà eu une idée
 		//timer pour la discussion
 		protected var m_timerDiscuss:FlxTimer;
 		protected var m_discussTime:Number = 5;
@@ -170,6 +171,8 @@ package Game.Objects
 					m_blobTarget.color = 0x0080FF;
 					//et supprimer sa référence
 					m_blobTarget = null;
+					//le blobby est maintenant un érudit
+					m_scholar = true;
 				}
 			}
 		}
@@ -380,6 +383,10 @@ package Game.Objects
 		
 		public function isBusy():Boolean {
 			return ((m_state != "walk") && (m_state != "idle")) || !visible ; 
+		}
+		
+		public function isScholar():Boolean {
+			return m_scholar;
 		}
 		
 		public function collideWithBlobby(blobby:Blobby):Boolean 
