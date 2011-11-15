@@ -40,6 +40,8 @@ package
 			SpriteResources.ImgTreeGrow.load();
 			SpriteResources.ImgTreeDie = new FlxExtBitmap("img/tree_anim_dead.png");
 			SpriteResources.ImgTreeDie.load();
+			SpriteResources.ImgTreeRoots = new FlxExtBitmap("img/roots.png");
+			SpriteResources.ImgTreeRoots.load();
 			//loader l'image du blobby
 			SpriteResources.ImgBlobby = new FlxExtBitmap("img/Blobby_Sprites.png");
 			SpriteResources.ImgBlobby.load();

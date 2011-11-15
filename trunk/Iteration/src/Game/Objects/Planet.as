@@ -101,6 +101,8 @@ package Game.Objects
 					m_heartHalo.scale.y = pulseScale;
 					m_heartBack.scale.x = pulseScale;
 					m_heartBack.scale.y = pulseScale;
+					m_heartDeath.scale.x = pulseScale;
+					m_heartDeath.scale.y = pulseScale;
 					
 					m_heartDeath.x = center().x + Math.cos(m_heart.angle) * (m_distance)* GameParams.map.zoom - m_heart.width /2;
 					m_heartDeath.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.map.zoom - m_heart.height / 2;
@@ -147,6 +149,8 @@ package Game.Objects
 					m_heartBack.y = center().y - Math.sin(m_heartBack.angle) * (m_distance) * GameParams.map.zoom - m_heartBack.height / 2;
 					break;
 				case "Dead":
+					m_heartDeath.scale.x = 0.1 * GameParams.map.zoom;
+					m_heartDeath.scale.y = 0.1 * GameParams.map.zoom;
 					break;
 				case "Dying":
 					m_state = "Dead";
