@@ -29,7 +29,8 @@ package Resources
 		
 		public static var BufferTreeGrow:Tree;
 		//background
-		[Embed(source = "../../bin/img/fond.jpg")] public static var ImgBackground:Class;
+		public static var ImgBackground:FlxExtBitmap;
+		public static var ImgForeground:FlxExtBitmap;
 				
 		
 	}
