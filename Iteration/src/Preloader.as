@@ -33,6 +33,8 @@ package
 			SpriteResources.ImgHeartHalo.load();
 			SpriteResources.ImgHeartBack = new FlxExtBitmap("img/heartBack.png");
 			SpriteResources.ImgHeartBack.load();
+			SpriteResources.ImgHeartDeath= new FlxExtBitmap("img/heartDeath.png");
+			SpriteResources.ImgHeartDeath.load();
 			//loader l'image de l'arbre 
 			SpriteResources.ImgTreeGrow = new FlxExtBitmap("img/tree_anim_grow.png");
 			SpriteResources.ImgTreeGrow.load();

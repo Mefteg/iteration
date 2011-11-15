@@ -15,7 +15,7 @@ package Game.Objects
 	{		
 		public function Cloud(distance:Number, planet:Planet) 
 		{
-			super(0, (FlxG.random() * 50) + (distance + 350), planet);
+			super(0, (FlxG.random() * 50) + (distance + 380), planet);
 			
 			var cloud:FlxSprite;
 			if ( FlxG.random() < 0.5 )

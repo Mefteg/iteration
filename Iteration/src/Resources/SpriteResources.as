@@ -14,6 +14,7 @@ package Resources
 		public static var ImgHeart:FlxExtBitmap;
 		public static var ImgHeartHalo:FlxExtBitmap;
 		public static var ImgHeartBack:FlxExtBitmap;
+		public static var ImgHeartDeath:FlxExtBitmap;
 		
 		public static var ImgTreeGrow:FlxExtBitmap;
 		public static var ImgTreeDie:FlxExtBitmap;

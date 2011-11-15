@@ -73,6 +73,7 @@ package Game.Objects
 		
 		public function clear():void
 		{
+			// Try to delete and remove elements
 			var size:Number = m_trees.length;
 			for ( var i:uint = 0 ; i < size ; i++ )
 			{
@@ -88,6 +89,7 @@ package Game.Objects
 		{
 			this.clear();
 			
+			// Restart the process of generation of the trees
 			for ( var i:uint = 0 ; i < GameParams.map.m_treeNumber ; i++ )
 			{
 				m_treeTimer[i] = new FlxTimer();

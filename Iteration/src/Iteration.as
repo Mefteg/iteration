@@ -136,10 +136,11 @@ package
 			//pour savoir si une idée a été trouvée
 			var gotIt:Boolean = false;
 			
-			while(!gotIt){
+			while (!gotIt && m_planet.getBlobbies().length > 0)
+			{
 				//prendre un blobby au hasard
 				var blob:Blobby = m_planet.getBlobbies()[FlxU.round(Math.random() * ( m_planet.getBlobbies().length -1 ) )];
-				if ( ! blob.isBusy() )
+				if ( blob != null && !blob.isBusy() )
 				{
 					blob.setIdea(m_currentIdea);
 					m_scene.add(m_currentIdea);
