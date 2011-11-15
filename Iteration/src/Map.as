@@ -42,6 +42,15 @@ package
 		public var m_meteorNbByCycle:int;
 		public var m_meteorSpeed:Number;
 		
+		public var m_ideaEffect:Object;
+		public var m_paix:Array = new Array();
+		public var m_guerre:Array = new Array();
+		public var m_religion:Array = new Array();
+		public var m_fanatisme:Array = new Array();
+		public var m_maladie:Array = new Array();
+		public var m_medecine:Array = new Array();
+		
+		
 		public var m_loaded:Boolean;
 		
 		public function Map(url:String) 
@@ -83,6 +92,24 @@ package
 			
 			m_meteorNbByCycle = m_xml.meteor.@nbByCycle;
 			m_meteorSpeed = m_xml.meteor.@speed;
+			
+			//idées
+			m_paix.push(m_xml.idee.@paixMort); m_paix.push(m_xml.idee.@paixNat);
+			m_guerre.push(m_xml.idee.@guerreMort); m_guerre.push(m_xml.idee.@guerreNat);
+			m_religion.push(m_xml.idee.@religionMort); m_religion.push(m_xml.idee.@religionNat);
+			m_fanatisme.push(m_xml.idee.@fanatismeMort); m_fanatisme.push(m_xml.idee.@fanatismeNat);
+			m_medecine.push(m_xml.idee.@medecineMort); m_medecine.push(m_xml.idee.@medecineNat);
+			m_maladie.push(m_xml.idee.@maladieMort); m_maladie.push(m_xml.idee.@maladieNat);
+			
+			m_ideaEffect = { 
+							paix : m_paix,
+							guerre : m_guerre,
+							fanatisme : m_fanatisme,
+							medecine : m_medecine,
+							maladie : m_maladie,
+							religion : m_religion
+				
+							};
 			
 			m_loaded = true;
 		}
