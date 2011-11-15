@@ -84,12 +84,12 @@ package
 			
 			//IDEES
 			m_ideas = new Array();
-			var idea:Idea = new Idea(0, 0, "war",10, 0, m_planet);
-			var idea2:Idea = new Idea(0, 0,"medicine", 10, 0, m_planet);
-			var idea3:Idea = new Idea(0, 0,"fire", 10, 0, m_planet);
-			var idea4:Idea = new Idea(0, 0,"electricity",10, 0, m_planet);
-			var idea5:Idea = new Idea(0, 0,"hospital", 10, 0, m_planet);
-			var idea6:Idea = new Idea(0, 0,"peace", 10, 0, m_planet);
+			var idea:Idea = new Idea(0, 0, "guerre",10, 0, m_planet);
+			var idea2:Idea = new Idea(0, 0,"medecine", 10, 0, m_planet);
+			var idea3:Idea = new Idea(0, 0,"deforestation", 10, 0, m_planet);
+			var idea4:Idea = new Idea(0, 0,"fanatisme",10, 0, m_planet);
+			var idea5:Idea = new Idea(0, 0,"ecologie", 10, 0, m_planet);
+			var idea6:Idea = new Idea(0, 0,"paix", 10, 0, m_planet);
 			var idea7:Idea = new Idea(0, 0,"religion", 10, 0, m_planet);
 			m_ideas.push(idea);
 			m_ideas.push(idea2);
@@ -147,6 +147,7 @@ package
 					gotIt = true;
 				}
 			}
+			trace(m_currentIdea.getName());
 		}
 		
 		//calcule le nombre de morts et de naissances
@@ -289,6 +290,9 @@ package
 					//si elle a été killée, elle peut réapparaitre donc on la sort juste de la scene
 					m_currentIdea.setState("waiting");
 					m_scene.remove(m_currentIdea);
+					//mettre le timer en pause
+					m_timerIdea.pause();
+					m_currentIdea = null;
 				}
 			}
 		}

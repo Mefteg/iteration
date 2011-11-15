@@ -281,6 +281,7 @@ package Game.Objects
 		public function explosion():void
 		{			
 			m_state = "Dying";
+						
 		}
 	}
 
