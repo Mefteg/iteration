@@ -84,18 +84,18 @@ package
 			
 			//IDEES
 			m_ideas = new Array();
-			var idea:Idea = new Idea(0, 0, "guerre",10, 0, m_planet);
-			var idea2:Idea = new Idea(0, 0,"medecine", 10, 0, m_planet);
-			var idea3:Idea = new Idea(0, 0,"deforestation", 10, 0, m_planet);
-			var idea4:Idea = new Idea(0, 0,"fanatisme",10, 0, m_planet);
-			var idea5:Idea = new Idea(0, 0,"ecologie", 10, 0, m_planet);
-			var idea6:Idea = new Idea(0, 0,"paix", 10, 0, m_planet);
-			var idea7:Idea = new Idea(0, 0,"religion", 10, 0, m_planet);
+			var idea:Idea = new Idea(0, 0, "guerre", m_planet);
+			var idea2:Idea = new Idea(0, 0,"medecine",  m_planet);
+			//var idea3:Idea = new Idea(0, 0,"deforestation", 10, 0, m_planet);
+			var idea4:Idea = new Idea(0, 0,"fanatisme", m_planet);
+			var idea5:Idea = new Idea(0, 0,"maladie",  m_planet);
+			var idea6:Idea = new Idea(0, 0,"paix", m_planet);
+			var idea7:Idea = new Idea(0, 0,"religion", m_planet);
 			m_ideas.push(idea);
 			m_ideas.push(idea2);
-			m_ideas.push(idea3);
+			//m_ideas.push(idea3);
 			m_ideas.push(idea4);
-			m_ideas.push(idea5);
+			//m_ideas.push(idea5);
 			m_ideas.push(idea6);
 			m_ideas.push(idea7);
 		}

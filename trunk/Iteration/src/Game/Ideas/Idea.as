@@ -3,6 +3,7 @@ package Game.Ideas
 	import Game.Objects.Blobby;
 	import Game.Objects.Element;
 	import Game.Objects.Planet;
+	import Globals.GameParams;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTimer;
 	import Utils.MathUtils;
@@ -25,13 +26,13 @@ package Game.Ideas
 		private var timerAnim:FlxTimer = new FlxTimer();//timer pour simuler une animation de la bulle d'idée en discussion
 		private var indexAnim:int = 0;
 		
-		public function Idea(pos:Number, distance:Number, name:String, effectDeath:int, effectBirth:int, planet:Planet ) 
+		public function Idea(pos:Number, distance:Number, name:String, planet:Planet ) 
 		{
 			super(pos, distance, planet);
 			setDistance(m_planet.radius() + 150);
 			m_name = name;
-			m_effectBirth = effectBirth/100;
-			m_effectDeath = effectDeath / 100;
+			m_effectBirth = GameParams.map.m_ideaEffect[m_name][1]/100;
+			m_effectDeath = GameParams.map.m_ideaEffect[m_name][0] / 100;
 			timerAnim.finished = true;
 			//charger la bulle
 			loadGraphic2(SpriteResources.ImgIdeaBubble, true, false, 300, 300);

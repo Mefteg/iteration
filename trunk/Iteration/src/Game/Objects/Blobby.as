@@ -176,7 +176,7 @@ package Game.Objects
 		
 		public function search():void {
 			
-			//si le blobby cible est mort ou occupé, en chercher un autre
+			//si le blobby cible est mort , en chercher un autre
 			if (!m_blobTarget)
 				searchNearestBlobby();
 				
