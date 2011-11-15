@@ -127,5 +127,11 @@ package Game
 		public function setPosPlanet(pos:FlxPoint) {
 			m_posPlanet = pos;
 		}
+		
+		public function getPosition():FlxPoint
+		{
+			return m_posCam;
+		}
+		
 	}
 }

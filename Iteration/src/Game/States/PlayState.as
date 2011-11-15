@@ -91,9 +91,12 @@ package  Game.States
 			
 			planet.setTrees(m_treeGenerator.trees());
 			
+			//----------CREER LA CAMERA-------------
+			m_camera = new Camera(planet.getMidpoint(), 0, 0, FlxG.width * 2, FlxG.height * 2, true);
+			m_camera.setPosPlanet(planet.getMidpoint());
+			
 			//------CREER LE BACKGROUND--------------
-			m_background = new Game.Background(new FlxPoint(0, 0), SpriteResources.ImgBackground, planet);
-			add(m_background);
+			m_background = new Game.Background(m_camera);
 			
 			
 			m_state = "Creation";
@@ -116,13 +119,7 @@ package  Game.States
 			initClouds();
 			
 			// On affiche la souris
-			FlxG.mouse.show();	
-
-			//----------CREER LA CAMERA-------------
-			m_camera = new Camera(planet.getMidpoint(), 0, 0, FlxG.width * 2, FlxG.height * 2, true);
-			m_camera.setPosPlanet(planet.getMidpoint());
-			
-			
+			FlxG.mouse.show();				
 		}
 		
 		override public function update():void 
@@ -216,6 +213,15 @@ package  Game.States
 			}
 			
 			super.update();	
+		}
+		
+		override public function draw():void 
+		{
+			m_background.drawBackground();
+			
+			super.draw();
+			
+			m_background.drawForeground();
 		}
 		
 		public function getElements():Array {

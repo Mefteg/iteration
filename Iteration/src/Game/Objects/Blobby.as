@@ -123,9 +123,11 @@ package Game.Objects
 			changeDirection();
 		}
 		
-		protected function duplicate():void {
+		protected function duplicate():void 
+		{
 			//si l'anim de mitose est finie
-			if (finished) {
+			if (finished) 
+			{
 				//placer le nouveau blobby
 				m_blobbyBirth.setPos(getPos() - 5.5);
 				setPos(getPos() + 5);
@@ -348,7 +350,7 @@ package Game.Objects
 				b = blobbies[i];
 				
 				//si c'est le même on passe au suivant
-				if (b == this)
+				if (b == this || b.isBusy() )
 					continue;
 					
 				dist = MathUtils.calculateDistance(this.m_pos, b.m_pos);

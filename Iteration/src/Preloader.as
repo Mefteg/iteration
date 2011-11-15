@@ -59,6 +59,12 @@ package
 			SpriteResources.ImgIdeaBubble = new FlxExtBitmap("img/IdeaBubble.png");
 			SpriteResources.ImgIdeaBubble.load();
 			
+			// fond
+			SpriteResources.ImgBackground = new FlxExtBitmap("img/background.jpg");
+			SpriteResources.ImgBackground.load();
+			SpriteResources.ImgForeground = new FlxExtBitmap("img/foreground.jpg");
+			SpriteResources.ImgForeground.load();
+			
 			
 			GameParams.map = new Map("xml/map1.xml");
 			
