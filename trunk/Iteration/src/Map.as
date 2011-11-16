@@ -20,6 +20,7 @@ package
 	{
 		public var m_xml:XML;
 		
+		public var iterationTime:Number;
 		
 		public var zoom:Number;
 		public var zoomMin:Number;
@@ -71,6 +72,8 @@ package
 		private function onComplete(e:Event):void
 		{
 			m_xml = new XML(e.target.data);
+			
+			iterationTime = m_xml.iteration.@time;
 			
 			zoomMin = m_xml.zoom.@min;
 			zoomMax = m_xml.zoom.@max;

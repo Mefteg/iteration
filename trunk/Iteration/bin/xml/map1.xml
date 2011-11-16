@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
+	<iteration time="10"/>
 	<zoom min="0.3" max="1" actual="0.3" />
 	<planet size="10" resources="10000" />
 	<blobby initNb="4" speed="0.1" lifetime="3" />

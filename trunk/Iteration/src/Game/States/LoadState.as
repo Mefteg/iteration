@@ -102,7 +102,7 @@ package Game.States
 			SpriteResources.ImgTreeDie = new FlxExtBitmap("img/tree_anim_dead.png");
 			addImage(SpriteResources.ImgTreeDie);
 			//Racines
-			SpriteResources.ImgTreeRoots = new FlxExtBitmap("img/roots.png");
+			SpriteResources.ImgTreeRoots = new FlxExtBitmap("img/roots.png");			
 			addImage(SpriteResources.ImgTreeRoots);
 			//loader l'image du blobby
 			SpriteResources.ImgBlobby = new FlxExtBitmap("img/Blobby_Sprites.png");

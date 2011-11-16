@@ -10,6 +10,7 @@ package
 	import Game.Objects.Meteor;
 	import Game.Objects.Planet;
 	import Game.States.PlayState;
+	import Globals.GameParams;
 	import org.flixel.*;
 	 
 	public class Iteration 
@@ -31,7 +32,7 @@ package
 		private var m_timerBirth:FlxTimer;//timer pour la naissance
 		private var m_timerIdea:FlxTimer; //timer pour les idées
 		
-		private var m_iterTime:Number = 10;
+		private var m_iterTime:Number;
 		private var m_iterNumber:int = 0;
 		
 		//variables pour la gestion des événements
@@ -53,6 +54,7 @@ package
 			m_scene = state;
 			m_blobbies = m_planet.getBlobbies();
 			//instancier le timer
+			m_iterTime = GameParams.map.iterationTime;
 			m_timer = new FlxTimer();
 			//et le démarrer immédiatement
 			m_timer.start(m_iterTime);
