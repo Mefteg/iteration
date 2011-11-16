@@ -1,6 +1,7 @@
 package Globals 
 {
 	import flash.media.Camera;
+	import Game.States.PlayState;
 	import org.flixel.FlxCamera;
 	/**
 	 * ...
@@ -8,6 +9,7 @@ package Globals
 	 */
 	public class GameParams 
 	{
+		static public var playstate:PlayState;
 		static public var camera:FlxCamera;
 		static public var map:Map;
 		
