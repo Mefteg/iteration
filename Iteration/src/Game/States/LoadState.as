@@ -1,6 +1,7 @@
 package Game.States 
 {
 	import flash.display.BitmapData;
+	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import Game.Objects.*;
@@ -19,6 +20,9 @@ package Game.States
 	 */
 	public class LoadState extends FlxState
 	{		
+		[Embed(source = '../../../bin/img/loading.swf')] private var Intro:Class;
+		private var movie:MovieClip;
+		
 		protected var m_state:String;
 		protected var m_images:Array;
 		protected var m_imagesSize:int;
@@ -137,6 +141,10 @@ package Game.States
 			
 			setState("Bitmap");
 			m_timerMin.start(4);
+			
+			movie = new Intro();
+			FlxG.stage.addChild(movie);
+			
 		}
 		
 		override public function update() :void{
@@ -150,7 +158,10 @@ package Game.States
 					loadGraphics();
 					break;
 				case "Loaded":
-					FlxG.switchState(new PlayState());
+					if (m_timerMin.finished) {
+						FlxG.switchState(new PlayState());
+						FlxG.stage.removeChild(movie);
+					}
 					break;
 			}
 		}
