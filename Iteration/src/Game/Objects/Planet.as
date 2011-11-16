@@ -35,6 +35,7 @@ package Game.Objects
 		public function Planet(x:Number, y:Number, blobbies:Array) 
 		{
 			m_planet = new FlxSprite(x, y);
+			
 			m_planet.loadGraphic2( SpriteResources.ImgPlnt,false,false,1400,1400);
 			add(m_planet);
 			

@@ -53,7 +53,8 @@ package Game.Objects
 			m_state = "idle";
 			generateAnimations();
 			
-			place();			
+			place();		
+			color = 0xFFB100;
 		}
 		
 		//génère les animations qui doivent etre propres au blobby

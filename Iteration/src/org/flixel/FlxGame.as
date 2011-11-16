@@ -479,7 +479,7 @@ package org.flixel
 			FlxG.resetCameras();
 			FlxG.resetInput();
 			FlxG.destroySounds();
-			FlxG.clearBitmapCache();
+			//FlxG.clearBitmapCache();
 			
 			//Clear the debugger overlay's Watch window
 			if(_debugger != null)

@@ -1,0 +1,159 @@
+package Game.States 
+{
+	import flash.display.BitmapData;
+	import flash.events.Event;
+	import flash.geom.Point;
+	import Game.Objects.*;
+	import Globals.GameParams;
+	import org.flixel.FlxExtBitmap;
+	import org.flixel.FlxG;
+	import org.flixel.FlxSave;
+	import org.flixel.FlxSprite;
+	import org.flixel.FlxState;
+	import org.flixel.FlxTimer;
+	import org.flixel.system.FlxPreloader;
+	import Resources.SpriteResources;
+	/**
+	 * ...
+	 * @author Moi
+	 */
+	public class LoadState extends FlxState
+	{		
+		protected var m_state:String;
+		protected var m_images:Array;
+		protected var m_imagesSize:int;
+		
+		protected var m_imagesLoaded:int = 0;
+		protected var m_progress:int = 0;
+		
+		protected var m_timerMin:FlxTimer;
+		
+		public function LoadState() 
+		{
+			m_images = new Array();
+			m_timerMin = new FlxTimer();
+		}
+		
+		public function getLoadImageProgress():Number {
+			m_progress = 0;
+			var allLoaded:Boolean = true;
+			for (var i:int = 0; i < m_imagesSize; i++) 
+			{
+				m_progress += m_images[i].getAdvancementInPercent();
+				allLoaded = allLoaded && m_images[i].loadComplete();
+			}
+			m_progress /= m_imagesSize;
+			if (m_progress >= 100) {
+				if (!allLoaded)
+					return 99;
+			}
+			
+			return m_progress;
+			
+		}
+		
+		public function getLoadGraphicProgress():Number {
+			return 100;
+		}
+		
+		//fonction pour charger une image et l'ajouter au tableau
+		public function addImage(image:FlxExtBitmap):void {
+			image.load();
+			m_images.push(image);
+		}
+		
+		public function loadGraphics():void {
+			for (var i:int = 0; i < m_imagesSize; i++) 
+			{
+				FlxG.addBitmapFromObject(m_images[i]);
+			}
+			//var tree:Tree = new Tree(new Point(0, 0), planet, null);
+			m_progress = 100;
+			setState("Loaded");
+		}
+		
+		public function setState(state:String):void {
+			m_state = state;
+		}
+		override public function create():void {
+			//loader la planete
+			SpriteResources.ImgPlnt = new FlxExtBitmap("img/planet.png");
+			addImage(SpriteResources.ImgPlnt);
+			//Coeur
+			SpriteResources.ImgHeart = new FlxExtBitmap("img/heart.png");
+			addImage(SpriteResources.ImgHeart);
+			//Coeur Halo
+			SpriteResources.ImgHeartHalo = new FlxExtBitmap("img/heartHalo.png");
+			addImage(SpriteResources.ImgHeartHalo);
+			//Coeur Back
+			SpriteResources.ImgHeartBack = new FlxExtBitmap("img/heartBack.png");
+			addImage(SpriteResources.ImgHeartBack);
+			//Coeur Mort
+			SpriteResources.ImgHeartDeath = new FlxExtBitmap("img/heartDeath.png");
+			addImage(SpriteResources.ImgHeartDeath);
+			//loader l'image de l'arbre 
+			SpriteResources.ImgTreeGrow = new FlxExtBitmap("img/tree_anim_grow.png");
+			addImage(SpriteResources.ImgTreeGrow);
+			//Mort arbre
+			SpriteResources.ImgTreeDie = new FlxExtBitmap("img/tree_anim_dead.png");
+			addImage(SpriteResources.ImgTreeDie);
+			//Racines
+			SpriteResources.ImgTreeRoots = new FlxExtBitmap("img/roots.png");
+			addImage(SpriteResources.ImgTreeRoots);
+			//loader l'image du blobby
+			SpriteResources.ImgBlobby = new FlxExtBitmap("img/Blobby_Sprites.png");
+			addImage(SpriteResources.ImgBlobby);
+			//loader l'image du meteor
+			SpriteResources.ImgMeteor = new FlxExtBitmap("img/meteor.png");
+			addImage(SpriteResources.ImgMeteor);
+			//loader l'image du meteor de vie
+			SpriteResources.ImgMeteorLife = new FlxExtBitmap("img/meteor_vie.png");
+			addImage(SpriteResources.ImgMeteorLife);
+			//loader l'image de l'explosion du meteor
+			SpriteResources.ImgExplosionMeteor = new FlxExtBitmap("img/explosion_meteor.png");
+			addImage(SpriteResources.ImgExplosionMeteor);
+			//nuages
+			SpriteResources.ImgCloud = new FlxExtBitmap("img/cloud1.png");
+			SpriteResources.ImgCloud2 = new FlxExtBitmap("img/cloud2.png");
+			addImage(SpriteResources.ImgCloud);
+			addImage(SpriteResources.ImgCloud2);
+			//idées
+			SpriteResources.ImgIdeaBubble = new FlxExtBitmap("img/IdeaBubble.png");
+			SpriteResources.ImgIdeas = new FlxExtBitmap("img/Ideas.png");
+			addImage(SpriteResources.ImgIdeaBubble);
+			addImage(SpriteResources.ImgIdeas);
+			
+			// fond
+			SpriteResources.ImgBackground = new FlxExtBitmap("img/fond.jpg");
+			SpriteResources.ImgForeground = new FlxExtBitmap("img/foreground.jpg");
+			addImage(SpriteResources.ImgBackground);
+			addImage(SpriteResources.ImgForeground);		
+			
+			//charger le xml
+			GameParams.map = new Map("xml/map1.xml");
+			
+			//enregistrer la taille du tableau
+			m_imagesSize = m_images.length;
+			
+			setState("Bitmap");
+			m_timerMin.start(4);
+		}
+		
+		override public function update() :void{
+			super.update();
+			switch(m_state) {
+				case "Bitmap":
+					if (getLoadImageProgress() >= 100)
+						setState("Graphic");
+					break;
+				case "Graphic":
+					loadGraphics();
+					break;
+				case "Loaded":
+					FlxG.switchState(new PlayState());
+					break;
+			}
+		}
+	}
+
+}
