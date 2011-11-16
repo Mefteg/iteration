@@ -119,20 +119,23 @@ package Game.Objects
 		
 		override public function update():void
 		{
-			super.update();		
+			super.update();
 			
-			var angle:Number = (Math.PI / 180) * m_pos ;
+			var offset:int = -9;
+			
+			var angleRoot:Number = (Math.PI / 180) * m_pos ;
+			var angleTree:Number = (Math.PI / 180) * (m_pos+offset) ;
 
-			m_roots.x = m_planet.center().x + Math.cos(angle) * (m_planet.radius()/2)* GameParams.map.zoom - m_roots.width /2;
-			m_roots.y = m_planet.center().y - Math.sin(angle) * (m_planet.radius()/2)* GameParams.map.zoom - m_roots.height/2;
-			m_treeGrow.x = m_planet.center().x + Math.cos(angle) * (m_distance)* GameParams.map.zoom - m_treeGrow.width /2;
-			m_treeGrow.y = m_planet.center().y - Math.sin(angle) * (m_distance) * GameParams.map.zoom - m_treeGrow.height / 2;
-			m_treeDie.x = m_planet.center().x + Math.cos(angle) * (m_distance)* GameParams.map.zoom - m_treeDie.width /2;
-			m_treeDie.y = m_planet.center().y - Math.sin(angle) * (m_distance)* GameParams.map.zoom - m_treeDie.height/2;
+			m_roots.x = m_planet.center().x + Math.cos(angleRoot) * (m_planet.radius()/2)* GameParams.map.zoom - m_roots.width /2;
+			m_roots.y = m_planet.center().y - Math.sin(angleRoot) * (m_planet.radius()/2)* GameParams.map.zoom - m_roots.height/2;
+			m_treeGrow.x = m_planet.center().x + Math.cos(angleTree) * (m_distance)* GameParams.map.zoom - m_treeGrow.width /2;
+			m_treeGrow.y = m_planet.center().y - Math.sin(angleTree) * (m_distance) * GameParams.map.zoom - m_treeGrow.height / 2;
+			m_treeDie.x = m_planet.center().x + Math.cos(angleTree) * (m_distance)* GameParams.map.zoom - m_treeDie.width /2;
+			m_treeDie.y = m_planet.center().y - Math.sin(angleTree) * (m_distance)* GameParams.map.zoom - m_treeDie.height/2;
 		
 			m_roots.angle = -m_pos + 90;
-			m_treeGrow.angle = -m_pos + 90;
-			m_treeDie.angle = -m_pos + 90;
+			m_treeGrow.angle = -(m_pos+offset) + 90;
+			m_treeDie.angle = -(m_pos+offset) + 90;
 			
 			m_roots.scale.x = 1.0 * GameParams.map.zoom;
 			m_roots.scale.y = 1.0  * GameParams.map.zoom;
