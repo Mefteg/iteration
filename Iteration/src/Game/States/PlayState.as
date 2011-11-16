@@ -4,6 +4,7 @@ package  Game.States
 	import flash.media.Sound;
 	import Game.Camera;
 	import Game.Background;
+	import Game.DepthBuffer;
 	import Game.Objects.Blobby;
 	import Game.Objects.Meteor;
 	import Game.Objects.Planet;
@@ -55,8 +56,13 @@ package  Game.States
 		private var m_FPSCounter:Number = 0;
 		private var m_FPS:Number = 0;	
 		
+		// Z Buffer
+		private var m_zbuffer:DepthBuffer = new DepthBuffer();
+		
 		public function PlayState() 
 		{
+			add(m_zbuffer);
+			
 			blobbies = new Array();
 			
 			clouds = new Array();
@@ -66,7 +72,7 @@ package  Game.States
 			m_text = new FlxText(10, 10, 500, FlxG.framerate.toString());
 			m_text.scrollFactor = new FlxPoint(0, 0);
 			m_text.size = 50;
-			add(m_text);
+			m_zbuffer.addForeground(m_text);
 			
 			
 			//SON
@@ -87,7 +93,7 @@ package  Game.States
 			planet = new Planet( FlxG.width / 2 , FlxG.height / 2, blobbies);
 			
 			m_treeGenerator = new TreeGenerator(planet, this);
-			add(m_treeGenerator);
+			m_zbuffer.addTrees(m_treeGenerator);
 			
 			planet.setTrees(m_treeGenerator.trees());
 			
@@ -105,7 +111,11 @@ package  Game.States
 			//initTrees();
 			
 			// On affiche la planete apres le background
-			add(planet);
+			m_zbuffer.addBackground(planet);
+			m_zbuffer.addForeground(planet.getDeadHeartSprite());
+			m_zbuffer.addForeground(planet.getHaloHeartSprite());
+			m_zbuffer.addForeground(planet.getBackHeartSprite());
+			m_zbuffer.addForeground(planet.getHeartSprite());
 			
 			//-------CREER LES BLOBBIES--------------			
 			initBlobies();
@@ -113,8 +123,8 @@ package  Game.States
 			//----------CREER LE METEOR-------------
 			// poncepermis
 			meteor = new Meteor( planet.radius() * 2, planet,true);
-			add(meteor);
-			add(meteor.getExplosion());
+			m_zbuffer.addBackground(meteor);
+			m_zbuffer.addBackground(meteor.getExplosion());
 			
 			initClouds();
 			
@@ -143,9 +153,9 @@ package  Game.States
 				case "Creation":
 					if ( meteor.hasExploded() )
 					{
-						remove(meteor.getExplosion());
+						m_zbuffer.removeBackground(remove(meteor.getExplosion()));
 						meteor.destroy();
-						remove(meteor);
+						m_zbuffer.removeBackground(meteor);
 						meteor = null;
 						
 						createWorld();
@@ -181,9 +191,9 @@ package  Game.States
 						meteor.checkTreesCollision();
 						if (meteor.hasExploded())
 						{
-							remove(meteor.getExplosion());
+							m_zbuffer.removeBackground(meteor.getExplosion());
 							meteor.destroy();
-							remove(meteor);
+							m_zbuffer.removeBackground(meteor);
 							meteor = null;
 						}
 					}
@@ -194,8 +204,8 @@ package  Game.States
 						// If we have a meteor roaming ... we delete it
 						if ( meteor != null )
 						{
-							remove(meteor.getExplosion());
-							remove(meteor);
+							m_zbuffer.removeBackground(meteor.getExplosion());
+							m_zbuffer.removeBackground(meteor);
 							meteor.destroy();
 						}
 						
@@ -214,7 +224,7 @@ package  Game.States
 						while ( trees.length != 0 )
 						{
 							var tree:Tree = trees.pop();
-							remove(tree);
+							m_zbuffer.removeTrees(tree);
 							tree.destroy();
 						}
 						
@@ -287,7 +297,7 @@ package  Game.States
 				blob = new Blobby( tabBlobbiesPosition[i], planet.radius(), planet);
 				blob.visible = false;
 				blobbies.push(blob);
-				add(blob);
+				m_zbuffer.addBlobbies(blob);
 			}
 		}
 		
@@ -301,7 +311,7 @@ package  Game.States
 			{
 				cloud = new Cloud(planet.radius() +50, planet);
 				clouds.push(cloud);
-				add(cloud);
+				m_zbuffer.addBackground(cloud);
 			}
 		}
 		
