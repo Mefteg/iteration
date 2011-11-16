@@ -246,13 +246,22 @@ package
 				//chercher un blobby inoccupé pour la mitose
 				var gotBlob:Boolean = false; // a true si on a trouvé un blobby a supprimer
 				var indexCreate:int;
-				while(!gotBlob){
+				
+				// Hardcore fix (for Hardgame)
+				// HACK HACK ! 
+				// To avoid the infinit loop
+				var i:uint = 0;
+				while (!gotBlob && i < nbBlobbies)
+				{
 					//choisir un blobby au hasard
 					indexCreate = Math.random() * (m_planet.getBlobbies().length -1);
 					//si le blobby n'est pas occupé
-					if(! m_planet.getBlobbies()[indexCreate].isBusy()){
+					if (! m_planet.getBlobbies()[indexCreate].isBusy())
+					{
 						gotBlob = true;
 					}
+					
+					i++;
 				}
 				//allouer le blobby a créer au blobby source
 				m_blobbies[indexCreate].setBlobbyBirth(blobby);

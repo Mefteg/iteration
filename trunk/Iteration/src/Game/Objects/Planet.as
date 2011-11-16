@@ -65,6 +65,12 @@ package Game.Objects
 			
 			m_heartDeath.x = center().x + Math.cos(m_heart.angle) * (m_distance)* GameParams.map.zoom - m_heart.width /2;
 			m_heartDeath.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.map.zoom - m_heart.height / 2; 
+			
+			m_planet.visible = true;
+			m_heartDeath.visible = true;
+			m_heart.visible = false;
+			m_heartHalo.visible = false;
+			m_heartBack.visible = false;
 		}
 		
 		override public function update():void 
@@ -86,6 +92,13 @@ package Game.Objects
 					if ( m_animTime > 1 )
 					{
 						m_animTime = 0;
+						
+						m_planet.visible = true;
+						m_heartDeath.visible = true;
+						m_heart.visible = true;
+						m_heartHalo.visible = true;
+						m_heartBack.visible = true;
+						
 						m_state = "Birth_s2";
 					}
 					break;
@@ -122,6 +135,13 @@ package Game.Objects
 					if ( m_animTime > 1 )
 					{
 						m_animTime = 0;
+						
+						m_planet.visible = true;
+						m_heartDeath.visible = false;
+						m_heart.visible = true;
+						m_heartHalo.visible = true;
+						m_heartBack.visible = true;
+						
 						m_state = "Living";
 					}
 					break;
@@ -149,6 +169,8 @@ package Game.Objects
 					m_heartBack.y = center().y - Math.sin(m_heartBack.angle) * (m_distance) * GameParams.map.zoom - m_heartBack.height / 2;
 					break;
 				case "Dead":
+					m_heartDeath.x = center().x + Math.cos(m_heart.angle) * (m_distance)* GameParams.map.zoom - m_heart.width /2;
+					m_heartDeath.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.map.zoom - m_heart.height / 2;
 					m_heartDeath.scale.x = 0.1 * GameParams.map.zoom;
 					m_heartDeath.scale.y = 0.1 * GameParams.map.zoom;
 					break;
@@ -157,7 +179,7 @@ package Game.Objects
 					break;
 			}
 		}
-		
+		/*
 		override public function draw():void 
 		{
 			m_planet.draw();
@@ -184,6 +206,7 @@ package Game.Objects
 					break;
 			}
 		}
+		*/
 		
 		public function center():Point
 		{
@@ -279,13 +302,45 @@ package Game.Objects
 		
 		public function live():void
 		{			
+			m_planet.visible = true;
+			m_heartDeath.visible = true;
+			m_heart.visible = false;
+			m_heartHalo.visible = false;
+			m_heartBack.visible = false;
+			
 			m_state = "Birth_s1";
 		}
 		
 		public function explosion():void
-		{			
+		{		
+			m_planet.visible = true;
+			m_heartDeath.visible = true;
+			m_heart.visible = false;
+			m_heartHalo.visible = false;
+			m_heartBack.visible = false;
+			
 			m_state = "Dying";
 						
+		}
+		
+		public function getHeartSprite():FlxSprite
+		{
+			return m_heart;
+		}
+		
+		public function getDeadHeartSprite():FlxSprite
+		{
+			return m_heartDeath;
+		}
+		
+		public function getHaloHeartSprite():FlxSprite
+		{
+			return m_heartHalo;
+		}
+		
+		public function getBackHeartSprite():FlxSprite
+		{
+			return m_heartBack;
 		}
 	}
 
