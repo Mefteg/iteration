@@ -40,7 +40,7 @@
     <option linkReport="" />
     <option loadExterns="" />
     <option staticLinkRSL="True" />
-    <option additional="-use-network=false" />
+    <option additional="" />
     <option compilerConstants="" />
     <option minorVersion="" />
   </build>
@@ -79,7 +79,7 @@
   <!-- Executed before build -->
   <preBuildCommand />
   <!-- Executed after build -->
-  <postBuildCommand alwaysRun="True" />
+  <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
