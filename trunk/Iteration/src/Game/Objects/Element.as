@@ -109,6 +109,10 @@ package Game.Objects
 			return m_state;
 		}
 		
+		public function getPlanet():Planet {
+			return m_planet;
+		}
+		
 		public function animIsFinished():Boolean {
 			return _curIndex == _curAnim.frames.length - 1 ;
 		}

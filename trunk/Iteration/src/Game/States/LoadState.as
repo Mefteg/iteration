@@ -101,6 +101,9 @@ package Game.States
 			//Mort arbre
 			SpriteResources.ImgTreeDie = new FlxExtBitmap("img/tree_anim_dead.png");
 			addImage(SpriteResources.ImgTreeDie);
+			//Fruit
+			SpriteResources.ImgFruit = new FlxExtBitmap("img/fruit.png");
+			addImage(SpriteResources.ImgFruit);
 			//Racines
 			SpriteResources.ImgTreeRoots = new FlxExtBitmap("img/roots.png");			
 			addImage(SpriteResources.ImgTreeRoots);

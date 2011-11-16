@@ -18,6 +18,7 @@ package Game.Objects
 		private var m_treeDie:FlxSprite= null;
 		private var m_roots:FlxSprite= null;
 		private var m_fruits:Array;
+		private var m_nbFruitMax:int;
 		
 		private var m_lifetime:int;
 		private var m_remainingtime:int;
@@ -29,6 +30,10 @@ package Game.Objects
 		public function Tree(origin:Point,planet:Planet, trees:Array) 
 		{
 			super(0, planet.radius(), planet);
+			m_nbFruitMax = GameParams.map.m_treeNbFruitMax;
+			if ( m_nbFruitMax > 6 ) {
+				m_nbFruitMax = 6;
+			}
 			
 			// Loop to position randomly a tree enough distant to others
 			var size:int = trees.length;
@@ -172,16 +177,34 @@ package Game.Objects
 					m_treeGrow.postUpdate();
 					if ( m_treeGrow.finished )
 					{
-						//on cree les fruits
+						// on cree les fruits
+						//createFruits();
 						m_fruits = new Array();
-						m_fruits.push(new Fruit(m_pos + 10 + offset, m_distance+50, m_planet));
-						m_fruits.push(new Fruit(m_pos + 5 + offset, m_distance + 50, m_planet));
-						m_fruits.push(new Fruit(m_pos + offset, m_distance + 50, m_planet));
-						m_fruits.push(new Fruit(m_pos - 10 + offset, m_distance + 50, m_planet));
-						m_fruits.push(new Fruit(m_pos + 3 + offset, m_distance + 135, m_planet));
-						m_fruits.push(new Fruit(m_pos - 4 + offset, m_distance + 130, m_planet));
-						for ( var i:int = 0; i < m_fruits.length; i++ ) {
-							GameParams.playstate.add(m_fruits[i]);
+						var availables:Array = new Array();
+						var positions:Array = new Array();
+						var distances:Array = new Array();
+						
+						positions.push(m_pos + 8 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
+						positions.push(m_pos + 4 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
+						positions.push(m_pos + offset + (Math.random() * 6) - 3); 	distances.push(m_distance + 50); 	availables.push(1);
+						positions.push(m_pos - 8 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
+						positions.push(m_pos + 2 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 135); 	availables.push(1);
+						positions.push(m_pos - 3 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 130); 	availables.push(1);
+						
+						// pour chaque fruit a placer
+						for (var j:int = 0; j < m_nbFruitMax; j++) {
+							// pour ne pas afficher deux fois le meme fruit
+							var f:int = Math.random() * positions.length;
+							while ( availables[f] == 0 ) {
+								f = Math.random() * positions.length;
+							}
+							// j'ajoute le fruit
+							trace(positions[f] + ", " + distances[f]);
+							m_fruits.push(new Fruit(positions[f], distances[f], getPlanet()));
+							// ce fruit n'est plus dispo du coup
+							availables[f] = 0;
+							// j'affiche le fruit
+							GameParams.playstate.getDepthBuffer().addFruit(m_fruits[m_fruits.length-1]);
 						}
 						setState("feed");
 					}
@@ -209,6 +232,40 @@ package Game.Objects
 			super.destroy();
 		}
 		
+		/*
+		 * CETTE FONCTION NE FONCTIONNE PAS
+		 */
+		private function createFruits():void {
+			m_fruits = new Array();
+			var availables:Array = new Array();
+			var positions:Array = new Array();
+			var distances:Array = new Array();
+			
+			trace("m_pos: " + m_pos);
+			positions.push(m_pos + 8 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
+			positions.push(m_pos + 4 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
+			positions.push(m_pos + offset + (Math.random() * 6) - 3); 	distances.push(m_distance + 50); 	availables.push(1);
+			positions.push(m_pos - 8 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
+			positions.push(m_pos + 2 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 135); 	availables.push(1);
+			positions.push(m_pos - 3 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 130); 	availables.push(1);
+			
+			// pour chaque fruit a placer
+			for (var j:int = 0; j < m_nbFruitMax; j++) {
+				// pour ne pas afficher deux fois le meme fruit
+				var f:int = Math.random() * positions.length;
+				while ( availables[f] == 0 ) {
+					f = Math.random() * positions.length;
+				}
+				// j'ajoute le fruit
+				trace(positions[f] + ", " + distances[f]);
+				m_fruits.push(new Fruit(positions[f], distances[f], getPlanet()));
+				// ce fruit n'est plus dispo du coup
+				availables[f] = 0;
+				// j'affiche le fruit
+				GameParams.playstate.getDepthBuffer().addFruit(m_fruits[m_fruits.length-1]);
+			}
+		}
+		
 		override public function setState(state:String):void 
 		{
 			if ( state == "die" && m_treeDie != null )
@@ -222,6 +279,10 @@ package Game.Objects
 		
 		public function die():void 
 		{
+			// on detruit tous les fruits ( s'il en reste )
+			for ( var i:int = 0; i < m_fruits.length; i++ ) {
+				m_fruits[i].setState("die");
+			}
 			if (m_treeDie != null && m_treeDie.finished) 
 			{
 				this.visible = false;
