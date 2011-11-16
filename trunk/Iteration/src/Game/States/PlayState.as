@@ -131,9 +131,6 @@ package  Game.States
 			
 			// On affiche la souris
 			FlxG.mouse.show();		
-			/*
-			var m_roots:FlxSprite = new FlxSprite();
-			m_roots.loadGraphic2(SpriteResources.ImgTreeRoots, true, false, 202, 716);*/
 		}
 		
 		override public function update():void 
