@@ -32,6 +32,8 @@ package Game.Objects
 		private var m_state:String = "Dead";
 		private var m_animTime:Number = 0;
 		
+		private var nbFrame:uint = 0;
+		
 		public function Planet(x:Number, y:Number, blobbies:Array) 
 		{
 			m_planet = new FlxSprite(x, y);
@@ -55,17 +57,19 @@ package Game.Objects
 			m_heartDeath = new FlxSprite(m_planet.x / 2, m_planet.y / 2);
 			m_heartDeath.loadGraphic2( SpriteResources.ImgHeartDeath, false, false, 1600, 1600);
 			
-			m_heart.scale.x = 0;
-			m_heart.scale.y = 0;
-			m_heartHalo.scale.x = 0;
-			m_heartHalo.scale.y = 0;
-			m_heartBack.scale.x = 0;
-			m_heartBack.scale.y = 0;
+			m_heart.scale.x = 0.1;
+			m_heart.scale.y = 0.1;
+			m_heartHalo.scale.x = 0.1;
+			m_heartHalo.scale.y = 0.1;
+			m_heartBack.scale.x = 0.1;
+			m_heartBack.scale.y = 0.1;
 			m_heartDeath.scale.x = 0.1 * GameParams.map.zoom;
 			m_heartDeath.scale.y = 0.1 * GameParams.map.zoom;
 			
 			m_heartDeath.x = center().x + Math.cos(m_heart.angle) * (m_distance)* GameParams.map.zoom - m_heart.width /2;
 			m_heartDeath.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.map.zoom - m_heart.height / 2; 
+			
+			m_heartBack.alpha = m_heartHalo.alpha = m_heart.alpha = 0;
 			
 			m_planet.visible = true;
 			m_heartDeath.visible = true;
@@ -79,16 +83,17 @@ package Game.Objects
 			super.update();
 			m_planet.scale = new FlxPoint(GameParams.map.zoom, GameParams.map.zoom);
 			
+			m_elapsedTime += FlxG.elapsed * 8;
+			var pulse:Number = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
+			var pulseScale:Number = (pulse + (m_resources / 10000) * 0.7096) * GameParams.map.zoom;
+			
+			m_animTime += 0.01;
+			
 			switch (m_state)
 			{
-				case "Birth_s1":
-					m_resources = GameParams.map.m_planetResources;
+				case "Birth_s1":					
+					pulseScale = MathUtils.interpolate(0.1, 0.7096, m_animTime) * GameParams.map.zoom;
 					
-					var scale:Number = MathUtils.interpolate(0.1, 0.7096, m_animTime) * GameParams.map.zoom;
-					m_heartDeath.scale.x = scale;
-					m_heartDeath.scale.y = scale;
-					m_heartDeath.x = center().x + Math.cos(m_heart.angle) * (m_distance)* GameParams.map.zoom - m_heart.width /2;
-					m_heartDeath.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.map.zoom - m_heart.height / 2;
 					m_animTime += 0.01;
 					if ( m_animTime > 1 )
 					{
@@ -104,37 +109,23 @@ package Game.Objects
 					}
 					break;
 				case "Birth_s2":
-					m_elapsedTime += FlxG.elapsed * 8;
 					var pulse:Number = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
-					var pulseScale:Number = (pulse + (m_resources / 10000) * 0.7096) * GameParams.map.zoom;
-					
-					
-					m_heart.scale.x = pulseScale
-					m_heart.scale.y = pulseScale;
-					m_heartHalo.scale.x = pulseScale;
-					m_heartHalo.scale.y = pulseScale;
-					m_heartBack.scale.x = pulseScale;
-					m_heartBack.scale.y = pulseScale;
+                    var pulseScale:Number = (pulse + (m_resources / 10000) * 0.7096) * GameParams.map.zoom;
+
 					m_heartDeath.scale.x = pulseScale;
-					m_heartDeath.scale.y = pulseScale;
+                    m_heartDeath.scale.y = pulseScale;
+
+					if ( nbFrame > 25 )
+					{
+						m_heartBack.alpha = m_heartHalo.alpha = m_heart.alpha = MathUtils.interpolate(0.0, 1., m_animTime);
+						m_heartDeath.alpha = MathUtils.interpolate(1.0, 0., m_animTime);
+						nbFrame = 0;
+					}
+					nbFrame++;
 					
-					m_heartDeath.x = center().x + Math.cos(m_heart.angle) * (m_distance)* GameParams.map.zoom - m_heart.width /2;
-					m_heartDeath.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.map.zoom - m_heart.height / 2;
-					m_heart.x = center().x + Math.cos(m_heart.angle) * (m_distance)* GameParams.map.zoom - m_heart.width /2;
-					m_heart.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.map.zoom - m_heart.height / 2;
-					m_heartHalo.x = center().x + Math.cos(m_heartHalo.angle) * (m_distance)* GameParams.map.zoom - m_heartHalo.width /2;
-					m_heartHalo.y = center().y - Math.sin(m_heartHalo.angle) * (m_distance) * GameParams.map.zoom - m_heartHalo.height / 2;
-					m_heartBack.x = center().x + Math.cos(m_heartBack.angle) * (m_distance)* GameParams.map.zoom - m_heartBack.width /2;
-					m_heartBack.y = center().y - Math.sin(m_heartBack.angle) * (m_distance) * GameParams.map.zoom - m_heartBack.height / 2;
-					
-					
-					m_heart.alpha = MathUtils.interpolate(0, 1., m_animTime);
-					m_heartHalo.alpha = MathUtils.interpolate(0, 1., m_animTime);
-					m_heartBack.alpha = MathUtils.interpolate(0, 1., m_animTime);
-					m_heartDeath.alpha = MathUtils.interpolate(1, 0., m_animTime);
-					m_animTime += 0.01;
 					if ( m_animTime > 1 )
 					{
+						nbFrame = 0;
 						m_animTime = 0;
 						
 						m_planet.visible = true;
@@ -149,65 +140,31 @@ package Game.Objects
 				case "Living":
 					m_heartHalo.angle-= 0.04;
 					m_heartBack.angle += 0.04;
-								
-					var pulse:Number = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
-					var pulseScale:Number = (pulse + (m_resources / 10000) * 0.7096) * GameParams.map.zoom;
-					// var pulse:Number = (Math.sin(m_elapsedTime*4)/2)/(Math.cos(m_elapsedTime-4)*8);
-					m_heart.scale.x = pulseScale;
-					m_heart.scale.y = pulseScale;
-					m_heartHalo.scale.x = pulseScale;
-					m_heartHalo.scale.y = pulseScale;
-					m_heartBack.scale.x = pulseScale;
-					m_heartBack.scale.y = pulseScale;
-					// Change the speed of the pulse
-					m_elapsedTime += FlxG.elapsed * 8;
-					
-					m_heart.x = center().x + Math.cos(m_heart.angle) * (m_distance)* GameParams.map.zoom - m_heart.width /2;
-					m_heart.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.map.zoom - m_heart.height / 2;
-					m_heartHalo.x = center().x + Math.cos(m_heartHalo.angle) * (m_distance)* GameParams.map.zoom - m_heartHalo.width /2;
-					m_heartHalo.y = center().y - Math.sin(m_heartHalo.angle) * (m_distance) * GameParams.map.zoom - m_heartHalo.height / 2;
-					m_heartBack.x = center().x + Math.cos(m_heartBack.angle) * (m_distance)* GameParams.map.zoom - m_heartBack.width /2;
-					m_heartBack.y = center().y - Math.sin(m_heartBack.angle) * (m_distance) * GameParams.map.zoom - m_heartBack.height / 2;
 					break;
 				case "Dead":
-					m_heartDeath.x = center().x + Math.cos(m_heart.angle) * (m_distance)* GameParams.map.zoom - m_heart.width /2;
-					m_heartDeath.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.map.zoom - m_heart.height / 2;
 					m_heartDeath.scale.x = 0.1 * GameParams.map.zoom;
-					m_heartDeath.scale.y = 0.1 * GameParams.map.zoom;
+                    m_heartDeath.scale.y = 0.1 * GameParams.map.zoom;
+
+					
+					pulseScale = 0.1 * GameParams.map.zoom;
 					break;
 				case "Dying":
 					m_state = "Dead";
 					break;
 			}
+			m_heartDeath.x = m_heartBack.x = m_heartHalo.x = m_heart.x = center().x + Math.cos(m_heart.angle) * (m_distance)* GameParams.map.zoom - m_heart.width /2;
+			m_heartDeath.y = m_heartBack.y = m_heartHalo.y = m_heart.y = center().y - Math.sin(m_heart.angle) * (m_distance) * GameParams.map.zoom - m_heart.height / 2;
+			
+			m_heart.scale.x = pulseScale;
+			m_heart.scale.y = pulseScale;
+			m_heartHalo.scale.x = pulseScale;
+			m_heartHalo.scale.y = pulseScale;
+			m_heartBack.scale.x = pulseScale;
+			m_heartBack.scale.y = pulseScale;
+			/*
+			m_heartDeath.scale.x = pulseScale;
+			m_heartDeath.scale.y = pulseScale;*/
 		}
-		/*
-		override public function draw():void 
-		{
-			m_planet.draw();
-			switch (m_state)
-			{
-				case "Birth_s1":
-					m_heartDeath.draw();
-					break;
-				case "Birth_s2":
-					m_heartDeath.draw();
-					m_heartHalo.draw();
-					m_heartBack.draw();
-					m_heart.draw();
-					break;
-				case "Living":
-					m_heartHalo.draw();
-					m_heartBack.draw();
-					m_heart.draw();
-					break;
-				case "Dead":
-					m_heartDeath.draw();
-					break;
-				case "Dying":
-					break;
-			}
-		}
-		*/
 		
 		public function center():Point
 		{
@@ -302,24 +259,22 @@ package Game.Objects
 		}
 		
 		public function live():void
-		{			
+		{	
 			m_planet.visible = true;
 			m_heartDeath.visible = true;
 			m_heart.visible = false;
 			m_heartHalo.visible = false;
 			m_heartBack.visible = false;
-			
 			m_state = "Birth_s1";
 		}
 		
 		public function explosion():void
-		{		
+		{	
 			m_planet.visible = true;
 			m_heartDeath.visible = true;
 			m_heart.visible = false;
 			m_heartHalo.visible = false;
 			m_heartBack.visible = false;
-			
 			m_state = "Dying";
 						
 		}

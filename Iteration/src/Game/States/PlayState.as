@@ -130,7 +130,10 @@ package  Game.States
 			initClouds();
 			
 			// On affiche la souris
-			FlxG.mouse.show();				
+			FlxG.mouse.show();		
+			/*
+			var m_roots:FlxSprite = new FlxSprite();
+			m_roots.loadGraphic2(SpriteResources.ImgTreeRoots, true, false, 202, 716);*/
 		}
 		
 		override public function update():void 
@@ -268,17 +271,6 @@ package  Game.States
 			}
 			
 			initTrees();
-			/*
-			size = m_treeGenerator.trees().length;
-			var trees:Array = m_treeGenerator.trees();
-			for (var j:int = 0; j < size; j++) 
-			{
-				if ( trees[j] != null )
-				{
-					trees[j].visible = true;
-				}
-			}
-			*/
 		}
 		
 		public function initTrees():void

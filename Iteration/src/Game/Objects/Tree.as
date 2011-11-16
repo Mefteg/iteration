@@ -14,9 +14,9 @@ package Game.Objects
 	 */
 	public class Tree extends Element
 	{				
-		private var m_treeGrow:FlxSprite;
-		private var m_treeDie:FlxSprite;
-		private var m_roots:FlxSprite;
+		private var m_treeGrow:FlxSprite = null;
+		private var m_treeDie:FlxSprite= null;
+		private var m_roots:FlxSprite= null;
 		private var m_fruits:Array;
 		
 		private var m_lifetime:int;
@@ -118,6 +118,7 @@ package Game.Objects
 					m_treeGrow.draw();
 					break;
 				case("die"):
+					m_roots.draw();
 					m_treeDie.draw();
 					break;
 				default:

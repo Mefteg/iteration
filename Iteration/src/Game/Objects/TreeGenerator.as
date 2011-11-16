@@ -23,12 +23,18 @@ package Game.Objects
 
 		public function TreeGenerator(planet:Planet,playState:PlayState)
 		{
+			super(0, 0, planet);
+			
 			m_trees = new Array(GameParams.map.m_treeNumber);
 			m_treeTimer = new Array(GameParams.map.m_treeNumber);
 			
 			m_playState = playState;
 			
-			super(0, 0, planet);
+			for ( var i:uint = 0 ; i < GameParams.map.m_treeNumber ; i++ )
+			{
+				m_trees[i] = new Tree(m_planet.center(), m_planet , m_trees);
+				m_trees[i].visible = false;
+			}
 		}
 		
 		override public function draw():void 
@@ -52,14 +58,14 @@ package Game.Objects
 				{
 					if ( m_treeTimer[i].finished )
 					{
-						m_trees[i] = new Tree(m_planet.center(), m_planet , m_trees);
+						m_trees[i].visible = true;
 						// m_playState.add(m_trees[i]);
 						m_treeTimer[i].destroy;
 						m_treeTimer[i] = null;
 					}
 				}
 				
-				if ( m_trees[i] != null )
+				if ( m_trees[i] != null && m_trees[i].visible == true )
 				{
 					m_trees[i].update();
 				}
@@ -80,7 +86,7 @@ package Game.Objects
 				if ( m_trees[i] != null )
 				{
 					m_playState.remove(m_trees[i]);
-					m_trees[i].destroy;
+					m_trees[i].visible = false;// destroy;
 				}
 			}
 		}
