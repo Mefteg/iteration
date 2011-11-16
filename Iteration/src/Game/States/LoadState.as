@@ -102,7 +102,7 @@ package Game.States
 			SpriteResources.ImgTreeDie = new FlxExtBitmap("img/tree_anim_dead.png");
 			addImage(SpriteResources.ImgTreeDie);
 			//Fruit
-			SpriteResources.ImgFruit = new FlxExtBitmap("img/fruit.png");
+			SpriteResources.ImgFruit = new FlxExtBitmap("img/FruitPop.png");
 			addImage(SpriteResources.ImgFruit);
 			//Racines
 			SpriteResources.ImgTreeRoots = new FlxExtBitmap("img/roots.png");			

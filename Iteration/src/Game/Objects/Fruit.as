@@ -1,6 +1,8 @@
 package Game.Objects 
 {
+	import org.flixel.FlxG;
 	import Resources.SpriteResources;
+	import Utils.MathUtils;
 	/**
 	 * ...
 	 * @author Tom
@@ -11,7 +13,9 @@ package Game.Objects
 		{
 			super(pos, distance, planet);
 			setState("growup");
-			loadGraphic2(SpriteResources.ImgFruit, true, false, 35, 34);
+			loadGraphic2(SpriteResources.ImgFruit, true, false, 30, 30);
+			addAnimation("growup", MathUtils.getArrayofNumbers(0, 9), 10, false);
+			play(m_state);
 			rotateToPlanet();
 			place();
 		}
@@ -21,6 +25,11 @@ package Game.Objects
 			place();
 			switch(m_state) {
 				case("growup"):
+					if ( finished ) {
+						setState("idle");
+					}
+					break;
+				case("idle"):
 					break;
 				case("fall"):
 					break;
