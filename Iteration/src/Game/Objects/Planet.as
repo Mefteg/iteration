@@ -298,6 +298,16 @@ package Game.Objects
 		{
 			return m_heartBack;
 		}
+		
+		public function getCenterScreenXY(Camera:FlxCamera=null):FlxPoint
+		{
+			var pt:FlxPoint = new FlxPoint();
+			if(Camera == null)
+				Camera = FlxG.camera;
+			pt.x = center().x - int(Camera.scroll.x);
+			pt.y = center().y - int(Camera.scroll.y);
+			return pt;
+		}
 	}
 
 }

@@ -54,7 +54,7 @@ package Game.Objects
 			generateAnimations();
 			
 			place();		
-			color = 0xFFB100;
+			color = 0x1df1ab;
 		}
 		
 		//génère les animations qui doivent etre propres au blobby

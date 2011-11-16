@@ -10,6 +10,12 @@ package Utils
 		static public var pi:Number = 3.14159265;
 		static public var pi180:Number = pi / 180.0;
 		
+		public static function sign(n:Number) {
+			if (n >= 0)
+				return 1;
+			else
+				return -1;
+		}
 		public static function interpolate(v1:Number, v2:Number, t:Number):Number
 		{
 			return v1 * (1 - t) + v2 * t;
