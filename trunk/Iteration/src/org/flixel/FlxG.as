@@ -1036,7 +1036,7 @@ package org.flixel
 				}
 			}
 			//If there is no data for this key, generate the requested graphic
-			if(!checkBitmapCache(key)) {
+			if (!checkBitmapCache(key)) {
 				if(Graphic is FlxExtBitmap) {
 					_cache[key] = (Graphic as FlxExtBitmap).bitmap.bitmapData;
 				} else {

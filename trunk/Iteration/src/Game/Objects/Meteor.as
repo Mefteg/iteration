@@ -64,6 +64,14 @@ package Game.Objects
 					{
 						m_state = "Roaming";
 					}
+					
+					if (onClick()) 
+					{
+						//on fait tomber le météore
+						m_state = "Crashing";
+                        // mspeed = m_speed * 1.2;
+					}
+					
 					break;
 				case "Roaming":
 					//le faire tourner sur lui meme

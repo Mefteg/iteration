@@ -1,5 +1,6 @@
 package Resources 
 {
+	import flash.display.BitmapData;
 	import flash.text.engine.EastAsianJustifier;
 	import Game.Objects.*;
 	import org.flixel.FlxExtBitmap;
@@ -10,7 +11,7 @@ package Resources
 	 */
 	public class SpriteResources 
 	{
-		public static var ImgPlnt:FlxExtBitmap;
+		public static var ImgPlnt:FlxExtBitmap ;
 		public static var ImgHeart:FlxExtBitmap;
 		public static var ImgHeartHalo:FlxExtBitmap;
 		public static var ImgHeartBack:FlxExtBitmap;
@@ -36,6 +37,9 @@ package Resources
 		//background
 		public static var ImgBackground:FlxExtBitmap;
 		public static var ImgForeground:FlxExtBitmap;
+		
+		//buffers
+		public static var BufferPlanet:BitmapData;
 		
 		public static var animateIdea:Array = [ -2, 0, 2, 0];
 		public static var arrayIdeas:Object = {
