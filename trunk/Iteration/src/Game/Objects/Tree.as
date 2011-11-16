@@ -17,6 +17,10 @@ package Game.Objects
 		private var m_treeGrow:FlxSprite;
 		private var m_treeDie:FlxSprite;
 		private var m_roots:FlxSprite;
+		private var m_fruits:Array;
+		
+		private var m_lifetime:int;
+		private var m_remainingtime:int;
 		
 		/**
 		 * @param	origin	The point where the root starts
@@ -159,7 +163,7 @@ package Game.Objects
 					m_roots.postUpdate();
 					if ( m_roots.finished )
 					{
-						m_state = "treeGrow";
+						setState("treeGrow");
 						m_treeGrow.play("grow");
 					}
 					break;
@@ -167,10 +171,25 @@ package Game.Objects
 					m_treeGrow.postUpdate();
 					if ( m_treeGrow.finished )
 					{
-						m_state = "feed";
+						//on cree les fruits
+						m_fruits = new Array();
+						m_fruits.push(new Fruit(m_pos + 10 + offset, m_distance+50, m_planet));
+						m_fruits.push(new Fruit(m_pos + 5 + offset, m_distance + 50, m_planet));
+						m_fruits.push(new Fruit(m_pos + offset, m_distance + 50, m_planet));
+						m_fruits.push(new Fruit(m_pos - 10 + offset, m_distance + 50, m_planet));
+						m_fruits.push(new Fruit(m_pos + 3 + offset, m_distance + 135, m_planet));
+						m_fruits.push(new Fruit(m_pos - 4 + offset, m_distance + 130, m_planet));
+						for ( var i:int = 0; i < m_fruits.length; i++ ) {
+							GameParams.playstate.add(m_fruits[i]);
+						}
+						setState("feed");
 					}
 					break;
 				case("feed"):
+					// s'il n'y a plus de fruits, l'arbre meurt
+					if ( m_fruits.length == 0 ) {
+						setState("die");
+					}
 					break;
 				case("die"):
 					m_treeDie.postUpdate();
