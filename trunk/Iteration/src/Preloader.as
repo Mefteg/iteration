@@ -66,7 +66,7 @@ package
 			SpriteResources.ImgIdeas.load();
 			
 			// fond
-			SpriteResources.ImgBackground = new FlxExtBitmap("img/background.jpg");
+			SpriteResources.ImgBackground = new FlxExtBitmap("img/fond.jpg");
 			SpriteResources.ImgBackground.load();
 			SpriteResources.ImgForeground = new FlxExtBitmap("img/foreground.jpg");
 			SpriteResources.ImgForeground.load();
