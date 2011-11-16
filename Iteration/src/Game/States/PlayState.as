@@ -123,7 +123,7 @@ package  Game.States
 			//----------CREER LE METEOR-------------
 			// poncepermis
 			meteor = new Meteor( planet.radius() * 2, planet, true);
-			//meteor.setState("Crashing");
+			meteor.setState("Crashing");
 			m_zbuffer.addBackground(meteor);
 			m_zbuffer.addBackground(meteor.getExplosion());
 			
@@ -320,6 +320,9 @@ package  Game.States
 				m_lastTime = now.getTime();
 			}
 		}
+		
+		public function getDepthBuffer():DepthBuffer {
+			return m_zbuffer;
+		}
 	}
-
 }
