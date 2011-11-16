@@ -160,8 +160,6 @@ package Game.Objects
 					}
 					break;
 				case("feed"):
-					m_roots.draw();
-					m_treeGrow.draw();
 					break;
 				case("die"):
 					m_treeDie.postUpdate();
@@ -172,18 +170,6 @@ package Game.Objects
 					break;
 			}
 			
-		}
-		
-		private function grow():void 
-		{
-		}
-		
-		private function growTree():void {
-			
-		}
-		
-		protected function growup():void 
-		{
 		}
 		
 		override public function destroy():void 

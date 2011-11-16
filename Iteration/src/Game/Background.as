@@ -25,13 +25,17 @@ package Game
 			m_camera = camera;
 			
 			m_backgroundSprite = new FlxSprite(0, 0, null);
-			m_backgroundSprite.loadGraphic2(SpriteResources.ImgBackground, false, false, 512, 512);
+			m_backgroundSprite.loadGraphic2(SpriteResources.ImgBackground, false, false, 2500, 1875);
 			m_foregroundSprite = new FlxSprite(0, 0, null);
 			m_foregroundSprite.loadGraphic2(SpriteResources.ImgForeground, false, false, 1280, 720);
 		}
 		
 		public function drawBackground():void 
 		{
+			m_backgroundSprite.x = m_camera.getPosition().x - GameParams.width / 2;
+			m_backgroundSprite.y = m_camera.getPosition().y - GameParams.height / 2;
+			m_backgroundSprite.draw();
+			/*
 			for ( var i:int = -1; i < 6 ; i++ )
 			{
 				for ( var j:int = 0 ; j < 4 ; j++ )
@@ -40,7 +44,7 @@ package Game
 					m_backgroundSprite.y = j * 512;
 					m_backgroundSprite.draw();
 				}
-			}
+			}*/
 		}
 
 		public function drawForeground():void 
