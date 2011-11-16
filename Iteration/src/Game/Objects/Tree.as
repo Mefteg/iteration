@@ -96,6 +96,10 @@ package Game.Objects
 				
 		override public function draw():void 
 		{
+			// Possible since we can be stucked when placing a tree
+			if ( m_roots == null || m_treeGrow == null || m_treeDie == null )
+				return;
+			
 			switch(m_state) 
 			{
 				case("rootsGrow"):
@@ -119,6 +123,10 @@ package Game.Objects
 		
 		override public function update():void
 		{
+			// Possible since we can be stucked when placing a tree
+			if ( m_roots == null || m_treeGrow == null || m_treeDie == null )
+				return;
+			
 			super.update();
 			
 			var offset:int = -9;
@@ -183,7 +191,7 @@ package Game.Objects
 		
 		override public function setState(state:String):void 
 		{
-			if ( state == "die" )
+			if ( state == "die" && m_treeDie != null )
 			{
 				m_treeDie.play("die");
 			}
@@ -194,7 +202,7 @@ package Game.Objects
 		
 		public function die():void 
 		{
-			if (m_treeDie.finished) 
+			if (m_treeDie != null && m_treeDie.finished) 
 			{
 				this.visible = false;
 				m_planet.removeTree(this);
