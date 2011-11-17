@@ -71,7 +71,8 @@ package Game.Ideas
 			}
 		}
 		
-		public function followBlobby() : void{
+		public function followBlobby() : void {
+			if (!m_blobby) return;
 			//déplacer l'idée par rapport au blobby
 			m_pos = m_blobby.getPos()+5;
 			
@@ -93,6 +94,8 @@ package Game.Ideas
 		
 		override public function setState(state:String):void {
 			m_state = state;
+			if (state == "killed")
+				m_blobby = null;
 			play(m_state);
 		}
 		

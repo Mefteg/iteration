@@ -15,6 +15,8 @@ package
 	 
 	public class Iteration 
 	{
+		//variable a true si l'itération peut commencer
+		private var m_ready:Boolean = false;
 		//Planet
 		private var m_planet:Planet;
 		//blobbies
@@ -136,6 +138,7 @@ package
 			m_currentIdea = m_ideas[  FlxU.round(Math.random() * (m_ideas.length -1))];
 			//pour savoir si une idée a été trouvée
 			var gotIt:Boolean = false;
+			var i:int = 0;
 			
 			while (!gotIt && m_planet.getBlobbies().length > 0)
 			{
@@ -193,7 +196,20 @@ package
 				m_ratioBirth = 1;
 		}
 		
+		public function isReady():Boolean {
+			if (m_ready) return true;
+			var ready:Boolean = true;
+			for (var i:int = 0; i < m_blobbies.length; i++) 
+			{
+				ready = ready && m_blobbies[i].isBorn();
+			}
+			m_ready = ready;
+			return m_ready;
+		}
+		
 		public function update() :void {
+			//vérifier que le terrain est en place
+			if ( ! isReady()) return;
 			//si le timer principal de l'itération est terminé
 			if (m_timer.finished && !m_currentIdea) {
 				//incrémenter le nombre d'itérations
@@ -227,9 +243,10 @@ package
 					
 					i++;
 				}
-				if(gotBlobby){
+				if (gotBlobby) {
+					m_planet.getBlobbies()[indexDelete].setState("comeBack");
 					//supprimer le blobby
-					m_planet.removeBlobbyAt(indexDelete);
+					//m_planet.removeBlobbyAt(indexDelete);
 					//incrémentere le compteur de morts
 					m_countDeaths++;
 				}
@@ -274,7 +291,7 @@ package
 					//allouer le blobby a créer au blobby source
 					m_blobbies[indexCreate].setBlobbyBirth(blobby);
 					//ajouter le blobby a la scene
-					m_scene.add(blobby);
+					m_scene.getDepthBuffer().addBlobbies(blobby);
 					//incrémenter le compteur de naissances
 					m_countBirths++;
 				}

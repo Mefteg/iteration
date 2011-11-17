@@ -71,7 +71,6 @@ package Game.States
 			{
 				FlxG.addBitmapFromObject(m_images[i]);
 			}
-			//var tree:Tree = new Tree(new Point(0, 0), planet, null);
 			m_progress = 100;
 			setState("Loaded");
 		}
