@@ -40,6 +40,9 @@ package Resources
 		public static var ImgBackground:FlxExtBitmap;
 		public static var ImgForeground:FlxExtBitmap;
 		
+		// mouse cursor
+		public static var ImgMouseCursor:FlxExtBitmap;
+		
 		//buffers
 		public static var BufferPlanet:BitmapData;
 		

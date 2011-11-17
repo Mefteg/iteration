@@ -135,7 +135,11 @@ package Game.States
 			SpriteResources.ImgBackground = new FlxExtBitmap("img/fond.png");
 			SpriteResources.ImgForeground = new FlxExtBitmap("img/foreground.png");
 			addImage(SpriteResources.ImgBackground);
-			addImage(SpriteResources.ImgForeground);		
+			addImage(SpriteResources.ImgForeground);
+			
+			// mouse cursor
+			SpriteResources.ImgMouseCursor = new FlxExtBitmap("img/curseur.png");
+			addImage(SpriteResources.ImgMouseCursor);
 			
 			//charger le xml
 			GameParams.map = new Map("xml/map1.xml");

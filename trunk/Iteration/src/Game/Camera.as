@@ -14,7 +14,8 @@ package Game
 	{
 		private var m_initPos:FlxPoint;
 		protected var m_posCam:FlxPoint = new FlxPoint(0, 0);
-		protected var m_speedCam:int = 4;
+		protected var m_speedCam:int = GameParams.map.zoomSpeed;
+		protected var m_speedUpCam:int = GameParams.map.zoomSpeedUp;
 		protected var m_zoomCam:Number = 0.01;
 		protected var m_posPlanet:FlxPoint;
 		
@@ -46,54 +47,55 @@ package Game
 		
 		protected function cameraMovement():void {
 			var tmp:Number;
+			var speedWithZoom:Number = m_speedCam * (1 - (GameParams.map.zoomMin - GameParams.map.zoom) * m_speedUpCam);
 			
 			// On replace la camera
-			tmp = m_posCam.x - m_speedCam - (FlxG.width * (1 - GameParams.map.zoom - GameParams.map.zoomMin));
+			tmp = m_posCam.x - speedWithZoom - (FlxG.width * (1 - GameParams.map.zoom - GameParams.map.zoomMin));
 			//si je ne depasse pas la frontiere gauche
 			if ( tmp > m_initPos.x - FlxG.width*0.5 ) 
 			{
 				if (FlxG.mouse.screenX * FlxG.camera.zoom < 30 || FlxG.keys.LEFT) {
-					m_posCam.x -= m_speedCam;
+					m_posCam.x -= speedWithZoom;
 				}
 			}
 			//sinon
 			else {
-				m_posCam.x += (m_posPlanet.x - FlxG.width * 0.5) - tmp - m_speedCam;
+				m_posCam.x += (m_posPlanet.x - FlxG.width * 0.5) - tmp - speedWithZoom;
 			}
 			
-			tmp = m_posCam.x + m_speedCam + (FlxG.width * (1 - GameParams.map.zoom - GameParams.map.zoomMin));
+			tmp = m_posCam.x + speedWithZoom + (FlxG.width * (1 - GameParams.map.zoom - GameParams.map.zoomMin));
 			//si je ne depasse pas la frontiere droite
 			if (  tmp < m_posPlanet.x + FlxG.width*0.5 ) 
 			{
 				if (FlxG.mouse.screenX * FlxG.camera.zoom > FlxG.width - 30 || FlxG.keys.RIGHT) {
-					m_posCam.x += m_speedCam;
+					m_posCam.x += speedWithZoom;
 				}
 			}
 			else {
 				m_posCam.x -= tmp - (m_posPlanet.x + FlxG.width * 0.5);
 			}
 			
-			tmp = m_posCam.y - m_speedCam - (FlxG.height * (1 - GameParams.map.zoom - GameParams.map.zoomMin));
+			tmp = m_posCam.y - speedWithZoom - (FlxG.height * (1 - GameParams.map.zoom - GameParams.map.zoomMin));
 			//si je ne depasse pas la frontiere gauche
 			if (  tmp > m_posPlanet.y - FlxG.height*0.5 ) 
 			{
 				if (FlxG.mouse.screenY * FlxG.camera.zoom < 30 || FlxG.keys.UP) 
 				{
-					m_posCam.y -= m_speedCam;
+					m_posCam.y -= speedWithZoom;
 				}
 			}
 			//sinon
 			else {
-				m_posCam.y += (m_posPlanet.y - FlxG.height*0.5) - tmp - m_speedCam;
+				m_posCam.y += (m_posPlanet.y - FlxG.height*0.5) - tmp - speedWithZoom;
 			}
 			
-			tmp = m_posCam.y + m_speedCam + (FlxG.height * (1 - GameParams.map.zoom - GameParams.map.zoomMin));
+			tmp = m_posCam.y + speedWithZoom + (FlxG.height * (1 - GameParams.map.zoom - GameParams.map.zoomMin));
 			//si je ne depasse pas la frontiere inferieure
 			if ( tmp < m_initPos.y + FlxG.height*0.5 ) 
 
 			{
 				if (FlxG.mouse.screenY * FlxG.camera.zoom > FlxG.height - 30 || FlxG.keys.DOWN) {
-					m_posCam.y += m_speedCam;
+					m_posCam.y += speedWithZoom;
 				}
 			}
 			else {
