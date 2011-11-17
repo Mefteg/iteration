@@ -149,7 +149,7 @@ package
 					gotIt = true;
 				}
 			}
-			trace(m_currentIdea.getName());
+			//trace(m_currentIdea.getName());
 		}
 		
 		//calcule le nombre de morts et de naissances
@@ -238,16 +238,17 @@ package
 			
 			//GESTION DES NAISSANCES
 			//si le timer de naissances arrive a échéance
-			if ( (m_timerBirth.finished) && (m_countBirths < m_nbBirths) ) 
-			{
+			//if ( (m_timerBirth.finished) && (m_countBirths < m_nbBirths) ) 
+			//{
 				//créer un nouveau blobby
-				var blobby:Blobby = new Blobby(Math.random() * 360, m_planet.radius(), m_planet);
+				//var blobby:Blobby = new Blobby(Math.random() * 360, m_planet.radius(), m_planet);
 				//le rendre invisible
-				blobby.visible = false;
+				//blobby.visible = false;
 				
 				//chercher un blobby inoccupé pour la mitose
 				var gotBlob:Boolean = false; // a true si on a trouvé un blobby a supprimer
 				var indexCreate:int;
+				var nbBlobbies:uint = m_planet.getBlobbies().length;
 				
 				// Hardcore fix (for Hardgame)
 				// HACK HACK ! 
@@ -261,21 +262,22 @@ package
 					if (! m_planet.getBlobbies()[indexCreate].isBusy())
 					{
 						gotBlob = true;
+						m_planet.getBlobbies()[indexCreate].setState("pick");
 					}
 					
 					i++;
 				}
 				//allouer le blobby a créer au blobby source
-				m_blobbies[indexCreate].setBlobbyBirth(blobby);
+				//m_blobbies[indexCreate].setBlobbyBirth(blobby);
 				//ajouter le blobby a la liste
-				m_planet.addBlobby(blobby);
+				//m_planet.addBlobby(blobby);
 				//ajouter le blobby a la scene
-				m_scene.add(blobby);
+				//m_scene.add(blobby);
 				//incrémenter le compteur de naissances
-				m_countBirths++;
+				//m_countBirths++;
 				//redémarrer le timer
-				startBirthTimer();
-			}
+				//startBirthTimer();
+			//}
 			
 			//GESTION DES IDEES
 			//si le timer à idée est terminé et qu'aucune idée n'est encore créée
@@ -289,7 +291,7 @@ package
 					//on applique les changements sur l'environnement
 					m_ratioBirth += m_currentIdea.getBirthEffect();
 					m_ratioDeath += m_currentIdea.getDeathEffect();
-					trace(m_ratioBirth, m_ratioDeath);
+					//trace(m_ratioBirth, m_ratioDeath);
 					//on la supprime de la liste
 					m_ideas.splice(m_ideas.indexOf(m_currentIdea), 1);
 					//on la supprime de la scene
