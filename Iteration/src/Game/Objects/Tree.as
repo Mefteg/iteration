@@ -21,6 +21,8 @@ package Game.Objects
 		private var m_roots:FlxSprite= null;
 		private var m_fruits:Array;
 		private var m_nbFruitMax:int;
+		
+		private var m_yellowingTimer:FlxTimer;
 
 		private var m_gap:int = -9;
 		
@@ -30,6 +32,8 @@ package Game.Objects
 		 */
 		public function Tree(origin:Point,planet:Planet, trees:Array) 
 		{
+			m_yellowingTimer = new FlxTimer();
+			
 			super(0, planet.radius(), planet);
 			m_nbFruitMax = GameParams.map.m_treeNbFruitMax;
 			if ( m_nbFruitMax > 6 ) {
@@ -89,7 +93,7 @@ package Game.Objects
 				
 				m_treeDie = new FlxSprite();
 				m_treeDie.loadGraphic2(SpriteResources.ImgTreeDie, true, false, 405, 376);
-				m_treeDie.addAnimation("goYellow", MathUtils.getArrayofNumbers(0, 11), GameParams.map.m_treeLifetime, false);
+				m_treeDie.addAnimation("goYellow", MathUtils.getArrayofNumbers(0, 11), 0, false);
 				m_treeDie.addAnimation("die", MathUtils.getArrayofNumbers(12, 77), 10, false);
 				m_treeDie.scale.x = 1.;
 				m_treeDie.scale.y = 1.;
@@ -97,6 +101,7 @@ package Game.Objects
 				m_roots = new FlxSprite();
 				m_roots.loadGraphic2(SpriteResources.ImgTreeRoots, true, false, 202, 716);
 				m_roots.addAnimation("grow", MathUtils.getArrayofNumbers(0, 44), 10, false);
+				m_roots.addAnimation("ungrow", MathUtils.getArrayofNumbers(0, 44).reverse(), 10, false);
 				m_roots.scale.x = 1.0;
 				m_roots.scale.y = 1.0;
 				
@@ -133,6 +138,9 @@ package Game.Objects
 				case("die"):
 					m_roots.draw();
 					m_treeDie.draw();
+					break;
+				case("ungrowRoot"):
+					m_roots.draw();
 					break;
 				default:
 					break;
@@ -187,10 +195,17 @@ package Game.Objects
 						createFruits();
 						setState("feed");
 						m_treeDie.play("goYellow");
+						m_yellowingTimer.start(GameParams.map.m_treeLifetime / 12.0);
 					}
 					break;
 				case("feed"):
-					m_treeDie.postUpdate();
+					if ( m_yellowingTimer.finished )
+					{
+						m_treeDie.frame = m_treeDie.frame+1;
+						m_treeDie.postUpdate();
+						m_yellowingTimer.start(GameParams.map.m_treeLifetime / 12.0);
+					}
+					
 
 					var cpt:int = 0;
 
@@ -209,7 +224,7 @@ package Game.Objects
 						m_state = "die";
 					}
 					
-					if ( m_treeDie.finished )
+					if ( m_treeDie.frame == 11 )
 					{
 						clearFruits();
 						m_treeDie.play("die");
@@ -220,13 +235,22 @@ package Game.Objects
 					m_treeDie.postUpdate();
 					if ( m_treeDie.finished )
 					{
-						m_treeDie.play("goYellow") 
+						m_treeDie.play("goYellow");
+						m_yellowingTimer.start(GameParams.map.m_treeLifetime / 12.0);
 						m_state = "feed";
 					}
 					break;
 				case("die"):
 					m_treeDie.postUpdate();
 					if (m_treeDie.finished )
+					{
+						m_state = "ungrowRoot";
+						m_roots.play("ungrow");
+					}
+					break;
+				case "ungrowRoot":
+					m_roots.postUpdate();
+					if ( m_roots.finished )
 					{
 						die();
 					}
