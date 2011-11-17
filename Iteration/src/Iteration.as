@@ -222,28 +222,30 @@ package
 					//choisir un blobby au hasard
 					indexDelete = Math.random() * (nbBlobbies-1);
 					//si le blobby n'est pas invincible
-					if(! m_planet.getBlobbies()[indexDelete].isInvincible()){
+					if(! m_planet.getBlobbies()[indexDelete].isBusy()){
 						gotBlobby = true;
 					}
 					
 					i++;
 				}
-				//supprimer le blobby
-				m_planet.removeBlobbyAt(indexDelete);
-				//incrémentere le compteur de morts
-				m_countDeaths++;
+				if(gotBlobby){
+					//supprimer le blobby
+					m_planet.removeBlobbyAt(indexDelete);
+					//incrémentere le compteur de morts
+					m_countDeaths++;
+				}
 				//redémarrer le timer pour les morts
 				startDeathTimer();
 			}
 			
 			//GESTION DES NAISSANCES
 			//si le timer de naissances arrive a échéance
-			//if ( (m_timerBirth.finished) && (m_countBirths < m_nbBirths) ) 
-			//{
+			if ( (m_timerBirth.finished) && (m_countBirths < m_nbBirths) ) 
+			{
 				//créer un nouveau blobby
-				//var blobby:Blobby = new Blobby(Math.random() * 360, m_planet.radius(), m_planet);
+				var blobby:Blobby = new Blobby(Math.random() * 360, m_planet.radius(), m_planet);
 				//le rendre invisible
-				//blobby.visible = false;
+				blobby.visible = false;
 				
 				//chercher un blobby inoccupé pour la mitose
 				var gotBlob:Boolean = false; // a true si on a trouvé un blobby a supprimer
@@ -262,22 +264,24 @@ package
 					if (! m_planet.getBlobbies()[indexCreate].isBusy())
 					{
 						gotBlob = true;
-						m_planet.getBlobbies()[indexCreate].setState("pick");
+						//m_planet.getBlobbies()[indexCreate].setState("pick");
 					}
 					
 					i++;
 				}
-				//allouer le blobby a créer au blobby source
-				//m_blobbies[indexCreate].setBlobbyBirth(blobby);
-				//ajouter le blobby a la liste
-				//m_planet.addBlobby(blobby);
-				//ajouter le blobby a la scene
-				//m_scene.add(blobby);
-				//incrémenter le compteur de naissances
-				//m_countBirths++;
-				//redémarrer le timer
-				//startBirthTimer();
-			//}
+
+				//si on n'a pas trouvé de blobby 
+				if (gotBlob) {
+					//allouer le blobby a créer au blobby source
+					m_blobbies[indexCreate].setBlobbyBirth(blobby);
+					//ajouter le blobby a la scene
+					m_scene.add(blobby);
+					//incrémenter le compteur de naissances
+					m_countBirths++;
+				}
+				startBirthTimer();
+				
+			}
 			
 			//GESTION DES IDEES
 			//si le timer à idée est terminé et qu'aucune idée n'est encore créée
