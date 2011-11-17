@@ -88,7 +88,6 @@ package
 			m_ideas = new Array();
 			var idea:Idea = new Idea(0, 0, "guerre", m_planet);
 			var idea2:Idea = new Idea(0, 0,"medecine",  m_planet);
-			//var idea3:Idea = new Idea(0, 0,"deforestation", 10, 0, m_planet);
 			var idea4:Idea = new Idea(0, 0,"fanatisme", m_planet);
 			var idea5:Idea = new Idea(0, 0,"maladie",  m_planet);
 			var idea6:Idea = new Idea(0, 0,"paix", m_planet);

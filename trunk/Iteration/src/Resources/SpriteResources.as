@@ -44,15 +44,20 @@ package Resources
 		
 		public static var animateIdea:Array = [ -2, 0, 2, 0];
 		public static var arrayIdeas:Object = {
-										ecologie:[0],
 										religion:[1],
-										guerre:[1],
 										paix:[2],
 										medecine:[3],
-										deforestation:[4],
 										guerre:[5],
 										fanatisme:[6],
 										maladie:[7]
+										};
+		public static var arrayIdeasColor:Object = {
+										religion:0xff5b67,
+										paix:0xFFFFFF,
+										medecine:0xe93a3e,
+										guerre:0xb0b0b0,
+										fanatisme:0xff6f26,
+										maladie:0xf1a71d
 										};
 		
 	}
