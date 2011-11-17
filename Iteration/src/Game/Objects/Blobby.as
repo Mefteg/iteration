@@ -109,6 +109,7 @@ package Game.Objects
 					eat();
 					break;
 				case("swallow"):
+					swallow();
 					break;
 				case("pick"):
 					pick();
@@ -163,6 +164,8 @@ package Game.Objects
 				if ( !m_blobbyBirth.isBusy())
 					//le passer en idle
 					m_blobbyBirth.setState("idle");
+				//ajouter le blobby a la liste
+				m_planet.addBlobby(m_blobbyBirth);
 				//supprimer sa référence
 				m_blobbyBirth = null;
 			}
@@ -456,7 +459,7 @@ package Game.Objects
 		
 		public function setBlobbyBirth(blobby:Blobby):void {
 			m_blobbyBirth = blobby;
-			setState("duplicate");
+			setState("pick");
 		}
 		
 		public function searchNearestBlobby():void 

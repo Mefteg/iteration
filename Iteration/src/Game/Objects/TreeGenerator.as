@@ -17,7 +17,7 @@ package Game.Objects
 	{	
 		private var m_trees:Array;
 		private var m_treeTimer:Array;
-		private var m_playState:PlayState
+		private var m_playState:PlayState;
 		
 		// private var treeSprite:FlxSprite;
 
