@@ -62,6 +62,8 @@ package Game.Objects
 		//génère les animations qui doivent etre propres au blobby
 		public function generateAnimations():void {	
 			loadGraphic2(SpriteResources.ImgBlobby, true, false, 300, 300);
+			addAnimation("arise", [77], 0, true);
+			addAnimation("birth",MathUtils.getArrayofNumbers(77,64), 6, false);
 			addAnimation("idle", [0, 1, 2, 3, 4, 5], 0.2+FlxG.random() * 2, true);
 			addAnimation("walk", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 2, true);
 			addAnimation("pick", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 2, true);
@@ -71,7 +73,9 @@ package Game.Objects
 			addAnimation("discuss", MathUtils.getArrayofNumbers(15, 21) , 5 +FlxG.random() * 2, true);
 			addAnimation("eat", MathUtils.getArrayofNumbers(45,51) , 5 +FlxG.random() * 2, false);
 			addAnimation("swallow",[51,50,49,48,47,46,45] , 5 +FlxG.random() * 2, false);
-			addAnimation("die", MathUtils.getArrayofNumbers(54,62) , 2 +FlxG.random() * 2, false);
+			addAnimation("die", [0] , 2 +FlxG.random() * 2, false);
+			addAnimation("comeBack", MathUtils.getArrayofNumbers(64,77) , 5 +FlxG.random() * 2, false);
+			addAnimation("dig", [77] , 0, false);
 
 		}
 		
@@ -83,7 +87,7 @@ package Game.Objects
 			place();
 			//rotation pour mettre le bas du sprite sur la surface de la planete
 			rotateToPlanet();
-			
+			if (onClick()) setState("comeBack");
 			switch( m_state ) {
 				case ("arise"):
 					arise();
@@ -109,6 +113,12 @@ package Game.Objects
 				case("die"):
 					die();
 					break;
+				case("comeBack"):
+					comeBack();
+					break;
+				case "dig":
+					dig();
+					break;
 				case("duplicate"):
 					duplicate();
 					break;
@@ -127,8 +137,29 @@ package Game.Objects
 			
 		}
 		protected function arise():void {
-			if (m_distance < m_planet.radius())
-				m_distance++;
+			if (m_distance < m_planet.radius()+43)
+				m_distance+=2;
+			else
+				setState("birth");
+		}
+		
+		protected function comeBack():void {
+			if (finished) {
+				//si il possédait une idée, la killer
+				if (m_idea){
+					m_idea.setState("killed");
+					m_idea = null;
+				}
+				setState("dig");
+			}
+		}
+		
+		protected function dig():void {
+			if (m_distance > 0) {
+				m_distance-=2;
+			}else {
+				setState("die");
+			}
 		}
 		protected function birth():void {
 			if (finished) {
@@ -396,8 +427,9 @@ package Game.Objects
 				if (m_idea) {
 					m_idea.setState("killed");
 				}
-				this.visible = false;
-				this.destroy();
+				visible = false;
+				m_planet.removeBlobby(this);
+				destroy();
 			}
 		}
 		
@@ -449,9 +481,7 @@ package Game.Objects
 		override public function destroy():void 
 		{
 			m_blobTarget = null;
-			//si il possédait une idée, la killer
-			if (m_idea)
-				m_idea.setState("killed");
+			
 			//ajouter des ressources a la planete
 			m_planet.addResources(80);
 			super.destroy();
@@ -581,6 +611,10 @@ package Game.Objects
 		
 		public function isBusy():Boolean {
 			return ((m_state != "walk") && (m_state != "idle")) || !visible ; 
+		}
+		
+		public function isBorn():Boolean {
+			return ( (m_state != "birth") && (m_state != "arise") );
 		}
 		
 		public function isScholar():Boolean {

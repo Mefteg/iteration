@@ -154,7 +154,7 @@ package Game.Objects
 			{
 				blob = blobbies[i];
 				if (checkBlobbyCollision(blob))
-					m_planet.removeBlobby(blob);
+					blob.setState("comeBack");
 			}
 		}
 		

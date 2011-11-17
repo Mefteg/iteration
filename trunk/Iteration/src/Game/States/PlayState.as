@@ -284,8 +284,9 @@ package  Game.States
 			
 			for (var i:int = 0; i < sizeBlob ; i++) 
 			{
-				blob = new Blobby( tabBlobbiesPosition[i], planet.radius(), planet);
+				blob = new Blobby( tabBlobbiesPosition[i], 0, planet);
 				blob.visible = false;
+				blob.setState("arise");
 				blobbies.push(blob);
 				m_zbuffer.addBlobbies(blob);
 			}

@@ -10,7 +10,7 @@ package Utils
 		static public var pi:Number = 3.14159265;
 		static public var pi180:Number = pi / 180.0;
 		
-		public static function sign(n:Number) {
+		public static function sign(n:Number):Number {
 			if (n >= 0)
 				return 1;
 			else
@@ -32,10 +32,18 @@ package Utils
 		
 		public static function getArrayofNumbers(init:int, n:int ):Array {
 			var tab:Array = new Array();
-			for (var i:int = init; i <= n ; i++) 
-			{
-				tab.push(i);
+			if(init<n){
+				for (var i:int = init; i <= n ; i++) 
+				{
+					tab.push(i);
+				}
+			}else {
+				for (var i:int = init; i >= n ; i--) 
+				{
+					tab.push(i);
+				}
 			}
+			
 			return tab;
 		}
 		
