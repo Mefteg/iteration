@@ -40,9 +40,11 @@ package
 		public var cloudsNumber:uint;
 		public var cloudsScale:Number;
 		public var rainDistance:Number;
+		public var cloudSpeed:Number;
 		
 		public var m_meteorNbByCycle:int;
 		public var m_meteorSpeed:Number;
+		public var m_meteorZone:Number;
 		
 		public var m_ideaEffect:Object;
 		public var m_paix:Array = new Array();
@@ -94,9 +96,11 @@ package
 			cloudsNumber = m_xml.cloud.@number;
 			cloudsScale = m_xml.cloud.@scale;
 			rainDistance = m_xml.cloud.@rainDistance;
+			cloudSpeed = m_xml.cloud.@speed;
 			
 			m_meteorNbByCycle = m_xml.meteor.@nbByCycle;
 			m_meteorSpeed = m_xml.meteor.@speed;
+			m_meteorZone = m_xml.meteor.@zone;
 			
 			//idées
 			m_paix.push(m_xml.idee.@paixMort); m_paix.push(m_xml.idee.@paixNat);
