@@ -35,8 +35,8 @@ package Game.Objects
 				case("fall"):
 					fall();
 					break;
-				case("eated"):
-					eated();
+				case("eaten"):
+					eaten();
 					break;
 				case("die"):
 					die();
@@ -48,12 +48,12 @@ package Game.Objects
 		
 		protected function fall():void {
 			m_distance -= m_speed;
-			if ( m_distance < m_planet.radius() + 100 ) {
-				setState("eated");
+			if ( m_distance < m_planet.radius() + 75 ) {
+				setState("eaten");
 			}
 		}
 		
-		protected function eated():void {
+		protected function eaten():void {
 			alive = false;
 			visible = false;
 		}

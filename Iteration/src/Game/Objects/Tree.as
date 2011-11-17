@@ -183,8 +183,15 @@ package Game.Objects
 					}
 					break;
 				case("feed"):
+					var cpt:int = 0;
 					// s'il n'y a plus de fruits, l'arbre meurt
-					if ( m_fruits.length == 0 ) {
+					for (var i:int = 0; i < m_fruits.length; i++) 
+					{
+						if ( !m_fruits[i].alive ) {
+							cpt++;
+						}
+					}
+					if ( cpt == m_fruits.length ) {
 						setState("die");
 					}
 					break;
@@ -202,12 +209,13 @@ package Game.Objects
 		override public function destroy():void 
 		{
 			m_planet.removeResources(300);
+			// je detruis les fruits
+			for (var i:int = 0; i < m_fruits.length; i++) {
+				m_fruits[i].setState("die");
+			}
 			super.destroy();
 		}
 		
-		/*
-		 * CETTE FONCTION NE FONCTIONNE PAS
-		 */
 		private function createFruits():void {
 			m_fruits = new Array();
 			var availables:Array = new Array();
@@ -248,7 +256,7 @@ package Game.Objects
 			play(m_state);
 		}
 		
-		public function die():void 
+		public function die():void
 		{
 			// on detruit tous les fruits ( s'il en reste )
 			for ( var i:int = 0; i < m_fruits.length; i++ ) {

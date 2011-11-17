@@ -70,7 +70,7 @@ package Game.Objects
 				m_direction = 2;
 			}
 			m_pos = FlxG.random() * 360 - 180;
-			m_speed = FlxG.random() / 16 + 0.02;	
+			m_speed = FlxG.random() / 16 + GameParams.map.cloudSpeed;	
 			
 			m_state = "Roaming";
 			m_hasSelected = false;

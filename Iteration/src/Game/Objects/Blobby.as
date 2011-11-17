@@ -180,6 +180,7 @@ package Game.Objects
 				// si le fruit a été détruit
 				if ( !m_target.alive ) {
 					setState("swallow");
+					m_target.setState("eated");
 				}
 			}
 		}
@@ -187,6 +188,7 @@ package Game.Objects
 		protected function swallow() :void{
 			if ( finished ) {
 				setState("duplicate");
+				m_target = null;
 			}
 		}
 		
@@ -389,35 +391,54 @@ package Game.Objects
 			}
 		}
 		
-		public function pick():void {
+		public function pick():void {			
 			// si j'ai une cible
 			if ( m_target != null ) {
-				// si j'ai atteint ma cible
-				if ( collideWithElement(m_target) ) {
-					//trace(describeType(m_target).@name);
-					//trace(describeType(m_target).@base);
-					// si c'etait un arbre qu'il cherchait
-					if ( describeType(m_target).@name == "Game.Objects::Tree" ) {
+				// si ma cible est un arbre
+				if ( describeType(m_target).@name == "Game.Objects::Tree" ) {
+					// si je suis arrivé à l'arbre
+					if ( collideWithElement(m_target) ) {
 						var tree:Tree = m_target as Tree;
 						// il va chercher un fruit
 						searchNearestElement(tree.getFruits());
 					}
-					// si c'etait un fruit qu'il cherchait
-					if ( describeType(m_target).@name == "Game.Objects::Fruit" ) {
-						// il va le manger
-						m_target.setState("fall");
-						setState("eat");
+					// sinon
+					else {
+						// je cherche l'arbre le plus proche
+						searchNearestTree();
+						// et je m'y rends
+						goTo(m_target);
 					}
 				}
-				//sinon
-				else {
-					//je me deplace vers ma cible
-					goTo(m_target);
+				
+				// si ma cible est un fruit
+				if ( describeType(m_target).@name == "Game.Objects::Fruit" ) {
+					//si le fruit est toujours vivant
+					if ( m_target.alive ) {
+						// si je suis arrivé au fruit et qu'il est toujours vivant
+						if ( collideWithElement(m_target) ) {
+							// il va le manger
+							m_target.setState("fall");
+							setState("eat");
+						}
+						// sinon
+						else {
+							// je vais vers le fruit
+							goTo(m_target);
+						}
+					}
+					// sinon
+					else {
+						// je cherche le fruit le plus proche
+						searchNearestTree();
+						var tree:Tree = m_target as Tree;
+						searchNearestElement(tree.getFruits());
+					}
 				}
 			}
 			// sinon
 			else {
-				//je recupere l'arbre le plus pres
+				//je recupere l'arbre le plus proche
 				searchNearestTree();
 			}
 		}
@@ -573,7 +594,7 @@ package Game.Objects
 			}
 		}
 		
-		// Cherche l'element le plus proche et le stocke dans m_target
+		// Cherche l'element "alive" le plus proche et le stocke dans m_target
 		public function searchNearestElement(elements:Array):void 
 		{
 			var size:int = elements.length; //nombre d'elements
@@ -590,12 +611,15 @@ package Game.Objects
 				
 				// s'il est instancié
 				if ( e != null ) {
-					dist = MathUtils.calculateDistance(this.m_pos, e.getPos());
-					if ( dist < distMin )
-					{
-						distMin = dist;
-						//changer l'element le plus près
-						nearest = e;
+					// s'il est "alive"
+					if ( e.alive ) {
+						dist = MathUtils.calculateDistance(this.m_pos, e.getPos());
+						if ( dist < distMin )
+						{
+							distMin = dist;
+							//changer l'element le plus près
+							nearest = e;
+						}
 					}
 				}
 			}
