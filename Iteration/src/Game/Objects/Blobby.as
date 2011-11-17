@@ -36,7 +36,6 @@ package Game.Objects
 		
 		public function Blobby(pos:Number, distance:Number, planet:Planet) 
 		{
-			if (onClick()) setState("die");
 			super(pos, distance, planet);
 			scale = new FlxPoint(GameParams.map.zoom,GameParams.map.zoom);
 			//instancier le timer de discussion
@@ -47,7 +46,8 @@ package Game.Objects
 			m_timerMove.start(1);
 			//Diminuer les ressources
 			m_planet.removeResources(100);
-			m_distance += 43;
+			if(m_distance !=0)
+				m_distance += 43;
 			//vitesse
 			m_speed = GameParams.map.m_blobbySpeed;
 						
@@ -64,6 +64,7 @@ package Game.Objects
 			loadGraphic2(SpriteResources.ImgBlobby, true, false, 300, 300);
 			addAnimation("idle", [0, 1, 2, 3, 4, 5], 0.2+FlxG.random() * 2, true);
 			addAnimation("walk", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 2, true);
+			addAnimation("pick", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 2, true);
 			addAnimation("search", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 3, true);
 			addAnimation("validate", MathUtils.getArrayofNumbers(24, 33), 5 +FlxG.random() * 2, false);
 			addAnimation("duplicate", MathUtils.getArrayofNumbers(36, 44), 5 , false)
@@ -84,6 +85,12 @@ package Game.Objects
 			rotateToPlanet();
 			
 			switch( m_state ) {
+				case ("arise"):
+					arise();
+					break;
+				case ("birth"):
+					birth();
+					break;
 				case("walk"):
 					walk();
 					break;
@@ -119,7 +126,15 @@ package Game.Objects
 			}
 			
 		}
-		
+		protected function arise():void {
+			if (m_distance < m_planet.radius())
+				m_distance++;
+		}
+		protected function birth():void {
+			if (finished) {
+				setState("idle");
+			}
+		}
 		protected function walk() :void{
 			changeDirection();
 		}
@@ -157,7 +172,6 @@ package Game.Objects
 				//placer le nouveau blobby
 				m_blobbyBirth.setPos(getPos() - 5.5);
 				setPos(getPos() + 5);
-				m_blobbyBirth.color = 0xFFFF00;
 				m_blobbyBirth.visible = true;
 				m_blobbyBirth.play(m_blobbyBirth.getState());
 				//si le blobby n'a pas été choisi pour une quelconque action
@@ -186,13 +200,13 @@ package Game.Objects
 					m_blobTarget.setState("idle");
 					//l'idée est diffusée
 					m_idea.setState("spread");
-					//vider la variable d'idée
-					m_idea = null;
 					//changer le sprite
-					color = 0x0080FF;
-					m_blobTarget.color = 0x0080FF;
+					color = SpriteResources.arrayIdeasColor[m_idea.getName()];
+					m_blobTarget.color = SpriteResources.arrayIdeasColor[m_idea.getName()];
 					//et supprimer sa référence
 					m_blobTarget = null;
+					//vider la variable d'idée
+					m_idea = null;
 					//le blobby est maintenant un érudit
 					m_scholar = true;
 				}
@@ -491,8 +505,6 @@ package Game.Objects
 			}
 			
 			m_blobTarget = nearest;
-			m_blobTarget.color = 0xFF0080;
-			this.color = 0x0618F9;
 		}
 		
 		// Cherche l'arbre ayant des fruits le plus près
