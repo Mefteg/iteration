@@ -322,5 +322,27 @@ package  Game.States
 		public function getDepthBuffer():DepthBuffer {
 			return m_zbuffer;
 		}
+		
+		public function rain(position:Number):void
+		{
+			if ( position < 0 )
+			{
+				position = 360 - position;
+			}
+			
+			var trees:Array = m_treeGenerator.trees();
+			for ( var i:uint = 0 ; i < trees.length ; i++ )
+			{
+				if ( trees[i] != null && trees[i].isVisible() == true && !trees[i].isGrowing() && !trees[i].isDead())
+				{
+					trace(Math.abs(trees[i].getPos() - position));
+					if ( Math.abs( trees[i].getPos() - position) < 30 )
+					{
+						trace ("Tree !");
+						trees[i].raining();
+					}
+				}
+			}
+		}
 	}
 }

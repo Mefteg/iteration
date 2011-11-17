@@ -14,15 +14,14 @@ package Game.Objects
 	 */
 	public class Tree extends Element
 	{				
+		private var m_otherTrees:Array;
+		
 		private var m_treeGrow:FlxSprite = null;
 		private var m_treeDie:FlxSprite= null;
 		private var m_roots:FlxSprite= null;
 		private var m_fruits:Array;
 		private var m_nbFruitMax:int;
-		
-		private var m_lifetime:int;
-		private var m_remainingtime:int;
-		
+
 		private var m_gap:int = -9;
 		
 		/**
@@ -36,6 +35,8 @@ package Game.Objects
 			if ( m_nbFruitMax > 6 ) {
 				m_nbFruitMax = 6;
 			}
+			
+			m_otherTrees = trees;
 			
 			// Loop to position randomly a tree enough distant to others
 			var size:int = trees.length;
@@ -88,13 +89,14 @@ package Game.Objects
 				
 				m_treeDie = new FlxSprite();
 				m_treeDie.loadGraphic2(SpriteResources.ImgTreeDie, true, false, 405, 376);
-				m_treeDie.addAnimation("die", MathUtils.getArrayofNumbers(0, 75), 20, false);
+				m_treeDie.addAnimation("goYellow", MathUtils.getArrayofNumbers(0, 11), GameParams.map.m_treeLifetime, false);
+				m_treeDie.addAnimation("die", MathUtils.getArrayofNumbers(12, 77), 10, false);
 				m_treeDie.scale.x = 1.;
 				m_treeDie.scale.y = 1.;
 				
 				m_roots = new FlxSprite();
 				m_roots.loadGraphic2(SpriteResources.ImgTreeRoots, true, false, 202, 716);
-				m_roots.addAnimation("grow", MathUtils.getArrayofNumbers(0, 44), 40, false);
+				m_roots.addAnimation("grow", MathUtils.getArrayofNumbers(0, 44), 10, false);
 				m_roots.scale.x = 1.0;
 				m_roots.scale.y = 1.0;
 				
@@ -122,7 +124,11 @@ package Game.Objects
 					break;
 				case("feed"):
 					m_roots.draw();
-					m_treeGrow.draw();
+					m_treeDie.draw();
+					break;
+				case "revive":
+					m_roots.draw();
+					m_treeDie.draw();
 					break;
 				case("die"):
 					m_roots.draw();
@@ -180,10 +186,14 @@ package Game.Objects
 						// on cree les fruits
 						createFruits();
 						setState("feed");
+						m_treeDie.play("goYellow");
 					}
 					break;
 				case("feed"):
+					m_treeDie.postUpdate();
+
 					var cpt:int = 0;
+
 					// s'il n'y a plus de fruits, l'arbre meurt
 					for (var i:int = 0; i < m_fruits.length; i++) 
 					{
@@ -191,13 +201,35 @@ package Game.Objects
 							cpt++;
 						}
 					}
-					if ( cpt == m_fruits.length ) {
-						setState("die");
+					
+					if ( cpt == m_fruits.length ) 
+					{
+						m_treeDie.addAnimation("completeDie", MathUtils.getArrayofNumbers(m_treeDie.frame, 77), 20, false);
+						m_treeDie.play("completeDie");
+						m_state = "die";
+					}
+					
+					if ( m_treeDie.finished )
+					{
+						clearFruits();
+						m_treeDie.play("die");
+						m_state = "die";
+					}
+					break;
+				case "revive":
+					m_treeDie.postUpdate();
+					if ( m_treeDie.finished )
+					{
+						m_treeDie.play("goYellow") 
+						m_state = "feed";
 					}
 					break;
 				case("die"):
 					m_treeDie.postUpdate();
-					die();
+					if (m_treeDie.finished )
+					{
+						die();
+					}
 					return;
 					break;
 				default:
@@ -206,13 +238,19 @@ package Game.Objects
 			
 		}
 		
-		override public function destroy():void 
+		public function clearFruits():void
 		{
-			m_planet.removeResources(300);
 			// je detruis les fruits
 			for (var i:int = 0; i < m_fruits.length; i++) {
 				m_fruits[i].setState("die");
 			}
+		}
+		
+		override public function destroy():void 
+		{
+			m_planet.removeResources(300);
+			
+			clearFruits();
 			super.destroy();
 		}
 		
@@ -259,13 +297,16 @@ package Game.Objects
 		public function die():void
 		{
 			// on detruit tous les fruits ( s'il en reste )
-			for ( var i:int = 0; i < m_fruits.length; i++ ) {
-				m_fruits[i].setState("die");
+			if ( m_fruits != null )
+			{
+				for ( var i:int = 0; i < m_fruits.length; i++ ) {
+					m_fruits[i].setState("die");
+				}
 			}
+			
 			if (m_treeDie != null && m_treeDie.finished) 
 			{
-				this.visible = false;
-				m_planet.removeTree(this);
+				reinit();
 			}
 		}
 		
@@ -277,8 +318,79 @@ package Game.Objects
 			return (m_pos + m_gap );
 		}
 		
+		public function isVisible():Boolean
+		{
+			return this.visible;
+		}
+		
+		public function isGrowing():Boolean
+		{
+			return (this.m_state == "treeGrow" || 
+					this.m_state == "rootsGrow");
+		}
+		
+		public function isDead():Boolean
+		{
+			return (this.m_state == "die");
+		}
+		
 		public function getFruits():Array {
 			return m_fruits;
+		}
+		
+		public function raining():void
+		{
+			m_state = "revive";
+			m_treeDie.addAnimation("revive", MathUtils.getArrayofNumbers(0, m_treeDie.frame).reverse(), 20, false);	
+			m_treeDie.play("revive");
+		}
+		
+		public function reinit():void
+		{
+			var size:int = m_otherTrees.length;
+			if ( size > 0 )
+			{
+				var randomPos:Number = FlxG.random() * 360;
+				
+				var t:Tree; // nearest tree (the closer one)
+				var distMin:Number = 1000; // distance of the nearest tree
+				var dist:Number = 0;
+				
+				var nbIteration:uint = 0;
+				
+				while ( dist < 25 && nbIteration < 25)
+				{
+					randomPos = FlxG.random() * 360;
+					distMin = 1000;
+					
+					for (var i:int = 0; i < size ; i++) 
+					{
+						//pour ce blobby
+						t = m_otherTrees[i];
+						if ( t == null )
+							continue;
+							
+						dist = MathUtils.calculateDistance(randomPos, t.m_pos);
+						if ( dist < distMin )
+						{
+							distMin = dist;
+						}		
+					}
+					
+					dist = distMin;
+					nbIteration++;
+				}
+				
+				if ( nbIteration >= 25 )
+				{
+					return;
+				}
+				
+				this.m_pos = randomPos;
+				m_roots.play("grow");
+			}
+			
+			m_state = "rootsGrow";
 		}
 	}
 

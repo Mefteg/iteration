@@ -138,9 +138,13 @@ package
 			m_currentIdea = m_ideas[  FlxU.round(Math.random() * (m_ideas.length -1))];
 			//pour savoir si une idée a été trouvée
 			var gotIt:Boolean = false;
-			var i:int = 0;
 			
-			while (!gotIt && m_planet.getBlobbies().length > 0)
+			// Hardcore fix (for Hardgame)
+			// HACK HACK ! 
+			// To avoid the infinit loop
+			var i:uint = 0;
+			
+			while (!gotIt && m_planet.getBlobbies().length > 0 && i < m_planet.getBlobbies().length )
 			{
 				//prendre un blobby au hasard
 				var blob:Blobby = m_planet.getBlobbies()[FlxU.round(Math.random() * ( m_planet.getBlobbies().length -1 ) )];
@@ -150,6 +154,8 @@ package
 					m_scene.add(m_currentIdea);
 					gotIt = true;
 				}
+				
+				i++;
 			}
 			//trace(m_currentIdea.getName());
 		}
