@@ -76,6 +76,8 @@ package Game.Objects
 			m_heart.visible = false;
 			m_heartHalo.visible = false;
 			m_heartBack.visible = false;
+			
+			m_animTime = 0;
 		}
 		
 		override public function update():void 
@@ -94,7 +96,6 @@ package Game.Objects
 				case "Birth_s1":					
 					pulseScale = MathUtils.interpolate(0.1, 0.7096, m_animTime) * GameParams.map.zoom;
 					
-					m_animTime += 0.01;
 					if ( m_animTime > 1 )
 					{
 						m_animTime = 0;
@@ -265,6 +266,9 @@ package Game.Objects
 			m_heart.visible = false;
 			m_heartHalo.visible = false;
 			m_heartBack.visible = false;
+			
+			m_animTime = 0;
+			
 			m_state = "Birth_s1";
 		}
 		

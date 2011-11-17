@@ -4,8 +4,8 @@
 	<zoom min="0.3" max="1" actual="0.3" />
 	<planet size="10" resources="10000" />
 	<blobby initNb="4" speed="0.1" lifetime="3" />
-	<tree number="8" nbFruitMax="4" lifetime="5" /> <!-- nbFruitMax doit etre superieur ou egal a 6 -->
-	<cloud number="6" scale="1" />
+	<tree number="8" nbFruitMax="4" lifetime="5"/> <!-- nbFruitMax doit etre superieur ou egal a 6 -->
+	<cloud number="6" scale="1"  rainDistance="280"/>
 	<meteor nbByCycle="1" speed="0.1" />
 	<idee guerreMort="10" guerreNat="0" 
 		paixMort="0" paixNat="10"

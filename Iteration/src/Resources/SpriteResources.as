@@ -30,6 +30,7 @@ package Resources
 		
 		public static var ImgCloud:FlxExtBitmap;
 		public static var ImgCloud2:FlxExtBitmap;
+		public static var ImgRain:FlxExtBitmap;
 		
 		public static var ImgIdeaBubble:FlxExtBitmap;
 		public static var ImgIdeas:FlxExtBitmap;

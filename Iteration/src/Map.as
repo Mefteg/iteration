@@ -39,6 +39,7 @@ package
 		
 		public var cloudsNumber:uint;
 		public var cloudsScale:Number;
+		public var rainDistance:Number;
 		
 		public var m_meteorNbByCycle:int;
 		public var m_meteorSpeed:Number;
@@ -92,6 +93,7 @@ package
 			
 			cloudsNumber = m_xml.cloud.@number;
 			cloudsScale = m_xml.cloud.@scale;
+			rainDistance = m_xml.cloud.@rainDistance;
 			
 			m_meteorNbByCycle = m_xml.meteor.@nbByCycle;
 			m_meteorSpeed = m_xml.meteor.@speed;
