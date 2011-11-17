@@ -23,6 +23,8 @@ package Game.Objects
 		private var m_lifetime:int;
 		private var m_remainingtime:int;
 		
+		private var m_gap:int = -9;
+		
 		/**
 		 * @param	origin	The point where the root starts
 		 * @param	planet where the tree will grow
@@ -139,10 +141,8 @@ package Game.Objects
 			
 			super.update();
 			
-			var offset:int = -9;
-			
 			var angleRoot:Number = (Math.PI / 180) * m_pos ;
-			var angleTree:Number = (Math.PI / 180) * (m_pos+offset) ;
+			var angleTree:Number = (Math.PI / 180) * (m_pos+m_gap) ;
 
 			m_roots.x = m_planet.center().x + Math.cos(angleRoot) * (m_planet.radius()/2)* GameParams.map.zoom - m_roots.width /2;
 			m_roots.y = m_planet.center().y - Math.sin(angleRoot) * (m_planet.radius()/2)* GameParams.map.zoom - m_roots.height/2;
@@ -152,8 +152,8 @@ package Game.Objects
 			m_treeDie.y = m_planet.center().y - Math.sin(angleTree) * (m_distance)* GameParams.map.zoom - m_treeDie.height/2;
 		
 			m_roots.angle = -m_pos + 90;
-			m_treeGrow.angle = -(m_pos+offset) + 90;
-			m_treeDie.angle = -(m_pos+offset) + 90;
+			m_treeGrow.angle = -(m_pos+m_gap) + 90;
+			m_treeDie.angle = -(m_pos+m_gap) + 90;
 			
 			m_roots.scale.x = 1.0 * GameParams.map.zoom;
 			m_roots.scale.y = 1.0  * GameParams.map.zoom;
@@ -178,34 +178,7 @@ package Game.Objects
 					if ( m_treeGrow.finished )
 					{
 						// on cree les fruits
-						//createFruits();
-						m_fruits = new Array();
-						var availables:Array = new Array();
-						var positions:Array = new Array();
-						var distances:Array = new Array();
-						
-						positions.push(m_pos + 8 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
-						positions.push(m_pos + 4 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
-						positions.push(m_pos + offset + (Math.random() * 6) - 3); 	distances.push(m_distance + 50); 	availables.push(1);
-						positions.push(m_pos - 8 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
-						positions.push(m_pos + 2 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 135); 	availables.push(1);
-						positions.push(m_pos - 3 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 130); 	availables.push(1);
-						
-						// pour chaque fruit a placer
-						for (var j:int = 0; j < m_nbFruitMax; j++) {
-							// pour ne pas afficher deux fois le meme fruit
-							var f:int = Math.random() * positions.length;
-							while ( availables[f] == 0 ) {
-								f = Math.random() * positions.length;
-							}
-							// j'ajoute le fruit
-							trace(positions[f] + ", " + distances[f]);
-							m_fruits.push(new Fruit(positions[f], distances[f], getPlanet()));
-							// ce fruit n'est plus dispo du coup
-							availables[f] = 0;
-							// j'affiche le fruit
-							GameParams.playstate.getDepthBuffer().addFruit(m_fruits[m_fruits.length-1]);
-						}
+						createFruits();
 						setState("feed");
 					}
 					break;
@@ -241,13 +214,12 @@ package Game.Objects
 			var positions:Array = new Array();
 			var distances:Array = new Array();
 			
-			trace("m_pos: " + m_pos);
-			positions.push(m_pos + 8 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
-			positions.push(m_pos + 4 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
-			positions.push(m_pos + offset + (Math.random() * 6) - 3); 	distances.push(m_distance + 50); 	availables.push(1);
-			positions.push(m_pos - 8 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
-			positions.push(m_pos + 2 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 135); 	availables.push(1);
-			positions.push(m_pos - 3 + offset + (Math.random() * 6) - 3); distances.push(m_distance + 130); 	availables.push(1);
+			positions.push(m_pos + 8 + m_gap + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
+			positions.push(m_pos + 4 + m_gap + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
+			positions.push(m_pos + m_gap + (Math.random() * 6) - 3); 	distances.push(m_distance + 50); 	availables.push(1);
+			positions.push(m_pos - 8 + m_gap + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
+			positions.push(m_pos + 2 + m_gap + (Math.random() * 6) - 3); distances.push(m_distance + 135); 	availables.push(1);
+			positions.push(m_pos - 3 + m_gap + (Math.random() * 6) - 3); distances.push(m_distance + 130); 	availables.push(1);
 			
 			// pour chaque fruit a placer
 			for (var j:int = 0; j < m_nbFruitMax; j++) {
@@ -257,7 +229,6 @@ package Game.Objects
 					f = Math.random() * positions.length;
 				}
 				// j'ajoute le fruit
-				trace(positions[f] + ", " + distances[f]);
 				m_fruits.push(new Fruit(positions[f], distances[f], getPlanet()));
 				// ce fruit n'est plus dispo du coup
 				availables[f] = 0;
@@ -288,6 +259,18 @@ package Game.Objects
 				this.visible = false;
 				m_planet.removeTree(this);
 			}
+		}
+		
+		public function isFeeding():Boolean {
+			return ( m_state == "feed" && m_fruits.length > 0 );
+		}
+		
+		override public function getPos():Number {
+			return (m_pos + m_gap );
+		}
+		
+		public function getFruits():Array {
+			return m_fruits;
 		}
 	}
 
