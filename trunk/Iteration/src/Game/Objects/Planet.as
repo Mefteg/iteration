@@ -96,6 +96,9 @@ package Game.Objects
 				case "Birth_s1":					
 					pulseScale = MathUtils.interpolate(0.1, 0.7096, m_animTime) * GameParams.map.zoom;
 					
+					m_heartDeath.scale.x = pulseScale;
+					m_heartDeath.scale.y = pulseScale;
+					
 					if ( m_animTime > 1 )
 					{
 						m_animTime = 0;

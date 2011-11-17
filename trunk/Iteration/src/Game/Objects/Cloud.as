@@ -106,7 +106,12 @@ package Game.Objects
 					m_pos = ( -180 / Math.PI) * Math.atan((FlxG.mouse.y - (FlxG.height / 2.)) / (FlxG.mouse.x - (FlxG.width / 2.)));
 					if ( FlxG.mouse.x < FlxG.width / 2 )
 					{
-						m_pos = 90 + (90 - (-m_pos));
+						m_pos = 90 + (90 - ( -m_pos));
+						m_pos -= 5;
+					}
+					else
+					{
+						m_pos += 0;
 					}
 					
 					if (!FlxG.mouse.pressed()) 
@@ -116,6 +121,7 @@ package Game.Objects
 						m_hasSelected = false;
 						m_rainSprite.visible = true;
 						m_rainSprite.play("rain");
+						GameParams.playstate.rain(m_pos+10);
 
 						// mspeed = m_speed * 1.2;
 					}
@@ -166,11 +172,14 @@ package Game.Objects
 				var screenXY:FlxPoint = m_cloudSprite.getScreenXY(new FlxPoint(m_cloudSprite.x, m_cloudSprite.y), GameParams.camera);
 				
 				//et si la souris se trouve sur le sprite
-				if ( ( mouseX < screenXY.x + m_cloudSprite.width) && (mouseX > screenXY.x) ) {
-					if ( (mouseY < screenXY.y + m_cloudSprite.height/2) && (mouseY > screenXY.y) ) {
-						return true;
-					}
+				if ( ( mouseX < screenXY.x + m_cloudSprite.width) && (mouseX > screenXY.x) ) 
+				{
+						if ( (mouseY < screenXY.y + m_cloudSprite.height/2) && (mouseY > screenXY.y) ) 
+						{
+								return true;
+						}
 				}
+
 			}
 			return false;
 		}

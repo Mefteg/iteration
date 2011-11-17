@@ -3,10 +3,10 @@
 	<iteration time="10"/>
 	<zoom min="0.3" max="1" actual="0.3" />
 	<planet size="10" resources="10000" />
-	<blobby initNb="4" speed="0.1" lifetime="3" recycledResources="100" />
-	<tree number="3" nbFruitMax="2" lifetime="5"/> <!-- nbFruitMax doit etre inferieur ou egal a 6 -->
-	<cloud number="6" scale="1"  rainDistance="280" speed="0.02" />
-	<meteor nbByCycle="1" speed="0.1" zone="10" />
+	<blobby initNb="4" speed="0.1" lifetime="3" recycledResources="100"/>
+	<tree number="3" nbFruitMax="2" lifetime="1" /> <!-- nbFruitMax doit etre inférieur ou egal a 6 -->
+	<cloud number="6" scale="1" rainDistance="280" speed="0.02"/>
+	<meteor nbByCycle="1" speed="0.1" zone="10"/>
 	<idee guerreMort="10" guerreNat="0" 
 		paixMort="0" paixNat="10"
 		religionMort="0" religionNat="10"
