@@ -65,7 +65,7 @@ package Game.Objects
 			addAnimation("arise", [77], 0, true);
 			addAnimation("birth",MathUtils.getArrayofNumbers(77,64), 6, false);
 			addAnimation("idle", [0, 1, 2, 3, 4, 5], 0.2+FlxG.random() * 2, true);
-			addAnimation("walk", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 2, true);
+			addAnimation("walk", MathUtils.getArrayofNumbers(6,13), (2 + FlxG.random() * 2)/**4*/, true);
 			addAnimation("pick", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 2, true);
 			addAnimation("search", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 3, true);
 			addAnimation("validate", MathUtils.getArrayofNumbers(24, 33), 5 +FlxG.random() * 2, false);

@@ -74,14 +74,14 @@ package  Game.States
 			m_text.size = 50;
 			m_zbuffer.addForeground(m_text);
 			
-			
 			//SON
 			var m_sound:SoundEngine.Sound = new SoundEngine.Sound(SoundResources.backgroundMusic, true);
 			m_soundBank.add(m_sound, "Background");
 			//m_soundBank.get("Background").play();
 			
 			// On affiche la souris
-			FlxG.mouse.show();		
+			FlxG.mouse.show();
+			//FlxG.mouse.load(SpriteResources.ImgMouseCursor);
 		}
 		
 		override public function create():void 

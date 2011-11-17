@@ -25,6 +25,8 @@ package
 		public var zoom:Number;
 		public var zoomMin:Number;
 		public var zoomMax:Number;
+		public var zoomSpeed:Number;
+		public var zoomSpeedUp:Number;
 		
 		public var m_planetSize:Number;
 		public var m_planetResources:int;
@@ -81,6 +83,8 @@ package
 			zoomMin = m_xml.zoom.@min;
 			zoomMax = m_xml.zoom.@max;
 			zoom = m_xml.zoom.@actual;
+			zoomSpeed = m_xml.zoom.@speed;
+			zoomSpeedUp = m_xml.zoom.@speedUp;
 			
 			m_planetSize = m_xml.planet.@size;
 			m_planetResources = m_xml.planet.@resources;
