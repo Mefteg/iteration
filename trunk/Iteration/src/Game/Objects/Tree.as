@@ -94,7 +94,7 @@ package Game.Objects
 				
 				m_roots = new FlxSprite();
 				m_roots.loadGraphic2(SpriteResources.ImgTreeRoots, true, false, 202, 716);
-				m_roots.addAnimation("grow", MathUtils.getArrayofNumbers(0, 44), 20, false);
+				m_roots.addAnimation("grow", MathUtils.getArrayofNumbers(0, 44), 40, false);
 				m_roots.scale.x = 1.0;
 				m_roots.scale.y = 1.0;
 				

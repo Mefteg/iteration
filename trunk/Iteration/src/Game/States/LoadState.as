@@ -122,8 +122,10 @@ package Game.States
 			//nuages
 			SpriteResources.ImgCloud = new FlxExtBitmap("img/cloud1.png");
 			SpriteResources.ImgCloud2 = new FlxExtBitmap("img/cloud2.png");
+			SpriteResources.ImgRain = new FlxExtBitmap("img/rain.png");
 			addImage(SpriteResources.ImgCloud);
 			addImage(SpriteResources.ImgCloud2);
+			addImage(SpriteResources.ImgRain);
 			//idées
 			SpriteResources.ImgIdeaBubble = new FlxExtBitmap("img/IdeaBubble.png");
 			SpriteResources.ImgIdeas = new FlxExtBitmap("img/Ideas.png");
@@ -131,8 +133,8 @@ package Game.States
 			addImage(SpriteResources.ImgIdeas);
 			
 			// fond
-			SpriteResources.ImgBackground = new FlxExtBitmap("img/fond.jpg");
-			SpriteResources.ImgForeground = new FlxExtBitmap("img/foreground.jpg");
+			SpriteResources.ImgBackground = new FlxExtBitmap("img/fond.png");
+			SpriteResources.ImgForeground = new FlxExtBitmap("img/foreground.png");
 			addImage(SpriteResources.ImgBackground);
 			addImage(SpriteResources.ImgForeground);		
 			

@@ -25,7 +25,7 @@ package Game
 			m_camera = camera;
 			
 			m_backgroundSprite = new FlxSprite(0, 0, null);
-			m_backgroundSprite.loadGraphic2(SpriteResources.ImgBackground, false, false, 2500, 1875);
+			m_backgroundSprite.loadGraphic2(SpriteResources.ImgBackground, false, false, 2500, 1406);
 			m_foregroundSprite = new FlxSprite(0, 0, null);
 			m_foregroundSprite.loadGraphic2(SpriteResources.ImgForeground, false, false, 1280, 720);
 		}
