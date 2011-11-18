@@ -33,6 +33,8 @@ package Game.Objects
 		protected var m_blobTarget:Blobby;
 		protected var m_blobbyBirth:Blobby;
 		public var m_target:Element = null;
+		public var m_targetTree:Tree = null;
+		public var m_targetFruit:Fruit = null;
 		
 		public function Blobby(pos:Number, distance:Number, planet:Planet) 
 		{
@@ -64,15 +66,15 @@ package Game.Objects
 			loadGraphic2(SpriteResources.ImgBlobby, true, false, 300, 300);
 			addAnimation("arise", [77], 0, true);
 			addAnimation("birth",MathUtils.getArrayofNumbers(77,64), 6, false);
-			addAnimation("idle", [0, 1, 2, 3, 4, 5], 0.2+FlxG.random() * 2, true);
-			addAnimation("walk", MathUtils.getArrayofNumbers(6,13), (2 + FlxG.random() * 2)/**4*/, true);
-			addAnimation("pick", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 2, true);
-			addAnimation("search", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 4, true);
-			addAnimation("validate", MathUtils.getArrayofNumbers(24, 33), 5 +FlxG.random() * 2, false);
-			addAnimation("duplicate", MathUtils.getArrayofNumbers(36, 44), 5 , false)
-			addAnimation("discuss", MathUtils.getArrayofNumbers(15, 21) , 5 +FlxG.random() * 2, true);
-			addAnimation("eat", MathUtils.getArrayofNumbers(45,51) , 5 +FlxG.random() * 2, false);
-			addAnimation("swallow",[51,50,49,48,47,46,45] , 5 +FlxG.random() * 2, false);
+			addAnimation("idle", [0, 1, 2, 3, 4, 5], 0.2 + FlxG.random() * 2, true);
+			addAnimation("walk", MathUtils.getArrayofNumbers(6,13), 6 + FlxG.random() * 2, true);
+			addAnimation("pick", MathUtils.getArrayofNumbers(6,13), 6 + FlxG.random() * 2, true);
+			addAnimation("search", MathUtils.getArrayofNumbers(6,13), 6 + FlxG.random() * 3, true);
+			addAnimation("validate", MathUtils.getArrayofNumbers(24, 33), 10 + FlxG.random() * 2, false);
+			addAnimation("duplicate", MathUtils.getArrayofNumbers(36, 44), 8 , false)
+			addAnimation("discuss", MathUtils.getArrayofNumbers(15, 21) , 5 + FlxG.random() * 2, true);
+			addAnimation("eat", MathUtils.getArrayofNumbers(45,51) , 8, false);
+			addAnimation("swallow",[51,50,49,48,47,46,45] , 8, false);
 			addAnimation("die", [0] , 2 +FlxG.random() * 2, false);
 			addAnimation("comeBack", MathUtils.getArrayofNumbers(64,77) , 5 +FlxG.random() * 2, false);
 			addAnimation("dig", [77] , 0, false);
@@ -178,9 +180,11 @@ package Game.Objects
 			// si l'animation est terminée
 			if ( finished ) {
 				// si le fruit a été détruit
-				if ( !m_target.alive ) {
+				if ( !m_targetFruit.alive ) {
 					setState("swallow");
-					m_target.setState("eated");
+					m_targetFruit.setState("eaten");
+					m_targetTree = null;
+					m_targetFruit = null;
 				}
 			}
 		}
@@ -393,57 +397,44 @@ package Game.Objects
 			}
 		}
 		
-		public function pick():void {			
-			// si j'ai une cible
-			if ( m_target != null ) {
-				// si ma cible est un arbre
-				if ( describeType(m_target).@name == "Game.Objects::Tree" ) {
-					// si je suis arrivé à l'arbre
-					if ( collideWithElement(m_target) ) {
-						var tree:Tree = m_target as Tree;
-						// il va chercher un fruit
-						searchNearestElement(tree.getFruits());
-					}
-					// sinon
-					else {
-						// je cherche l'arbre le plus proche
-						searchNearestTree();
-						// et je m'y rends
-						goTo(m_target);
-					}
+		public function pick():void {
+			// si je dois chercher un arbre et pas un fruit
+			if ( m_targetTree != null && m_targetFruit == null ) {
+				// si je suis arrivé à l'arbre
+				if ( collideWithElement(m_targetTree) ) {
+					m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
 				}
-				
-				// si ma cible est un fruit
-				if ( describeType(m_target).@name == "Game.Objects::Fruit" ) {
-					//si le fruit est toujours vivant
-					if ( m_target.alive ) 
-					{
-						// si je suis arrivé au fruit et qu'il est toujours vivant
-						if ( collideWithElement(m_target) ) {
-							// il va le manger
-							m_target.setState("fall");
-							setState("eat");
-						}
-						// sinon
-						else {
-							// je vais vers le fruit
-							goTo(m_target);
-						}
+				// sinon
+				else {
+					// je cherche l'arbre le plus proche
+					m_targetTree = searchNearestTree();
+					// et je m'y rends
+					goTo(m_targetTree);
+				}
+			}
+			// sinon
+			else {
+				// si je n'ai pas de fruit à trouver
+				if ( m_targetFruit == null ) {
+					//je recupere l'arbre le plus proche
+					m_targetTree = searchNearestTree();
+				}
+				// sinon
+				else {
+					// si je suis arrivé au fruit
+					if ( collideWithElement(m_targetFruit) ) {
+						m_targetFruit.setState("fall");
+						setState("eat");
 					}
 					// sinon
 					else 
 					{
 						// je cherche le fruit le plus proche
-						searchNearestTree();
-						var tree:Tree = m_target as Tree;
-						searchNearestElement(tree.getFruits());
+						m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
+						// et je m'y rends
+						goTo(m_targetFruit);
 					}
 				}
-			}
-			// sinon
-			else {
-				//je recupere l'arbre le plus proche
-				searchNearestTree();
 			}
 		}
 		
@@ -564,7 +555,7 @@ package Game.Objects
 		}
 		
 		// Cherche l'arbre ayant des fruits le plus près
-		public function searchNearestTree():void 
+		public function searchNearestTree():Tree 
 		{
 			var trees:Array = m_planet.getTrees(); //tous les trees
 			var size:int = trees.length; //nombre de trees
@@ -594,13 +585,11 @@ package Game.Objects
 				}
 			}
 			
-			if ( nearest != null ) {
-				m_target = nearest;
-			}
+			return nearest;
 		}
 		
-		// Cherche l'element "alive" le plus proche et le stocke dans m_target
-		public function searchNearestElement(elements:Array):void 
+		// Retourne l'element "alive" le plus proche
+		public function searchNearestElement(elements:Array):Element 
 		{
 			var size:int = elements.length; //nombre d'elements
 			
@@ -629,9 +618,7 @@ package Game.Objects
 				}
 			}
 			
-			if ( nearest != null ) {
-				m_target = nearest;
-			}
+			return nearest;
 		}
 		
 		public function isInvincible() : Boolean{
