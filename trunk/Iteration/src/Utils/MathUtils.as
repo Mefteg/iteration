@@ -32,13 +32,17 @@ package Utils
 		
 		public static function getArrayofNumbers(init:int, n:int ):Array {
 			var tab:Array = new Array();
-			if(init<n){
-				for (var i:int = init; i <= n ; i++) 
+			var i:int
+			if (init < n)
+			{
+				for (i = init; i <= n ; i++) 
 				{
 					tab.push(i);
 				}
-			}else {
-				for (var i:int = init; i >= n ; i--) 
+			}
+			else 
+			{
+				for (i = init; i >= n ; i--) 
 				{
 					tab.push(i);
 				}

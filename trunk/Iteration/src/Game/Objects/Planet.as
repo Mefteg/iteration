@@ -113,8 +113,8 @@ package Game.Objects
 					}
 					break;
 				case "Birth_s2":
-					var pulse:Number = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
-                    var pulseScale:Number = (pulse + (m_resources / 10000) * 0.7096) * GameParams.map.zoom;
+					pulse = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
+                    pulseScale = (pulse + (m_resources / 10000) * 0.7096) * GameParams.map.zoom;
 
 					m_heartDeath.scale.x = pulseScale;
                     m_heartDeath.scale.y = pulseScale;

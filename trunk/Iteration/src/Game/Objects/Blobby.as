@@ -414,7 +414,8 @@ package Game.Objects
 				// si ma cible est un fruit
 				if ( describeType(m_target).@name == "Game.Objects::Fruit" ) {
 					//si le fruit est toujours vivant
-					if ( m_target.alive ) {
+					if ( m_target.alive ) 
+					{
 						// si je suis arrivé au fruit et qu'il est toujours vivant
 						if ( collideWithElement(m_target) ) {
 							// il va le manger
@@ -428,7 +429,8 @@ package Game.Objects
 						}
 					}
 					// sinon
-					else {
+					else 
+					{
 						// je cherche le fruit le plus proche
 						searchNearestTree();
 						var tree:Tree = m_target as Tree;
