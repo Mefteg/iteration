@@ -680,7 +680,6 @@ package Game.Objects
 		public function isOnElement(target:Element):Boolean 
 		{
 			if ( (getPos() % 360) - (target.getPos() % 360) < 1 && (getPos() % 360) - (target.getPos() % 360) > 0 ) {
-				trace((getPos() % 360) + " - " + (target.getPos() % 360));
 				return true;
 			}
 			return false;
