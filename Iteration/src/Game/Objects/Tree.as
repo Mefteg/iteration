@@ -365,7 +365,7 @@ package Game.Objects
 		
 		public function isDead():Boolean
 		{
-			return (this.m_state == "die");
+			return (this.m_state == "die") || (this.m_state == "ungrowRoot");
 		}
 		
 		public function getFruits():Array {

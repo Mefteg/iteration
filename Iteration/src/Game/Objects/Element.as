@@ -3,6 +3,7 @@ package Game.Objects
 	import flash.geom.Point;
 	import Globals.GameParams;
 	import org.flixel.*;
+	import org.flixel.system.input.Mouse;
 	import Utils.MathUtils;
 	/**
 	 * ...
@@ -20,6 +21,10 @@ package Game.Objects
 		public var m_planet:Planet; // référence vers la planete pour diverses raisons
 		
 		protected var m_state:String; // Etat de l'élément
+		
+		// Sound related stuff
+		private var m_soundName:String;	// The name of the sound to play 
+		private var m_soundZoomLevel:Number;
 		
 		// params : pos = angle par rapport au cerlcle de la planete 
 		//			distance = distance par rapport au centre de la planete
@@ -59,21 +64,22 @@ package Game.Objects
 			this.angle = -m_pos + 90;
 		}
 		
-		public function onClick():Boolean {
-			//si click de la souris
-			if (FlxG.mouse.justPressed()) {
+		public function onClick():Boolean 
+		{
+			if ( FlxG.mouse.justPressed() )
+			{
+				//si click de la souris
+				var mouseVar:Mouse = FlxG.mouse;
+				var mouseX:int = FlxG.mouse.getWorldPosition(GameParams.camera).x;
+				var mouseY:int = FlxG.mouse.getWorldPosition(GameParams.camera).y;
 				
-				var mouseX:int = FlxG.mouse.x ;
-				var mouseY:int = FlxG.mouse.y ;
-				var screenXY:FlxPoint = getScreenXY(new FlxPoint(x, y), GameParams.camera);
-				
-				//et si la souris se trouve sur le sprite
-				if ( ( mouseX < screenXY.x + width) && (mouseX > screenXY.x) ) {
-					if ( (mouseY < screenXY.y + height) && (mouseY > screenXY.y) ) {
-						return true;
-					}
+				//if ( pixelsOverlapPoint(new FlxPoint(mouseX, mouseY), 0xFF, GameParams.camera) )
+				if ( Point.distance(new Point(mouseX, mouseY), new Point(x + width / 2, y + height / 2)) < Math.min(height,width)/4 )
+				{
+					return true;
 				}
 			}
+			
 			return false;
 		}
 		

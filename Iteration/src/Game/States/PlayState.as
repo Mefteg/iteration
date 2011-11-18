@@ -17,9 +17,7 @@ package  Game.States
 	import org.flixel.*;
 	import org.flixel.system.FlxAnim;
 	import Resources.SpriteResources;
-	import Resources.SoundResources;
 	import SoundEngine.SoundBank;
-	import SoundEngine.Sound;
 	import Utils.MathUtils;
 	
 	/**
@@ -30,7 +28,6 @@ package  Game.States
 	{		
 		private var m_camera:Camera;
 		
-		private var m_soundBank:SoundBank = new SoundBank();
 		//animations pour blobby
 		protected var nbAnimBlob:int = 4;
 				
@@ -73,8 +70,7 @@ package  Game.States
 			m_zbuffer.addForeground(m_text);
 			
 			//SON
-			var m_sound:SoundEngine.Sound = new SoundEngine.Sound(SoundResources.backgroundMusic, true);
-			m_soundBank.add(m_sound, "Background");
+			
 			//m_soundBank.get("Background").play();
 			
 			// On affiche la souris
@@ -288,18 +284,16 @@ package  Game.States
 		{
 			if ( position < 0 )
 			{
-				position = 360 - position;
+				position = 360 + position;
 			}
-			
+
 			var trees:Array = m_treeGenerator.trees();
 			for ( var i:uint = 0 ; i < trees.length ; i++ )
 			{
 				if ( trees[i] != null && trees[i].isVisible() == true && !trees[i].isGrowing() && !trees[i].isDead())
 				{
-					trace(Math.abs(trees[i].getPos() - position));
 					if ( Math.abs( trees[i].getPos() - position) < 30 )
 					{
-						trace ("Tree !");
 						trees[i].raining();
 					}
 				}

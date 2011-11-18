@@ -185,12 +185,10 @@ package Game.Objects
 				var mouseX:int = FlxG.mouse.getWorldPosition(GameParams.camera).x;
 				var mouseY:int = FlxG.mouse.getWorldPosition(GameParams.camera).y;
 				
-				if ( m_cloudSprite.pixelsOverlapPoint(new FlxPoint(mouseX, mouseY), 0xFF, GameParams.camera) )
+				// if ( m_cloudSprite.pixelsOverlapPoint(new FlxPoint(mouseX, mouseY), 0xFF, GameParams.camera) )
+				if ( Point.distance(new Point(mouseX, mouseY), new Point(m_cloudSprite.x + m_cloudSprite.width / 2, m_cloudSprite.y + m_cloudSprite.height / 2)) < Math.min(m_cloudSprite.height,m_cloudSprite.width)/4 )
 				{
-					if ( Point.distance(new Point(mouseX, mouseY), new Point(m_cloudSprite.x + m_cloudSprite.width / 2, m_cloudSprite.y + m_cloudSprite.height / 2)) < Math.min(m_cloudSprite.height,m_cloudSprite.width)/2 )
-					{
-						return true;
-					}
+					return true;
 				}
 			}
 			

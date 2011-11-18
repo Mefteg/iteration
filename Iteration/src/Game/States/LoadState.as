@@ -14,6 +14,10 @@ package Game.States
 	import org.flixel.FlxTimer;
 	import org.flixel.system.FlxPreloader;
 	import Resources.SpriteResources;
+	
+	import SoundEngine.SoundBank;
+	import SoundEngine.Sound;
+	import Resources.SoundResources;
 	/**
 	 * ...
 	 * @author Moi
@@ -36,6 +40,7 @@ package Game.States
 		{
 			m_images = new Array();
 			m_timerMin = new FlxTimer();
+			GameParams.soundBank = new SoundBank();
 		}
 		
 		public function getLoadImageProgress():Number {
@@ -78,7 +83,26 @@ package Game.States
 		public function setState(state:String):void {
 			m_state = state;
 		}
-		override public function create():void {
+		override public function create():void 
+		{
+			createSprites();
+			createSounds();
+			
+			//charger le xml
+			GameParams.map = new Map("xml/map1.xml");
+			
+			//enregistrer la taille du tableau
+			m_imagesSize = m_images.length;
+			
+			setState("Bitmap");
+			m_timerMin.start(4);
+			
+			movie = new Intro();
+			FlxG.stage.addChild(movie);
+		}
+		
+		private function createSprites():void
+		{
 			//loader la planete
 			SpriteResources.ImgPlnt = new FlxExtBitmap("img/planet.png");
 			addImage(SpriteResources.ImgPlnt);
@@ -154,19 +178,12 @@ package Game.States
 			addImage(SpriteResources.ImgCreditBackground);
 			SpriteResources.ImgCreditBackbutton = new FlxExtBitmap("img/BackButton.png");
 			addImage(SpriteResources.ImgCreditBackbutton);
-			
-			//charger le xml
-			GameParams.map = new Map("xml/map1.xml");
-			
-			//enregistrer la taille du tableau
-			m_imagesSize = m_images.length;
-			
-			setState("Bitmap");
-			m_timerMin.start(4);
-			
-			movie = new Intro();
-			FlxG.stage.addChild(movie);
-			
+		}
+		
+		private function createSounds():void
+		{
+			var m_sound:SoundEngine.Sound = new SoundEngine.Sound(SoundResources.backgroundMusic, true);
+			GameParams.soundBank.add(m_sound, SoundResources.backgroudMusicName);
 		}
 		
 		override public function update() :void{

@@ -155,6 +155,8 @@ package Game.Objects
 				case "Dead":
 					m_heartDeath.scale.x = 0.1 * GameParams.map.zoom;
                     m_heartDeath.scale.y = 0.1 * GameParams.map.zoom;
+					
+					m_heartDeath.alpha = 1;
 
 					
 					pulseScale = 0.1 * GameParams.map.zoom;
