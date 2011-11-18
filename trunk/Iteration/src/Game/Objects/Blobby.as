@@ -421,8 +421,9 @@ package Game.Objects
 				}
 				// sinon
 				else {
-					// si je suis arrivé au fruit
-					if ( collideWithElement(m_targetFruit) ) {
+					// si je suis arrivé sous le fruit
+					if ( isOnElement(m_targetFruit) ) {
+						trace("Je suis dessous!");
 						m_targetFruit.setState("fall");
 						setState("eat");
 					}
@@ -657,6 +658,15 @@ package Game.Objects
 			if (!target) return false;
 			
 			if ( Math.abs(((this.m_pos + 180) % 360) - ((target.getPos() + 180) % 360)) < 7 )
+			{
+				return true;
+			}
+			return false;
+		}
+		
+		public function isOnElement(target:Element):Boolean 
+		{			
+			if ( (getPos() % 360) - (target.getPos() % 360) < 1 )
 			{
 				return true;
 			}
