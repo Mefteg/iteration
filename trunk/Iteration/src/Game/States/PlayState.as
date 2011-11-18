@@ -245,13 +245,6 @@ package  Game.States
 			
 		public function createWorld():void
 		{			
-			var size:int = blobbies.length;
-			for (var i:int = 0; i < size; i++) 
-
-			{
-				blobbies[i].visible = true;
-			}
-			
 			initTrees();
 		}
 		

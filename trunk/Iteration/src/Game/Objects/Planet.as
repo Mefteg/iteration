@@ -139,6 +139,13 @@ package Game.Objects
 						m_heartBack.visible = true;
 						
 						m_state = "Living";
+						
+						var size:int = m_blobbies.length;
+						for (var i:int = 0; i < size; i++) 
+
+						{
+							m_blobbies[i].visible = true;
+						}
 					}
 					break;
 				case "Living":
