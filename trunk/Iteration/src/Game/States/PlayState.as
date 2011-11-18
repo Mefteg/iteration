@@ -104,9 +104,6 @@ package  Game.States
 			
 			
 			m_state = "Creation";
-						
-			//----------CREER LES ARBRES------------
-			//initTrees();
 			
 			// On affiche la planete apres le background
 			m_zbuffer.addBackground(planet);
@@ -136,6 +133,7 @@ package  Game.States
 		
 		override public function update():void 
 		{			
+			if (FlxG.keys.A) planet.removeResources(10000);
 			
 			//mettre a jour la camera
 			m_camera.update();
@@ -144,7 +142,7 @@ package  Game.States
 			{
 				case "Creation":
 					if ( meteor.hasExploded() )
-					{
+					{		
 						m_zbuffer.removeBackground(remove(meteor.getExplosion()));
 						meteor.destroy();
 						m_zbuffer.removeBackground(meteor);
@@ -193,6 +191,8 @@ package  Game.States
 					// Planet death condition
 					if ( planet.isDead() || blobbies.length > 100 || (blobbies.length < 4 && m_iteration.getIterations() > 2))
 					{
+						FlxG.shake(0.01);
+						FlxG.flash();
 						// If we have a meteor roaming ... we delete it
 						if ( meteor != null )
 						{
@@ -263,13 +263,10 @@ package  Game.States
 		public function initBlobies():void
 		{
 			var blob:Blobby;
-			//tableau de positions des blobbies à créer
-			var tabBlobbiesPosition:Array = [ 2  , 90, 200, 21 ];
-			var sizeBlob:uint = tabBlobbiesPosition.length; // optimisation
 			
-			for (var i:int = 0; i < sizeBlob ; i++) 
+			for (var i:int = 0; i < GameParams.map.m_blobbyInitNb ; i++) 
 			{
-				blob = new Blobby( tabBlobbiesPosition[i], 0, planet);
+				blob = new Blobby( Math.random()*360, 0, planet);
 				blob.visible = false;
 				blob.setState("arise");
 				blobbies.push(blob);

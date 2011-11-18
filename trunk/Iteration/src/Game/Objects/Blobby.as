@@ -89,7 +89,6 @@ package Game.Objects
 			place();
 			//rotation pour mettre le bas du sprite sur la surface de la planete
 			rotateToPlanet();
-			if (onClick()) setState("comeBack");
 			switch( m_state ) {
 				case ("arise"):
 					arise();
@@ -408,8 +407,11 @@ package Game.Objects
 				else {
 					// je cherche l'arbre le plus proche
 					m_targetTree = searchNearestTree();
-					// et je m'y rends
-					goTo(m_targetTree);
+					// si un arbre a été trouvé
+					if ( m_targetTree != null ) { 
+						// et je m'y rends
+						goTo(m_targetTree);
+					}
 				}
 			}
 			// sinon
@@ -423,7 +425,6 @@ package Game.Objects
 				else {
 					// si je suis arrivé sous le fruit
 					if ( isOnElement(m_targetFruit) ) {
-						trace("Je suis dessous!");
 						m_targetFruit.setState("fall");
 						setState("eat");
 					}
@@ -431,9 +432,21 @@ package Game.Objects
 					else 
 					{
 						// je cherche le fruit le plus proche
-						m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
-						// et je m'y rends
-						goTo(m_targetFruit);
+						m_targetTree = searchNearestTree();
+						//s'il existe encore un arbre 
+						if(m_targetTree !=null){
+							m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
+							//s'il existe encore un fruit
+							if ( m_targetFruit != null ) {
+								// et je m'y rends
+								goTo(m_targetFruit);
+							}
+						}//sinon j'attends et j'ai tres faim
+						else {
+							setState("idle");
+						}
+						
+						
 					}
 				}
 			}
