@@ -51,6 +51,7 @@ package Game.Objects
 		override public function update():void 
 		{
 			super.update();
+			if (m_trees.length == 0) return;
 			
 			for ( var i:uint = 0 ; i < GameParams.map.m_treeNumber ; i++ )
 			{
@@ -100,8 +101,10 @@ package Game.Objects
 			{
 				m_treeTimer[i] = new FlxTimer();
 				m_treeTimer[i].start(FlxG.random() * 20);
-			}
-			
+				
+				m_trees[i] = new Tree(m_planet.center(), m_planet , m_trees);
+				m_trees[i].visible = false;
+			}			
 		}
 	}
 	

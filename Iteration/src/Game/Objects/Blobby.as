@@ -67,7 +67,7 @@ package Game.Objects
 			addAnimation("idle", [0, 1, 2, 3, 4, 5], 0.2+FlxG.random() * 2, true);
 			addAnimation("walk", MathUtils.getArrayofNumbers(6,13), (2 + FlxG.random() * 2)/**4*/, true);
 			addAnimation("pick", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 2, true);
-			addAnimation("search", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 3, true);
+			addAnimation("search", MathUtils.getArrayofNumbers(6,13), 2 + FlxG.random() * 4, true);
 			addAnimation("validate", MathUtils.getArrayofNumbers(24, 33), 5 +FlxG.random() * 2, false);
 			addAnimation("duplicate", MathUtils.getArrayofNumbers(36, 44), 5 , false)
 			addAnimation("discuss", MathUtils.getArrayofNumbers(15, 21) , 5 +FlxG.random() * 2, true);
@@ -251,6 +251,8 @@ package Game.Objects
 			//si le blobby cible est mort , en chercher un autre
 			if (!m_blobTarget)
 				searchNearestBlobby();
+			if (m_blobTarget.isDying())
+				searchNearestBlobby();
 				
 			if ( collideWithBlobby(m_blobTarget) ) {
 				//si le blobby est occupé on attend
@@ -270,7 +272,7 @@ package Game.Objects
 				var angle1:Number = this.m_pos + 180 % 360;
 				if ( angle1 < m_blobTarget.m_pos )
 				{
-					m_pos -= m_speed;
+					m_pos -= m_speed*1.2;
 					if ( m_pos > 360 ) // modulo of the angle
 					{
 						m_pos -= 360;
@@ -278,7 +280,7 @@ package Game.Objects
 				}
 				else
 				{
-					m_pos += m_speed;
+					m_pos += m_speed*1.2;
 					if ( m_pos < 0 ) // modulo of the angle
 					{
 						m_pos += 360;
@@ -290,7 +292,7 @@ package Game.Objects
 				var angle2:Number = m_blobTarget.m_pos + 180 % 360;
 				if ( angle2 > this.m_pos )
 				{
-					m_pos -= m_speed;
+					m_pos -= m_speed*1.2;
 					if ( m_pos > 360 ) // modulo of the angle
 					{
 						m_pos -= 360;
@@ -298,7 +300,7 @@ package Game.Objects
 				}
 				else
 				{
-					m_pos += m_speed;
+					m_pos += m_speed*1.2;
 					if ( m_pos < 00 ) // modulo of the angle
 					{
 						m_pos += 360;
@@ -309,7 +311,7 @@ package Game.Objects
 			{
 				if ( dist > 0 )
 				{
-					m_pos -= m_speed;
+					m_pos -= m_speed*1.2;
 					if ( m_pos > 360 ) // modulo of the angle
 					{
 						m_pos -= 360;
@@ -317,7 +319,7 @@ package Game.Objects
 				}
 				else
 				{
-					m_pos += m_speed;
+					m_pos += m_speed*1.2;
 					if ( m_pos < 00 ) // modulo of the angle
 					{
 						m_pos += 360;
@@ -527,6 +529,7 @@ package Game.Objects
 		public function setBlobbyBirth(blobby:Blobby):void {
 			m_blobbyBirth = blobby;
 			setState("pick");
+			//setState("duplicate");
 		}
 		
 		public function searchNearestBlobby():void 
@@ -641,6 +644,10 @@ package Game.Objects
 		
 		public function isBorn():Boolean {
 			return ( (m_state != "birth") && (m_state != "arise") );
+		}
+		
+		public function isDying():Boolean {
+			return ( (m_state == "dig") || (m_state == "comeBack") || (m_state == "die"));
 		}
 		
 		public function isScholar():Boolean {

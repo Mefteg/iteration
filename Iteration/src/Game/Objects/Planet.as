@@ -271,6 +271,7 @@ package Game.Objects
 			
 			m_animTime = 0;
 			
+			m_resources = GameParams.map.m_planetResources;
 			m_state = "Birth_s1";
 		}
 		

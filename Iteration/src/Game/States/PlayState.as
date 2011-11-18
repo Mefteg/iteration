@@ -135,16 +135,6 @@ package  Game.States
 		
 		override public function update():void 
 		{			
-			// On regle le scale des elements en fonction du zoom de la camera
-			var elements:Array = getElements();
-			
-			// Pour chaque element
-			for (var i:int = 0; i < elements.length; i++) 
-			{
-				// On gere le scale/zoom
-				//elements[i].setScale(new FlxPoint(GameParams.worldZoom, GameParams.worldZoom));
-				//elements[i].setDistance(elements[i].getDistance() * m_zoom);
-			}
 			
 			//mettre a jour la camera
 			m_camera.update();
@@ -215,12 +205,16 @@ package  Game.States
 						add(meteor);
 						add(meteor.getExplosion());
 						
+						var blobDestroy:Blobby;
 						// Delete all the elements
 						while ( blobbies.length != 0 )
 						{
-							blobbies.pop().destroy();
+							blobDestroy = blobbies.pop();
+							getDepthBuffer().removeBlobbies(blobDestroy);
+							remove(blobDestroy);
+							blobDestroy.destroy();
 						}
-			
+						blobDestroy = null;
 						var trees:Array = m_treeGenerator.trees();
 						while ( trees.length != 0 )
 						{
@@ -228,7 +222,7 @@ package  Game.States
 							m_zbuffer.removeTrees(tree);
 							tree.destroy();
 						}
-						
+						m_iteration.clear();
 						planet.explosion();
 						m_state = "Creation";
 						initBlobies();
@@ -247,17 +241,7 @@ package  Game.States
 			
 			m_background.drawForeground();
 		}
-		
-		public function getElements():Array {
-			var elements:Array = new Array();
-			elements = elements.concat(blobbies);
-			elements = elements.concat(m_treeGenerator);
-			elements = elements.concat(clouds);
-			elements.push(planet);
 			
-			return elements;
-		}
-		
 		public function createWorld():void
 		{			
 			var size:int = blobbies.length;

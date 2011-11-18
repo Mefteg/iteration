@@ -48,12 +48,12 @@ package Resources
 		
 		public static var animateIdea:Array = [ -2, 0, 2, 0];
 		public static var arrayIdeas:Object = {
-										religion:[1],
-										paix:[2],
-										medecine:[3],
-										guerre:[5],
-										fanatisme:[6],
-										maladie:[7]
+										religion:[0],
+										paix:[1],
+										medecine:[2],
+										guerre:[4],
+										fanatisme:[3],
+										maladie:[5]
 										};
 		public static var arrayIdeasColor:Object = {
 										religion:0xff5b67,

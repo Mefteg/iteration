@@ -264,6 +264,7 @@ package Game.Objects
 		
 		public function clearFruits():void
 		{
+			if (!m_fruits || m_fruits.length==0) return;
 			// je detruis les fruits
 			for (var i:int = 0; i < m_fruits.length; i++) {
 				m_fruits[i].setState("die");

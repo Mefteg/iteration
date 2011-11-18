@@ -115,6 +115,7 @@ package
 			startIdeaTimer();
 			startDeathTimer();
 			startBirthTimer();
+			calcStats();
 		}
 		
 		public function restart() : void {
@@ -138,7 +139,9 @@ package
 			m_currentIdea = m_ideas[  FlxU.round(Math.random() * (m_ideas.length -1))];
 			//pour savoir si une idée a été trouvée
 			var gotIt:Boolean = false;
-			
+			//prendre un blobby au hasard
+			var blob:Blobby;
+			var index:int = FlxU.round(Math.random() * ( m_planet.getBlobbies().length -1 ) );
 			// Hardcore fix (for Hardgame)
 			// HACK HACK ! 
 			// To avoid the infinit loop
@@ -146,18 +149,24 @@ package
 			
 			while (!gotIt && m_planet.getBlobbies().length > 0 && i < m_planet.getBlobbies().length )
 			{
-				//prendre un blobby au hasard
-				var blob:Blobby = m_planet.getBlobbies()[FlxU.round(Math.random() * ( m_planet.getBlobbies().length -1 ) )];
+				blob = m_planet.getBlobbies()[index];
 				if ( blob != null && !blob.isBusy() && !blob.isScholar() )
 				{
 					blob.setIdea(m_currentIdea);
 					m_scene.add(m_currentIdea);
 					gotIt = true;
+				}else{
+					//incrementer le compteur de recherche
+					index++;
+					if (index >= m_planet.getBlobbies().length)
+						index = 0;
+					i++;
 				}
-				
-				i++;
 			}
-			//trace(m_currentIdea.getName());
+			if (!gotIt) {
+				m_currentIdea = null;
+				startIdeaTimer();
+			}
 		}
 		
 		//calcule le nombre de morts et de naissances
@@ -231,7 +240,7 @@ package
 			if ( (m_timerDeath.finished) && (m_countDeaths < m_nbDeaths) ) {
 				
 				var gotBlobby:Boolean = false; // a true si on a trouvé un blobby a supprimer
-				var indexDelete:int; //index du blobby a supprimer
+				var indexDelete:int = Math.random() * (nbBlobbies-1); //index du blobby a supprimer
 				
 				// Hardcore fix (for Hardgame)
 				// HACK HACK ! 
@@ -239,20 +248,20 @@ package
 				var i:uint = 0;
 				var nbBlobbies:uint = m_planet.getBlobbies().length;
 				
-				while(!gotBlobby && i < nbBlobbies){
-					//choisir un blobby au hasard
-					indexDelete = Math.random() * (nbBlobbies-1);
+				while(!gotBlobby && i < nbBlobbies){					
 					//si le blobby n'est pas invincible
 					if(! m_planet.getBlobbies()[indexDelete].isBusy()){
 						gotBlobby = true;
+					}else{
+						//incrémenter le compteur de recherche
+						indexDelete++;
+						if (indexDelete >= nbBlobbies)
+							indexDelete = 0;
+						i++;
 					}
-					
-					i++;
 				}
 				if (gotBlobby) {
 					m_planet.getBlobbies()[indexDelete].setState("comeBack");
-					//supprimer le blobby
-					//m_planet.removeBlobbyAt(indexDelete);
 					//incrémentere le compteur de morts
 					m_countDeaths++;
 				}
@@ -260,7 +269,7 @@ package
 				startDeathTimer();
 			}
 			
-			//GESTION DES NAISSANCES
+			//GESTION DES MANGEAGES
 			//si le timer de naissances arrive a échéance
 			if ( (m_timerBirth.finished) && (m_countBirths < m_nbBirths) ) 
 			{
@@ -271,8 +280,8 @@ package
 				
 				//chercher un blobby inoccupé pour la mitose
 				var gotBlob:Boolean = false; // a true si on a trouvé un blobby a supprimer
-				var indexCreate:int;
-				var nbBlobbies:uint = m_planet.getBlobbies().length;
+				var indexCreate:int = Math.random() * (m_planet.getBlobbies().length -1);//choisir un blobby
+				var nbBlobbies:uint = m_planet.getBlobbies().length;//limite de recherche
 				
 				// Hardcore fix (for Hardgame)
 				// HACK HACK ! 
@@ -280,16 +289,17 @@ package
 				var i:uint = 0;
 				while (!gotBlob && i < nbBlobbies)
 				{
-					//choisir un blobby au hasard
-					indexCreate = Math.random() * (m_planet.getBlobbies().length -1);
 					//si le blobby n'est pas occupé
 					if (! m_planet.getBlobbies()[indexCreate].isBusy())
 					{
 						gotBlob = true;
-						//m_planet.getBlobbies()[indexCreate].setState("pick");
+					}else{
+						//incrémenter l'indice de recherche
+						indexCreate++;
+						if (indexCreate >= nbBlobbies)
+							indexCreate = 0;
+						i++;
 					}
-					
-					i++;
 				}
 
 				//si on n'a pas trouvé de blobby 
@@ -334,6 +344,16 @@ package
 					m_currentIdea = null;
 				}
 			}
+		}
+		
+		public function clear():void {
+			if (m_currentIdea){
+				m_currentIdea.destroy();
+				m_scene.remove(m_currentIdea);
+			}
+			m_ready = false;
+			m_countBirths = 0;
+			m_countDeaths = 0;
 		}
 		
 		public function cycleFinished():Boolean
