@@ -126,7 +126,7 @@ package Game
 			}
 		}
 		
-		public function setPosPlanet(pos:FlxPoint) {
+		public function setPosPlanet(pos:FlxPoint):void {
 			m_posPlanet = pos;
 		}
 		

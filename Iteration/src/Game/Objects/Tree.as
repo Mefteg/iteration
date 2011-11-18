@@ -311,7 +311,16 @@ package Game.Objects
 		{
 			if ( state == "die" && m_treeDie != null )
 			{
-				m_treeDie.play("die");
+				if ( m_state == "feed" || m_state == "die" )
+				{
+					m_treeDie.addAnimation("completeDie", MathUtils.getArrayofNumbers(m_treeDie.frame, 77), 20, false);
+					m_treeDie.play("completeDie");
+				}
+				else if ( m_state == "treeGrow" )
+				{
+					m_treeDie.addAnimation("completeDie", MathUtils.getArrayofNumbers(77-m_treeGrow.frame, 77), 20, false);
+					m_treeDie.play("completeDie");
+				}
 			}
 			
 			m_state = state; 

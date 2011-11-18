@@ -1,6 +1,8 @@
 package Game.Objects 
 {
+	import flash.geom.Point;
 	import org.flixel.FlxG;
+	import org.flixel.FlxU;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
@@ -16,7 +18,7 @@ package Game.Objects
 	 */
 	public class Cloud extends FlxGroup
 	{				
-		static var m_hasSelected:Boolean;
+		static private var m_hasSelected:Boolean;
 		
 		private var m_cloudSprite:FlxSprite;
 		private var m_rainSprite:FlxSprite;
@@ -142,11 +144,11 @@ package Game.Objects
 			
 			m_rainSprite.scale = m_cloudSprite.scale;
 		}
-		
+	
 		override public function draw():void 
 		{
 			super.draw();
-			
+
 			switch (m_state)
 			{
 				case "Roaming":
@@ -160,27 +162,26 @@ package Game.Objects
 					break;
 					
 			}
+
 		}
 	
 		public function clicDetection():Boolean 
 		{
-			if ( FlxG.mouse.pressed() )
+			if ( m_hasSelected && FlxG.mouse.pressed() || FlxG.mouse.justPressed() )
 			{
 				//si click de la souris
-				var mouseX:int = FlxG.mouse.x ;
-				var mouseY:int = FlxG.mouse.y ;
-				var screenXY:FlxPoint = m_cloudSprite.getScreenXY(new FlxPoint(m_cloudSprite.x, m_cloudSprite.y), GameParams.camera);
+				var mouseX:int = FlxG.mouse.getWorldPosition(GameParams.camera).x;
+				var mouseY:int = FlxG.mouse.getWorldPosition(GameParams.camera).y;
 				
-				//et si la souris se trouve sur le sprite
-				if ( ( mouseX < screenXY.x + m_cloudSprite.width) && (mouseX > screenXY.x) ) 
+				if ( m_cloudSprite.pixelsOverlapPoint(new FlxPoint(mouseX, mouseY), 0xFF, GameParams.camera) )
 				{
-						if ( (mouseY < screenXY.y + m_cloudSprite.height/2) && (mouseY > screenXY.y) ) 
-						{
-								return true;
-						}
+					if ( Point.distance(new Point(mouseX, mouseY), new Point(m_cloudSprite.x + m_cloudSprite.width / 2, m_cloudSprite.y + m_cloudSprite.height / 2)) < Math.min(m_cloudSprite.height,m_cloudSprite.width)/2 )
+					{
+						return true;
+					}
 				}
-
 			}
+			
 			return false;
 		}
 	}
