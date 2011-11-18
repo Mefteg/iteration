@@ -53,14 +53,14 @@ package Utils
 		
 		public static function calculateDistance(angle1:Number, angle2:Number):Number
 		{
-			if ( angle1 >= 360 || angle1 < 0 )
+			/*if ( angle1 > 360 || angle1 < 0 )
 			{
 				trace ("You are using this function wrongly");
 			}
 			else if ( angle2 >= 360 || angle2 < 0 )
 			{
 				trace ("You are using this function wrongly");
-			}
+			}*/
 			
 			var d1:Number = Math.abs(angle1 - angle2);
 			var d2:Number;

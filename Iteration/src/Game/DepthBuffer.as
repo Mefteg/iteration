@@ -1,6 +1,7 @@
 package Game 
 {
 	import org.flixel.FlxBasic;
+	import org.flixel.FlxEmitter;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
 	/**
@@ -14,6 +15,8 @@ package Game
 		private var m_trees:FlxGroup;
 		private var m_fruits:FlxGroup;
 		private var m_foreGround:FlxGroup;
+		
+			var emitter:FlxEmitter = new FlxEmitter(100,100); //x and y of the emitter
 		
 		public function DepthBuffer()
 		{
