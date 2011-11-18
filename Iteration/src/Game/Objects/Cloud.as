@@ -201,8 +201,8 @@ package Game.Objects
 		{
 			m_distance = (FlxG.random() * GameParams.map.m_cloudsDistanceRandom) + GameParams.map.m_cloudsDistance;
 			
-			m_cloudSprite.scale.x = 1 * FlxG.random() /	50 + 1;
-			m_cloudSprite.scale.y = 1 * FlxG.random() / 50 + 1;
+			m_cloudSprite.scale.x = (1 * FlxG.random() /	50 + 1) * GameParams.map.zoom;
+			m_cloudSprite.scale.y = (1 * FlxG.random() / 50 + 1) * GameParams.map.zoom;
 			
 			m_rainSprite.visible = false;
 			m_cloudSprite.visible = true;

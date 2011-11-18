@@ -269,6 +269,9 @@ package Game.Objects
 			m_heartHalo.visible = false;
 			m_heartBack.visible = false;
 			
+			m_heartDeath.scale.x = 0.1 * GameParams.map.zoom;
+			m_heartDeath.scale.y = 0.1 * GameParams.map.zoom;
+			
 			m_animTime = 0;
 			
 			m_resources = GameParams.map.m_planetResources;
