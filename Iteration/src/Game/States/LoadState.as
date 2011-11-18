@@ -141,6 +141,20 @@ package Game.States
 			SpriteResources.ImgMouseCursor = new FlxExtBitmap("img/curseur.png");
 			addImage(SpriteResources.ImgMouseCursor);
 			
+			// menu
+			SpriteResources.ImgMenuBackground = new FlxExtBitmap("img/MenuScreen.png");
+			addImage(SpriteResources.ImgMenuBackground);
+			SpriteResources.ImgMenuPlaybutton = new FlxExtBitmap("img/PlayButton.png");
+			addImage(SpriteResources.ImgMenuPlaybutton);
+			SpriteResources.ImgMenuCreditbutton = new FlxExtBitmap("img/CreditsButton.png");
+			addImage(SpriteResources.ImgMenuCreditbutton);
+			
+			// menu
+			SpriteResources.ImgCreditBackground = new FlxExtBitmap("img/CreditsScreen.png");
+			addImage(SpriteResources.ImgCreditBackground);
+			SpriteResources.ImgCreditBackbutton = new FlxExtBitmap("img/BackButton.png");
+			addImage(SpriteResources.ImgCreditBackbutton);
+			
 			//charger le xml
 			GameParams.map = new Map("xml/map1.xml");
 			
@@ -167,7 +181,8 @@ package Game.States
 					break;
 				case "Loaded":
 					if (m_timerMin.finished) {
-						FlxG.switchState(new PlayState());
+						//FlxG.switchState(new PlayState());
+						FlxG.switchState(new MenuState());
 						FlxG.stage.removeChild(movie);
 					}
 					break;

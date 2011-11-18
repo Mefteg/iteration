@@ -43,6 +43,15 @@ package Resources
 		// mouse cursor
 		public static var ImgMouseCursor:FlxExtBitmap;
 		
+		// menu
+		public static var ImgMenuBackground:FlxExtBitmap;
+		public static var ImgMenuPlaybutton:FlxExtBitmap;
+		public static var ImgMenuCreditbutton:FlxExtBitmap;
+		
+		// credits
+		public static var ImgCreditBackground:FlxExtBitmap;
+		public static var ImgCreditBackbutton:FlxExtBitmap;
+		
 		//buffers
 		public static var BufferPlanet:BitmapData;
 		
