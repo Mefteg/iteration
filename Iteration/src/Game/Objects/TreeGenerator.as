@@ -17,18 +17,15 @@ package Game.Objects
 	{	
 		private var m_trees:Array;
 		private var m_treeTimer:Array;
-		private var m_playState:PlayState;
 		
 		// private var treeSprite:FlxSprite;
 
-		public function TreeGenerator(planet:Planet,playState:PlayState)
+		public function TreeGenerator(planet:Planet)
 		{
 			super(0, 0, planet);
 			
 			m_trees = new Array(GameParams.map.m_treeNumber);
 			m_treeTimer = new Array(GameParams.map.m_treeNumber);
-			
-			m_playState = playState;
 			
 			for ( var i:uint = 0 ; i < GameParams.map.m_treeNumber ; i++ )
 			{
@@ -86,7 +83,6 @@ package Game.Objects
 			{
 				if ( m_trees[i] != null )
 				{
-					m_playState.remove(m_trees[i]);
 					m_trees[i].visible = false;// destroy;
 				}
 			}
@@ -100,7 +96,7 @@ package Game.Objects
 			for ( var i:uint = 0 ; i < GameParams.map.m_treeNumber ; i++ )
 			{
 				m_treeTimer[i] = new FlxTimer();
-				m_treeTimer[i].start(FlxG.random() * 20);
+				m_treeTimer[i].start(GameParams.map.m_treeBirthTime + FlxG.random() * GameParams.map.m_treeBirthRandom);
 				
 				m_trees[i] = new Tree(m_planet.center(), m_planet , m_trees);
 				m_trees[i].visible = false;

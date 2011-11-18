@@ -31,20 +31,23 @@ package Game.Objects
 		
 		private var m_planet:Planet = null;
 		
-		public function Cloud(distance:Number, planet:Planet) 
+		public function Cloud(planet:Planet) 
 		{
 			m_planet = planet;
-			m_distance = (FlxG.random() * 50) + (distance + 380);
-			// super(0, (FlxG.random() * 50) + (distance + 380), planet);
+			m_distance = (FlxG.random() * GameParams.map.m_cloudsDistanceRandom) + GameParams.map.m_cloudsDistance;
 			
 			m_cloudSprite = new FlxSprite();
 			if ( FlxG.random() < 0.5 )
 			{
-				m_cloudSprite.loadGraphic2(SpriteResources.ImgCloud, false, false, 417, 187);
+				m_cloudSprite.loadGraphic2(SpriteResources.ImgCloud, false, false, 552, 187);
+				m_cloudSprite.addAnimation("rain", MathUtils.getArrayofNumbers(0, 16), 10, false);
+				m_cloudSprite.addAnimation("birth", MathUtils.getArrayofNumbers(0, 16).reverse(), 10, false);
 			}
 			else
 			{
-				m_cloudSprite.loadGraphic2(SpriteResources.ImgCloud2, false, false, 461, 214);
+				m_cloudSprite.loadGraphic2(SpriteResources.ImgCloud2, false, false, 592, 214);
+				m_cloudSprite.addAnimation("rain", MathUtils.getArrayofNumbers(0, 16), 10, false);
+				m_cloudSprite.addAnimation("birth", MathUtils.getArrayofNumbers(0, 17).reverse(), 10, false);
 			}
 
 			m_cloudSprite.scale.x = 1 * FlxG.random() /	50 + 1;
@@ -76,6 +79,8 @@ package Game.Objects
 			
 			m_state = "Roaming";
 			m_hasSelected = false;
+			
+			m_cloudSprite.play("birth");
 		}	
 		
 		override public function update():void 
@@ -122,8 +127,9 @@ package Game.Objects
 						m_state = "Raining";
 						m_hasSelected = false;
 						m_rainSprite.visible = true;
+						m_cloudSprite.play("rain");
 						m_rainSprite.play("rain");
-						GameParams.playstate.rain(m_pos+10);
+						GameParams.playstate.rain(m_pos + 10);
 
 						// mspeed = m_speed * 1.2;
 					}
@@ -133,6 +139,12 @@ package Game.Objects
 					m_rainSprite.x = m_planet.center().x + Math.cos(MathUtils.degToRan(m_pos)) * (m_distance-GameParams.map.rainDistance) * GameParams.map.zoom - m_rainSprite.width /2;
 					m_rainSprite.y = m_planet.center().y - Math.sin(MathUtils.degToRan(m_pos)) * (m_distance-GameParams.map.rainDistance) * GameParams.map.zoom - m_rainSprite.height / 2;
 					m_rainSprite.angle = -m_pos + 90;
+					
+					if ( m_cloudSprite.finished )
+					{
+						reinit();
+					}
+					
 					break;
 			}
 
@@ -183,6 +195,35 @@ package Game.Objects
 			}
 			
 			return false;
+		}
+		
+		public function reinit():void
+		{
+			m_distance = (FlxG.random() * GameParams.map.m_cloudsDistanceRandom) + GameParams.map.m_cloudsDistance;
+			
+			m_cloudSprite.scale.x = 1 * FlxG.random() /	50 + 1;
+			m_cloudSprite.scale.y = 1 * FlxG.random() / 50 + 1;
+			
+			m_rainSprite.visible = false;
+			m_cloudSprite.visible = true;
+			
+			if ( FlxG.random() < 0.5 )
+			{
+				m_direction = 1;
+			}
+			else
+			{
+				m_direction = 2;
+			}
+			m_pos = FlxG.random() * 360 - 180;
+			m_speed = FlxG.random() / 16 + GameParams.map.cloudSpeed;
+			
+			m_cloudSprite.frame = 0;
+			
+			m_state = "Roaming";
+			m_hasSelected = false;
+			
+			m_cloudSprite.play("birth");
 		}
 	}
 

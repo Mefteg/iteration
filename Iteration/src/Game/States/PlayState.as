@@ -6,6 +6,7 @@ package  Game.States
 	import Game.Background;
 	import Game.DepthBuffer;
 	import Game.Objects.Blobby;
+	import Game.Objects.CloudGenerator;
 	import Game.Objects.Meteor;
 	import Game.Objects.Planet;
 	import Game.Objects.Tree;
@@ -38,7 +39,7 @@ package  Game.States
 		protected var blobbies:Array;
 		protected var meteor:Meteor;
 		protected var m_treeGenerator:TreeGenerator;
-		protected var clouds:Array;
+		protected var m_cloudsGenerator:CloudGenerator;
 				
 		//Background
 		private var m_background:Background;
@@ -63,10 +64,7 @@ package  Game.States
 		{
 			add(m_zbuffer);
 			
-			blobbies = new Array();
-			
-			clouds = new Array();
-			
+			blobbies = new Array();			
 	
 			//FPS
 			m_text = new FlxText(10, 10, 500, FlxG.framerate.toString());
@@ -92,7 +90,7 @@ package  Game.States
 			//------CREER LA PLANETE-----------------
 			planet = new Planet( FlxG.width / 2 , FlxG.height / 2, blobbies);
 			
-			m_treeGenerator = new TreeGenerator(planet, this);
+			m_treeGenerator = new TreeGenerator(planet);
 			m_zbuffer.addTrees(m_treeGenerator);
 			
 			planet.setTrees(m_treeGenerator.trees());
@@ -117,7 +115,12 @@ package  Game.States
 			m_zbuffer.addForeground(planet.getBackHeartSprite());
 			m_zbuffer.addForeground(planet.getHeartSprite());
 			
-			//-------CREER LES BLOBBIES--------------			
+			//-------CREER LES BLOBBIES--------------	
+			
+			m_cloudsGenerator = new CloudGenerator(planet);
+			m_zbuffer.addBackground(m_cloudsGenerator);
+			m_cloudsGenerator.regenerate();
+			
 			initBlobies();
 			
 			//----------CREER LE METEOR-------------
@@ -126,9 +129,7 @@ package  Game.States
 			meteor.setState("Crashing");
 			m_zbuffer.addBackground(meteor);
 			m_zbuffer.addBackground(meteor.getExplosion());
-			
-			initClouds();
-			
+
 			// On affiche la souris
 			FlxG.mouse.show();		
 		}
@@ -273,20 +274,6 @@ package  Game.States
 				blob.setState("arise");
 				blobbies.push(blob);
 				m_zbuffer.addBlobbies(blob);
-			}
-		}
-		
-		
-		public function initClouds():void
-		{
-			var j:int = 0;
-			var cloud:Cloud;
-			
-			for (j = 0 ; j < GameParams.map.cloudsNumber ; j++ )
-			{
-				cloud = new Cloud(planet.radius() +50, planet);
-				clouds.push(cloud);
-				m_zbuffer.addBackground(cloud);
 			}
 		}
 		

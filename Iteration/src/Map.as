@@ -36,10 +36,16 @@ package
 		public var m_blobbyInitNb:int;
 		
 		public var m_treeNumber:int;
+		public var m_treeBirthTime:int;
+		public var m_treeBirthRandom:int;
 		public var m_treeNbFruitMax:int;
 		public var m_treeLifetime:int;
 		
 		public var cloudsNumber:uint;
+		public var m_cloudsBirthTime:int;
+		public var m_cloudsBirthRandom:int;
+		public var m_cloudsDistance:int;
+		public var m_cloudsDistanceRandom:int;
 		public var cloudsScale:Number;
 		public var rainDistance:Number;
 		public var cloudSpeed:Number;
@@ -94,10 +100,16 @@ package
 			m_blobbyInitNb = m_xml.blobby.@initNb;
 			
 			m_treeNumber = m_xml.tree.@number;
+			m_treeBirthTime = m_xml.tree.@birthRandom;
+			m_treeBirthRandom = m_xml.tree.@birthTime;
 			m_treeLifetime = m_xml.tree.@lifetime;
 			m_treeNbFruitMax = m_xml.tree.@nbFruitMax;
 			
 			cloudsNumber = m_xml.cloud.@number;
+			m_cloudsBirthTime = m_xml.cloud.@birthTime;
+			m_cloudsBirthRandom = m_xml.cloud.@birthRandom;
+			m_cloudsDistance = m_xml.cloud.@distance;
+			m_cloudsDistanceRandom = m_xml.cloud.@distanceRandom;
 			cloudsScale = m_xml.cloud.@scale;
 			rainDistance = m_xml.cloud.@rainDistance;
 			cloudSpeed = m_xml.cloud.@speed;

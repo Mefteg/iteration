@@ -53,11 +53,11 @@ package Utils
 		
 		public static function calculateDistance(angle1:Number, angle2:Number):Number
 		{
-			if ( angle1 > 360 || angle1 < 0 )
+			if ( angle1 >= 360 || angle1 < 0 )
 			{
 				trace ("You are using this function wrongly");
 			}
-			else if ( angle2 > 360 || angle2 < 0 )
+			else if ( angle2 >= 360 || angle2 < 0 )
 			{
 				trace ("You are using this function wrongly");
 			}
