@@ -97,7 +97,7 @@ package Game.Objects
 			
 			m_elapsedTime += FlxG.elapsed * 8;
 			var pulse:Number = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
-			var pulseScale:Number = (pulse + (m_resources / 10000) * 0.7096) * GameParams.map.zoom;
+			var pulseScale:Number = ((pulse + (m_resources / 10000) * 0.7096) + 0.1) * GameParams.map.zoom;
 			
 			m_animTime += 0.01;
 			
@@ -172,6 +172,10 @@ package Game.Objects
 					pulseScale = 0.1 * GameParams.map.zoom;
 					break;
 				case "Dying":
+					m_heartDeath.scale.x = 0.1 * GameParams.map.zoom;
+                    m_heartDeath.scale.y = 0.1 * GameParams.map.zoom;
+					
+					m_heartDeath.alpha = 1;
 					
 					dying();
 					break;
