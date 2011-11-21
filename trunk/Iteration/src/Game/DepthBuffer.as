@@ -16,7 +16,7 @@ package Game
 		private var m_fruits:FlxGroup;
 		private var m_foreGround:FlxGroup;
 		
-			var emitter:FlxEmitter = new FlxEmitter(100,100); //x and y of the emitter
+			// var emitter:FlxEmitter = new FlxEmitter(100,100); //x and y of the emitter
 		
 		public function DepthBuffer()
 		{

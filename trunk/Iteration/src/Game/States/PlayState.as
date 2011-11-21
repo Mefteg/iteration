@@ -18,6 +18,7 @@ package  Game.States
 	import org.flixel.system.FlxAnim;
 	import Resources.SpriteResources;
 	import SoundEngine.SoundBank;
+	import Resources.SoundResources;
 	import Utils.MathUtils;
 	
 	/**
@@ -71,7 +72,7 @@ package  Game.States
 			
 			//SON
 			
-			//m_soundBank.get("Background").play();
+			// GameParams.soundBank.get(SoundResources.backgroudMusic).play();
 			
 			// On affiche la souris
 			FlxG.mouse.show();
@@ -238,6 +239,7 @@ package  Game.States
 					break;
 			}
 			
+			GameParams.soundBank.update();
 			super.update();	
 		}
 		

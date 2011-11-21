@@ -182,8 +182,15 @@ package Game.States
 		
 		private function createSounds():void
 		{
-			var m_sound:SoundEngine.Sound = new SoundEngine.Sound(SoundResources.backgroundMusic, true);
-			GameParams.soundBank.add(m_sound, SoundResources.backgroudMusicName);
+			GameParams.soundBank.load(SoundResources.backgroudMusic,true);
+			GameParams.soundBank.load(SoundResources.backgroudLowRessMusic,true);
+			GameParams.soundBank.load(SoundResources.backgroudHighRessMusic,true);
+			GameParams.soundBank.load(SoundResources.crashSound,false);
+			GameParams.soundBank.load(SoundResources.mlifeSound,false);
+			GameParams.soundBank.load(SoundResources.ressBirthSound,false);
+			GameParams.soundBank.load(SoundResources.mdeathSound,false);
+			GameParams.soundBank.load(SoundResources.rainSound,false);
+			GameParams.soundBank.load(SoundResources.ideaSound,false);
 		}
 		
 		override public function update() :void{

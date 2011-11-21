@@ -4,6 +4,7 @@ package Game.Objects
 	import Globals.GameParams;
 	import flash.text.engine.ElementFormat;
 	import org.flixel.*;
+	import Resources.SoundResources;
 	import Utils.MathUtils;
 	
 	import Resources.SpriteResources;
@@ -24,7 +25,9 @@ package Game.Objects
 		private var m_crashTime:Number = 0.0;
 		
 		private var m_hasExploded:Boolean = false;
-		private var m_giveLife:Boolean ;
+		private var m_giveLife:Boolean;
+		
+		private var m_soundTimer:FlxTimer = new FlxTimer();
 		
 		public function Meteor(roamingDistance:Number,planet:Planet,glife:Boolean) 
 		{
@@ -32,9 +35,15 @@ package Game.Objects
 			m_roamingDistance = roamingDistance;
 			//Créer l'image
 			if (glife)
-				loadGraphic2(SpriteResources.ImgMeteorLife, false, false, 166,171);
+			{
+				loadGraphic2(SpriteResources.ImgMeteorLife, false, false, 166, 171);
+				m_soundTimer.start(3);
+			}
 			else
+			{
 				loadGraphic2(SpriteResources.ImgMeteor, false, false, 351, 333);
+				m_soundTimer.start(3);
+			}
 			m_speed = GameParams.map.m_meteorSpeed;
 
 			//dimensionner le météore par rapport a la planete
@@ -53,6 +62,20 @@ package Game.Objects
 		override public function update():void 
 		{
 			//trace(m_state);
+			if ( m_soundTimer && m_soundTimer.finished )
+			{
+				m_soundTimer.destroy();
+				m_soundTimer = null;
+				if ( m_giveLife )
+				{
+					GameParams.soundBank.get(SoundResources.mlifeSound).play();
+				}
+				else
+				{
+					GameParams.soundBank.get(SoundResources.mdeathSound).play();
+				}
+			}
+			
 			switch (m_state)
 			{
 				case "Incoming":
@@ -64,13 +87,13 @@ package Game.Objects
 					{
 						m_state = "Roaming";
 					}
-					
+					/*
 					if (onClick()) 
 					{
 						//on fait tomber le météore
 						m_state = "Crashing";
                         // mspeed = m_speed * 1.2;
-					}
+					}*/
 					
 					break;
 				case "Roaming":
@@ -81,6 +104,11 @@ package Game.Objects
 					{
 						//on fait tomber le météore
 						m_state = "Crashing";
+						
+						if ( !m_giveLife )
+						{
+							GameParams.soundBank.get(SoundResources.crashSound).play();
+						}
                         // mspeed = m_speed * 1.2;
 					}
 					break;
@@ -130,7 +158,9 @@ package Game.Objects
 						m_explosion.rotateToPlanet();
 					}
 					if (m_distance < 0.1)
+					{
 						m_state = "Exploding";
+					}
 					break;
 				case "Exploding":
 					visible = false;

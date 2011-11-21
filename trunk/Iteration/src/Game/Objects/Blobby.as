@@ -11,6 +11,7 @@ package Game.Objects
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTimer;
 	import org.flixel.FlxU;
+	import Resources.SoundResources;
 	import Utils.MathUtils;
 	
 	import Resources.SpriteResources;
@@ -530,6 +531,8 @@ package Game.Objects
 			//chercher le blobby le plus près
 			searchNearestBlobby();
 			setState("search");
+			
+			GameParams.soundBank.get(SoundResources.ideaSound).play();
 		}
 		
 		public function setBlobbyBirth(blobby:Blobby):void {

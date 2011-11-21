@@ -63,6 +63,12 @@ package
 		public var m_medecine:Array = new Array();
 		
 		
+		public var m_soundFadeInTime:Number;
+		public var m_soundFadeOutTime:Number;
+		public var m_soundRessourcesLow:Number;
+		public var m_soundRessourcesHigh:Number;
+		
+		
 		public var m_loaded:Boolean;
 		
 		public function Map(url:String) 
@@ -135,6 +141,12 @@ package
 							religion : m_religion
 				
 							};
+							
+			// Sound
+			m_soundFadeInTime = m_xml.sound.@fadeInTime;
+			m_soundFadeOutTime = m_xml.sound.@fadeOutTime;
+			m_soundRessourcesLow = m_xml.sound.@ressourcesLow;
+			m_soundRessourcesHigh = m_xml.sound.@ressourcesHigh;
 			
 			m_loaded = true;
 		}
