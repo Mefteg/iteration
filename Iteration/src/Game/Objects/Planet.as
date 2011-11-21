@@ -64,7 +64,7 @@ package Game.Objects
 			m_heartBack.loadGraphic2( SpriteResources.ImgHeartBack, false, false, 1600, 1600);
 			m_heartDeath = new FlxSprite(m_planet.x / 2, m_planet.y / 2);
 			m_heartDeath.loadGraphic2( SpriteResources.ImgHeartDeath, false, false, 1600, 1600);
-			
+
 			m_heart.scale.x = 0.1;
 			m_heart.scale.y = 0.1;
 			m_heartHalo.scale.x = 0.1;
@@ -151,8 +151,7 @@ package Game.Objects
 						m_state = "Living";
 						
 						var size:int = m_blobbies.length;
-						for (var i:int = 0; i < size; i++) 
-
+						for (var i:int = 0; i < size; i++)
 						{
 							m_blobbies[i].visible = true;
 						}
