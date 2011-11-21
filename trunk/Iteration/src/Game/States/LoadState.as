@@ -178,6 +178,12 @@ package Game.States
 			addImage(SpriteResources.ImgCreditBackground);
 			SpriteResources.ImgCreditBackbutton = new FlxExtBitmap("img/BackButton.png");
 			addImage(SpriteResources.ImgCreditBackbutton);
+			
+			//tuto
+			SpriteResources.ImgTuto= new FlxExtBitmap("img/tutorial.png");
+			addImage(SpriteResources.ImgTuto);
+			SpriteResources.ImgMenuTutobutton = new FlxExtBitmap("img/TutoButton.png");
+			addImage(SpriteResources.ImgMenuTutobutton);
 		}
 		
 		private function createSounds():void

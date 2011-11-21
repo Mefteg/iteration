@@ -2,6 +2,7 @@ package Game.States
 {
 	import Game.Buttons.CreditButton;
 	import Game.Buttons.PlayButton;
+	import Game.Buttons.TutoButton;
 	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
@@ -16,6 +17,8 @@ package Game.States
 		protected var m_background:FlxSprite;
 		protected var m_playbutton:PlayButton;
 		protected var m_creditbutton:CreditButton;
+		protected var m_tutobutton:TutoButton;
+		
 		
 		public function MenuState() 
 		{
@@ -34,6 +37,9 @@ package Game.States
 			
 			m_creditbutton = new CreditButton(((1280 / 3) * 2 - 194 / 2), ((720 / 5) * 4 - 95 / 2), null, function() { FlxG.switchState(new CreditState()); });
 			add(m_creditbutton);
+			
+			m_tutobutton = new TutoButton(((1280 / 3) * 1.5 - 200 / 2), ((720 / 5) * 4.5 - 114 / 2), null, function() { FlxG.switchState(new TutoState()); });
+			add(m_tutobutton);
 		}
 		
 		override public function update():void {
