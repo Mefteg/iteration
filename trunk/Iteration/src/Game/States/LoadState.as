@@ -122,7 +122,9 @@ package Game.States
 			addImage(SpriteResources.ImgLifeParticle);
 			//loader l'image de l'arbre 
 			SpriteResources.ImgTreeGrow = new FlxExtBitmap("img/tree_anim_grow.png");
+			SpriteResources.ImgTreeGrow2 = new FlxExtBitmap("img/tree2_anim_grow.png");
 			addImage(SpriteResources.ImgTreeGrow);
+			addImage(SpriteResources.ImgTreeGrow2);
 			//Mort arbre
 			SpriteResources.ImgTreeDie = new FlxExtBitmap("img/tree_anim_dead.png");
 			addImage(SpriteResources.ImgTreeDie);

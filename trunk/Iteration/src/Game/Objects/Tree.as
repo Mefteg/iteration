@@ -86,7 +86,14 @@ package Game.Objects
 				m_distance += 175;
 				
 				m_treeGrow = new FlxSprite();
-				m_treeGrow.loadGraphic2(SpriteResources.ImgTreeGrow, true, false, 405, 376);
+				if ( FlxG.random() < 0.5 )
+				{
+					m_treeGrow.loadGraphic2(SpriteResources.ImgTreeGrow, true, false, 405, 376);
+				}
+				else
+				{
+					m_treeGrow.loadGraphic2(SpriteResources.ImgTreeGrow2, true, false, 405, 379);
+				}
 				m_treeGrow.addAnimation("grow", MathUtils.getArrayofNumbers(0, 62), 20, false);
 				m_treeGrow.scale.x = 1.;
 				m_treeGrow.scale.y = 1.;
