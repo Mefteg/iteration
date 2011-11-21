@@ -44,8 +44,8 @@ package
 		private var m_countDeaths:int=0;
 		private var m_countBirths:int = 0;
 		//variables pour le taux de mortalité/natalité
-		private var m_ratioDeath:Number = 0.25;
-		private var m_ratioBirth:Number = 0.60;
+		private var m_ratioDeath:Number = GameParams.map.mortalite;
+		private var m_ratioBirth:Number = GameParams.map.natalite;
 		
 		// Information on iteration for outside the class
 		private var m_iterationTick:Boolean = false;

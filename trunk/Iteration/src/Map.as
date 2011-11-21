@@ -21,6 +21,8 @@ package
 		public var m_xml:XML;
 		
 		public var iterationTime:Number;
+		public var natalite:Number;
+		public var mortalite:Number;
 		
 		public var zoom:Number;
 		public var zoomMin:Number;
@@ -34,6 +36,7 @@ package
 		public var m_blobbyLifetime:int;
 		public var m_blobbySpeed:Number;
 		public var m_blobbyInitNb:int;
+		public var m_blobbyDiscussTime:Number;
 		
 		public var m_treeNumber:int;
 		public var m_treeBirthTime:int;
@@ -91,6 +94,8 @@ package
 			m_xml = new XML(e.target.data);
 			
 			iterationTime = m_xml.iteration.@time;
+			mortalite = m_xml.iteration.@mortalite;
+			natalite = m_xml.iteration.@natalite;
 			
 			zoomMin = m_xml.zoom.@min;
 			zoomMax = m_xml.zoom.@max;
@@ -104,6 +109,7 @@ package
 			m_blobbyLifetime = m_xml.blobby.@lifetime;
 			m_blobbySpeed = m_xml.blobby.@speed;
 			m_blobbyInitNb = m_xml.blobby.@initNb;
+			m_blobbyDiscussTime = m_xml.blobby.@discussTime;
 			
 			m_treeNumber = m_xml.tree.@number;
 			m_treeBirthTime = m_xml.tree.@birthRandom;
