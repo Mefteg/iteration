@@ -188,7 +188,7 @@ package Game.Objects
 			for (var i:int = 0; i < size; i++) 
 			{
 				blob = blobbies[i];
-				if (checkBlobbyCollision(blob))
+				if (checkBlobbyCollision(blob) && !blob.isDying())
 					blob.setState("comeBack");
 			}
 		}

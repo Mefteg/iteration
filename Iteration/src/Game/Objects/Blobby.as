@@ -29,7 +29,7 @@ package Game.Objects
 		protected var m_scholar:Boolean = false; // si le blobby a déjà eu une idée
 		//timer pour la discussion
 		protected var m_timerDiscuss:FlxTimer;
-		protected var m_discussTime:Number = 5;
+		protected var m_discussTime:Number = GameParams.map.m_blobbyDiscussTime;
 		
 		protected var m_blobTarget:Blobby;
 		protected var m_blobbyBirth:Blobby;
