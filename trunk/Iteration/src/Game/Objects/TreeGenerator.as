@@ -18,6 +18,8 @@ package Game.Objects
 		private var m_trees:Array;
 		private var m_treeTimer:Array;
 		
+		private var m_dying:Boolean = false;
+		
 		// private var treeSprite:FlxSprite;
 
 		public function TreeGenerator(planet:Planet)
@@ -48,11 +50,11 @@ package Game.Objects
 		override public function update():void 
 		{
 			super.update();
-			if (m_trees.length == 0) return;
+			if (m_trees.length == 0 ) return;
 			
 			for ( var i:uint = 0 ; i < GameParams.map.m_treeNumber ; i++ )
 			{
-				if ( m_treeTimer[i] != null )
+				if ( m_treeTimer[i] != null && !m_dying)
 				{
 					if ( m_treeTimer[i].finished )
 					{
@@ -77,21 +79,23 @@ package Game.Objects
 		
 		public function clear():void
 		{
+			m_dying = true;
 			// Try to delete and remove elements
 			var size:Number = m_trees.length;
 			for ( var i:uint = 0 ; i < size ; i++ )
 			{
 				if ( m_trees[i] != null )
 				{
-					m_trees[i].visible = false;// destroy;
+					//m_trees[i].visible = false;// destroy;
+					m_trees[i].setState("die");
 				}
 			}
 		}
 		
 		public function regenerate():void
-		{
-			this.clear();
-			
+		{trace("regene");
+			//this.clear();
+			m_dying = false;
 			// Restart the process of generation of the trees
 			for ( var i:uint = 0 ; i < GameParams.map.m_treeNumber ; i++ )
 			{

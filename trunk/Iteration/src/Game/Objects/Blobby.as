@@ -75,7 +75,7 @@ package Game.Objects
 			addAnimation("discuss", MathUtils.getArrayofNumbers(15, 21) , 5 + FlxG.random() * 2, true);
 			addAnimation("eat", MathUtils.getArrayofNumbers(45,51) , 8, false);
 			addAnimation("swallow",[51,50,49,48,47,46,45] , 8, false);
-			addAnimation("die", [0] , 2 +FlxG.random() * 2, false);
+			addAnimation("die", [77] , 2 +FlxG.random() * 2, false);
 			addAnimation("comeBack", MathUtils.getArrayofNumbers(64,77) , 5 +FlxG.random() * 2, false);
 			addAnimation("dig", [77] , 0, false);
 
@@ -156,7 +156,7 @@ package Game.Objects
 		}
 		
 		protected function dig():void {
-			if (m_distance > 0) {
+			if (m_distance >this.height*0.5) {
 				m_distance-=2;
 			}else {
 				setState("die");
@@ -207,6 +207,7 @@ package Game.Objects
 				}
 				//placer le nouveau blobby
 				m_blobbyBirth.setPos(getPos() - 5.5);
+				m_blobbyBirth.color = color;
 				setPos(getPos() + 5);
 				m_blobbyBirth.visible = true;
 				m_blobbyBirth.play(m_blobbyBirth.getState());
@@ -246,6 +247,17 @@ package Game.Objects
 					//le blobby est maintenant un érudit
 					m_scholar = true;
 				}
+			}
+		}
+		
+		public function die():void {
+			if (finished) {
+				if (m_idea) {
+					m_idea.setState("killed");
+				}
+				visible = false;
+				m_planet.removeBlobby(this);
+				destroy();
 			}
 		}
 		
@@ -445,23 +457,11 @@ package Game.Objects
 						else {
 							setState("idle");
 						}
-						
-						
 					}
 				}
 			}
 		}
 		
-		public function die():void {
-			if (finished) {
-				if (m_idea) {
-					m_idea.setState("killed");
-				}
-				visible = false;
-				m_planet.removeBlobby(this);
-				destroy();
-			}
-		}
 		
 		public function changeDirection():void 
 		{

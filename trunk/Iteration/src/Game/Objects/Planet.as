@@ -162,7 +162,8 @@ package Game.Objects
 					pulseScale = 0.1 * GameParams.map.zoom;
 					break;
 				case "Dying":
-					m_state = "Dead";
+					
+					dying();
 					break;
 			}
 			m_heartDeath.x = m_heartBack.x = m_heartHalo.x = m_heart.x = center().x + Math.cos(m_heart.angle) * (m_distance)* GameParams.map.zoom - m_heart.width /2;
@@ -245,7 +246,8 @@ package Game.Objects
 			m_blobbies.push(blobby);
 		}
 		//supprime un blobby
-		public function removeBlobby(blobby:Blobby):void {
+		public function removeBlobby(blobby:Blobby):void 
+		{
 			var index:int = m_blobbies.indexOf(blobby);
 			m_blobbies.splice(index, 1);
 		}
@@ -295,9 +297,39 @@ package Game.Objects
 			m_heartHalo.visible = false;
 			m_heartBack.visible = false;
 			m_state = "Dying";
-						
+			
+			//jouer les anims de mort de tous les elements
+			var size:int = m_blobbies.length;
+			for (var i:int = 0; i < size; i++) 
+			{
+				if(! m_blobbies[i].isDying())
+					m_blobbies[i].setState("comeBack")
+			}	
+			size = m_trees.length;
+			for (var j:int = 0; j < size; j++) 
+			{
+				m_trees[j].setState("die");
+			}
 		}
 		
+		public function dying():void 
+		{
+			var hasTrees:Boolean = false;
+			var nbTrees:uint = m_trees.length;
+			for (var i:int = 0 ; i < nbTrees ; i++ )
+			{
+				if ( m_trees[i] && m_trees[i].visible )
+				{
+					hasTrees = true;
+					break;
+				}
+			}
+			
+			if ( m_blobbies.length == 0 && hasTrees == false)
+			{
+				m_state = "Dead";
+			}
+		}
 		public function getHeartSprite():FlxSprite
 		{
 			return m_heart;
@@ -316,6 +348,10 @@ package Game.Objects
 		public function getBackHeartSprite():FlxSprite
 		{
 			return m_heartBack;
+		}
+		
+		public function isDying():Boolean {
+			return m_state == "Dying";
 		}
 		
 		public function getCenterScreenXY(Camera:FlxCamera=null):FlxPoint

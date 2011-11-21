@@ -139,6 +139,10 @@ package Game.Objects
 					m_roots.draw();
 					m_treeDie.draw();
 					break;
+				case("dieGrow"):
+					m_roots.draw();
+					m_treeGrow.draw();
+					break;
 				case("ungrowRoot"):
 					m_roots.draw();
 					break;
@@ -248,6 +252,14 @@ package Game.Objects
 						m_roots.play("ungrow");
 					}
 					break;
+				case "dieGrow":
+					m_treeGrow.postUpdate();
+					if (m_treeGrow.finished )
+					{
+						m_state = "ungrowRoot";
+						m_roots.play("ungrow");
+					}
+					break;
 				case "ungrowRoot":
 					m_roots.postUpdate();
 					if ( m_roots.finished )
@@ -309,23 +321,33 @@ package Game.Objects
 		}
 		
 		override public function setState(state:String):void 
-		{
+		{			
 			if ( state == "die" && m_treeDie != null )
 			{
 				if ( m_state == "feed" || m_state == "die" )
 				{
 					m_treeDie.addAnimation("completeDie", MathUtils.getArrayofNumbers(m_treeDie.frame, 77), 20, false);
 					m_treeDie.play("completeDie");
+					m_state = state; 
 				}
 				else if ( m_state == "treeGrow" )
 				{
-					m_treeDie.addAnimation("completeDie", MathUtils.getArrayofNumbers(77-m_treeGrow.frame, 77), 20, false);
-					m_treeDie.play("completeDie");
+					m_treeGrow.addAnimation("completeDie", MathUtils.getArrayofNumbers(m_treeGrow.frame, 0), 20, false);
+					m_treeGrow.play("completeDie");
+					m_state = "dieGrow";
+				}
+				else if ( m_state == "rootsGrow" )
+				{
+					m_roots.addAnimation("completeDie", MathUtils.getArrayofNumbers(m_roots.frame, 0), 20, false);
+					m_roots.play("completeDie");
+					m_state = "ungrowRoot";
 				}
 			}
-			
-			m_state = state; 
-			play(m_state);
+			else
+			{
+				m_state = state; 
+				play(m_state);
+			}
 		}
 		
 		public function die():void
@@ -338,9 +360,16 @@ package Game.Objects
 				}
 			}
 			
-			if (m_treeDie != null && m_treeDie.finished) 
+			if (m_treeDie != null && m_roots.finished) 
 			{
-				reinit();
+				if ( !m_planet.isDead() )
+				{
+					reinit();
+				}
+				else
+				{
+					this.visible = false;
+				}
 			}
 		}
 		
@@ -425,6 +454,7 @@ package Game.Objects
 			}
 			
 			m_state = "rootsGrow";
+			this.visible = true;
 		}
 	}
 
