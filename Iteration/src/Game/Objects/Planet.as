@@ -309,7 +309,7 @@ package Game.Objects
 		
 		public function isDead():Boolean
 		{
-			if ( m_resources < 0 )
+			if ( m_resources < 0 || m_blobbies.length < 3 )
 			{
 				return true;
 			}
