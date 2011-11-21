@@ -175,7 +175,10 @@ package Game.Objects
 			{
 				tree = trees[i];
 				if (checkTreeCollision(tree))
+				{
+					tree.clearFruits();
 					tree.setState("die");
+				}
 			}
 		}
 		
