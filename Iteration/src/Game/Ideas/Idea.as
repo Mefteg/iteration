@@ -96,7 +96,8 @@ package Game.Ideas
 			m_state = state;
 			if (state == "killed")
 				m_blobby = null;
-			play(m_state);
+			else
+				play(m_state);
 		}
 		
 		override public function draw():void {

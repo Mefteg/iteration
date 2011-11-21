@@ -187,8 +187,8 @@ package  Game.States
 					// Planet death condition
 					if ( planet.isDead() || blobbies.length > 100 || (blobbies.length < 4 && m_iteration.getIterations() > 2))
 					{
-						FlxG.shake(0.01);
-						FlxG.flash();
+						//FlxG.shake(0.01);
+						//FlxG.flash();
 						// If we have a meteor roaming ... we delete it
 						if ( meteor != null )
 						{
@@ -197,33 +197,43 @@ package  Game.States
 							meteor.destroy();
 						}
 						
-						// Create the birth meteor
-						meteor = new Meteor(planet.radius() * 2, planet,true);
-						add(meteor);
-						add(meteor.getExplosion());
 						
-						var blobDestroy:Blobby;
-						// Delete all the elements
-						while ( blobbies.length != 0 )
-						{
-							blobDestroy = blobbies.pop();
-							getDepthBuffer().removeBlobbies(blobDestroy);
-							remove(blobDestroy);
-							blobDestroy.destroy();
-						}
-						blobDestroy = null;
-						var trees:Array = m_treeGenerator.trees();
-						while ( trees.length != 0 )
-						{
-							var tree:Tree = trees.pop();
-							m_zbuffer.removeTrees(tree);
-							tree.destroy();
-						}
+						m_treeGenerator.clear();
 						m_iteration.clear();
 						planet.explosion();
-						m_state = "Creation";
-						initBlobies();
+						m_state = "Removal";
 					}
+					break;
+				case "Removal":
+					if (planet.isDying()) break;
+					
+					var blobDestroy:Blobby;
+					// Delete all the elements
+					while ( blobbies.length != 0 )
+					{
+						blobDestroy = blobbies.pop();
+						getDepthBuffer().removeBlobbies(blobDestroy);
+						remove(blobDestroy);
+						blobDestroy.destroy();
+					}
+					blobDestroy = null;
+					
+					/*var trees:Array = m_treeGenerator.trees();
+					while ( trees.length != 0 )
+					{
+						var tree:Tree = trees.pop();
+						m_zbuffer.removeTrees(tree);
+						tree.destroy();
+					}*/
+					
+					m_state = "Creation";
+					initBlobies();
+					
+					// Create the birth meteor
+					meteor = new Meteor(planet.radius() * 2, planet,true);
+					add(meteor);
+					add(meteor.getExplosion());
+					
 					break;
 			}
 			
