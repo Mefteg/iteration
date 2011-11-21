@@ -2,6 +2,7 @@ package Game.Objects
 {
 	import flash.geom.Point;
 	import Globals.GameParams;
+	import Resources.SoundResources;
 	import Utils.MathUtils;
 	import org.flixel.*;
 	
@@ -31,6 +32,13 @@ package Game.Objects
 		
 		private var m_state:String = "Dead";
 		private var m_animTime:Number = 0;
+		
+		/**
+		 * if 1 low ressource
+		 * if 2 middle ressource
+		 * if 3 high ressource
+		 */
+		private var m_ressourceLevel = 0;
 		
 		private var nbFrame:uint = 0;
 		
@@ -78,6 +86,8 @@ package Game.Objects
 			m_heartBack.visible = false;
 			
 			m_animTime = 0;
+			
+			m_ressourceLevel = 0;
 		}
 		
 		override public function update():void 
@@ -175,9 +185,43 @@ package Game.Objects
 			m_heartHalo.scale.y = pulseScale;
 			m_heartBack.scale.x = pulseScale;
 			m_heartBack.scale.y = pulseScale;
+			
 			/*
 			m_heartDeath.scale.x = pulseScale;
-			m_heartDeath.scale.y = pulseScale;*/
+			m_heartDeath.scale.y = pulseScale;
+			*/
+			
+			if ( m_state == "Dead" || m_state == "Dying" )
+			{
+				GameParams.soundBank.get(SoundResources.backgroudLowRessMusic).stop();
+				GameParams.soundBank.get(SoundResources.backgroudMusic).stop();
+				GameParams.soundBank.get(SoundResources.backgroudHighRessMusic).stop();
+				m_ressourceLevel = 0;
+			}
+			else
+			{			
+				if ( m_resources < GameParams.map.m_soundRessourcesLow && m_ressourceLevel != 1 )
+				{
+					GameParams.soundBank.get(SoundResources.backgroudLowRessMusic).fadeIn(GameParams.map.m_soundFadeInTime);
+					GameParams.soundBank.get(SoundResources.backgroudMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
+					m_ressourceLevel = 1;
+				}
+				else if ( m_resources > GameParams.map.m_soundRessourcesHigh && m_ressourceLevel != 3)
+				{
+					GameParams.soundBank.get(SoundResources.backgroudHighRessMusic).fadeIn(GameParams.map.m_soundFadeInTime);
+					GameParams.soundBank.get(SoundResources.backgroudMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
+					m_ressourceLevel = 3;
+				}
+				else if ( m_resources < GameParams.map.m_soundRessourcesHigh &&
+						  m_resources > GameParams.map.m_soundRessourcesLow &&
+						  m_ressourceLevel != 2)
+				{
+					GameParams.soundBank.get(SoundResources.backgroudLowRessMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
+					GameParams.soundBank.get(SoundResources.backgroudMusic).fadeIn(GameParams.map.m_soundFadeInTime);
+					GameParams.soundBank.get(SoundResources.backgroudHighRessMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
+					m_ressourceLevel = 2;
+				}
+			}
 		}
 		
 		public function center():Point
@@ -287,6 +331,9 @@ package Game.Objects
 			
 			m_resources = GameParams.map.m_planetResources;
 			m_state = "Birth_s1";
+			
+			GameParams.soundBank.get(SoundResources.ressBirthSound).play();
+			m_ressourceLevel = 0;
 		}
 		
 		public function explosion():void

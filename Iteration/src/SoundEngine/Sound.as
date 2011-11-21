@@ -15,18 +15,32 @@ package SoundEngine
 		 * @param	sound
 		 * @param	isLooping	true if the sound should loop when it's played
 		 */
+		/*
 		public function Sound(sound:Class, isLooping:Boolean) 
 		{
 			m_sound = new FlxSound();
 			m_sound.loadEmbedded(sound, isLooping);
 		}
+		*/
+		
+		/**
+		 * Load the sound from file or URL
+		 * @param	soundPath	the path to the file (or URL) to load
+		 * @param	isLooping	true if the sound should loop when it's played
+		 */
+		public function Sound(soundPath:String, isLooping:Boolean) 
+		{
+			m_sound = new FlxSound();
+			m_sound.loadStream(soundPath, isLooping);
+		}
 		
 		/**
 		 * Plays the sound
 		 */
-		public function play():void
+		public function play(volume:Number = 1):void
 		{
 			m_sound.play();
+			m_sound.volume = volume;
 		}
 		
 		/**

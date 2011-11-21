@@ -6,6 +6,7 @@ package Game.Objects
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
+	import Resources.SoundResources;
 	import Utils.MathUtils;
 	
 	import Globals.GameParams;
@@ -130,6 +131,8 @@ package Game.Objects
 						m_cloudSprite.play("rain");
 						m_rainSprite.play("rain");
 						GameParams.playstate.rain(m_pos + 10);
+						
+						GameParams.soundBank.get(SoundResources.rainSound).play();
 
 						// mspeed = m_speed * 1.2;
 					}

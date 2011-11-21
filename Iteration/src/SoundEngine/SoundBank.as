@@ -24,6 +24,18 @@ package SoundEngine
 		}
 		
 		/**
+		 * Loads and adds a new sound in the bank
+		 * The filename is used as key
+		 * @param	soundPath the file to load (can be an URL)
+		 * @param	loop true if the song should loop
+		 */
+		public function load(soundPath:String,loop:Boolean):void
+		{
+			m_soundsBank[soundPath] = new Sound(soundPath,loop);
+			m_updateBank.push(m_soundsBank[soundPath]);
+		}
+		
+		/**
 		 * Gets back a sound present in the bank, identified by soundID (asserts if not found)
 		 * @param	soundID the name (key) identifiying the sound
 		 * @return	the sound

@@ -17,7 +17,8 @@ package Game.States
 		protected var m_playbutton:PlayButton;
 		protected var m_creditbutton:CreditButton;
 		
-		public function MenuState() {
+		public function MenuState() 
+		{
 			
 		}
 		
