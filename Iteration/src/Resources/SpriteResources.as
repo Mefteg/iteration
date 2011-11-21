@@ -47,10 +47,13 @@ package Resources
 		public static var ImgMenuBackground:FlxExtBitmap;
 		public static var ImgMenuPlaybutton:FlxExtBitmap;
 		public static var ImgMenuCreditbutton:FlxExtBitmap;
+		public static var ImgMenuTutobutton:FlxExtBitmap;
 		
 		// credits
 		public static var ImgCreditBackground:FlxExtBitmap;
 		public static var ImgCreditBackbutton:FlxExtBitmap;
+		
+		public static var ImgTuto:FlxExtBitmap;
 		
 		//buffers
 		public static var BufferPlanet:BitmapData;
