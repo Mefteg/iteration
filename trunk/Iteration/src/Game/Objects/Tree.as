@@ -322,6 +322,14 @@ package Game.Objects
 		{			
 			if ( state == "die" && m_treeDie != null )
 			{
+				// on detruit tous les fruits ( s'il en reste )
+				if ( m_fruits != null )
+				{
+					for ( var i:int = 0; i < m_fruits.length; i++ ) {
+						m_fruits[i].setState("die");
+					}
+				}
+				
 				if ( m_state == "feed" || m_state == "die" )
 				{
 					m_treeDie.addAnimation("completeDie", MathUtils.getArrayofNumbers(m_treeDie.frame, 77), 20, false);
@@ -360,7 +368,7 @@ package Game.Objects
 			
 			if (m_treeDie != null && m_roots.finished) 
 			{
-				if ( !m_planet.isDead() )
+				if ( !m_planet.isDead() && !m_planet.isDying() )
 				{
 					reinit();
 				}
