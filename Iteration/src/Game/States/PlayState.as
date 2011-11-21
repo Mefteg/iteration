@@ -187,8 +187,6 @@ package  Game.States
 					// Planet death condition
 					if ( planet.isDead() || blobbies.length > 100 || (blobbies.length < 4 && m_iteration.getIterations() > 2))
 					{
-						//FlxG.shake(0.01);
-						//FlxG.flash();
 						// If we have a meteor roaming ... we delete it
 						if ( meteor != null )
 						{
@@ -233,6 +231,9 @@ package  Game.States
 					meteor = new Meteor(planet.radius() * 2, planet,true);
 					add(meteor);
 					add(meteor.getExplosion());
+					
+					FlxG.shake(0.01);
+					FlxG.flash();
 					
 					break;
 			}
