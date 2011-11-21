@@ -46,8 +46,7 @@ package Game.Objects
 			//instancier le timer de mouvement
 			m_timerMove = new FlxTimer();
 			m_timerMove.start(1);
-			//Diminuer les ressources
-			m_planet.removeResources(100);
+			
 			if(m_distance !=0)
 				m_distance += 43;
 			//vitesse
@@ -219,6 +218,8 @@ package Game.Objects
 				m_planet.addBlobby(m_blobbyBirth);
 				//supprimer sa référence
 				m_blobbyBirth = null;
+				//Diminuer les ressources
+				m_planet.removeResources(100);
 			}
 		}
 				

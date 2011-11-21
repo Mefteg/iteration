@@ -41,9 +41,9 @@ package Game.Objects
 			this.scale.x = (0.1 * planet.getHeight())/width;
 			this.scale.y = (0.1 * planet.getWidth()) / height;
 			//créer l'explosion
-			m_explosion = new Element(m_pos, planet.radius()+360, planet);
-			m_explosion.loadGraphic2(SpriteResources.ImgExplosionMeteor, true, false, 1000, 1200);
-			m_explosion.addAnimation("explode", MathUtils.getArrayofNumbers(0, 9), 6, false);
+			m_explosion = new Element(m_pos, planet.radius()+345, planet);
+			m_explosion.loadGraphic2(SpriteResources.ImgExplosionMeteor, true, false, 900, 1000);
+			m_explosion.addAnimation("explode", MathUtils.getArrayofNumbers(0, 15), 6, false);
 			m_explosion.visible = false;
 			m_giveLife = glife;
 			
@@ -125,12 +125,17 @@ package Game.Objects
 					if (m_explosion.finished)
 					{
 						m_explosion.visible = false;
+					}else {
+						m_explosion.place();
+						m_explosion.rotateToPlanet();
 					}
 					if (m_distance < 0.1)
 						m_state = "Exploding";
 					break;
 				case "Exploding":
 					visible = false;
+					m_explosion.place();
+					m_explosion.rotateToPlanet();
 					if (m_explosion.finished){
 						m_hasExploded = true;
 					}

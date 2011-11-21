@@ -284,9 +284,7 @@ package Game.Objects
 		}
 		
 		override public function destroy():void 
-		{
-			m_planet.removeResources(300);
-			
+		{			
 			clearFruits();
 			super.destroy();
 		}
