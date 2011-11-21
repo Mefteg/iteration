@@ -120,7 +120,8 @@ package Game.Objects
 					m_crashTime += 0.003;
 					
 					//si le météore atteint la planete :: il explose
-					if (m_distance <= m_planet.radius()) {
+					if (m_distance <= m_planet.radius()) 
+					{
 						m_speed = 0;
 						//placer l'explosion
 						m_explosion.setPos(m_pos-5);

@@ -103,6 +103,7 @@ package  Game.States
 			m_state = "Creation";
 			
 			// On affiche la planete apres le background
+			
 			m_zbuffer.addBackground(planet);
 			m_zbuffer.addForeground(planet.getDeadHeartSprite());
 			m_zbuffer.addForeground(planet.getHaloHeartSprite());

@@ -5,7 +5,7 @@
 	<planet size="10" resources="10000" />
 	<blobby initNb="5" speed="0.1" lifetime="3" recycledResources="100" discussTime="4" />
 	<tree number="3" nbFruitMax="2" birthTime="10" birthRandom="5" lifetime="33" /> <!-- nbFruitMax doit etre inférieur ou egal a 6 -->
-	<cloud number="6" scale="1" birthTime="10" birthRandom="5" distance="1150" distanceRandom="50" rainDistance="280" speed="0.02"/>
+	<cloud number="6" scale="1" birthTime="10" birthRandom="5" distance="1150" distanceRandom="50" rainDistance="290" speed="0.02"/>
 	<meteor nbByCycle="1" speed="0.1" zone="10"/>
 	<idee guerreMort="10" guerreNat="0" 
 		paixMort="0" paixNat="10"
