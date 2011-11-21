@@ -124,7 +124,7 @@ package Game.Objects
 					break;
 				case "Birth_s2":
 					pulse = (Math.sin(m_elapsedTime * 4) / 4) / (Math.sin(m_elapsedTime / 4) * 4) / 64;
-                    pulseScale = (pulse + (m_resources / 10000) * 0.7096) * GameParams.map.zoom;
+                    pulseScale = ((pulse + (m_resources / 10000) * 0.7096) + 0.1) * GameParams.map.zoom;
 
 					m_heartDeath.scale.x = pulseScale;
                     m_heartDeath.scale.y = pulseScale;
@@ -196,9 +196,9 @@ package Game.Objects
 			
 			if ( m_state == "Dead" || m_state == "Dying" )
 			{
-				GameParams.soundBank.get(SoundResources.backgroudLowRessMusic).stop();
-				GameParams.soundBank.get(SoundResources.backgroudMusic).stop();
-				GameParams.soundBank.get(SoundResources.backgroudHighRessMusic).stop();
+				GameParams.soundBank.get(SoundResources.backgroudLowRessMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
+				GameParams.soundBank.get(SoundResources.backgroudMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
+				GameParams.soundBank.get(SoundResources.backgroudHighRessMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
 				m_ressourceLevel = 0;
 			}
 			else

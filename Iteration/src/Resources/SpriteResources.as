@@ -22,6 +22,7 @@ package Resources
 
 		
 		public static var ImgTreeGrow:FlxExtBitmap;
+		public static var ImgTreeGrow2:FlxExtBitmap;
 		public static var ImgTreeDie:FlxExtBitmap;
 		public static var ImgTreeRoots:FlxExtBitmap;
 		public static var ImgFruit:FlxExtBitmap;
