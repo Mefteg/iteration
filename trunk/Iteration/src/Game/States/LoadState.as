@@ -1,5 +1,6 @@
 package Game.States 
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -168,8 +169,8 @@ package Game.States
 			addImage(SpriteResources.ImgForeground);
 			
 			// mouse cursor
-			SpriteResources.ImgMouseCursor = new FlxExtBitmap("img/curseur.png");
-			addImage(SpriteResources.ImgMouseCursor);
+			//SpriteResources.ImgMouseCursor = new FlxExtBitmap("img/curseur.png");
+			//addImage(SpriteResources.ImgMouseCursor);
 			
 			// menu
 			SpriteResources.ImgMenuBackground = new FlxExtBitmap("img/MenuScreen.png");

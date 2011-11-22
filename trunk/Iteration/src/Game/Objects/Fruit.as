@@ -66,6 +66,7 @@ package Game.Objects
 		protected function die():void {
 			if ( !m_givenResources ) {
 				m_planet.removeResources(GameParams.map.m_treeFruitResources);
+				m_givenResources = true;
 			}
 			super.destroy();
 		}

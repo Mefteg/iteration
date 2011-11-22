@@ -1,5 +1,7 @@
 package  Game.States
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.utils.Timer;
 	import flash.media.Sound;
 	import Game.Camera;
@@ -72,7 +74,7 @@ package  Game.States
 			
 			//SON
 			
-			// GameParams.soundBank.get(SoundResources.backgroudMusic).play();
+			//GameParams.soundBank.get(SoundResources.backgroudMusic).play();
 			
 			// On affiche la souris
 			FlxG.mouse.show();
@@ -126,7 +128,8 @@ package  Game.States
 			m_zbuffer.addBackground(meteor.getExplosion());
 
 			// On affiche la souris
-			FlxG.mouse.show();		
+			FlxG.mouse.show();
+			FlxG.mouse.load(SpriteResources.ImgMouseCursor);
 		}
 		
 		override public function update():void 

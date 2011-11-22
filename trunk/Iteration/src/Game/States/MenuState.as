@@ -27,7 +27,8 @@ package Game.States
 		
 		override public function create():void {
 			FlxG.mouse.show();
-				
+			FlxG.mouse.load(SpriteResources.ImgMouseCursor);
+			
 			m_background = new FlxSprite();
 			m_background.loadGraphic2(SpriteResources.ImgMenuBackground, false, false, 1280, 720, true);
 			add(m_background);
