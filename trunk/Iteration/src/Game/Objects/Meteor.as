@@ -17,6 +17,7 @@ package Game.Objects
 		//sprite d'explosion
 		protected var m_explosion:Element;
 		
+		
 		private var m_roamingDistance:Number;
 		
 		protected var m_fall:Boolean = false;
@@ -87,13 +88,13 @@ package Game.Objects
 					{
 						m_state = "Roaming";
 					}
-					/*
+					
 					if (onClick()) 
 					{
 						//on fait tomber le météore
 						m_state = "Crashing";
                         // mspeed = m_speed * 1.2;
-					}*/
+					}
 					
 					break;
 				case "Roaming":
@@ -107,12 +108,15 @@ package Game.Objects
 						
 						if ( !m_giveLife )
 						{
+							//jouer le onss
 							GameParams.soundBank.get(SoundResources.crashSound).play();
 						}
                         // mspeed = m_speed * 1.2;
 					}
 					break;
 				case "Crashing":
+					if(!m_giveLife && m_distance< m_planet.radius()+600)
+						checkTargetedBlobbies();
 					//le faire tourner sur lui meme
 					angle--;
 					//réduire la distance entre le météore et la planète
@@ -189,8 +193,40 @@ package Game.Objects
 			for (var i:int = 0; i < size; i++) 
 			{
 				blob = blobbies[i];
+				blob.flip(false);
 				if (checkBlobbyCollision(blob) && !blob.isDying())
 					blob.setState("comeBack");
+				else if (blob.getState() == "panic" || blob.getState() == "goPanic"){
+					blob.setState("idle");
+				}
+			}
+		}
+		
+		private function checkTargetedBlobbies():void {
+			var blobbies:Array = m_planet.getBlobbies();
+			var size:int = blobbies.length;
+			var blob:Blobby;
+			for (var i:int = 0; i < size; i++) 
+			{
+				blob = blobbies[i];
+				//si le blobby n'est pas occupé 
+				if ( !blob.isBusy()) {
+					//on calcule l'angle entre la météore et ce blobby
+					var diff:Number = ((getPos() + 180) % 360) - ((blob.getPos() + 180) % 360);
+					//si cet angle est suffisament petit on a une collision
+					if (  Math.abs(diff) < 50 ) {
+						//donner une direction d'échappatoire selon la position du blobby
+						if (diff>-5) {
+							blob.flip(false);
+							blob.setDirection(2);
+						}else {
+							blob.flip(true);
+							blob.setDirection(1);
+						}
+						// ce blobby a tout intérêt à paniquer
+						blob.setState("goPanic");
+					}
+				}
 			}
 		}
 		

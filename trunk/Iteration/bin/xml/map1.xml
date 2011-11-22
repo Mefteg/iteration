@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
-	<iteration time="10" natalite="0.50" mortalite="0.25" />
+	<iteration time="10" natalite="0.9" mortalite="0.1" />
 	<zoom min="0.3" max="1" actual="0.3" speed="4" speedUp="4" />
 	<planet size="10" resources="5000" />
 	<blobby initNb="5" speed="0.1" lifetime="3" recycledResources="100" discussTime="4" />

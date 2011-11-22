@@ -6,7 +6,7 @@ package Resources
 	 */
 	public class SoundResources 
 	{
-		public static var backgroudMusic:String = "./music/main.mp3";
+		public static var backgroudMusic:String =  "./music/main.mp3";
 		public static var backgroudLowRessMusic:String = "./music/lowRess.mp3";
 		public static var backgroudHighRessMusic:String = "./music/highRess.mp3";
 		public static var crashSound:String = "./sfx/crash.mp3";

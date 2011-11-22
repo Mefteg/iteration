@@ -23,6 +23,8 @@ package Game.Objects
 	 */
 	public class Blobby extends Element
 	{				
+		//image pour le blobby qui court a gauche
+		protected var m_blobbyLeft:FlxSprite;
 		//timer pour le mouvement
 		protected var m_timerMove:FlxTimer;
 		//idée
@@ -37,6 +39,8 @@ package Game.Objects
 		public var m_target:Element = null;
 		public var m_targetTree:Tree = null;
 		public var m_targetFruit:Fruit = null;
+		
+		protected var left:Boolean;
 		
 		public function Blobby(pos:Number, distance:Number, planet:Planet) 
 		{
@@ -60,6 +64,7 @@ package Game.Objects
 			
 			place();		
 			color = 0x1df1ab;
+			flip(0);
 		}
 		
 		//génère les animations qui doivent etre propres au blobby
@@ -79,12 +84,34 @@ package Game.Objects
 			addAnimation("die", [77] , 2 +FlxG.random() * 2, false);
 			addAnimation("comeBack", MathUtils.getArrayofNumbers(64,77) , 5 +FlxG.random() * 2, false);
 			addAnimation("dig", [77] , 0, false);
-
+			addAnimation("goPanic", MathUtils.getArrayofNumbers(54, 58), 8, false);
+			addAnimation("panic", MathUtils.getArrayofNumbers(59, 62), 15, true);
+			//poru quand il est inversé
+			m_blobbyLeft = new FlxSprite();
+			m_blobbyLeft.loadGraphic2(SpriteResources.ImgBlobbyRunLeft, true, false, 300, 300);
+			m_blobbyLeft.addAnimation("panic", [3, 8, 7, 6], 15, true);
+			m_blobbyLeft.addAnimation("goPanic", [2, 1, 0, 5, 4], 8, false);
+			m_blobbyLeft.visible = true;
+		}
+		
+		override public function draw():void {
+			if (!visible) return;
+			if (left) {
+				m_blobbyLeft.x = x; m_blobbyLeft.y = y;
+				m_blobbyLeft.angle = angle;
+				m_blobbyLeft.scale = scale;
+				m_blobbyLeft.color = color;
+				m_blobbyLeft.draw();
+			}else {
+				super.draw();
+			}
+			
 		}
 		
 		override public function update():void 
 		{
 			if (!visible) return;
+			if(left){ m_blobbyLeft.postUpdate();}
 			super.update();
 			// placer le blobby
 			place();
@@ -132,6 +159,12 @@ package Game.Objects
 					break;
 				case("pick"):
 					pick();
+					break;
+				case("goPanic"):
+					goPanic();
+					break;
+				case("panic"):
+					panic();
 					break;
 				default:
 					break;
@@ -256,6 +289,36 @@ package Game.Objects
 					//le blobby est maintenant un érudit
 					m_scholar = true;
 				}
+			}
+		}
+		
+		public function goPanic():void {
+			if (left && m_blobbyLeft.finished)
+				setState("panic");
+			else if (finished) 
+				setState("panic");
+			
+		}
+		
+		public function panic():void {
+			//bouger le sprite
+			switch(m_direction) 
+			{
+			case 1: 
+				m_pos += m_speed; 
+				if ( m_pos > 360 ) // modulo of the angle
+				{
+					m_pos -= 360;
+				}
+				break;
+			case 2: 
+				m_pos -= m_speed;
+				if ( m_pos < 0 ) // modulo of the angle
+				{
+					m_pos += 360;
+				}
+				break;
+				default:break;
 			}
 		}
 		
@@ -520,7 +583,8 @@ package Game.Objects
 		override public function destroy():void 
 		{
 			m_blobTarget = null;
-			
+			m_blobbyLeft.destroy();
+			m_blobbyLeft = null;
 			//ajouter des ressources a la planete
 			m_planet.addResources(80);
 			super.destroy();
@@ -545,7 +609,6 @@ package Game.Objects
 		public function setBlobbyBirth(blobby:Blobby):void {
 			m_blobbyBirth = blobby;
 			setState("pick");
-			//setState("duplicate");
 		}
 		
 		public function searchNearestBlobby():void 
@@ -696,17 +759,25 @@ package Game.Objects
 			return false;
 		}
 
-		override public function draw():void 
-		{
-			if (!visible) return;
-			super.draw();
-		}
-		
+			
 				
 		override public function setState(state:String):void {
 			m_state = state;
-			play(m_state);
+			if (left)
+				m_blobbyLeft.play(m_state);
+			else
+				play(m_state);
 		}
+
+		
+		public function setDirection(dir:int):void {
+			m_direction = dir;
+		}
+		
+		public function flip(f:Boolean):void {
+			left = f;
+		}
+
 		
 		override public function onClick():Boolean 
 		{
@@ -738,6 +809,7 @@ package Game.Objects
 			
 			return false;
 		}
+
 	}
 
 }

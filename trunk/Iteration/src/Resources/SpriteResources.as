@@ -25,6 +25,7 @@ package Resources
 		public static var ImgFruit:FlxExtBitmap;
 		
 		public static var ImgBlobby:FlxExtBitmap;
+		public static var ImgBlobbyRunLeft:FlxExtBitmap;
 		
 		public static var ImgMeteor:FlxExtBitmap;
 		public static var ImgMeteorLife:FlxExtBitmap;

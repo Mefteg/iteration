@@ -131,6 +131,7 @@ package  Game.States
 		
 		override public function update():void 
 		{			
+			
 			if (FlxG.keys.A) planet.removeResources(10000);
 			
 			//mettre a jour la camera
