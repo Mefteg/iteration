@@ -16,10 +16,6 @@ package Resources
 		public static var ImgHeartHalo:FlxExtBitmap;
 		public static var ImgHeartBack:FlxExtBitmap;
 		public static var ImgHeartDeath:FlxExtBitmap;
-		public static var ImgLifeParticle:FlxExtBitmap;
-		
-		[Embed(source = "../../bin/img/lifeParticle.png")] public static var particleSprite:Class
-
 		
 		public static var ImgTreeGrow:FlxExtBitmap;
 		public static var ImgTreeGrow2:FlxExtBitmap;

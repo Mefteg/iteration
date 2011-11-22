@@ -105,13 +105,23 @@ package Game
 		
 		// Gere le zoom de la camera
 		protected function cameraZoom():void {
-			if ( FlxG.keys.Z && GameParams.map.zoom < GameParams.map.zoomMax ) 
+			if ( (FlxG.keys.Z || FlxG.mouse.wheel > 0) && GameParams.map.zoom < GameParams.map.zoomMax ) 
 			{
-				GameParams.map.zoom += m_zoomCam;
+				if ( FlxG.mouse.wheel > 0 ) {
+					GameParams.map.zoom += 4 * m_zoomCam;
+				}
+				else {
+					GameParams.map.zoom += m_zoomCam;
+				}
 			}
-			if ( FlxG.keys.S && GameParams.map.zoom > GameParams.map.zoomMin ) 
+			if ( (FlxG.keys.S || FlxG.mouse.wheel < 0) && GameParams.map.zoom > GameParams.map.zoomMin ) 
 			{
-				GameParams.map.zoom -= m_zoomCam;
+				if ( FlxG.mouse.wheel < 0 ) {
+					GameParams.map.zoom -= 4 * m_zoomCam;
+				}
+				else {
+					GameParams.map.zoom -= m_zoomCam;
+				}
 			}
 		}
 		

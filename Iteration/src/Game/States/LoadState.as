@@ -118,8 +118,6 @@ package Game.States
 			//Coeur Mort
 			SpriteResources.ImgHeartDeath = new FlxExtBitmap("img/heartDeath.png");
 			addImage(SpriteResources.ImgHeartDeath);
-			SpriteResources.ImgLifeParticle = new FlxExtBitmap("img/lifeParticle.png");
-			addImage(SpriteResources.ImgLifeParticle);
 			//loader l'image de l'arbre 
 			SpriteResources.ImgTreeGrow = new FlxExtBitmap("img/tree_anim_grow.png");
 			SpriteResources.ImgTreeGrow2 = new FlxExtBitmap("img/tree2_anim_grow.png");

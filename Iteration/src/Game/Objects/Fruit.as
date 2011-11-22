@@ -1,5 +1,6 @@
 package Game.Objects 
 {
+	import Globals.GameParams;
 	import org.flixel.FlxG;
 	import Resources.SpriteResources;
 	import Utils.MathUtils;
@@ -50,6 +51,7 @@ package Game.Objects
 			m_distance -= m_speed;
 			if ( m_distance < m_planet.radius() + 75 ) {
 				setState("eaten");
+				m_planet.removeResources(GameParams.map.m_treeFruitResources);
 			}
 		}
 		
