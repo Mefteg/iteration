@@ -93,7 +93,7 @@ package Game.Objects
 		}
 		
 		public function regenerate():void
-		{trace("regene");
+		{
 			//this.clear();
 			m_dying = false;
 			// Restart the process of generation of the trees
