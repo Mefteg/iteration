@@ -33,6 +33,9 @@ package Game.Objects
 		//timer pour la discussion
 		protected var m_timerDiscuss:FlxTimer;
 		protected var m_discussTime:Number = GameParams.map.m_blobbyDiscussTime;
+		//timer pour la panique
+		protected var m_timerPanic:FlxTimer;
+		protected var m_panicTime:Number = GameParams.map.m_blobbyPanicTime;
 		
 		protected var m_blobTarget:Blobby;
 		protected var m_blobbyBirth:Blobby;
@@ -52,6 +55,7 @@ package Game.Objects
 			//instancier le timer de mouvement
 			m_timerMove = new FlxTimer();
 			m_timerMove.start(1);
+			m_timerPanic = new FlxTimer();
 			
 			if(m_distance !=0)
 				m_distance += 43;
@@ -84,13 +88,13 @@ package Game.Objects
 			addAnimation("die", [77] , 2 +FlxG.random() * 2, false);
 			addAnimation("comeBack", MathUtils.getArrayofNumbers(64,77) , 5 +FlxG.random() * 2, false);
 			addAnimation("dig", [77] , 0, false);
-			addAnimation("goPanic", MathUtils.getArrayofNumbers(54, 58), 8, false);
+			addAnimation("goPanic", MathUtils.getArrayofNumbers(54, 58), 15, false);
 			addAnimation("panic", MathUtils.getArrayofNumbers(59, 62), 15, true);
 			//poru quand il est inversé
 			m_blobbyLeft = new FlxSprite();
 			m_blobbyLeft.loadGraphic2(SpriteResources.ImgBlobbyRunLeft, true, false, 300, 300);
 			m_blobbyLeft.addAnimation("panic", [3, 8, 7, 6], 15, true);
-			m_blobbyLeft.addAnimation("goPanic", [2, 1, 0, 5, 4], 8, false);
+			m_blobbyLeft.addAnimation("goPanic", [2, 1, 0, 5, 4], 15, false);
 			m_blobbyLeft.visible = true;
 		}
 		
@@ -179,6 +183,7 @@ package Game.Objects
 		}
 		
 		protected function comeBack():void {
+			flip(0);
 			if (finished) 
 			{
 				//si il possédait une idée, la killer
@@ -293,14 +298,23 @@ package Game.Objects
 		}
 		
 		public function goPanic():void {
-			if (left && m_blobbyLeft.finished)
+			//vérifier quelle anim est jouée puis lancer le timer de panique
+			if (left && m_blobbyLeft.finished) {
+				m_timerPanic.start(m_panicTime);
 				setState("panic");
-			else if (finished) 
+			}else if (finished) {
+				m_timerPanic.start(m_panicTime);
 				setState("panic");
+			}
 			
 		}
 		
 		public function panic():void {
+			if (m_timerPanic.finished){
+				setState("idle");
+				flip(0);
+				return;
+			}
 			//bouger le sprite
 			switch(m_direction) 
 			{
