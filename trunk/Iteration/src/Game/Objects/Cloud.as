@@ -30,6 +30,8 @@ package Game.Objects
 		private var m_state:String;
 		private var m_distance:Number;
 		
+		private var m_clicOffset:Number;
+		
 		private var m_planet:Planet = null;
 		
 		public function Cloud(planet:Planet) 
@@ -104,6 +106,18 @@ package Game.Objects
 					
 					if (clicDetection() && !m_hasSelected) 
 					{
+						m_clicOffset = ( -180 / Math.PI) * Math.atan((FlxG.mouse.y - (FlxG.height / 2.)) / (FlxG.mouse.x - (FlxG.width / 2.)));
+						if ( FlxG.mouse.x < FlxG.width / 2 )
+						{
+							m_clicOffset = 90 + (90 - ( -m_clicOffset));
+							m_clicOffset -= 5;
+						}
+						else
+						{
+							m_clicOffset += 0;
+						}
+						
+						m_clicOffset -= m_pos;
 						//on fait tomber le météore
 						m_state = "Attached";
 						m_hasSelected = true;
@@ -121,6 +135,7 @@ package Game.Objects
 					{
 						m_pos += 0;
 					}
+					m_pos -= m_clicOffset;
 					
 					if (!FlxG.mouse.pressed()) 
 					{
