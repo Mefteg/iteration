@@ -47,6 +47,7 @@ package Resources
 		// mouse cursor
 		//public static var ImgMouseCursor:FlxExtBitmap;
 		[Embed(source="../../bin/img/curseur_etat_normal.png")] public static var ImgMouseCursor:Class;
+		[Embed(source="../../bin/img/curseur_clic.png")] public static var ImgMouseCursorClic:Class;
 		
 		// menu
 		public static var ImgMenuBackground:FlxExtBitmap;
