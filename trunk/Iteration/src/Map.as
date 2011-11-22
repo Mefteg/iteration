@@ -76,6 +76,7 @@ package
 		public var m_soundRessourcesLow:Number;
 		public var m_soundRessourcesHigh:Number;
 		
+		public var m_crackZone:Number;
 		
 		public var m_loaded:Boolean;
 		
@@ -111,6 +112,7 @@ package
 			m_planetSize = m_xml.planet.@size;
 			m_planetResources = m_xml.planet.@resources;
 			m_crackFadeOutTimer = m_xml.planet.@crackTimeOut;
+			m_crackZone = m_xml.planet.@crackZone; 
 			
 			m_blobbyLifetime = m_xml.blobby.@lifetime;
 			m_blobbySpeed = m_xml.blobby.@speed;
