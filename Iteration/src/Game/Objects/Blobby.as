@@ -586,7 +586,7 @@ package Game.Objects
 			m_blobbyLeft.destroy();
 			m_blobbyLeft = null;
 			//ajouter des ressources a la planete
-			m_planet.addResources(80);
+			m_planet.addResources(GameParams.map.m_blobbyRecycledResources);
 			super.destroy();
 		}
 		

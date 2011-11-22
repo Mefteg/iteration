@@ -37,6 +37,7 @@ package
 		public var m_blobbySpeed:Number;
 		public var m_blobbyInitNb:int;
 		public var m_blobbyDiscussTime:Number;
+		public var m_blobbyRecycledResources:int;
 		
 		public var m_treeNumber:int;
 		public var m_treeBirthTime:int;
@@ -111,6 +112,7 @@ package
 			m_blobbySpeed = m_xml.blobby.@speed;
 			m_blobbyInitNb = m_xml.blobby.@initNb;
 			m_blobbyDiscussTime = m_xml.blobby.@discussTime;
+			m_blobbyRecycledResources = m_xml.blobby.@recycledResources;
 			
 			m_treeNumber = m_xml.tree.@number;
 			m_treeBirthTime = m_xml.tree.@birthRandom;

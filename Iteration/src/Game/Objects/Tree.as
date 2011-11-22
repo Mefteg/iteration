@@ -26,6 +26,8 @@ package Game.Objects
 
 		private var m_gap:int = -9;
 		
+		private var m_model:int = 0;
+		
 		/**
 		 * @param	origin	The point where the root starts
 		 * @param	planet where the tree will grow
@@ -91,11 +93,13 @@ package Game.Objects
 				{
 					m_treeGrow.loadGraphic2(SpriteResources.ImgTreeGrow, true, false, 405, 376);
 					m_treeDie.loadGraphic2(SpriteResources.ImgTreeDie, true, false, 405, 376);
+					m_model = 0;
 				}
 				else
 				{
 					m_treeGrow.loadGraphic2(SpriteResources.ImgTreeGrow2, true, false, 405, 379);
 					m_treeDie.loadGraphic2(SpriteResources.ImgTreeDie2, true, false, 405, 379);
+					m_model = 1;
 				}
 				m_treeGrow.addAnimation("grow", MathUtils.getArrayofNumbers(0, 62), 20, false);
 				m_treeGrow.scale.x = 1.;
@@ -292,7 +296,7 @@ package Game.Objects
 			}
 		}
 		
-		override public function destroy():void 
+		override public function destroy():void
 		{			
 			clearFruits();
 			super.destroy();
@@ -304,12 +308,22 @@ package Game.Objects
 			var positions:Array = new Array();
 			var distances:Array = new Array();
 			
-			positions.push(m_pos + 8 + m_gap + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
-			positions.push(m_pos + 4 + m_gap + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
-			positions.push(m_pos + m_gap + (Math.random() * 6) - 3); 	distances.push(m_distance + 50); 	availables.push(1);
-			positions.push(m_pos - 8 + m_gap + (Math.random() * 6) - 3); distances.push(m_distance + 50); 	availables.push(1);
-			positions.push(m_pos + 2 + m_gap + (Math.random() * 6) - 3); distances.push(m_distance + 135); 	availables.push(1);
-			positions.push(m_pos - 3 + m_gap + (Math.random() * 6) - 3); distances.push(m_distance + 130); 	availables.push(1);
+			if( m_model == 0 ) {
+				positions.push(m_pos + 8 + m_gap + (Math.random() * 4) - 2); distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(m_pos + 4 + m_gap + (Math.random() * 4) - 2); distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(m_pos - 1 + m_gap + (Math.random() * 4) - 2); 	distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(m_pos - 8 + m_gap + (Math.random() * 4) - 2); distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(m_pos + 2 + m_gap + (Math.random() * 4) - 2); distances.push(m_distance + 135); 	availables.push(1);
+				positions.push(m_pos - 3 + m_gap + (Math.random() * 4) - 2); distances.push(m_distance + 130); 	availables.push(1);
+			}
+			if( m_model == 1 ) {
+				positions.push(m_pos + 8 + m_gap + (Math.random() * 2) - 1); distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(m_pos + 3 + m_gap + (Math.random() * 2) - 1); distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(m_pos - 4 + m_gap + (Math.random() * 2) - 1); 	distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(m_pos - 6 + m_gap + (Math.random() * 2) - 1); distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(m_pos + 6 + m_gap + (Math.random() * 2) - 1); distances.push(m_distance + 135); 	availables.push(1);
+				positions.push(m_pos + 2 + m_gap + (Math.random() * 2) - 1); distances.push(m_distance + 130); 	availables.push(1);
+			}
 			
 			// pour chaque fruit a placer
 			for (var j:int = 0; j < m_nbFruitMax; j++) {
