@@ -1057,6 +1057,7 @@ package org.flixel
 				mtx.translate(newPixels.width, 0);
 				newPixels.draw(pixels, mtx);
 				pixels = newPixels;
+				_cache[Key] = pixels;
 			}
 			return pixels;
 		}

@@ -137,6 +137,8 @@ package Game.States
 			//loader l'image du blobby
 			SpriteResources.ImgBlobby = new FlxExtBitmap("img/Blobby_Sprites.png");
 			addImage(SpriteResources.ImgBlobby);
+			SpriteResources.ImgBlobbyRunLeft = new FlxExtBitmap("img/Blobby_run_left.png");
+			addImage(SpriteResources.ImgBlobbyRunLeft);
 			//loader l'image du meteor
 			SpriteResources.ImgMeteor = new FlxExtBitmap("img/meteor.png");
 			addImage(SpriteResources.ImgMeteor);
