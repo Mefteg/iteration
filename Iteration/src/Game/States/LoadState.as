@@ -125,7 +125,9 @@ package Game.States
 			addImage(SpriteResources.ImgTreeGrow2);
 			//Mort arbre
 			SpriteResources.ImgTreeDie = new FlxExtBitmap("img/tree_anim_dead.png");
+			SpriteResources.ImgTreeDie2 = new FlxExtBitmap("img/tree2_anim_dead.png");
 			addImage(SpriteResources.ImgTreeDie);
+			addImage(SpriteResources.ImgTreeDie2);
 			//Fruit
 			SpriteResources.ImgFruit = new FlxExtBitmap("img/pop_fruit_40.png");
 			addImage(SpriteResources.ImgFruit);
