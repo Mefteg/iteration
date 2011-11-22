@@ -38,6 +38,7 @@ package
 		public var m_blobbySpeed:Number;
 		public var m_blobbyInitNb:int;
 		public var m_blobbyDiscussTime:Number;
+		public var m_blobbyPanicTime:Number;
 		public var m_blobbyRecycledResources:int;
 		
 		public var m_treeNumber:int;
@@ -59,6 +60,7 @@ package
 		public var m_meteorNbByCycle:int;
 		public var m_meteorSpeed:Number;
 		public var m_meteorZone:Number;
+		public var m_meteorZonePanic:Number;
 		
 		public var m_ideaEffect:Object;
 		public var m_paix:Array = new Array();
@@ -114,6 +116,7 @@ package
 			m_blobbySpeed = m_xml.blobby.@speed;
 			m_blobbyInitNb = m_xml.blobby.@initNb;
 			m_blobbyDiscussTime = m_xml.blobby.@discussTime;
+			m_blobbyPanicTime = m_xml.blobby.@panicTime;
 			m_blobbyRecycledResources = m_xml.blobby.@recycledResources;
 			
 			m_treeNumber = m_xml.tree.@number;
@@ -135,6 +138,7 @@ package
 			m_meteorNbByCycle = m_xml.meteor.@nbByCycle;
 			m_meteorSpeed = m_xml.meteor.@speed;
 			m_meteorZone = m_xml.meteor.@zone;
+			m_meteorZonePanic = m_xml.meteor.@zonePanic;
 			
 			//idées
 			m_paix.push(m_xml.idee.@paixMort); m_paix.push(m_xml.idee.@paixNat);

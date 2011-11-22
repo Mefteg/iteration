@@ -62,7 +62,6 @@ package Game.Objects
 		
 		override public function update():void 
 		{
-			//trace(m_state);
 			if ( m_soundTimer && m_soundTimer.finished )
 			{
 				m_soundTimer.destroy();
@@ -115,7 +114,7 @@ package Game.Objects
 					}
 					break;
 				case "Crashing":
-					if(!m_giveLife && m_distance< m_planet.radius()+600)
+					if(!m_giveLife && m_distance< m_planet.radius()+300)
 						checkTargetedBlobbies();
 					//le faire tourner sur lui meme
 					angle--;
@@ -171,7 +170,7 @@ package Game.Objects
 					visible = false;
 					m_explosion.place();
 					m_explosion.rotateToPlanet();
-					if (m_explosion.finished){
+					if (m_explosion.finished) {
 						m_hasExploded = true;
 					}
 					break;
@@ -193,12 +192,11 @@ package Game.Objects
 			for (var i:int = 0; i < size; i++) 
 			{
 				blob = blobbies[i];
-				blob.flip(false);
-				if (checkBlobbyCollision(blob) && !blob.isDying())
+				if (checkBlobbyCollision(blob) && !blob.isDying()) {
+					blob.flip(0);
 					blob.setState("comeBack");
-				else if (blob.getState() == "panic" || blob.getState() == "goPanic"){
-					blob.setState("idle");
 				}
+				
 			}
 		}
 		
@@ -214,7 +212,7 @@ package Game.Objects
 					//on calcule l'angle entre la météore et ce blobby
 					var diff:Number = ((getPos() + 180) % 360) - ((blob.getPos() + 180) % 360);
 					//si cet angle est suffisament petit on a une collision
-					if (  Math.abs(diff) < 50 ) {
+					if (  Math.abs(diff) < GameParams.map.m_meteorZonePanic ) {
 						//donner une direction d'échappatoire selon la position du blobby
 						if (diff>-5) {
 							blob.flip(false);
