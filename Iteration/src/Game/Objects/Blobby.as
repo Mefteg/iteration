@@ -11,6 +11,7 @@ package Game.Objects
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTimer;
 	import org.flixel.FlxU;
+	import org.flixel.system.input.Mouse;
 	import Resources.SoundResources;
 	import Utils.MathUtils;
 	
@@ -145,13 +146,19 @@ package Game.Objects
 		}
 		
 		protected function comeBack():void {
-			if (finished) {
+			if (finished) 
+			{
 				//si il possédait une idée, la killer
-				if (m_idea){
+				if (m_idea)
+				{
 					m_idea.setState("killed");
 					m_idea = null;
 				}
-				setState("dig");
+				
+				if ( onClick() )
+				{
+					setState("dig");
+				}
 			}
 		}
 		
@@ -699,6 +706,38 @@ package Game.Objects
 		override public function setState(state:String):void {
 			m_state = state;
 			play(m_state);
+		}
+		
+		override public function onClick():Boolean 
+		{
+			if ( FlxG.mouse.justPressed() )
+			{
+				//si click de la souris
+				var mouseVar:Mouse = FlxG.mouse;
+				var mouseX:int = FlxG.mouse.getWorldPosition(GameParams.camera).x;
+				var mouseY:int = FlxG.mouse.getWorldPosition(GameParams.camera).y;
+
+				var clicAngle:Number = 0;
+				clicAngle = ( -180 / Math.PI) * Math.atan((FlxG.mouse.y - (FlxG.height / 2.)) / (FlxG.mouse.x - (FlxG.width / 2.)));
+				if ( FlxG.mouse.screenX < FlxG.width / 2 )
+				{
+					clicAngle += 180;
+				}
+				else
+				{
+					if ( FlxG.mouse.screenY > FlxG.height / 2 )
+					{
+						clicAngle += 360;
+					}
+				}
+
+				if ( Math.abs(m_pos - clicAngle) < 2 && Math.abs(Point.distance(new Point(mouseX, mouseY), m_planet.center()) - 183) < 10 )
+				{
+					return true;
+				}
+			}
+			
+			return false;
 		}
 	}
 
