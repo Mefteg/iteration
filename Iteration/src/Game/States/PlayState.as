@@ -60,6 +60,9 @@ package  Game.States
 		// Z Buffer
 		private var m_zbuffer:DepthBuffer = new DepthBuffer();
 		
+		// compteur pour savoir combien de temps le clic est enfoncé
+		private var m_mousecpt = 0;
+		
 		public function PlayState() 
 		{
 			add(m_zbuffer);
@@ -242,6 +245,20 @@ package  Game.States
 					FlxG.flash();
 					
 					break;
+			}
+			
+			// update du curseur
+			if ( FlxG.mouse.pressed() ) {
+				if ( m_mousecpt > 8 ) {
+					FlxG.mouse.load(SpriteResources.ImgMouseCursorClic);
+				}
+				else {
+					m_mousecpt++;
+				}
+			}
+			else {
+				FlxG.mouse.load(SpriteResources.ImgMouseCursor);
+				m_mousecpt = 0;
 			}
 			
 			GameParams.soundBank.update();

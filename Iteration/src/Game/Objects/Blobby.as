@@ -495,56 +495,64 @@ package Game.Objects
 		}
 		
 		public function pick():void {
-			// si je dois chercher un arbre et pas un fruit
-			if ( m_targetTree != null && m_targetFruit == null ) {
-				// si je suis arrivé à l'arbre
-				if ( collideWithElement(m_targetTree) ) {
-					m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
+			// s'il n'y a aucun arbre disponible
+			if ( m_planet.getTrees().length == 0 ) {
+				// si je dois chercher un arbre et pas un fruit
+				if ( m_targetTree != null && m_targetFruit == null ) {
+					// si je suis arrivé à l'arbre
+					if ( collideWithElement(m_targetTree) ) {
+						m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
+					}
+					// sinon
+					else {
+						// je cherche l'arbre le plus proche
+						m_targetTree = searchNearestTree();
+						// si un arbre a été trouvé
+						if ( m_targetTree != null ) { 
+							// et je m'y rends
+							goTo(m_targetTree);
+						}
+					}
 				}
 				// sinon
 				else {
-					// je cherche l'arbre le plus proche
-					m_targetTree = searchNearestTree();
-					// si un arbre a été trouvé
-					if ( m_targetTree != null ) { 
-						// et je m'y rends
-						goTo(m_targetTree);
+					// si je n'ai pas de fruit à trouver
+					if ( m_targetFruit == null ) {
+						//je recupere l'arbre le plus proche
+						m_targetTree = searchNearestTree();
+					}
+					// sinon
+					else {
+						// si je suis arrivé sous le fruit
+						if ( isOnElement(m_targetFruit) ) {
+							m_targetFruit.setState("fall");
+							setState("eat");
+						}
+						// sinon
+						else 
+						{
+							// je cherche le fruit le plus proche
+							m_targetTree = searchNearestTree();
+							//s'il existe encore un arbre 
+							if(m_targetTree !=null){
+								m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
+								//s'il existe encore un fruit
+								if ( m_targetFruit != null ) {
+									// et je m'y rends
+									goTo(m_targetFruit);
+								}
+							}//sinon j'attends et j'ai tres faim
+							else {
+								setState("idle");
+							}
+						}
 					}
 				}
 			}
 			// sinon
 			else {
-				// si je n'ai pas de fruit à trouver
-				if ( m_targetFruit == null ) {
-					//je recupere l'arbre le plus proche
-					m_targetTree = searchNearestTree();
-				}
-				// sinon
-				else {
-					// si je suis arrivé sous le fruit
-					if ( isOnElement(m_targetFruit) ) {
-						m_targetFruit.setState("fall");
-						setState("eat");
-					}
-					// sinon
-					else 
-					{
-						// je cherche le fruit le plus proche
-						m_targetTree = searchNearestTree();
-						//s'il existe encore un arbre 
-						if(m_targetTree !=null){
-							m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
-							//s'il existe encore un fruit
-							if ( m_targetFruit != null ) {
-								// et je m'y rends
-								goTo(m_targetFruit);
-							}
-						}//sinon j'attends et j'ai tres faim
-						else {
-							setState("idle");
-						}
-					}
-				}
+				// je repasse en état "idle"
+				setState("idle");
 			}
 		}
 		
