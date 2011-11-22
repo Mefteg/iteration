@@ -713,19 +713,18 @@ package Game.Objects
 			if ( FlxG.mouse.justPressed() )
 			{
 				//si click de la souris
-				var mouseVar:Mouse = FlxG.mouse;
 				var mouseX:int = FlxG.mouse.getWorldPosition(GameParams.camera).x;
 				var mouseY:int = FlxG.mouse.getWorldPosition(GameParams.camera).y;
 
 				var clicAngle:Number = 0;
-				clicAngle = ( -180 / Math.PI) * Math.atan((FlxG.mouse.y - (FlxG.height / 2.)) / (FlxG.mouse.x - (FlxG.width / 2.)));
-				if ( FlxG.mouse.screenX < FlxG.width / 2 )
+				clicAngle = ( -180 / Math.PI) * Math.atan((mouseY - m_planet.center().y) / (mouseX - m_planet.center().x));
+				if ( mouseX < m_planet.center().x )
 				{
 					clicAngle += 180;
 				}
 				else
 				{
-					if ( FlxG.mouse.screenY > FlxG.height / 2 )
+					if ( mouseY > m_planet.center().y )
 					{
 						clicAngle += 360;
 					}
