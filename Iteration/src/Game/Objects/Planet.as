@@ -24,7 +24,6 @@ package Game.Objects
 		
 		private var m_elapsedTime:Number = 0;
 		
-		private var m_center:Point;//centre de la planete
 		private var m_radius:Number; //son rayon
 		
 		private var m_resources:int; // ressources de la planete
@@ -32,6 +31,10 @@ package Game.Objects
 		
 		private var m_state:String = "Dead";
 		private var m_animTime:Number = 0;
+		
+		
+		private var m_crackPos:Number = 0;
+		private var m_isCracking:Boolean = false;
 		
 		/**
 		 * if 1 low ressource
@@ -49,7 +52,6 @@ package Game.Objects
 			m_planet.loadGraphic2( SpriteResources.ImgPlnt,false,false,1400,1400);
 			add(m_planet);
 			
-			m_center = new Point(x + m_planet.width / 2, y + m_planet.height / 2);
 			m_radius = (m_planet.height) / 2;
 			
 			m_blobbies = blobbies;
@@ -160,6 +162,19 @@ package Game.Objects
 				case "Living":
 					m_heartHalo.angle-= 0.04;
 					m_heartBack.angle += 0.04;
+					
+					if ( FlxG.mouse.justPressed() )
+					{
+						var mouseX:int = FlxG.mouse.getWorldPosition(GameParams.camera).x;
+						var mouseY:int = FlxG.mouse.getWorldPosition(GameParams.camera).y;
+						
+						trace (Point.distance(new Point(mouseX, mouseY), this.center()));
+						if ( Math.abs(Point.distance(new Point(mouseX, mouseY), this.center()) - 200) < 5 )
+						{
+							crack();
+						}
+					}
+					
 					break;
 				case "Dead":
 					m_heartDeath.scale.x = 0.1 * GameParams.map.zoom;
@@ -229,7 +244,7 @@ package Game.Objects
 		
 		public function center():Point
 		{
-			return m_center;
+			return new Point(m_planet.x + m_planet.width / 2, m_planet.y + m_planet.height / 2);
 		}
 		
 		public function radius():Number
@@ -412,6 +427,39 @@ package Game.Objects
 			pt.x = center().x - int(Camera.scroll.x);
 			pt.y = center().y - int(Camera.scroll.y);
 			return pt;
+		}
+		
+		public function crack():void
+		{
+			var mouseX:int = FlxG.mouse.getWorldPosition(GameParams.camera).x;
+			var mouseY:int = FlxG.mouse.getWorldPosition(GameParams.camera).y;
+			
+			var clicAngle:Number = 0;
+			clicAngle = ( -180 / Math.PI) * Math.atan((mouseY - this.center().y) / (mouseX - this.center().x));
+			if ( mouseX < this.center().x )
+			{
+				clicAngle += 180;
+			}
+			else
+			{
+				if ( mouseY > this.center().y )
+				{
+					clicAngle += 360;
+				}
+			}
+			
+			m_crackPos = clicAngle;
+			m_isCracking = true;
+		}
+		
+		public function isCrasking():Boolean
+		{
+			return m_isCracking;
+		}
+		
+		public function getPosition():Number
+		{
+			return m_crackPos;
 		}
 	}
 
