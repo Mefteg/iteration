@@ -32,6 +32,7 @@ package
 		
 		public var m_planetSize:Number;
 		public var m_planetResources:int;
+		public var m_crackFadeOutTimer:int;
 		
 		public var m_blobbyLifetime:int;
 		public var m_blobbySpeed:Number;
@@ -107,6 +108,7 @@ package
 			
 			m_planetSize = m_xml.planet.@size;
 			m_planetResources = m_xml.planet.@resources;
+			m_crackFadeOutTimer = m_xml.planet.@crackTimeOut;
 			
 			m_blobbyLifetime = m_xml.blobby.@lifetime;
 			m_blobbySpeed = m_xml.blobby.@speed;
