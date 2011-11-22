@@ -43,6 +43,7 @@ package
 		public var m_treeBirthRandom:int;
 		public var m_treeNbFruitMax:int;
 		public var m_treeLifetime:int;
+		public var m_treeFruitResources:Number;
 		
 		public var cloudsNumber:uint;
 		public var m_cloudsBirthTime:int;
@@ -116,6 +117,7 @@ package
 			m_treeBirthRandom = m_xml.tree.@birthTime;
 			m_treeLifetime = m_xml.tree.@lifetime;
 			m_treeNbFruitMax = m_xml.tree.@nbFruitMax;
+			m_treeFruitResources = m_xml.tree.@fruitResources;
 			
 			cloudsNumber = m_xml.cloud.@number;
 			m_cloudsBirthTime = m_xml.cloud.@birthTime;
