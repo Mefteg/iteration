@@ -10,6 +10,8 @@ package Game.Objects
 	 */
 	public class Fruit extends Element 
 	{
+		protected var m_givenResources:Boolean;
+		
 		public function Fruit(pos:Number, distance:Number, planet:Planet) 
 		{
 			super(pos, distance, planet);
@@ -52,6 +54,7 @@ package Game.Objects
 			if ( m_distance < m_planet.radius() + 75 ) {
 				setState("eaten");
 				m_planet.removeResources(GameParams.map.m_treeFruitResources);
+				m_givenResources = true;
 			}
 		}
 		
@@ -61,6 +64,9 @@ package Game.Objects
 		}
 		
 		protected function die():void {
+			if ( !m_givenResources ) {
+				m_planet.removeResources(GameParams.map.m_treeFruitResources);
+			}
 			super.destroy();
 		}
 	}

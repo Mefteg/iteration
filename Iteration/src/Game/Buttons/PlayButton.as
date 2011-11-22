@@ -11,7 +11,7 @@ package Game.Buttons
 	{
 		public function PlayButton(X:Number = 0, Y:Number = 0, Label:String = null, OnClick:Function = null) {
 			super(X, Y, Label, OnClick);
-			loadGraphic2(SpriteResources.ImgMenuPlaybutton, false, false, 190, 94, true);
+			loadGraphic2(SpriteResources.ImgMenuPlaybutton, false, false, 232, 114, true);
 		}		
 	}
 
