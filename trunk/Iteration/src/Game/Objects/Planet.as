@@ -32,9 +32,12 @@ package Game.Objects
 		private var m_state:String = "Dead";
 		private var m_animTime:Number = 0;
 		
-		
+		private var m_crackSprite:FlxSprite;
 		private var m_crackPos:Number = 0;
 		private var m_isCracking:Boolean = false;
+		private var m_crackTimer:FlxTimer = new FlxTimer();
+		private var m_crackFadeOut:Boolean = false;
+		private var m_crackFade:Number = 0;
 		
 		/**
 		 * if 1 low ressource
@@ -87,11 +90,18 @@ package Game.Objects
 			m_heartHalo.visible = false;
 			m_heartBack.visible = false;
 			
+			// Crack loading
+			m_crackSprite = new FlxSprite();
+			m_crackSprite.loadGraphic2(SpriteResources.ImgCrack, false, false, 250, 300);
+			m_crackSprite.addAnimation("run", MathUtils.getArrayofNumbers(0, 24), 30, false);
+			m_crackSprite.visible = false;
+			add(m_crackSprite);
+			
 			m_animTime = 0;
 			
 			m_ressourceLevel = 0;
 		}
-		
+
 		override public function update():void 
 		{
 			super.update();
@@ -163,13 +173,12 @@ package Game.Objects
 					m_heartHalo.angle-= 0.04;
 					m_heartBack.angle += 0.04;
 					
-					if ( FlxG.mouse.justPressed() )
+					if ( FlxG.mouse.justPressed() && m_isCracking == false && m_crackFadeOut == false )
 					{
 						var mouseX:int = FlxG.mouse.getWorldPosition(GameParams.camera).x;
 						var mouseY:int = FlxG.mouse.getWorldPosition(GameParams.camera).y;
 						
-						trace (Point.distance(new Point(mouseX, mouseY), this.center()));
-						if ( Math.abs(Point.distance(new Point(mouseX, mouseY), this.center()) - 200) < 5 )
+						if ( Math.abs(Point.distance(new Point(mouseX, mouseY), this.center()) - m_radius * GameParams.map.zoom) < 5 )
 						{
 							crack();
 						}
@@ -181,7 +190,6 @@ package Game.Objects
                     m_heartDeath.scale.y = 0.1 * GameParams.map.zoom;
 					
 					m_heartDeath.alpha = 1;
-
 					
 					pulseScale = 0.1 * GameParams.map.zoom;
 					break;
@@ -209,6 +217,7 @@ package Game.Objects
 			m_heartDeath.scale.y = pulseScale;
 			*/
 			
+			// Musics mamagement
 			if ( m_state == "Dead" || m_state == "Dying" )
 			{
 				GameParams.soundBank.get(SoundResources.backgroudLowRessMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
@@ -238,6 +247,28 @@ package Game.Objects
 					GameParams.soundBank.get(SoundResources.backgroudMusic).fadeIn(GameParams.map.m_soundFadeInTime);
 					GameParams.soundBank.get(SoundResources.backgroudHighRessMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
 					m_ressourceLevel = 2;
+				}
+			}
+			
+			if ( m_isCracking )
+			{
+				var tmpAngle:Number = (Math.PI / 180) * m_crackPos ;
+				
+				m_crackSprite.x = center().x + Math.cos(tmpAngle) * (m_radius-100)* GameParams.map.zoom - m_crackSprite.width /2;
+				m_crackSprite.y = center().y - Math.sin(tmpAngle) * (m_radius-100) * GameParams.map.zoom - m_crackSprite.height / 2;
+				
+				m_crackSprite.angle = -m_crackPos + 90;
+				m_crackSprite.scale.x = GameParams.map.zoom;
+				m_crackSprite.scale.y = GameParams.map.zoom;
+			}
+			if ( m_crackTimer.finished && m_crackFadeOut )
+			{				
+				m_crackSprite.alpha = MathUtils.interpolate(1, 0, m_crackFade);
+				m_crackFade += 0.03;
+				if ( m_crackFade > 1 )
+				{
+					m_crackFadeOut = false;
+					m_isCracking = false;
 				}
 			}
 		}
@@ -392,6 +423,9 @@ package Game.Objects
 			
 			if ( m_blobbies.length == 0 && hasTrees == false)
 			{
+				m_crackSprite.visible = false;
+				m_isCracking = false;
+				
 				m_state = "Dead";
 			}
 		}
@@ -447,9 +481,18 @@ package Game.Objects
 					clicAngle += 360;
 				}
 			}
+			trace("ClicAngle :" + clicAngle);
 			
 			m_crackPos = clicAngle;
 			m_isCracking = true;
+			m_crackSprite.visible = true;
+			m_crackSprite.play("run");
+			m_crackTimer.start(GameParams.map.m_crackFadeOutTimer);
+			m_crackFadeOut = true;
+			m_crackFade = 0;
+			m_crackSprite.alpha = 1;
+			
+			trace("Crack!");
 		}
 		
 		public function isCrasking():Boolean
