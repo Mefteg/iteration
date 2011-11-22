@@ -492,6 +492,8 @@ package Game.Objects
 			m_crackFade = 0;
 			m_crackSprite.alpha = 1;
 			
+			checkTargetedBlobbies();
+			
 			trace("Crack!");
 		}
 		
@@ -503,6 +505,33 @@ package Game.Objects
 		public function getPosition():Number
 		{
 			return m_crackPos;
+		}
+		
+		private function checkTargetedBlobbies():void {
+			var size:int = m_blobbies.length;
+			var blob:Blobby;
+			for (var i:int = 0; i < size; i++) 
+			{
+				blob = m_blobbies[i];
+				//si le blobby n'est pas occupé 
+				if ( !blob.isBusy()) {
+					//on calcule l'angle entre la météore et ce blobby
+					var diff:Number = ((m_crackPos + 180) % 360) - ((blob.getPos() + 180) % 360);
+					//si cet angle est suffisament petit on a une collision
+					if (  Math.abs(diff) < GameParams.map.m_crackZone ) {
+						//donner une direction d'échappatoire selon la position du blobby
+						if (diff>0) {
+							blob.flip(false);
+							blob.setDirection(2);
+						}else {
+							blob.flip(true);
+							blob.setDirection(1);
+						}
+						// ce blobby a tout intérêt à paniquer
+						blob.setState("goPanic");
+					}
+				}
+			}
 		}
 	}
 
