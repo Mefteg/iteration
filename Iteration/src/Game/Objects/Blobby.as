@@ -841,7 +841,7 @@ package Game.Objects
 				
 				trace("Clic Angle: " + clicAngle);
 
-				if ( Math.abs(m_pos - clicAngle) < 2 && Math.abs(Point.distance(new Point(mouseX, mouseY), m_planet.center()) - (m_planet.radius()-95) * GameParams.map.zoom) < 5 )
+				if ( Math.abs(MathUtils.clampAngle(m_pos) - clicAngle) < 2 && Math.abs(Point.distance(new Point(mouseX, mouseY), m_planet.center()) - (m_planet.radius()-95) * GameParams.map.zoom) < 5 )
 				{
 					return true;
 				}
