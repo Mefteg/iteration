@@ -811,9 +811,6 @@ package Game.Objects
 
 				var clicAngle:Number = 0;
 				clicAngle = ( -180 / Math.PI) * Math.atan((mouseY - m_planet.center().y) / (mouseX - m_planet.center().x));
-				trace("Mouse 2: " + mouseX + ";" + mouseY);
-				trace ("Earth center: " + m_planet.center().x + ";" + m_planet.center().y);
-				trace("Angle: " + clicAngle);
 				if ( mouseX < m_planet.center().x )
 				{
 					clicAngle += 180;
@@ -825,7 +822,6 @@ package Game.Objects
 						clicAngle += 360;
 					}
 				}
-				trace("Clic Angle: " + clicAngle);
 
 				if ( Math.abs(m_pos - clicAngle) < 2 && Math.abs(Point.distance(new Point(mouseX, mouseY), m_planet.center()) - (m_planet.radius()-95) * GameParams.map.zoom) < 5 )
 				{
