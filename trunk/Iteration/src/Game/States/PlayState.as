@@ -37,7 +37,6 @@ package  Game.States
 		protected var nbAnimBlob:int = 4;
 				
 		//objets
-		protected var m_scroll:Scroll;
 		protected var planet:Planet;
 		protected var blobbies:Array;
 		protected var meteor:Meteor;
@@ -138,9 +137,9 @@ package  Game.States
 			FlxG.mouse.load(SpriteResources.ImgMouseCursor);
 			
 			//______________SCROLL_____________________
-			m_scroll = new Scroll();
-			add(m_scroll);
-			getDepthBuffer().addScroll(m_scroll);
+			GameParams.scroll = new Scroll();
+			add(GameParams.scroll);
+			getDepthBuffer().addScroll(GameParams.scroll);
 			
 		}
 		
@@ -168,7 +167,7 @@ package  Game.States
 						//-------CREER LA CLASSE D'ITERATION-----
 						m_iteration = new Iteration(this, planet);
 						m_iteration.reInit();
-						
+						GameParams.scroll.setIteration(m_iteration);
 						m_state = "Life";
 					}
 					break;

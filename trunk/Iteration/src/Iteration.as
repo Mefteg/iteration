@@ -199,6 +199,14 @@ package
 			return m_iterNumber;
 		}
 		
+		public function getBirthRatio():Number {
+			return m_ratioBirth;
+		}
+		
+		public function getDeathRatio():Number {
+			return m_ratioDeath;
+		}
+		
 		public function changeDeathRatio(val:Number):void {
 			m_ratioDeath += val;
 			if (m_ratioDeath > 1)
@@ -324,9 +332,12 @@ package
 			if (m_currentIdea) {
 				//et qu'elle a été diffusée
 				if (m_currentIdea.getState() == "spread") {
+					GameParams.scroll.addIdea(m_currentIdea);
 					//on applique les changements sur l'environnement
-					m_ratioBirth += m_currentIdea.getBirthEffect();
-					m_ratioDeath += m_currentIdea.getDeathEffect();
+					//m_ratioBirth += m_currentIdea.getBirthEffect();
+					//m_ratioDeath += m_currentIdea.getDeathEffect();
+					changeBirthRatio(m_currentIdea.getBirthEffect());
+					changeDeathRatio(m_currentIdea.getDeathEffect());
 					//trace(m_ratioBirth, m_ratioDeath);
 					//on la supprime de la liste
 					m_ideas.splice(m_ideas.indexOf(m_currentIdea), 1);
@@ -347,6 +358,7 @@ package
 		}
 		
 		public function clear():void {
+			GameParams.scroll.removeIdeas();
 			if (m_currentIdea){
 				m_currentIdea.destroy();
 				m_scene.remove(m_currentIdea);

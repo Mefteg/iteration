@@ -196,6 +196,10 @@ package Game.States
 			addImage(SpriteResources.ImgTuto);
 			SpriteResources.ImgMenuTutobutton = new FlxExtBitmap("img/TutoButton.png");
 			addImage(SpriteResources.ImgMenuTutobutton);
+			
+			//parchemin
+			SpriteResources.ImgScroll = new FlxExtBitmap("img/scroll.png");
+			addImage(SpriteResources.ImgScroll);
 		}
 		
 		private function createSounds():void
