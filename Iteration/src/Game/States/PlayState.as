@@ -317,11 +317,27 @@ package  Game.States
 		
 		public function rain(position:Number):void
 		{
+			// Truncate angle between 0 - 360
+			if ( position > 0 )
+			{
+				while ( position > 360 )
+				{
+					position -= 360;
+				}
+			}
+			else
+			{
+				while ( position < -360 )
+				{
+					position += 360;
+				}
+			}
+			
 			if ( position < 0 )
 			{
 				position = 360 + position;
 			}
-
+			
 			var trees:Array = m_treeGenerator.trees();
 			for ( var i:uint = 0 ; i < trees.length ; i++ )
 			{
