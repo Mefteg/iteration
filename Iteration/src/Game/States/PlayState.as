@@ -2,6 +2,7 @@ package  Game.States
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Sprite;
 	import flash.utils.Timer;
 	import flash.media.Sound;
 	import Game.Camera;
@@ -11,6 +12,7 @@ package  Game.States
 	import Game.Objects.CloudGenerator;
 	import Game.Objects.Meteor;
 	import Game.Objects.Planet;
+	import Game.Objects.Scroll;
 	import Game.Objects.Tree;
 	import Game.Objects.Cloud;
 	import Game.Objects.TreeGenerator;
@@ -35,6 +37,7 @@ package  Game.States
 		protected var nbAnimBlob:int = 4;
 				
 		//objets
+		protected var m_scroll:Scroll;
 		protected var planet:Planet;
 		protected var blobbies:Array;
 		protected var meteor:Meteor;
@@ -133,6 +136,12 @@ package  Game.States
 			// On affiche la souris
 			FlxG.mouse.show();
 			FlxG.mouse.load(SpriteResources.ImgMouseCursor);
+			
+			//______________SCROLL_____________________
+			m_scroll = new Scroll();
+			add(m_scroll);
+			getDepthBuffer().addScroll(m_scroll);
+			
 		}
 		
 		override public function update():void 

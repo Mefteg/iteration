@@ -16,10 +16,12 @@ package Game
 		private var m_fruits:FlxGroup;
 		private var m_foreGround:FlxGroup;
 		
+		public var m_scroll:FlxGroup;
 			// var emitter:FlxEmitter = new FlxEmitter(100,100); //x and y of the emitter
 		
 		public function DepthBuffer()
 		{
+			m_scroll = new FlxGroup();
 			m_backGround = new FlxGroup();
 			m_blobbies = new FlxGroup();
 			m_trees = new FlxGroup();
@@ -31,6 +33,7 @@ package Game
 			add(m_trees);
 			add(m_fruits);
 			add(m_foreGround);
+			add(m_scroll);
 		}
 		
 		public function addBackground(element:FlxBasic):void
@@ -41,6 +44,14 @@ package Game
 		public function addBlobbies(element:FlxBasic):void
 		{
 			m_blobbies.add(element);
+		}
+		
+		public function addScroll(element:FlxBasic):void
+		{
+			m_scroll.add(element);
+		}
+		public function removeScroll(element:FlxBasic):void {
+			m_scroll.remove(element);
 		}
 		
 		public function addTrees(element:FlxBasic):void

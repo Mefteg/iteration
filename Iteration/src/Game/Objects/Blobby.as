@@ -44,6 +44,7 @@ package Game.Objects
 		public var m_targetFruit:Fruit = null;
 		
 		protected var left:Boolean;
+		private var m_previousState:String=null;
 		
 		public function Blobby(pos:Number, distance:Number, planet:Planet) 
 		{
@@ -68,7 +69,7 @@ package Game.Objects
 			
 			place();		
 			color = 0x1df1ab;
-			flip(0);
+			flip(false);
 		}
 		
 		//génère les animations qui doivent etre propres au blobby
@@ -193,7 +194,7 @@ package Game.Objects
 					m_idea = null;
 				}
 				
-				if ( onClick() || m_planet.isDead() )
+				if ( onClick() || m_planet.isDying() )
 				{
 					setState("dig");
 				}
@@ -264,8 +265,6 @@ package Game.Objects
 				m_planet.addBlobby(m_blobbyBirth);
 				//supprimer sa référence
 				m_blobbyBirth = null;
-				//Diminuer les ressources
-				m_planet.removeResources(100);
 			}
 		}
 				
@@ -310,9 +309,14 @@ package Game.Objects
 		}
 		
 		public function panic():void {
-			if (m_timerPanic.finished){
-				setState("idle");
+			if (m_timerPanic.finished) {
 				flip(0);
+				if (m_previousState) {
+					setState(m_previousState);
+					m_previousState = null;
+				}else{
+					setState("idle");
+				}
 				return;
 			}
 			//bouger le sprite
@@ -630,7 +634,7 @@ package Game.Objects
 		
 		public function setBlobbyBirth(blobby:Blobby):void {
 			m_blobbyBirth = blobby;
-			setState("pick");
+			setState("pick"); 
 		}
 		
 		public function searchNearestBlobby():void 
@@ -735,6 +739,10 @@ package Game.Objects
 			return (m_state == "search") || (m_state == "validate") || (m_state == "discuss") || (m_state == "duplicate") ;
 		}
 		
+		public function isNotSoBusy():Boolean {
+			return ((m_state != "walk") && (m_state != "idle") &&(m_state != "pick")&&(m_state != "search")) || !visible ; 
+		}
+		
 		public function isBusy():Boolean {
 			return ((m_state != "walk") && (m_state != "idle")) || !visible ; 
 		}
@@ -784,6 +792,9 @@ package Game.Objects
 			
 				
 		override public function setState(state:String):void {
+			if (state == "goPanic" && ( m_state == "pick" || m_state == "search"))
+				m_previousState = m_state;
+				
 			m_state = state;
 			if (left)
 				m_blobbyLeft.play(m_state);

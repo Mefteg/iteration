@@ -514,7 +514,7 @@ package Game.Objects
 			{
 				blob = m_blobbies[i];
 				//si le blobby n'est pas occupé 
-				if ( !blob.isBusy()) {
+				if ( !blob.isNotSoBusy()) {
 					//on calcule l'angle entre la météore et ce blobby
 					var diff:Number = ((m_crackPos + 180) % 360) - ((blob.getPos() + 180) % 360);
 					//si cet angle est suffisament petit on a une collision
