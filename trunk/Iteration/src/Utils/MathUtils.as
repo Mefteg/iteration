@@ -86,6 +86,32 @@ package Utils
 			}
 		}
 		
+		public static function clampAngle(angle:Number):Number
+		{
+			// Truncate angle between 0 - 360
+			if ( angle > 0 )
+			{
+				while ( angle > 360 )
+				{
+					angle -= 360;
+				}
+			}
+			else
+			{
+				while ( angle < -360 )
+				{
+					angle += 360;
+				}
+			}
+			
+			if ( angle < 0 )
+			{
+				angle = 360 + angle;
+			}
+			
+			return angle;
+		}
+		
 	}
 
 }

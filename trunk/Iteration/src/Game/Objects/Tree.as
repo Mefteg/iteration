@@ -236,7 +236,7 @@ package Game.Objects
 					
 					if ( cpt == m_fruits.length ) 
 					{
-						m_treeDie.addAnimation("completeDie", MathUtils.getArrayofNumbers(m_treeDie.frame, 77), 20, false);
+						m_treeDie.addAnimation("completeDie", MathUtils.getArrayofNumbers(m_treeDie.frame, 77), 10, false);
 						m_treeDie.play("completeDie");
 						m_state = "die";
 					}
@@ -435,6 +435,11 @@ package Game.Objects
 			m_state = "revive";
 			m_treeDie.addAnimation("revive", MathUtils.getArrayofNumbers(0, m_treeDie.frame).reverse(), 20, false);	
 			m_treeDie.play("revive");
+			
+			for (var i:int = 0; i < m_fruits.length; i++) {
+				m_fruits[i].destroy();
+			}
+			createFruits();
 		}
 		
 		public function reinit():void

@@ -3,7 +3,7 @@
 	<iteration time="10" natalite="0.9" mortalite="0.1" />
 	<zoom min="0.3" max="1" actual="0.3" speed="4" speedUp="4" />
 	<blobby initNb="10" speed="0.1" lifetime="3" recycledResources="100" discussTime="4" panicTime="4" />
-	<planet size="10" resources="5000" crackTimeOut="5" crackZone="20" shakeForce="0.01" shakeDuration="0.5" />
+	<planet size="10" resources="10000" crackTimeOut="5" crackZone="20" shakeForce="0.01" shakeDuration="0.5" />
 	<tree number="6" nbFruitMax="6" birthTime="10" birthRandom="5" lifetime="33" fruitResources="100" /> <!-- nbFruitMax doit etre inférieur ou egal a 6 -->
 	<cloud number="6" scale="1" birthTime="10" birthRandom="5" distance="1150" distanceRandom="50" rainDistance="290" speed="0.02"/>
 	<meteor nbByCycle="1" speed="0.1" zone="10" zonePanic="50" />
