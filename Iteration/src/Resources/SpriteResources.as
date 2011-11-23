@@ -44,10 +44,15 @@ package Resources
 		public static var ImgBackground:FlxExtBitmap;
 		public static var ImgForeground:FlxExtBitmap;
 		
+		//image scroll
+		public static var ImgScroll:FlxExtBitmap;
+		
 		// mouse cursor
 		//public static var ImgMouseCursor:FlxExtBitmap;
 		[Embed(source="../../bin/img/curseur_etat_normal.png")] public static var ImgMouseCursor:Class;
-		[Embed(source="../../bin/img/curseur_clic.png")] public static var ImgMouseCursorClic:Class;
+		[Embed(source = "../../bin/img/curseur_clic.png")] public static var ImgMouseCursorClic:Class;
+		
+		[Embed(source = "../../bin/img/HelveticaLTStd-Light.otf", fontFamily = "myFont", embedAsCFF = "false")] public var helv:String;
 		
 		// menu
 		public static var ImgMenuBackground:FlxExtBitmap;

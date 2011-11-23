@@ -24,6 +24,8 @@ package
 		public var natalite:Number;
 		public var mortalite:Number;
 		
+		public var scrollTime:Number;
+		
 		public var zoom:Number;
 		public var zoomMin:Number;
 		public var zoomMax:Number;
@@ -104,6 +106,8 @@ package
 			iterationTime = m_xml.iteration.@time;
 			mortalite = m_xml.iteration.@mortalite;
 			natalite = m_xml.iteration.@natalite;
+			
+			scrollTime = m_xml.scroll.@time;
 			
 			zoomMin = m_xml.zoom.@min;
 			zoomMax = m_xml.zoom.@max;
