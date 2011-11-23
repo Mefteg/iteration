@@ -193,7 +193,7 @@ package Game.Objects
 			{
 				blob = blobbies[i];
 				if (checkBlobbyCollision(blob) && !blob.isDying()) {
-					blob.flip(0);
+					blob.flip(false);
 					blob.setState("comeBack");
 				}
 				
@@ -208,7 +208,7 @@ package Game.Objects
 			{
 				blob = blobbies[i];
 				//si le blobby n'est pas occupé 
-				if ( !blob.isBusy()) {
+				if ( !blob.isNotSoBusy()) {
 					//on calcule l'angle entre la météore et ce blobby
 					var diff:Number = ((getPos() + 180) % 360) - ((blob.getPos() + 180) % 360);
 					//si cet angle est suffisament petit on a une collision
