@@ -496,7 +496,7 @@ package Game.Objects
 		
 		public function pick():void {
 			// s'il n'y a aucun arbre disponible
-			if ( m_planet.getTrees().length == 0 ) {
+			if ( m_planet.getTrees().length > 0 ) {
 				// si je dois chercher un arbre et pas un fruit
 				if ( m_targetTree != null && m_targetFruit == null ) {
 					// si je suis arrivé à l'arbre
