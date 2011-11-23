@@ -494,7 +494,7 @@ package Game.Objects
 			
 			checkTargetedBlobbies();
 			
-			trace("Crack!");
+			FlxG.shake(GameParams.map.m_crackShakeForce, GameParams.map.m_crackShakeDuration);
 		}
 		
 		public function isCrasking():Boolean
