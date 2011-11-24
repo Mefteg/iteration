@@ -59,7 +59,7 @@ package Game.Objects
 			
 			m_blobbies = blobbies;
 			
-			m_resources = GameParams.map.m_planetResources;
+			m_resources = 0;
 			
 			m_heart = new FlxSprite(m_planet.x, m_planet.y);
 			m_heart.loadGraphic2( SpriteResources.ImgHeart,false,false,1600,1600);
@@ -197,7 +197,16 @@ package Game.Objects
 					m_heartDeath.scale.x = 0.1 * GameParams.map.zoom;
                     m_heartDeath.scale.y = 0.1 * GameParams.map.zoom;
 					
-					m_heartDeath.alpha = 1;
+					if ( nbFrame > 15 )
+					{
+						m_heart.alpha = m_heartBack.alpha = m_heartHalo.alpha = MathUtils.interpolate(1.0, 0.0, m_animTime);
+						m_heartDeath.alpha = MathUtils.interpolate(0.0, 1.0, m_animTime);
+					
+						m_animTime += 0.03;
+						
+						nbFrame = 0;
+					}
+					nbFrame++;
 					
 					dying();
 					break;
@@ -218,11 +227,14 @@ package Game.Objects
 			*/
 			
 			// Musics mamagement
-			if ( m_state == "Dead" || m_state == "Dying" )
+			if ( (m_state == "Dead" || m_state == "Dying") )
 			{
-				GameParams.soundBank.get(SoundResources.backgroudLowRessMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
-				GameParams.soundBank.get(SoundResources.backgroudMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
-				GameParams.soundBank.get(SoundResources.backgroudHighRessMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
+				if ( m_ressourceLevel != 0 )
+				{
+					GameParams.soundBank.get(SoundResources.backgroudLowRessMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
+					GameParams.soundBank.get(SoundResources.backgroudMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
+					GameParams.soundBank.get(SoundResources.backgroudHighRessMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
+				}
 				m_ressourceLevel = 0;
 			}
 			else
@@ -358,7 +370,7 @@ package Game.Objects
 		
 		public function isDead():Boolean
 		{
-			if ( m_resources < 0 || m_blobbies.length < 3 )
+			if ( m_resources < 0 || m_blobbies.length == 0 )
 			{
 				return true;
 			}
@@ -406,6 +418,9 @@ package Game.Objects
 			{
 				m_trees[j].setState("die");
 			}
+			
+			m_animTime = 0;
+			nbFrame = 0;
 		}
 		
 		public function dying():void 

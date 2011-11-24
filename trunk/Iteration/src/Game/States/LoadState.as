@@ -213,6 +213,7 @@ package Game.States
 			GameParams.soundBank.load(SoundResources.mdeathSound,false);
 			GameParams.soundBank.load(SoundResources.rainSound,false);
 			GameParams.soundBank.load(SoundResources.ideaSound,false);
+			GameParams.soundBank.load(SoundResources.windSound,true);
 		}
 		
 		override public function update() :void{
