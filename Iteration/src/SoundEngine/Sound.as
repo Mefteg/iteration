@@ -9,6 +9,7 @@ package SoundEngine
 	public class Sound
 	{
 		private var m_sound:FlxSound // Internal sound instance
+		private var m_isPlaying:Boolean;
 		
 		/**
 		 * Load the sound
@@ -32,6 +33,7 @@ package SoundEngine
 		{
 			m_sound = new FlxSound();
 			m_sound.loadStream(soundPath, isLooping);
+			m_isPlaying = false;
 		}
 		
 		/**
@@ -41,6 +43,7 @@ package SoundEngine
 		{
 			m_sound.play();
 			m_sound.volume = volume;
+			m_isPlaying = true;
 		}
 		
 		/**
@@ -48,7 +51,13 @@ package SoundEngine
 		 */
 		public function stop():void
 		{
+			m_isPlaying = false;
 			m_sound.stop();
+		}
+		
+		public function isPlaying():Boolean
+		{
+			return m_isPlaying;
 		}
 		
 		/**
@@ -58,6 +67,7 @@ package SoundEngine
 		public function fadeIn(time:Number):void
 		{
 			m_sound.fadeIn(time);
+			m_isPlaying = true;
 		}
 		
 		/**
@@ -67,6 +77,7 @@ package SoundEngine
 		public function fadeOut(time:Number):void
 		{
 			m_sound.fadeOut(time);
+			m_isPlaying = false;
 		}
 		
 		/**

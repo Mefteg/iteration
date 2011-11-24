@@ -15,6 +15,7 @@ package Resources
 		public static var mdeathSound:String = "./sfx/deathroid.mp3";
 		public static var rainSound:String = "./sfx/rain.mp3";
 		public static var ideaSound:String = "./sfx/idea.mp3";
+		public static var windSound:String = "./sfx/wind.mp3";
 	}
 
 }

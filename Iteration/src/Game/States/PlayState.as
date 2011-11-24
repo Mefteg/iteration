@@ -141,6 +141,7 @@ package  Game.States
 			add(GameParams.scroll);
 			getDepthBuffer().addScroll(GameParams.scroll);
 			
+			GameParams.soundBank.get(SoundResources.windSound).play();
 		}
 		
 		override public function update():void 
@@ -169,6 +170,11 @@ package  Game.States
 						m_iteration.reInit();
 						GameParams.scroll.setIteration(m_iteration);
 						m_state = "Life";
+						
+						if ( GameParams.soundBank.get(SoundResources.windSound).isPlaying() )
+						{
+							GameParams.soundBank.get(SoundResources.windSound).fadeOut(3);
+						}
 					}
 					break;
 				case "Life":
@@ -251,6 +257,8 @@ package  Game.States
 					
 					FlxG.shake(0.01);
 					FlxG.flash();
+					
+					GameParams.soundBank.get(SoundResources.windSound).play();
 					
 					break;
 			}
