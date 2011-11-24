@@ -196,6 +196,10 @@ package Game.States
 			addImage(SpriteResources.ImgTuto);
 			SpriteResources.ImgMenuTutobutton = new FlxExtBitmap("img/TutoButton.png");
 			addImage(SpriteResources.ImgMenuTutobutton);
+			SpriteResources.ImgTutoLeftArrow = new FlxExtBitmap("img/leftarrow.png");
+			addImage(SpriteResources.ImgTutoLeftArrow);
+			SpriteResources.ImgTutoRightArrow = new FlxExtBitmap("img/rightarrow.png");
+			addImage(SpriteResources.ImgTutoRightArrow);
 			
 			//parchemin
 			SpriteResources.ImgScroll = new FlxExtBitmap("img/scroll.png");

@@ -64,7 +64,10 @@ package Resources
 		public static var ImgCreditBackground:FlxExtBitmap;
 		public static var ImgCreditBackbutton:FlxExtBitmap;
 		
+		// tutorial
 		public static var ImgTuto:FlxExtBitmap;
+		public static var ImgTutoLeftArrow:FlxExtBitmap;
+		public static var ImgTutoRightArrow:FlxExtBitmap;
 		
 		//buffers
 		public static var BufferPlanet:BitmapData;
