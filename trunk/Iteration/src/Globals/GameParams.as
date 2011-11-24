@@ -20,6 +20,8 @@ package Globals
 		/* Can't move these, since it's used in the main */
 		static public var width:uint = 1280;
 		static public var height:uint = 720;
+		
+		static public var currentTutoSlide:int = 0;
 	}
 
 }
