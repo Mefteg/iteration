@@ -57,7 +57,6 @@ package Game.Objects
 			m_timerMove = new FlxTimer();
 			m_timerMove.start(1);
 			m_timerPanic = new FlxTimer();
-			
 			if(m_distance !=0)
 				m_distance += 43;
 			//vitesse
@@ -184,17 +183,16 @@ package Game.Objects
 		}
 		
 		protected function comeBack():void {
-			flip(0);
-			if (finished) 
+			flip(false);
+			//si il possédait une idée, la killer
+			if (m_idea)
 			{
-				//si il possédait une idée, la killer
-				if (m_idea)
-				{
-					m_idea.setState("killed");
-					m_idea = null;
-				}
-				
-				if ( onClick() || m_planet.isDying() )
+				m_idea.setState("killed");
+				m_idea = null;
+			}
+			if (finished) 
+			{				
+				if ( onClick() || m_planet.isDead() )
 				{
 					setState("dig");
 				}
@@ -310,7 +308,7 @@ package Game.Objects
 		
 		public function panic():void {
 			if (m_timerPanic.finished) {
-				flip(0);
+				flip(false);
 				if (m_previousState) {
 					setState(m_previousState);
 					m_previousState = null;
@@ -352,16 +350,18 @@ package Game.Objects
 		}
 		
 		public function search():void {
-			
+			//trace("search",m_blobTarget.isDying());
 			//si le blobby cible est mort , en chercher un autre
-			if (!m_blobTarget)
+			if (!m_blobTarget )
 				searchNearestBlobby();
 			if (m_blobTarget.isDying())
 				searchNearestBlobby();
 				
 			if ( collideWithBlobby(m_blobTarget) ) {
+				//trace("collision", m_pos, m_blobTarget.getPos(), m_blobTarget.isBusy());
 				//si le blobby est occupé on attend
-				if (m_blobTarget.isBusy()) return;
+				if (m_blobTarget.isBusy()) 
+					return;
 				//démarrer le timer de discussion
 				m_timerDiscuss.start(m_discussTime);
 				//changer les états des deux blobby en "discussion"
@@ -823,9 +823,9 @@ package Game.Objects
 				var clicAngle:Number = 0;
 				clicAngle = ( -180 / Math.PI) * Math.atan((mouseY - m_planet.center().y) / (mouseX - m_planet.center().x));
 				
-				trace("Mouse 2: " + mouseX + ";" + mouseY);
-				trace ("Earth center: " + m_planet.center().x + ";" + m_planet.center().y);
-				trace("Angle: " + clicAngle);
+				//trace("Mouse 2: " + mouseX + ";" + mouseY);
+				//trace ("Earth center: " + m_planet.center().x + ";" + m_planet.center().y);
+				//trace("Angle: " + clicAngle);
 				
 				if ( mouseX < m_planet.center().x )
 				{
@@ -839,7 +839,7 @@ package Game.Objects
 					}
 				}
 				
-				trace("Clic Angle: " + clicAngle);
+				//trace("Clic Angle: " + clicAngle);
 
 				if ( Math.abs(MathUtils.clampAngle(m_pos) - clicAngle) < 2 && Math.abs(Point.distance(new Point(mouseX, mouseY), m_planet.center()) - (m_planet.radius()-95) * GameParams.map.zoom) < 5 )
 				{

@@ -77,8 +77,8 @@ package Resources
 										religion:[0],
 										paix:[1],
 										medecine:[2],
-										guerre:[4],
 										fanatisme:[3],
+										guerre:[4],
 										maladie:[5]
 										};
 		public static var arrayIdeasColor:Object = {

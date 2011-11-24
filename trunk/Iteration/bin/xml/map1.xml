@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
-	<iteration time="10" natalite="0.9" mortalite="0.1" />
+	<iteration time="15" natalite="0.9" mortalite="0.1" />
 	<zoom min="0.3" max="1" actual="0.3" speed="4" speedUp="4" />
 	<scroll time="5"/>
 	<blobby initNb="10" speed="0.1" lifetime="3" recycledResources="100" discussTime="4" panicTime="4" />

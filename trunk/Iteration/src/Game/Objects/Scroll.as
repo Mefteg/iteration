@@ -40,12 +40,7 @@ package Game.Objects
 			add(m_iterText);
 			//positions des idées
 			m_ideas = new Array();
-			createIdea( -90, 100);
-			createIdea( 0, 100);
-			createIdea( 90, 100);
-			createIdea( -90, 180);
-			createIdea( 0, 180);
-			createIdea( 90, 180);
+			initIdeas();
 			
 			//timer
 			m_timer = new FlxTimer();
@@ -58,6 +53,15 @@ package Game.Objects
 				if ( (FlxG.mouse.y > m_scroll.y) && (FlxG.mouse.y < m_scroll.y+m_scroll.height))
 					return true;
 			return false;
+		}
+		
+		public function initIdeas():void {
+			createIdea( -90, 100);
+			createIdea( 0, 100);
+			createIdea( 90, 100);
+			createIdea( -90, 180);
+			createIdea( 0, 180);
+			createIdea( 90, 180);
 		}
 		
 		public function onClick():Boolean {
@@ -81,7 +85,7 @@ package Game.Objects
 		override public function update():void {
 			super.update();
 			if(m_iteration )
-			m_iterText.text = "Iteration : "+m_iteration.getIterations()+"\nNatalité : "+m_iteration.getDeathRatio()+"\nMortalité : "+m_iteration.getBirthRatio()+"\nIdees :";
+			m_iterText.text = "Iteration : "+m_iteration.getIterations()+"\nNatalité : "+m_iteration.getBirthPercent()+"%\nMortalité : "+m_iteration.getDeathPercent()+"%\nIdees :";
 			switch(m_state) {
 				case "closed":
 					wait();
@@ -157,11 +161,13 @@ package Game.Objects
 		}
 		
 		public function removeIdeas():void {
-			for (var i:int = 0; i < nbIdea; i++) 
-			{
-				m_ideas[i].visible = false;
+			
+			while (m_ideas.length > 0){
+				remove(m_ideas.pop());
 			}
+			
 			nbIdea = 0;
+			initIdeas();
 		}
 		public function setIteration(iter:Iteration):void {
 			m_iteration = iter;

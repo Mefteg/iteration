@@ -96,9 +96,8 @@ package
 			var idea7:Idea = new Idea(0, 0,"religion", m_planet);
 			m_ideas.push(idea);
 			m_ideas.push(idea2);
-			//m_ideas.push(idea3);
 			m_ideas.push(idea4);
-			//m_ideas.push(idea5);
+			m_ideas.push(idea5);
 			m_ideas.push(idea6);
 			m_ideas.push(idea7);
 		}
@@ -134,7 +133,6 @@ package
 		
 		public function createIdea():void {
 			if (m_ideas.length == 0) return;
-	
 			//prendrer une idée au hasard
 			m_currentIdea = m_ideas[  FlxU.round(Math.random() * (m_ideas.length -1))];
 			//pour savoir si une idée a été trouvée
@@ -186,6 +184,7 @@ package
 		//calcule un temps aléatoire pour la prochaine naissance
 		private function startBirthTimer():void {
 			m_timerBirth.start( Math.random() * (m_iterTime / m_nbBirths) );
+			
 		}
 		//calcule le temps aléatoire pour la prochaine idée
 		private function startIdeaTimer():void {
@@ -207,16 +206,28 @@ package
 			return m_ratioDeath;
 		}
 		
+		public function getBirthPercent():int {
+			return Math.round(m_ratioBirth*100);
+		}
+		
+		public function getDeathPercent():int {
+			return Math.round(m_ratioDeath*100);
+		}
+		
 		public function changeDeathRatio(val:Number):void {
+			trace("BeginChangeDeath", m_ratioDeath, "+", val);
 			m_ratioDeath += val;
 			if (m_ratioDeath > 1)
 				m_ratioDeath = 1;
+			trace("EndChangeDeath", m_ratioDeath);
 		}
 		
 		public function changeBirthRatio(val:Number):void {
+			trace("BeginChangeBirth", m_ratioBirth, "+", val);
 			m_ratioBirth += val;
 			if (m_ratioBirth > 1)
 				m_ratioBirth = 1;
+			trace("EndChangeBirth", m_ratioBirth);
 		}
 		
 		public function isReady():Boolean {
@@ -322,7 +333,7 @@ package
 				startBirthTimer();
 				
 			}
-			
+			//trace(m_timerIdea.finished, m_timerIdea.progress, m_currentIdea);
 			//GESTION DES IDEES
 			//si le timer à idée est terminé et qu'aucune idée n'est encore créée
 			if (m_timerIdea.finished && !m_currentIdea)
@@ -334,8 +345,6 @@ package
 				if (m_currentIdea.getState() == "spread") {
 					GameParams.scroll.addIdea(m_currentIdea);
 					//on applique les changements sur l'environnement
-					//m_ratioBirth += m_currentIdea.getBirthEffect();
-					//m_ratioDeath += m_currentIdea.getDeathEffect();
 					changeBirthRatio(m_currentIdea.getBirthEffect());
 					changeDeathRatio(m_currentIdea.getDeathEffect());
 					//trace(m_ratioBirth, m_ratioDeath);
@@ -344,14 +353,10 @@ package
 					//on la supprime de la scene
 					m_currentIdea.destroy();
 					m_currentIdea = null;
-					//mettre le timer en pause
-					m_timerIdea.pause();
 				}else if (m_currentIdea.getState() == "killed") {
 					//si elle a été killée, elle peut réapparaitre donc on la sort juste de la scene
 					m_currentIdea.setState("waiting");
 					m_scene.remove(m_currentIdea);
-					//mettre le timer en pause
-					m_timerIdea.pause();
 					m_currentIdea = null;
 				}
 			}
