@@ -653,7 +653,7 @@ package Game.Objects
 				b = blobbies[i];
 				
 				//si c'est le même on passe au suivant
-				if (b == this )
+				if (b == this || b.isDying() )
 					continue;
 					
 				dist = MathUtils.calculateDistance(this.m_pos, b.m_pos);
