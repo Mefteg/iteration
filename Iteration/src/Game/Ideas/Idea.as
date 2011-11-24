@@ -88,8 +88,10 @@ package Game.Ideas
 		}
 		
 		public function pop():void {
-			if (finished)
+			if (finished) {
+				m_spriteIdea.play("pop");
 				setState("popped");
+			}
 		}
 		
 		override public function setState(state:String):void {
@@ -102,8 +104,9 @@ package Game.Ideas
 		
 		override public function draw():void {
 			super.draw();
-			if (m_state == "popped" || m_state == "discussed")
+			if (m_state == "popped" || m_state == "discussed") {
 				m_spriteIdea.draw();
+			}
 		}
 		override public function update():void {
 			super.update();
@@ -113,10 +116,6 @@ package Game.Ideas
 					break;
 				case "popping":
 					pop();
-					break;
-				case "popped":
-					followBlobby();
-					m_spriteIdea.play("pop");
 					break;
 				case "discussed":
 					animate();

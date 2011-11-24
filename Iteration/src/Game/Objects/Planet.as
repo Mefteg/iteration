@@ -329,10 +329,13 @@ package Game.Objects
 		
 		public function addResources(n:int):void {
 			m_resources += n;
+			if (m_resources > GameParams.map.m_planetResources)
+				m_resources = GameParams.map.m_planetResources;
 		}
 		
 		public function removeResources(n:int):void {
 			m_resources -= n;
+			
 		}
 		
 		public function setScale(value:FlxPoint):void {
@@ -496,7 +499,7 @@ package Game.Objects
 					clicAngle += 360;
 				}
 			}
-			trace("ClicAngle :" + clicAngle);
+			//trace("ClicAngle :" + clicAngle);
 			
 			m_crackPos = clicAngle;
 			m_isCracking = true;
