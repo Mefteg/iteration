@@ -373,7 +373,7 @@ package Game.Objects
 		
 		public function isDead():Boolean
 		{
-			var int:counter = 0;
+			var counter:int = 0;
 			for ( var i:int = 0 ; i < m_blobbies.length ; i++ )
 			{
 				if ( !m_blobbies[i].isDying() )
