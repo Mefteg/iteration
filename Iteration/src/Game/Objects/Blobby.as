@@ -297,9 +297,11 @@ package Game.Objects
 		public function goPanic():void {
 			//vérifier quelle anim est jouée puis lancer le timer de panique
 			if (left && m_blobbyLeft.finished) {
+				m_timerPanic = new FlxTimer();
 				m_timerPanic.start(m_panicTime);
 				setState("panic");
 			}else if (finished) {
+				m_timerPanic = new FlxTimer();
 				m_timerPanic.start(m_panicTime);
 				setState("panic");
 			}
@@ -755,6 +757,10 @@ package Game.Objects
 			return ( (m_state == "dig") || (m_state == "comeBack") || (m_state == "die"));
 		}
 		
+		public function isPanicking():Boolean {
+			return ( (m_state == "goPanic") || (m_state == "panic"));
+		}
+		
 		public function isScholar():Boolean {
 			return m_scholar;
 		}
@@ -805,6 +811,10 @@ package Game.Objects
 		
 		public function setDirection(dir:int):void {
 			m_direction = dir;
+		}
+		
+		public function getDirection():int {
+			return m_direction;
 		}
 		
 		public function flip(f:Boolean):void {

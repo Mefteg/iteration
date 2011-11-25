@@ -532,21 +532,28 @@ package Game.Objects
 			{
 				blob = m_blobbies[i];
 				//si le blobby n'est pas occupé 
-				if ( !blob.isNotSoBusy()) {
+				if ( !blob.isNotSoBusy() || blob.isPanicking()) {
 					//on calcule l'angle entre la météore et ce blobby
 					var diff:Number = ((m_crackPos + 180) % 360) - ((blob.getPos() + 180) % 360);
 					//si cet angle est suffisament petit on a une collision
 					if (  Math.abs(diff) < GameParams.map.m_crackZone ) {
 						//donner une direction d'échappatoire selon la position du blobby
-						if (diff>0) {
-							blob.flip(false);
-							blob.setDirection(2);
+						if (diff > 0) {
+							if(blob.getDirection() != 2){
+								blob.flip(false);
+								blob.setDirection(2);
+								// ce blobby a tout intérêt à paniquer
+								blob.setState("goPanic");
+							}
 						}else {
-							blob.flip(true);
-							blob.setDirection(1);
+							if(blob.getDirection() !=1){
+								blob.flip(true);
+								blob.setDirection(1);
+								// ce blobby a tout intérêt à paniquer
+								blob.setState("goPanic");
+							}
 						}
-						// ce blobby a tout intérêt à paniquer
-						blob.setState("goPanic");
+						
 					}
 				}
 			}
