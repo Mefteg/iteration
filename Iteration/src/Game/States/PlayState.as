@@ -189,8 +189,11 @@ package  Game.States
 						{
 							meteor = new Meteor( planet.radius() * 2, planet, false);
 							
-							add(meteor);
-							add(meteor.getExplosion());
+							//add(meteor);
+							//add(meteor.getExplosion());
+							
+							m_zbuffer.addBackground(meteor);
+							m_zbuffer.addBackground(meteor.getExplosion());
 						}
 					}
 					//si le mechant meteor explose sur la planete
@@ -238,22 +241,16 @@ package  Game.States
 						blobDestroy.destroy();
 					}
 					blobDestroy = null;
-					
-					/*var trees:Array = m_treeGenerator.trees();
-					while ( trees.length != 0 )
-					{
-						var tree:Tree = trees.pop();
-						m_zbuffer.removeTrees(tree);
-						tree.destroy();
-					}*/
-					
+										
 					m_state = "Creation";
 					initBlobies();
 					
 					// Create the birth meteor
 					meteor = new Meteor(planet.radius() * 2, planet,true);
-					add(meteor);
-					add(meteor.getExplosion());
+					//add(meteor);
+					//add(meteor.getExplosion());
+					m_zbuffer.addBackground(meteor);
+					m_zbuffer.addBackground(meteor.getExplosion());
 					
 					FlxG.shake(0.01);
 					FlxG.flash();
