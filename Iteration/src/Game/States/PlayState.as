@@ -208,7 +208,7 @@ package  Game.States
 					}
 					
 					// Planet death condition
-					if ( planet.isDead() || blobbies.length > 100 || (blobbies.length < 4 && m_iteration.getIterations() > 2))
+					if ( planet.isDead())
 					{
 						// If we have a meteor roaming ... we delete it
 						if ( meteor != null )
