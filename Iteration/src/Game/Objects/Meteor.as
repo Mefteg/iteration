@@ -93,6 +93,12 @@ package Game.Objects
 						//on fait tomber le météore
 						m_state = "Crashing";
                         // mspeed = m_speed * 1.2;
+						
+						if ( !m_giveLife )
+						{
+							//jouer le sons
+							GameParams.soundBank.get(SoundResources.crashSound).play();
+						}
 					}
 					
 					break;
@@ -107,7 +113,7 @@ package Game.Objects
 						
 						if ( !m_giveLife )
 						{
-							//jouer le onss
+							//jouer le sons
 							GameParams.soundBank.get(SoundResources.crashSound).play();
 						}
                         // mspeed = m_speed * 1.2;
