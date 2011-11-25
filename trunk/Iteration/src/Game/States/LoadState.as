@@ -53,7 +53,8 @@ package Game.States
 				allLoaded = allLoaded && m_images[i].loadComplete();
 			}
 			m_progress /= m_imagesSize;
-			if (m_progress >= 100) {
+			if (m_progress >= 100) 
+			{
 				if (!allLoaded)
 					return 99;
 			}

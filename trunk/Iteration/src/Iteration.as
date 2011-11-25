@@ -134,7 +134,8 @@ package
 		public function createIdea():void {
 			if (m_ideas.length == 0) return;
 			//prendrer une idée au hasard
-			m_currentIdea = m_ideas[  FlxU.round(Math.random() * (m_ideas.length -1))];
+			
+			m_currentIdea = FlxG.getRandom(m_ideas) as Idea;
 			//pour savoir si une idée a été trouvée
 			var gotIt:Boolean = false;
 			//prendre un blobby au hasard
