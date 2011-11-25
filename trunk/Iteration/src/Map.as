@@ -65,6 +65,7 @@ package
 		public var m_meteorSpeed:Number;
 		public var m_meteorZone:Number;
 		public var m_meteorZonePanic:Number;
+		public var m_meteorDistance:Number;
 		
 		public var m_ideaEffect:Object;
 		public var m_paix:Array = new Array();
@@ -149,6 +150,7 @@ package
 			m_meteorSpeed = m_xml.meteor.@speed;
 			m_meteorZone = m_xml.meteor.@zone;
 			m_meteorZonePanic = m_xml.meteor.@zonePanic;
+			m_meteorDistance = m_xml.meteor.@distance;
 			
 			//idées
 			m_paix.push(m_xml.idee.@paixMort); m_paix.push(m_xml.idee.@paixNat);
