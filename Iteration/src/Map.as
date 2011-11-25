@@ -131,8 +131,7 @@ package
 			
 			m_treeNumber = m_xml.tree.@number;
 			m_treeBirthTime = m_xml.tree.@birthTime;
-			m_treeBirthRandom = m_xml.tree.@birthRandom
-			;
+			m_treeBirthRandom = m_xml.tree.@birthRandom;
 			m_treeLifetime = m_xml.tree.@lifetime;
 			m_treeNbFruitMax = m_xml.tree.@nbFruitMax;
 			m_treeFruitResources = m_xml.tree.@fruitResources;

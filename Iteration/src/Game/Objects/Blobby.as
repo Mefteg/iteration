@@ -603,7 +603,7 @@ package Game.Objects
 				setState("walk");
 			}
 			
-			m_timerMove.start(FlxU.srand(rand)*4 +0.5); //définir un temps aléatoire de déplacement de l'objet
+			m_timerMove.start(rand*4 +0.5); //définir un temps aléatoire de déplacement de l'objet
 		}
 		
 		override public function destroy():void 
