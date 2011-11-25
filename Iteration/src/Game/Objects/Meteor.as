@@ -33,6 +33,10 @@ package Game.Objects
 		public function Meteor(roamingDistance:Number,planet:Planet,glife:Boolean) 
 		{
 			super(0, roamingDistance * 2, planet);
+			if ( !glife ) {
+				m_distance = GameParams.map.m_meteorDistance;
+			}
+			
 			m_roamingDistance = roamingDistance;
 			//Créer l'image
 			if (glife)
@@ -42,6 +46,7 @@ package Game.Objects
 			}
 			else
 			{
+				m_roamingDistance = GameParams.map.m_meteorDistance;
 				loadGraphic2(SpriteResources.ImgMeteor, false, false, 351, 333);
 				m_soundTimer.start(3);
 			}
@@ -120,7 +125,7 @@ package Game.Objects
 					}
 					break;
 				case "Crashing":
-					if(!m_giveLife && m_distance< m_planet.radius()+300)
+					if(!m_giveLife && m_distance < m_planet.radius()+300)
 						checkTargetedBlobbies();
 					//le faire tourner sur lui meme
 					angle--;

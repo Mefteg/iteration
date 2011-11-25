@@ -31,7 +31,7 @@ package Game.Objects
 		public function Scroll() 
 		{
 			//créer le bas du parchemin
-			m_scroll = new FlxSprite(-260, 176);
+			m_scroll = new FlxSprite(-267, 176);
 			m_scroll.loadGraphic2(SpriteResources.ImgScroll, false, false, 322, 368);
 			m_scroll.scrollFactor = new FlxPoint(0, 0);
 			add(m_scroll);
@@ -118,7 +118,7 @@ package Game.Objects
 		
 		private function scrollBack():void 
 		{
-			if (m_scroll.x > -260)
+			if (m_scroll.x > -267)
 				//scroller tous les elements
 				for (var i:int = 0; i < this.length; i++) 
 				{

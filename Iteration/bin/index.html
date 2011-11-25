@@ -5,7 +5,7 @@
 	<title>Iteration</title>
 	<meta name="description" content="" />
 	
-	<script src="js/swfobject.js"></script>
+	<!--<script src="js/swfobject.js"></script>
 	<script>
 		var flashvars = {
 		};
@@ -25,16 +25,21 @@
 			"altContent", "100%", "100%", "10.0.0", 
 			"expressInstall.swf", 
 			flashvars, params, attributes);
-	</script>
+	</script>-->
 	<style>
 		html, body { height:100%; overflow:hidden; }
-		body { margin:0; }
+		body { background-image: url(img/fondtile.png); margin:0; }
+		object { padding: 0px; margin: 0px; }
+		#flash { border: 5px solid black; width: 1280px; height: 720px; text-align: center; padding: 0px; margin: auto; margin-top: 50px; }
 	</style>
 </head>
 <body>
-	<div id="altContent">
-		<h1>Iteration</h1>
-		<p><a href="http://www.adobe.com/go/getflashplayer">Get Adobe Flash player</a></p>
+	<div id="flash">
+		<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="1280" height="720">
+			<param name="movie" value="Iteration.swf">
+			<param name="quality" value="high">
+			<embed src="Iteration.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="1280" height="720"></embed>
+		</object>
 	</div>
 </body>
 </html>
