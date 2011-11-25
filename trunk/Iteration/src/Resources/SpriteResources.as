@@ -52,7 +52,7 @@ package Resources
 		[Embed(source="../../bin/img/curseur_etat_normal.png")] public static var ImgMouseCursor:Class;
 		[Embed(source = "../../bin/img/curseur_clic.png")] public static var ImgMouseCursorClic:Class;
 		
-		[Embed(source = "../../bin/img/HelveticaLTStd-Light.otf", fontFamily = "myFont", embedAsCFF = "false")] public var helv:String;
+		[Embed(source = "../../bin/img/HelveticaLTStd-BoldCond.otf", fontFamily = "myFont", embedAsCFF = "false")] public var helv:String;
 		
 		// menu
 		public static var ImgMenuBackground:FlxExtBitmap;
@@ -74,12 +74,12 @@ package Resources
 		
 		public static var animateIdea:Array = [ -2, 0, 2, 0];
 		public static var arrayIdeas:Object = {
-										religion:[0],
-										paix:[1],
-										medecine:[2],
-										fanatisme:[3],
-										guerre:[4],
-										maladie:[5]
+										"religion":[0],
+										"paix":[1],
+										"medecine":[2],
+										"fanatisme":[3],
+										"guerre":[4],
+										"maladie":[5]
 										};
 		public static var arrayIdeasColor:Object = {
 										religion:0xff5b67,

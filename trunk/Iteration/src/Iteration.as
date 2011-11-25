@@ -66,7 +66,7 @@ package
 			
 			m_timerBirth = new FlxTimer();
 			startBirthTimer();
-			
+
 			m_timerIdea = new FlxTimer();
 			
 			
@@ -214,19 +214,15 @@ package
 		}
 		
 		public function changeDeathRatio(val:Number):void {
-			trace("BeginChangeDeath", m_ratioDeath, "+", val);
 			m_ratioDeath += val;
 			if (m_ratioDeath > 1)
 				m_ratioDeath = 1;
-			trace("EndChangeDeath", m_ratioDeath);
 		}
 		
 		public function changeBirthRatio(val:Number):void {
-			trace("BeginChangeBirth", m_ratioBirth, "+", val);
 			m_ratioBirth += val;
 			if (m_ratioBirth > 1)
 				m_ratioBirth = 1;
-			trace("EndChangeBirth", m_ratioBirth);
 		}
 		
 		public function isReady():Boolean {

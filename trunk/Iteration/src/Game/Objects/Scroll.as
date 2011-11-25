@@ -22,7 +22,9 @@ package Game.Objects
 		private var m_speed:Number = 10;
 		
 		protected var m_scroll:FlxSprite;
-		protected var m_iterText:FlxText;
+		protected var m_iterText1:FlxText;
+		protected var m_iterText2:FlxText;
+		protected var m_iterText3:FlxText;
 		protected var m_ideas:Array;
 		protected var nbIdea:int = 0;
 		
@@ -34,10 +36,19 @@ package Game.Objects
 			m_scroll.scrollFactor = new FlxPoint(0, 0);
 			add(m_scroll);
 			//créer les textes
-			m_iterText = new FlxText( m_scroll.x+10, m_scroll.y+10, 300);
-			m_iterText.setFormat("myFont", 32, 0x000000); //font-family, font-size, color, alignment
-			m_iterText.scrollFactor = new FlxPoint(0, 0);
-			add(m_iterText);
+			m_iterText1 = new FlxText( m_scroll.x+200, m_scroll.y+24, 300,"0");
+			m_iterText1.setFormat("myFont", 36, 0x000000); //font-family, font-size, color, alignment
+			m_iterText2 = new FlxText( m_scroll.x+200, m_scroll.y+81, 300,"0");
+			m_iterText2.setFormat("myFont", 36, 0x000000); //font-family, font-size, color, alignment
+			m_iterText3 = new FlxText( m_scroll.x+200, m_scroll.y+138, 300,"0");
+			m_iterText3.setFormat("myFont", 36, 0x000000); //font-family, font-size, color, alignment
+			
+			m_iterText1.scrollFactor = new FlxPoint(0, 0);
+			m_iterText2.scrollFactor = new FlxPoint(0, 0);
+			m_iterText3.scrollFactor = new FlxPoint(0, 0);
+			add(m_iterText1);
+			add(m_iterText2);
+			add(m_iterText3);
 			//positions des idées
 			m_ideas = new Array();
 			initIdeas();
@@ -56,12 +67,12 @@ package Game.Objects
 		}
 		
 		public function initIdeas():void {
-			createIdea( -90, 100);
-			createIdea( 0, 100);
-			createIdea( 90, 100);
-			createIdea( -90, 180);
-			createIdea( 0, 180);
-			createIdea( 90, 180);
+			createIdea( -90, 150);
+			createIdea( 0, 150);
+			createIdea( 90, 150);
+			createIdea( -90, 200);
+			createIdea( 0, 200);
+			createIdea( 90, 200);
 		}
 		
 		public function onClick():Boolean {
@@ -75,7 +86,7 @@ package Game.Objects
 		}
 		public function createIdea(dX:Number, dY:Number ):void {
 			var idea:FlxSprite = new FlxSprite(m_scroll.x+dX, m_scroll.y+ dY);
-			idea.scale = new FlxPoint(0.6, 0.6);
+			idea.scale = new FlxPoint(0.45, 0.45);
 			idea.scrollFactor = new FlxPoint();
 			idea.visible = false;
 			add(idea);
@@ -84,8 +95,11 @@ package Game.Objects
 		
 		override public function update():void {
 			super.update();
-			if(m_iteration )
-			m_iterText.text = "Iteration : "+m_iteration.getIterations()+"\nNatalité : "+m_iteration.getBirthPercent()+"%\nMortalité : "+m_iteration.getDeathPercent()+"%\nIdees :";
+			if(m_iteration ){
+			m_iterText1.text = m_iteration.getIterations().toString();
+			m_iterText2.text = m_iteration.getBirthPercent() + "%";
+			m_iterText3.text = m_iteration.getDeathPercent() + "%";
+			}
 			switch(m_state) {
 				case "closed":
 					wait();
