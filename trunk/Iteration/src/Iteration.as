@@ -67,8 +67,6 @@ package
 			m_timerBirth = new FlxTimer();
 			startBirthTimer();
 			
-			initIdeas();
-			
 			m_timerIdea = new FlxTimer();
 			
 			

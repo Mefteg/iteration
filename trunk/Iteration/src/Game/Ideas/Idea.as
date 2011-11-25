@@ -98,13 +98,19 @@ package Game.Ideas
 			m_state = state;
 			if (state == "killed")
 				m_blobby = null;
+			else if ( state == "popped" ||  state == "discussed")
+			{
+				m_spriteIdea.frame = SpriteResources.arrayIdeas[m_name];
+				play(m_state);
+			}
 			else
 				play(m_state);
 		}
 		
 		override public function draw():void {
 			super.draw();
-			if (m_state == "popped" || m_state == "discussed") {
+			if (m_state == "popped" || m_state == "discussed") 
+			{
 				m_spriteIdea.draw();
 			}
 		}
