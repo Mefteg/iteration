@@ -178,7 +178,7 @@ package Game.Objects
 						var mouseX:int = FlxG.mouse.getWorldPosition(GameParams.camera).x;
 						var mouseY:int = FlxG.mouse.getWorldPosition(GameParams.camera).y;
 						
-						if ( Math.abs(Point.distance(new Point(mouseX, mouseY), this.center()) - m_radius * GameParams.map.zoom) < 5 )
+						if ( Math.abs(Point.distance(new Point(mouseX, mouseY), this.center()) - m_radius * GameParams.map.zoom) < 8 )
 						{
 							crack();
 						}
