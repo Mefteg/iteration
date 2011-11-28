@@ -34,7 +34,7 @@ package Game.Objects
 		{
 			super(0, roamingDistance * 2, planet);
 			if ( !glife ) {
-				m_distance = GameParams.map.m_meteorDistance;
+				m_distance = GameParams.map.m_meteorDistance * 2;
 			}
 			
 			m_roamingDistance = roamingDistance;
