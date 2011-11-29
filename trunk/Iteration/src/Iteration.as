@@ -12,6 +12,7 @@ package
 	import Game.States.PlayState;
 	import Globals.GameParams;
 	import org.flixel.*;
+	import Resources.SoundResources;
 	 
 	public class Iteration 
 	{
@@ -86,12 +87,12 @@ package
 			
 			//IDEES
 			m_ideas = new Array();
-			var idea:Idea = new Idea(0, 0, "guerre", m_planet);
-			var idea2:Idea = new Idea(0, 0,"medecine",  m_planet);
-			var idea4:Idea = new Idea(0, 0,"fanatisme", m_planet);
-			var idea5:Idea = new Idea(0, 0,"maladie",  m_planet);
-			var idea6:Idea = new Idea(0, 0,"paix", m_planet);
-			var idea7:Idea = new Idea(0, 0,"religion", m_planet);
+			var idea:Idea = new Idea(0, 0, "guerre", m_planet, SoundResources.ideaWarSound);
+			var idea2:Idea = new Idea(0, 0,"medecine",  m_planet, SoundResources.ideaHealthSound);
+			var idea4:Idea = new Idea(0, 0,"fanatisme", m_planet, SoundResources.ideaFanatismeSound);
+			var idea5:Idea = new Idea(0, 0,"maladie",  m_planet, SoundResources.ideaSicknessSound);
+			var idea6:Idea = new Idea(0, 0,"paix", m_planet, SoundResources.ideaPeaceSound);
+			var idea7:Idea = new Idea(0, 0,"religion", m_planet, SoundResources.ideaReligionSound);
 			m_ideas.push(idea);
 			m_ideas.push(idea2);
 			m_ideas.push(idea4);

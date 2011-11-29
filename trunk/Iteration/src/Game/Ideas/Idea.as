@@ -26,7 +26,9 @@ package Game.Ideas
 		private var timerAnim:FlxTimer = new FlxTimer();//timer pour simuler une animation de la bulle d'idée en discussion
 		private var indexAnim:int = 0;
 		
-		public function Idea(pos:Number, distance:Number, name:String, planet:Planet ) 
+		private var m_soundName:String;
+		
+		public function Idea(pos:Number, distance:Number, name:String, planet:Planet, soundName:String ) 
 		{
 			super(pos, distance, planet);
 			setDistance(m_planet.radius() + 150);
@@ -43,6 +45,8 @@ package Game.Ideas
 			m_spriteIdea.loadGraphic2(SpriteResources.ImgIdeas, true, false, 300, 300);
 			m_spriteIdea.addAnimation("pop", SpriteResources.arrayIdeas[m_name], 0, false);
 			setState("waiting");
+			
+			m_soundName = soundName;
 		}
 		
 		public function setBlobby(blobby:Blobby):void {
@@ -101,6 +105,10 @@ package Game.Ideas
 				m_blobby = null;
 			else if ( state == "popped" ||  state == "discussed")
 			{
+				if ( state == "popped" )
+				{
+					GameParams.soundBank.get(m_soundName).play(GameParams.map.m_soundIdeaVolume);
+				}
 				m_spriteIdea.frame = SpriteResources.arrayIdeas[m_name];
 				play(m_state);
 			}

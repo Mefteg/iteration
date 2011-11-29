@@ -102,7 +102,11 @@ package Game.Objects
 						if ( !m_giveLife )
 						{
 							//jouer le sons
-							GameParams.soundBank.get(SoundResources.crashSound).play();
+							GameParams.soundBank.get(SoundResources.crashSound).play(GameParams.map.m_soundDeathMeteorVolume);
+						}
+						else
+						{
+							GameParams.soundBank.get(SoundResources.crashSound).play(GameParams.map.m_soundLifeMeteorVolume);
 						}
 					}
 					

@@ -81,6 +81,11 @@ package
 		public var m_soundRessourcesLow:Number;
 		public var m_soundRessourcesHigh:Number;
 		
+		public var m_soundIdeaVolume:Number;
+		public var m_soundDeathMeteorVolume:Number;
+		public var m_soundLifeMeteorVolume:Number;
+		public var m_soundMeteorTimer:Number;
+		
 		public var m_crackZone:Number;
 		
 		public var m_loaded:Boolean;
@@ -175,6 +180,11 @@ package
 			m_soundFadeOutTime = m_xml.sound.@fadeOutTime;
 			m_soundRessourcesLow = m_xml.sound.@ressourcesLow;
 			m_soundRessourcesHigh = m_xml.sound.@ressourcesHigh;
+			
+			m_soundIdeaVolume = m_xml.sound.@volumeIdea;
+			m_soundMeteorTimer = m_xml.sound.@meteorTimer;
+			m_soundDeathMeteorVolume = m_xml.sound.@volumeDeathMeteor;
+			m_soundLifeMeteorVolume = m_xml.sound.@volumeLifeMeteor;
 			
 			m_loaded = true;
 		}

@@ -14,5 +14,6 @@
 		medecineMort="0" medecineNat="13"
 		maladieMort="17" maladieNat="0"
 	/>
-	<sound fadeInTime="3" fadeOutTime="3" ressourcesLow="3333" ressourcesHigh="6666" />
+	<sound fadeInTime="3" fadeOutTime="3" ressourcesLow="3333" ressourcesHigh="6666" volumeIdea="0.6" volumeDeathMeteor="1.0" volumeLifeMeteor="1.0" meteorTimer="2" />
+	<!-- volumes should be between 0 and 1 -->
 </data>
