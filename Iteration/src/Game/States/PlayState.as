@@ -65,6 +65,9 @@ package  Game.States
 		// compteur pour savoir combien de temps le clic est enfoncé
 		private var m_mousecpt = 0;
 		
+		// Meteor sound timer
+		private var m_meteorTimer:FlxTimer = new FlxTimer();
+		
 		public function PlayState() 
 		{
 			add(m_zbuffer);
@@ -129,6 +132,9 @@ package  Game.States
 			// poncepermis
 			meteor = new Meteor( planet.radius() * 2, planet, true);
 			meteor.setState("Crashing");
+			m_meteorTimer.start(GameParams.map.m_soundMeteorTimer);
+			
+
 			m_zbuffer.addBackground(meteor);
 			m_zbuffer.addBackground(meteor.getExplosion());
 
@@ -148,6 +154,12 @@ package  Game.States
 		{			
 			
 			if (FlxG.keys.A) planet.removeResources(10000);
+			
+			if ( m_meteorTimer != null && m_meteorTimer.finished )
+			{
+				GameParams.soundBank.get(SoundResources.crashSound).play(GameParams.map.m_soundLifeMeteorVolume);
+				m_meteorTimer = null;
+			}
 			
 			//mettre a jour la camera
 			m_camera.update();
