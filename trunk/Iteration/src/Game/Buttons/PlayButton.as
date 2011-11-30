@@ -11,6 +11,9 @@ package Game.Buttons
 	 */
 	public class PlayButton extends FlxButton 
 	{
+		private var rotateRight:Boolean = false;
+		private var angleMax:Number = 5;
+		
 		public function PlayButton(X:Number = 0, Y:Number = 0, Label:String = null, OnClick:Function = null) {
 			super(X, Y, Label, OnClick);
 			loadGraphic2(SpriteResources.ImgMenuPlaybutton, false, false, 232, 114, true);
@@ -19,9 +22,25 @@ package Game.Buttons
 		override public function update():void {
 			super.update();
 			if (mouseOn())
-				scale = new FlxPoint(1.05, 1.05);
+				animate();
+				//scale = new FlxPoint(1.05, 1.05);
 			else
-				scale = new FlxPoint(1, 1);
+				angle = 0;
+				//scale = new FlxPoint(1, 1);
+				
+		}
+		
+		private function animate():void 
+		{
+			if (rotateRight) {
+				angle += 0.3;
+				if (angle > angleMax)
+					rotateRight = false;
+			}else {
+				angle-= 0.3;
+				if (angle < -angleMax)
+					rotateRight = true;
+			}
 		}
 		
 		public function mouseOn():Boolean {
