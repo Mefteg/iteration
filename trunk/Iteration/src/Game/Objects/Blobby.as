@@ -508,6 +508,10 @@ package Game.Objects
 							// et je m'y rends
 							goTo(m_targetTree);
 						}
+						else
+						{
+							setState("idle");
+						}
 					}
 				}
 				// sinon
@@ -517,6 +521,10 @@ package Game.Objects
 					if ( m_targetFruit == null ) {
 						//je recupere l'arbre le plus proche
 						m_targetTree = searchNearestTree();
+						if ( m_targetTree == null )
+						{
+							setState("idle");
+						}
 					}
 					// sinon
 					else 

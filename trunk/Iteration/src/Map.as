@@ -85,6 +85,7 @@ package
 		public var m_soundDeathMeteorVolume:Number;
 		public var m_soundLifeMeteorVolume:Number;
 		public var m_soundMeteorTimer:Number;
+		public var m_volumeMusic:Number;
 		
 		public var m_crackZone:Number;
 		
@@ -185,6 +186,7 @@ package
 			m_soundMeteorTimer = m_xml.sound.@meteorTimer;
 			m_soundDeathMeteorVolume = m_xml.sound.@volumeDeathMeteor;
 			m_soundLifeMeteorVolume = m_xml.sound.@volumeLifeMeteor;
+			m_volumeMusic = m_xml.sound.@volumeMusic;
 			
 			m_loaded = true;
 		}

@@ -241,13 +241,13 @@ package Game.Objects
 			{			
 				if ( m_resources < GameParams.map.m_soundRessourcesLow && m_ressourceLevel != 1 )
 				{
-					GameParams.soundBank.get(SoundResources.backgroudLowRessMusic).fadeIn(GameParams.map.m_soundFadeInTime);
+					GameParams.soundBank.get(SoundResources.backgroudLowRessMusic).fadeIn(GameParams.map.m_soundFadeInTime,GameParams.map.m_volumeMusic);
 					GameParams.soundBank.get(SoundResources.backgroudMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
 					m_ressourceLevel = 1;
 				}
 				else if ( m_resources > GameParams.map.m_soundRessourcesHigh && m_ressourceLevel != 3)
 				{
-					GameParams.soundBank.get(SoundResources.backgroudHighRessMusic).fadeIn(GameParams.map.m_soundFadeInTime);
+					GameParams.soundBank.get(SoundResources.backgroudHighRessMusic).fadeIn(GameParams.map.m_soundFadeInTime,GameParams.map.m_volumeMusic);
 					GameParams.soundBank.get(SoundResources.backgroudMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
 					m_ressourceLevel = 3;
 				}
@@ -256,7 +256,7 @@ package Game.Objects
 						  m_ressourceLevel != 2)
 				{
 					GameParams.soundBank.get(SoundResources.backgroudLowRessMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
-					GameParams.soundBank.get(SoundResources.backgroudMusic).fadeIn(GameParams.map.m_soundFadeInTime);
+					GameParams.soundBank.get(SoundResources.backgroudMusic).fadeIn(GameParams.map.m_soundFadeInTime,GameParams.map.m_volumeMusic);
 					GameParams.soundBank.get(SoundResources.backgroudHighRessMusic).fadeOut(GameParams.map.m_soundFadeOutTime);
 					m_ressourceLevel = 2;
 				}
