@@ -17,16 +17,15 @@ package Game.Buttons
 		public function PlayButton(X:Number = 0, Y:Number = 0, Label:String = null, OnClick:Function = null) {
 			super(X, Y, Label, OnClick);
 			loadGraphic2(SpriteResources.ImgMenuPlaybutton, false, false, 232, 114, true);
+			antialiasing = true;
 		}		
 		
 		override public function update():void {
 			super.update();
 			if (mouseOn())
 				animate();
-				//scale = new FlxPoint(1.05, 1.05);
 			else
 				angle = 0;
-				//scale = new FlxPoint(1, 1);
 				
 		}
 		
