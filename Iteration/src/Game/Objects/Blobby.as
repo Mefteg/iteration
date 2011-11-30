@@ -32,7 +32,6 @@ package Game.Objects
 		protected var m_scholar:String = null; // si le blobby a déjà eu une idée
 		//timer pour la discussion
 		protected var m_timerDiscuss:FlxTimer;
-		protected var m_discussTime:Number = GameParams.map.m_blobbyDiscussTime;
 		//timer pour la panique
 		protected var m_timerPanic:FlxTimer;
 		protected var m_panicTime:Number = GameParams.map.m_blobbyPanicTime;
@@ -81,6 +80,7 @@ package Game.Objects
 			addAnimation("pick", MathUtils.getArrayofNumbers(6,13), 6 + FlxG.random() * 2, true);
 			addAnimation("search", MathUtils.getArrayofNumbers(6,13), 6 + FlxG.random() * 3, true);
 			addAnimation("validate", MathUtils.getArrayofNumbers(24, 33), 10 + FlxG.random() * 2, false);
+			addAnimation("convert", MathUtils.getArrayofNumbers(24, 33), 10 + FlxG.random() * 2, false);
 			addAnimation("duplicate", MathUtils.getArrayofNumbers(36, 44), 8 , false)
 			addAnimation("discuss", MathUtils.getArrayofNumbers(15, 21) , 5 + FlxG.random() * 2, true);
 			addAnimation("eat", MathUtils.getArrayofNumbers(45,51) , 8, false);
@@ -140,6 +140,9 @@ package Game.Objects
 					break;
 				case("validate"):
 					validate();
+					break;
+				case("convert"):
+					convert();
 					break;
 				case("idle"):
 					idle();
@@ -305,8 +308,13 @@ package Game.Objects
 				
 		protected function discuss() :void {
 			if (m_timerDiscuss.finished && m_blobTarget) {
-				setState("validate");
-				m_blobTarget.setState("validate");
+				if(!getScholar()){
+					setState("validate");
+					m_blobTarget.setState("validate");
+				}else {
+					setState("convert");
+					m_blobTarget.setState("convert");
+				}
 			}
 		}
 		
@@ -328,13 +336,42 @@ package Game.Objects
 					m_idea.setState("spread");
 					//changer le sprite
 					color = SpriteResources.arrayIdeasColor[m_idea.getName()];
-					m_blobTarget.color = SpriteResources.arrayIdeasColor[m_idea.getName()];
+					m_blobTarget.color = color;
 					//et supprimer sa référence
 					m_blobTarget = null;
 					//vider la variable d'idée
 					m_idea = null;
 					
 				}
+			}
+		}
+		
+		public function convert():void {
+			if (finished && m_blobTarget) {
+				var rand:Number = Math.random();
+				if (rand > 0.5) {//on va dire que ce blobby a perdu la bataille
+					//supprimer l'idée du blobby (s'il en a une)
+					GameParams.record.removeBlobby(this);
+					//rajouter celle du blobby gagnant
+					GameParams.record.addBlobby(m_blobTarget);
+					//remplacer l'idée recue du blobby  et sa couleur
+					this.setScholar(m_blobTarget.getScholar());
+					color = m_blobTarget.color;
+				}else { // autrement il la gagne
+					//supprimer l'idée du blobby cible (s'il en a une)
+					GameParams.record.removeBlobby(m_blobTarget);
+					//rajouter celle du blobby gagnant
+					GameParams.record.addBlobby(this);
+					//remplacer l'idée recue du blobby  et sa couleur
+					m_blobTarget.setScholar(getScholar());
+					m_blobTarget.color = color;
+					
+				}
+				//remettre les états des deux blobs
+				setState("idle");
+				m_blobTarget.setState("idle");
+				//vider la variable blob cible
+				m_blobTarget = null;
 			}
 		}
 		
@@ -381,23 +418,30 @@ package Game.Objects
 		public function search():void {
 			//trace("search",m_blobTarget.isDying());
 			//si le blobby cible est mort , en chercher un autre
-			if (!m_blobTarget )
+			if (!m_blobTarget ){
 				searchNearestBlobby();
+				return;
+			}
 			if (m_blobTarget.isDying())
 				searchNearestBlobby();
-				
 			if ( collideWithBlobby(m_blobTarget) ) {
 				//trace("collision", m_pos, m_blobTarget.getPos(), m_blobTarget.isBusy());
 				//si le blobby est occupé on attend
 				if (m_blobTarget.isBusy()) 
 					return;
-				//démarrer le timer de discussion
-				m_timerDiscuss.start(m_discussTime);
+				
+				if (!getScholar())
+					//démarrer le timer de discussion
+					m_timerDiscuss.start(GameParams.map.m_blobbyDiscussTime);
+				else
+					//démarrer le timer de convertion
+					m_timerDiscuss.start(GameParams.map.m_convertTime);
 				//changer les états des deux blobby en "discussion"
 				m_blobTarget.setState("discuss");
 				this.setState("discuss");
 				//sigifier a l'idée qu'elle est discutée
-				m_idea.setState("discussed");
+				if(m_idea)
+					m_idea.setState("discussed");
 			}
 			
 			var dist:Number = this.m_pos - m_blobTarget.m_pos;
@@ -436,8 +480,8 @@ package Game.Objects
 					this.move(1,1.2);
 				}
 			}
-						
-			m_idea.update();
+			if(m_idea)			
+				m_idea.update();
 		}
 		
 		public function goTo(target:Element):void {
@@ -756,9 +800,13 @@ package Game.Objects
 		}
 		
 		public function isBusy():Boolean {
+			//if (isConverting()) return false;
 			return ((m_state != "walk") && (m_state != "idle")) || !visible ; 
 		}
 		
+		public function isConverting():Boolean {
+			return ( (m_state=="search") || (m_state=="discuss") ) &&(getScholar()!=null);
+		}
 		public function isBorn():Boolean {
 			return ( (m_state != "birth") && (m_state != "arise") );
 		}

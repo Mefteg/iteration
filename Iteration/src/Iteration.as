@@ -35,6 +35,7 @@ package
 		private var m_timerDeath:FlxTimer;//timer pour la mort
 		private var m_timerBirth:FlxTimer;//timer pour la naissance
 		private var m_timerIdea:FlxTimer; //timer pour les idées
+		private var m_timerConvert:FlxTimer;//timer pour la conversion 
 		
 		private var m_iterTime:Number;
 		private var m_iterNumber:int = 0;
@@ -42,12 +43,15 @@ package
 		//variables pour la gestion des événements
 		private var m_nbDeaths:int;
 		private var m_nbBirths:int;
+		private var m_nbConvert:int;
 		//variables comptant le nombre de D/B par itération
 		private var m_countDeaths:int=0;
 		private var m_countBirths:int = 0;
+		private var m_countConversions:int = 0;
 		//variables pour le taux de mortalité/natalité
 		private var m_ratioDeath:Number = GameParams.map.mortalite;
 		private var m_ratioBirth:Number = GameParams.map.natalite;
+		private var m_ratioConvert:Number = GameParams.map.convertRate;
 		
 		// Information on iteration for outside the class
 		private var m_iterationTick:Boolean = false;
@@ -71,6 +75,8 @@ package
 			startBirthTimer();
 
 			m_timerIdea = new FlxTimer();
+			
+			m_timerConvert = new FlxTimer();
 			
 			GameParams.record = new Record();
 			
@@ -108,8 +114,13 @@ package
 		public function reInit():void
 		{
 			m_iterNumber = 0;
-			m_ratioDeath = 0.25;
-			m_ratioBirth = 0.50;
+			m_countBirths = 0;
+			m_countDeaths = 0;
+			m_countConversions = 0;
+			
+			m_ratioDeath = GameParams.map.mortalite;
+			m_ratioBirth = GameParams.map.natalite;
+			m_ratioConvert = GameParams.map.convertRate;
 			
 			initIdeas();
 			GameParams.record.init();
@@ -118,6 +129,7 @@ package
 			startIdeaTimer();
 			startDeathTimer();
 			startBirthTimer();
+			startConvTimer();
 			calcStats();
 		}
 		
@@ -126,11 +138,12 @@ package
 			calcStats();
 			m_countBirths = 0;
 			m_countDeaths = 0;
-			
+			m_countConversions = 0;
 			//redémarrer les timers
 			startDeathTimer();
 			startBirthTimer();
 			startIdeaTimer();
+			startConvTimer();
 			//redémarrer le timer principal					
 			m_timer.start(m_iterTime);
 		}
@@ -192,6 +205,7 @@ package
 			var rand:Number = Math.random();
 			m_nbDeaths = m_planet.getBlobbies().length * m_ratioDeath; // % de morts
 			m_nbBirths = m_planet.getBlobbies().length * m_ratioBirth; // % de naissances
+			m_nbConvert = m_planet.getBlobbies().length * m_ratioConvert; // % de convertisseur?..?
 		}
 		
 		//calcule un temps aléatoire pour la prochaine mort
@@ -208,7 +222,11 @@ package
 		}
 		//calcule le temps aléatoire pour la prochaine idée
 		private function startIdeaTimer():void {
-			m_timerIdea.start(Math.random() * m_iterTime);
+			m_timerIdea.start(Math.random() * (m_iterTime*m_timer.progress) );
+		}
+		
+		private function startConvTimer():void {
+			m_timerConvert.start(Math.random() * ( (m_iterTime*m_timer.progress) / m_nbConvert) );
 		}
 		public function getElapsedTime():Number {
 			return m_timer.time;
@@ -276,7 +294,7 @@ package
 			if ( (m_timerDeath.finished) && (m_countDeaths < m_nbDeaths) ) {
 				
 				var gotBlobby:Boolean = false; // a true si on a trouvé un blobby a supprimer
-				var indexDelete:int = Math.random() * (nbBlobbies-1); //index du blobby a supprimer
+				var indexDelete:int = Math.random() * (m_planet.getBlobbies().length-1); //index du blobby a supprimer
 				
 				// Hardcore fix (for Hardgame)
 				// HACK HACK ! 
@@ -376,6 +394,40 @@ package
 					m_scene.remove(m_currentIdea);
 					m_currentIdea = null;
 				}
+			}
+			//GESTION DES CONVERSIONS
+			//Si le timer de mort arrive a échéance
+			if ( (m_timerConvert.finished) && (m_countConversions< m_nbConvert) ) {
+				
+				var gotBlobby:Boolean = false; // a true si on a trouvé un blobby a supprimer
+				var index:int = Math.random() * (nbBlobbies-1); //index du blobby a supprimer
+				
+				// Hardcore fix (for Hardgame)
+				// HACK HACK ! 
+				// To avoid the infinit loop
+				var i:uint = 0;
+				var nbBlobbies:uint = m_planet.getBlobbies().length;
+				var blob:Blobby;
+				while (!gotBlobby && i < nbBlobbies) {		
+					blob = m_planet.getBlobbies()[index];
+					//si le blobby n'est pas invincible
+					if(!blob.isBusy() && !blob.isConverting() && blob.getScholar()!=null){
+						gotBlobby = true;
+					}else{
+						//incrémenter le compteur de recherche
+						index++;
+						if (index >= nbBlobbies)
+							index = 0;
+						i++;
+					}
+				}
+				if (gotBlobby) {
+					m_planet.getBlobbies()[index].setState("search");
+					//incrémentere le compteur de morts
+					m_countConversions++;
+				}
+				//redémarrer le timer pour les morts
+				startConvTimer();
 			}
 			//mettre à jour les idées
 			updateIdeas();
