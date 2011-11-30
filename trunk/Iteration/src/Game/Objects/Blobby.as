@@ -207,6 +207,13 @@ package Game.Objects
 				m_idea.setState("killed");
 				m_idea = null;
 			}
+			//s'il possédait un fruit
+			if (m_targetFruit)
+			{
+				if ( m_targetFruit.getState() == "beingEaten" ) {
+					m_targetFruit.setState("idle");
+				}
+			}
 			if (finished) 
 			{	
 				if ( onClick() || m_planet.isDead() )
@@ -485,6 +492,9 @@ package Game.Objects
 						if ( m_targetFruit == null )
 						{
 							m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
+							if ( m_targetFruit.getState() == "beingEaten" ) {
+								m_targetFruit = null;
+							}
 						}
 						else // Je vais vers le fruit que j'ai repairé
 						{
@@ -550,12 +560,13 @@ package Game.Objects
 									//s'il existe encore un fruit
 									if ( m_targetFruit != null ) 
 									{
+										// je decide que ce fruit m'est reservé
 										m_targetFruit.setState("beingEaten");
 										// et je m'y rends
 										goTo(m_targetFruit);
 									}
 								}
-								else // Je vais vers le fruit que j'ai repairé
+								else // Je vais vers le fruit que j'ai reperé
 								{
 									goTo(m_targetFruit);
 								}

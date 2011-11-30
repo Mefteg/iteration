@@ -1,5 +1,6 @@
 package 
 {
+	import flash.events.Event;
 	import Game.States.*;
 	import Globals.GameParams;
 	import org.flixel.*;
@@ -15,7 +16,16 @@ package
 		public function Main():void 
 		{			
 			super(GameParams.width, GameParams.height, LoadState, 1);
+			stage.removeEventListener(Event.DEACTIVATE, onFocusLost);
+            stage.removeEventListener(Event.ACTIVATE, onFocus);
 		}
+		
+		override protected function create(FlashEvent:Event):void
+        {
+            super.create(FlashEvent);
+            stage.removeEventListener(Event.DEACTIVATE, onFocusLost);
+            stage.removeEventListener(Event.ACTIVATE, onFocus);
+        }
 		
 	}
 	
