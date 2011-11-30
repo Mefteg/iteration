@@ -63,7 +63,6 @@ package Game.Ideas
 		}
 		
 		public function getName():String {
-			trace(m_name);
 			return m_name;
 		}
 		

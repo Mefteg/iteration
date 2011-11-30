@@ -23,6 +23,7 @@ package
 		public var iterationTime:Number;
 		public var natalite:Number;
 		public var mortalite:Number;
+		public var convertRate:Number;
 		
 		public var scrollTime:Number;
 		
@@ -44,6 +45,7 @@ package
 		public var m_blobbyDiscussTime:Number;
 		public var m_blobbyPanicTime:Number;
 		public var m_blobbyRecycledResources:int;
+		public var m_convertTime:Number;
 		
 		public var m_treeNumber:int;
 		public var m_treeBirthTime:int;
@@ -113,6 +115,7 @@ package
 			iterationTime = m_xml.iteration.@time;
 			mortalite = m_xml.iteration.@mortalite;
 			natalite = m_xml.iteration.@natalite;
+			convertRate = m_xml.iteration.@convertRate;
 			
 			scrollTime = m_xml.scroll.@time;
 			
@@ -135,6 +138,7 @@ package
 			m_blobbyDiscussTime = m_xml.blobby.@discussTime;
 			m_blobbyPanicTime = m_xml.blobby.@panicTime;
 			m_blobbyRecycledResources = m_xml.blobby.@recycledResources;
+			m_convertTime = m_xml.blobby.@convertTime;
 			
 			m_treeNumber = m_xml.tree.@number;
 			m_treeBirthTime = m_xml.tree.@birthTime;
