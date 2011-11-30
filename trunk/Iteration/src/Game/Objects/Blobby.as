@@ -174,6 +174,22 @@ package Game.Objects
 					break;
 			}
 			
+			if ( m_targetFruit )
+			{
+				if ( !m_targetFruit.alive )
+				{
+					m_targetFruit = null;
+				}
+			}
+			
+			if ( m_blobTarget )
+			{
+				if ( m_blobTarget.isDying() )
+				{
+					m_blobTarget = null;
+				}
+			}
+			
 		}
 		protected function arise():void {
 			if (m_distance < m_planet.radius()+43)
@@ -221,11 +237,21 @@ package Game.Objects
 		
 		protected function eat() :void {
 			// si l'animation est terminée
-			if ( finished ) {
+			if ( finished ) 
+			{
+				if ( m_targetFruit != null )
+				{
 				// si le fruit a été détruit
-				if ( !m_targetFruit.alive ) {
+					if ( !m_targetFruit.alive ) {
+						setState("swallow");
+						m_targetFruit.setState("eaten");
+						m_targetTree = null;
+						m_targetFruit = null;
+					}
+				}
+				else
+				{
 					setState("swallow");
-					m_targetFruit.setState("eaten");
 					m_targetTree = null;
 					m_targetFruit = null;
 				}
@@ -319,25 +345,8 @@ package Game.Objects
 				}
 				return;
 			}
-			//bouger le sprite
-			switch(m_direction) 
-			{
-			case 1: 
-				m_pos += m_speed; 
-				if ( m_pos > 360 ) // modulo of the angle
-				{
-					m_pos -= 360;
-				}
-				break;
-			case 2: 
-				m_pos -= m_speed;
-				if ( m_pos < 0 ) // modulo of the angle
-				{
-					m_pos += 360;
-				}
-				break;
-				default:break;
-			}
+			
+			this.move(m_direction);
 		}
 		
 		public function die():void {
@@ -379,19 +388,11 @@ package Game.Objects
 				var angle1:Number = this.m_pos + 180 % 360;
 				if ( angle1 < m_blobTarget.m_pos )
 				{
-					m_pos -= m_speed*1.2;
-					if ( m_pos > 360 ) // modulo of the angle
-					{
-						m_pos -= 360;
-					}
+					this.move(2,1.2);
 				}
 				else
 				{
-					m_pos += m_speed*1.2;
-					if ( m_pos < 0 ) // modulo of the angle
-					{
-						m_pos += 360;
-					}
+					this.move(1,1.2);
 				}
 			}
 			else if ( m_blobTarget.m_pos > 270 && this.m_pos < 180 )
@@ -399,38 +400,22 @@ package Game.Objects
 				var angle2:Number = m_blobTarget.m_pos + 180 % 360;
 				if ( angle2 > this.m_pos )
 				{
-					m_pos -= m_speed*1.2;
-					if ( m_pos > 360 ) // modulo of the angle
-					{
-						m_pos -= 360;
-					}
+					this.move(2,1.2);
 				}
 				else
 				{
-					m_pos += m_speed*1.2;
-					if ( m_pos < 00 ) // modulo of the angle
-					{
-						m_pos += 360;
-					}
+					this.move(1,1.2);
 				}
 			}
 			else
 			{
 				if ( dist > 0 )
 				{
-					m_pos -= m_speed*1.2;
-					if ( m_pos > 360 ) // modulo of the angle
-					{
-						m_pos -= 360;
-					}
+					this.move(2,1.2);
 				}
 				else
 				{
-					m_pos += m_speed*1.2;
-					if ( m_pos < 00 ) // modulo of the angle
-					{
-						m_pos += 360;
-					}
+					this.move(1,1.2);
 				}
 			}
 						
@@ -444,19 +429,11 @@ package Game.Objects
 				var angle1:Number = this.m_pos + 180 % 360;
 				if ( angle1 < target.getPos() )
 				{
-					m_pos -= m_speed;
-					if ( m_pos > 360 ) // modulo of the angle
-					{
-						m_pos -= 360;
-					}
+					this.move(2);
 				}
 				else
 				{
-					m_pos += m_speed;
-					if ( m_pos < 0 ) // modulo of the angle
-					{
-						m_pos += 360;
-					}
+					this.move(1);
 				}
 			}
 			else if ( target.getPos() > 270 && this.m_pos < 180 )
@@ -464,74 +441,80 @@ package Game.Objects
 				var angle2:Number = target.getPos() + 180 % 360;
 				if ( angle2 > this.m_pos )
 				{
-					m_pos -= m_speed;
-					if ( m_pos > 360 ) // modulo of the angle
-					{
-						m_pos -= 360;
-					}
+					this.move(2);
 				}
 				else
 				{
-					m_pos += m_speed;
-					if ( m_pos < 00 ) // modulo of the angle
-					{
-						m_pos += 360;
-					}
+					this.move(1);
 				}
 			}
 			else
 			{
 				if ( dist > 0 )
 				{
-					m_pos -= m_speed;
-					if ( m_pos > 360 ) // modulo of the angle
-					{
-						m_pos -= 360;
-					}
+					this.move(2);
 				}
 				else
 				{
-					m_pos += m_speed;
-					if ( m_pos < 00 ) // modulo of the angle
-					{
-						m_pos += 360;
-					}
+					this.move(1);
 				}
 			}
 		}
 		
 		public function pick():void {
 			// s'il n'y a aucun arbre disponible
-			if ( m_planet.getTrees().length > 0 ) {
+			if ( m_planet.getTrees().length > 0 ) 
+			{
 				// si je dois chercher un arbre et pas un fruit
-				if ( m_targetTree != null && m_targetFruit == null ) {
+				if ( m_targetTree != null && m_targetFruit == null ) 
+				{
 					// si je suis arrivé à l'arbre
-					if ( collideWithElement(m_targetTree) ) {
-						m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
+					if ( collideWithElement(m_targetTree) ) 
+					{
+						if ( m_targetFruit == null )
+						{
+							m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
+						}
+						else // Je vais vers le fruit que j'ai repairé
+						{
+							goTo(m_targetFruit);
+						}
+						
+						// Si l'arbre ne feed plus (il n'a plus de fruit), on l'enlève et on espère qu'au prochain tour de boucle, il trouvera un meilleur arbre
+						if ( m_targetTree.isFeeding() == false )
+						{
+							m_targetTree = null;
+						}
 					}
 					// sinon
-					else {
+					else 
+					{
 						// je cherche l'arbre le plus proche
 						m_targetTree = searchNearestTree();
 						// si un arbre a été trouvé
-						if ( m_targetTree != null ) { 
+						if ( m_targetTree != null ) 
+						{ 
 							// et je m'y rends
 							goTo(m_targetTree);
 						}
 					}
 				}
 				// sinon
-				else {
+				else 
+				{
 					// si je n'ai pas de fruit à trouver
 					if ( m_targetFruit == null ) {
 						//je recupere l'arbre le plus proche
 						m_targetTree = searchNearestTree();
 					}
 					// sinon
-					else {
+					else 
+					{
 						// si je suis arrivé sous le fruit
-						if ( isOnElement(m_targetFruit) ) {
+						if ( m_targetFruit && isOnElement(m_targetFruit) && m_targetFruit.getState() != "fall" && m_targetFruit.getState() != "eaten" ) 
+						{
 							m_targetFruit.setState("fall");
+							m_targetFruit = null;
 							setState("eat");
 						}
 						// sinon
@@ -540,15 +523,26 @@ package Game.Objects
 							// je cherche le fruit le plus proche
 							m_targetTree = searchNearestTree();
 							//s'il existe encore un arbre 
-							if(m_targetTree !=null){
-								m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
-								//s'il existe encore un fruit
-								if ( m_targetFruit != null ) {
-									// et je m'y rends
+							if (m_targetTree != null)
+							{
+								if ( m_targetFruit == null )	// Je ne connais pas encore de fruit
+								{
+									m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
+									//s'il existe encore un fruit
+									if ( m_targetFruit != null ) 
+									{
+										m_targetFruit.setState("beingEaten");
+										// et je m'y rends
+										goTo(m_targetFruit);
+									}
+								}
+								else // Je vais vers le fruit que j'ai repairé
+								{
 									goTo(m_targetFruit);
 								}
-							}//sinon j'attends et j'ai tres faim
-							else {
+							}
+							else //sinon j'attends et j'ai tres faim
+							{
 								setState("idle");
 							}
 						}
@@ -568,25 +562,7 @@ package Game.Objects
 			//si le timer est toujours en cours
 			if (! m_timerMove.finished) {
 				//bouger le sprite
-				switch(m_direction) 
-				{
-					case 0: break;
-				case 1: 
-					m_pos += m_speed; 
-					if ( m_pos > 360 ) // modulo of the angle
-					{
-						m_pos -= 360;
-					}
-					break;
-				case 2: 
-					m_pos -= m_speed;
-					if ( m_pos < 0 ) // modulo of the angle
-					{
-						m_pos += 360;
-					}
-					break;
-					default:break;
-				}
+				this.move(m_direction);
 				
 				//s'arrêter là
 				return;
@@ -722,13 +698,17 @@ package Game.Objects
 				// s'il est instancié
 				if ( e != null ) {
 					// s'il est "alive"
-					if ( e.alive ) {
-						dist = MathUtils.calculateDistance(this.m_pos, e.getPos());
-						if ( dist < distMin )
+					if ( e.alive ) 
+					{
+						if ( e.getState() != "beingEaten" && e.getState() != "die" && e.getState() != "eaten" )	// code only for fruits ; to avoid fruits that are already looked by other blobbies
 						{
-							distMin = dist;
-							//changer l'element le plus près
-							nearest = e;
+							dist = MathUtils.calculateDistance(this.m_pos, e.getPos());
+							if ( dist < distMin )
+							{
+								distMin = dist;
+								//changer l'element le plus près
+								nearest = e;
+							}
 						}
 					}
 				}
@@ -858,6 +838,29 @@ package Game.Objects
 			}
 			
 			return false;
+		}
+		
+		public function move(direction:int, speedFactor:Number = 1):void
+		{
+			switch(direction) 
+			{
+				case 0: break;
+			case 1: 
+				m_pos += m_speed * speedFactor; 
+				if ( m_pos > 360 ) // modulo of the angle
+				{
+					m_pos -= 360;
+				}
+				break;
+			case 2: 
+				m_pos -= m_speed * speedFactor;
+				if ( m_pos < 0 ) // modulo of the angle
+				{
+					m_pos += 360;
+				}
+				break;
+				default:break;
+			}
 		}
 
 	}

@@ -92,7 +92,7 @@ package Game.Objects
 					{
 						m_state = "Roaming";
 					}
-					
+					/*
 					if (onClick()) 
 					{
 						//on fait tomber le météore
@@ -108,7 +108,7 @@ package Game.Objects
 						{
 							GameParams.soundBank.get(SoundResources.crashSound).play(GameParams.map.m_soundLifeMeteorVolume);
 						}
-					}
+					}*/
 					
 					break;
 				case "Roaming":
@@ -123,7 +123,11 @@ package Game.Objects
 						if ( !m_giveLife )
 						{
 							//jouer le sons
-							GameParams.soundBank.get(SoundResources.crashSound).play();
+							GameParams.soundBank.get(SoundResources.crashSound).play(GameParams.map.m_soundDeathMeteorVolume);
+						}
+						else
+						{
+							GameParams.soundBank.get(SoundResources.crashSound).play(GameParams.map.m_soundLifeMeteorVolume);
 						}
                         // mspeed = m_speed * 1.2;
 					}

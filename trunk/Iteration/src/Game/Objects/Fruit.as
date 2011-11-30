@@ -35,6 +35,8 @@ package Game.Objects
 					break;
 				case("idle"):
 					break;
+				case("beingEaten"):
+					break;
 				case("fall"):
 					fall();
 					break;

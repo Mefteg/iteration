@@ -404,8 +404,22 @@ package Game.Objects
 			}
 		}
 		
-		public function isFeeding():Boolean {
-			return ( m_state == "feed" && m_fruits.length > 0 );
+		public function isFeeding():Boolean 
+		{
+			return ( m_state == "feed" && countFruits() > 0 );
+		}
+		
+		public function countFruits():uint
+		{
+			var counter:uint = 0;
+			for (var i:int = 0 ; i < m_fruits.length ; i++ )
+			{
+				if ( m_fruits[i].alive )
+				{
+					counter ++;
+				}
+			}
+			return counter;
 		}
 		
 		override public function getPos():Number {
@@ -438,17 +452,7 @@ package Game.Objects
 			m_treeDie.addAnimation("revive", MathUtils.getArrayofNumbers(0, m_treeDie.frame).reverse(), 20, false);	
 			m_treeDie.play("revive");
 			
-			var cpt:int = 0;
-
-			// s'il n'y a plus de fruits, l'arbre meurt
-			for (var i:int = 0; i < m_fruits.length; i++) 
-			{
-				if ( !m_fruits[i].alive ) {
-					cpt++;
-				}
-			}
-			
-			if ( cpt == m_fruits.length )
+			if ( this.countFruits() == m_fruits.length )
 			{
 				for (var i:int = 0; i < m_fruits.length; i++) {
 					m_fruits[i].destroy();
