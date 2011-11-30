@@ -368,7 +368,7 @@ package  Game.States
 			{
 				if ( trees[i] != null && trees[i].isVisible() == true && !trees[i].isGrowing() && !trees[i].isDead())
 				{
-					if ( Math.abs( trees[i].getPos() - position) < 30 )
+					if ( Math.abs( trees[i].getPos() - position) < 20 )
 					{
 						trees[i].raining();
 					}
