@@ -452,7 +452,7 @@ package Game.Objects
 			m_treeDie.addAnimation("revive", MathUtils.getArrayofNumbers(0, m_treeDie.frame).reverse(), 20, false);	
 			m_treeDie.play("revive");
 			
-			if ( this.countFruits() == m_fruits.length )
+			if ( this.countFruits() == 0 )
 			{
 				for (var i:int = 0; i < m_fruits.length; i++) {
 					m_fruits[i].destroy();
