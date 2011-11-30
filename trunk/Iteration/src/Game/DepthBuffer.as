@@ -15,6 +15,7 @@ package Game
 		private var m_trees:FlxGroup;
 		private var m_fruits:FlxGroup;
 		private var m_foreGround:FlxGroup;
+		private var m_meteors:FlxGroup;
 		
 		public var m_scroll:FlxGroup;
 			// var emitter:FlxEmitter = new FlxEmitter(100,100); //x and y of the emitter
@@ -27,9 +28,11 @@ package Game
 			m_trees = new FlxGroup();
 			m_fruits = new FlxGroup();
 			m_foreGround = new FlxGroup();
+			m_meteors = new FlxGroup();
 			
 			add(m_backGround);
 			add(m_blobbies);
+			add(m_meteors);
 			add(m_trees);
 			add(m_fruits);
 			add(m_foreGround);
@@ -54,6 +57,13 @@ package Game
 			m_scroll.remove(element);
 		}
 		
+		public function addMeteor(element:FlxBasic):void
+		{
+			m_meteors.add(element);
+		}
+		public function removeMeteor(element:FlxBasic):void {
+			m_meteors.remove(element);
+		}
 		public function addTrees(element:FlxBasic):void
 		{
 			m_trees.add(element);

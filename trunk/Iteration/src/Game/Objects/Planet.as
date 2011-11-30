@@ -359,11 +359,7 @@ package Game.Objects
 			var index:int = m_blobbies.indexOf(blobby);
 			m_blobbies.splice(index, 1);
 		}
-		public function removeBlobbyAt(index:int):void {
-			m_blobbies[index].setState("die");
-			m_blobbies.splice(index, 1);
-		}
-		
+				
 		// tree deletion
 		public function removeTree(tree:Tree):void {
 			var index:int = m_trees.indexOf(tree);

@@ -135,8 +135,8 @@ package  Game.States
 			m_meteorTimer.start(GameParams.map.m_soundMeteorTimer);
 			
 
-			m_zbuffer.addBackground(meteor);
-			m_zbuffer.addBackground(meteor.getExplosion());
+			m_zbuffer.addMeteor(meteor);
+			m_zbuffer.addMeteor(meteor.getExplosion());
 
 			// On affiche la souris
 			FlxG.mouse.show();
@@ -169,9 +169,9 @@ package  Game.States
 				case "Creation":
 					if ( meteor.hasExploded() )
 					{		
-						m_zbuffer.removeBackground(remove(meteor.getExplosion()));
+						m_zbuffer.removeMeteor(remove(meteor.getExplosion()));
 						meteor.destroy();
-						m_zbuffer.removeBackground(meteor);
+						m_zbuffer.removeMeteor(meteor);
 						meteor = null;
 						
 						createWorld();
@@ -204,8 +204,8 @@ package  Game.States
 							//add(meteor);
 							//add(meteor.getExplosion());
 							
-							m_zbuffer.addBackground(meteor);
-							m_zbuffer.addBackground(meteor.getExplosion());
+							m_zbuffer.addMeteor(meteor);
+							m_zbuffer.addMeteor(meteor.getExplosion());
 						}
 					}
 					//si le mechant meteor explose sur la planete
@@ -215,9 +215,9 @@ package  Game.States
 						meteor.checkTreesCollision();
 						if (meteor.hasExploded())
 						{
-							m_zbuffer.removeBackground(meteor.getExplosion());
+							m_zbuffer.removeMeteor(meteor.getExplosion());
 							meteor.destroy();
-							m_zbuffer.removeBackground(meteor);
+							m_zbuffer.removeMeteor(meteor);
 							meteor = null;
 						}
 					}
@@ -228,8 +228,8 @@ package  Game.States
 						// If we have a meteor roaming ... we delete it
 						if ( meteor != null )
 						{
-							m_zbuffer.removeBackground(meteor.getExplosion());
-							m_zbuffer.removeBackground(meteor);
+							m_zbuffer.removeMeteor(meteor.getExplosion());
+							m_zbuffer.removeMeteor(meteor);
 							meteor.destroy();
 						}
 						
@@ -261,8 +261,8 @@ package  Game.States
 					meteor = new Meteor(planet.radius() * 2, planet,true);
 					//add(meteor);
 					//add(meteor.getExplosion());
-					m_zbuffer.addBackground(meteor);
-					m_zbuffer.addBackground(meteor.getExplosion());
+					m_zbuffer.addMeteor(meteor);
+					m_zbuffer.addMeteor(meteor.getExplosion());
 					
 					FlxG.shake(0.01);
 					FlxG.flash();

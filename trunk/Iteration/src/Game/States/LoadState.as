@@ -219,13 +219,9 @@ package Game.States
 			GameParams.soundBank.load(SoundResources.rainSound,false);
 			GameParams.soundBank.load(SoundResources.ideaSound,false);
 			GameParams.soundBank.load(SoundResources.windSound, true);
-			
-			GameParams.soundBank.load(SoundResources.ideaFanatismeSound, false);
-			GameParams.soundBank.load(SoundResources.ideaWarSound, false);
-			GameParams.soundBank.load(SoundResources.ideaSicknessSound, false);
-			GameParams.soundBank.load(SoundResources.ideaPeaceSound, false);
-			GameParams.soundBank.load(SoundResources.ideaReligionSound, false);
-			GameParams.soundBank.load(SoundResources.ideaHealthSound, false);
+			for (var i:String in SoundResources.soundIdeas) {
+				GameParams.soundBank.load(SoundResources.soundIdeas[i], false);
+			}
 		}
 		
 		override public function update() :void{
