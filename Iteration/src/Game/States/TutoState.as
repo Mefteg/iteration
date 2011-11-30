@@ -37,10 +37,10 @@ package Game.States
 			m_slides = new Array();
 			// slide 1
 			m_slides.push(new FlxSprite());
-			m_slides[m_slides.length - 1].loadGraphic2(SpriteResources.ImgTuto, false, false, 1280, 720, true);
+			m_slides[m_slides.length - 1].loadGraphic2(SpriteResources.ImgTuto1, false, false, 1280, 720, true);
 			// slide 2
 			m_slides.push(new FlxSprite());
-			m_slides[m_slides.length - 1].loadGraphic2(SpriteResources.ImgMenuBackground, false, false, 1280, 720, true);
+			m_slides[m_slides.length - 1].loadGraphic2(SpriteResources.ImgTuto2, false, false, 1280, 720, true);
 			
 			for (var i:int = 0; i < m_slides.length; i++) {
 				add(m_slides[i]);
