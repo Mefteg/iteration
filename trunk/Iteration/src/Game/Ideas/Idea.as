@@ -101,20 +101,22 @@ package Game.Ideas
 		}
 		
 		override public function setState(state:String):void {
-			m_state = state;
+			
 			if (state == "killed")
 				m_blobby = null;
 			else if ( state == "popped" ||  state == "discussed")
 			{
-				if ( state == "popped" )
+				if ( state == "popped" || (m_state != "popped" && state == "discussed") )
 				{
 					GameParams.soundBank.get(m_soundName).play(GameParams.map.m_soundIdeaVolume);
 				}
 				m_spriteIdea.frame = SpriteResources.arrayIdeas[m_name];
-				play(m_state);
+				play(state);
 			}
 			else
-				play(m_state);
+				play(state);
+				
+			m_state = state;
 		}
 		
 		override public function draw():void {
