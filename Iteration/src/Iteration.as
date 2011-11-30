@@ -9,6 +9,7 @@ package
 	import Game.Objects.Blobby;
 	import Game.Objects.Meteor;
 	import Game.Objects.Planet;
+	import Game.Record;
 	import Game.States.PlayState;
 	import Globals.GameParams;
 	import org.flixel.*;
@@ -50,6 +51,7 @@ package
 		
 		// Information on iteration for outside the class
 		private var m_iterationTick:Boolean = false;
+		private var m_ideaDone:Boolean = false;
 		
 		public function Iteration(state:PlayState, planet:Planet) 
 		{
@@ -70,6 +72,7 @@ package
 
 			m_timerIdea = new FlxTimer();
 			
+			GameParams.record = new Record();
 			
 			calcStats();
 			
@@ -87,18 +90,19 @@ package
 			
 			//IDEES
 			m_ideas = new Array();
-			var idea:Idea = new Idea(0, 0, "guerre", m_planet, SoundResources.ideaWarSound);
-			var idea2:Idea = new Idea(0, 0,"medecine",  m_planet, SoundResources.ideaHealthSound);
-			var idea4:Idea = new Idea(0, 0,"fanatisme", m_planet, SoundResources.ideaFanatismeSound);
-			var idea5:Idea = new Idea(0, 0,"maladie",  m_planet, SoundResources.ideaSicknessSound);
-			var idea6:Idea = new Idea(0, 0,"paix", m_planet, SoundResources.ideaPeaceSound);
-			var idea7:Idea = new Idea(0, 0,"religion", m_planet, SoundResources.ideaReligionSound);
+			var idea:Idea = new Idea(0, 0, "guerre", m_planet);
+			var idea2:Idea = new Idea(0, 0,"medecine",  m_planet);
+			var idea4:Idea = new Idea(0, 0,"fanatisme", m_planet);
+			var idea5:Idea = new Idea(0, 0,"maladie",  m_planet);
+			var idea6:Idea = new Idea(0, 0,"paix", m_planet);
+			var idea7:Idea = new Idea(0, 0,"religion", m_planet);
 			m_ideas.push(idea);
 			m_ideas.push(idea2);
 			m_ideas.push(idea4);
 			m_ideas.push(idea5);
 			m_ideas.push(idea6);
 			m_ideas.push(idea7);
+			
 		}
 		
 		public function reInit():void
@@ -108,6 +112,7 @@ package
 			m_ratioBirth = 0.50;
 			
 			initIdeas();
+			GameParams.record.init();
 			
 			m_timer.start(m_iterTime);
 			startIdeaTimer();
@@ -144,15 +149,15 @@ package
 			// HACK HACK ! 
 			// To avoid the infinit loop
 			var i:uint = 0;
-			
 			while (!gotIt && m_planet.getBlobbies().length > 0 && i < m_planet.getBlobbies().length )
 			{
 				blob = m_planet.getBlobbies()[index];
-				if ( blob != null && !blob.isBusy() && !blob.isScholar() )
+				if ( blob != null && !blob.isBusy() && !blob.getScholar() )
 				{
 					blob.setIdea(m_currentIdea);
 					m_scene.add(m_currentIdea);
 					gotIt = true;
+					m_ideaDone = true;
 				}else{
 					//incrementer le compteur de recherche
 					index++;
@@ -167,6 +172,21 @@ package
 			}
 		}
 		
+		private function updateIdeas():void {
+			//vérifier si une idée n'est pas obsolète
+			var recycle:Array = GameParams.record.checkDeprecatedIdea();
+			if (recycle.length == 0) return;
+			for (var i:int = 0; i < recycle.length ; i++) 
+			{
+				//retirer l'idée obsbolète du scroll
+				GameParams.scroll.removeIdea(recycle[i]);
+				//changer les ratios
+				m_ratioBirth -= GameParams.map.m_ideaEffect[recycle[i]][1] / 100;
+				m_ratioDeath -= GameParams.map.m_ideaEffect[recycle[i]][0] / 100;
+				//rajouter l'idée obsolète
+				m_ideas.push(new Idea(0, 0, recycle[i], m_planet));
+			}
+		}
 		//calcule le nombre de morts et de naissances
 		private function calcStats():void {
 			var rand:Number = Math.random();
@@ -244,7 +264,8 @@ package
 			if (m_timer.finished && !m_currentIdea) {
 				//incrémenter le nombre d'itérations
 				m_iterNumber++;
-				
+				//une autre idée va pouvoir apparaitre
+				m_ideaDone = false;
 				m_iterationTick = true;
 				//relancer le timer
 				restart();
@@ -332,7 +353,7 @@ package
 			//trace(m_timerIdea.finished, m_timerIdea.progress, m_currentIdea);
 			//GESTION DES IDEES
 			//si le timer à idée est terminé et qu'aucune idée n'est encore créée
-			if (m_timerIdea.finished && !m_currentIdea)
+			if (m_timerIdea.finished && !m_currentIdea && !m_ideaDone)
 				createIdea();//creer une idée
 				
 			//si une idée est en cours	
@@ -356,6 +377,8 @@ package
 					m_currentIdea = null;
 				}
 			}
+			//mettre à jour les idées
+			updateIdeas();
 		}
 		
 		public function clear():void {

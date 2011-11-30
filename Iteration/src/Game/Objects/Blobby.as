@@ -29,7 +29,7 @@ package Game.Objects
 		protected var m_timerMove:FlxTimer;
 		//idée
 		protected var m_idea:Idea;
-		protected var m_scholar:Boolean = false; // si le blobby a déjà eu une idée
+		protected var m_scholar:String = null; // si le blobby a déjà eu une idée
 		//timer pour la discussion
 		protected var m_timerDiscuss:FlxTimer;
 		protected var m_discussTime:Number = GameParams.map.m_blobbyDiscussTime;
@@ -115,7 +115,8 @@ package Game.Objects
 		override public function update():void 
 		{
 			if (!visible) return;
-			if(left){ m_blobbyLeft.postUpdate();}
+			if (left) { m_blobbyLeft.postUpdate(); }
+			
 			super.update();
 			// placer le blobby
 			place();
@@ -207,7 +208,7 @@ package Game.Objects
 				m_idea = null;
 			}
 			if (finished) 
-			{				
+			{	
 				if ( onClick() || m_planet.isDead() )
 				{
 					setState("dig");
@@ -278,6 +279,7 @@ package Game.Objects
 				//placer le nouveau blobby
 				m_blobbyBirth.setPos(getPos() - 5.5);
 				m_blobbyBirth.color = color;
+				m_blobbyBirth.setScholar(m_scholar);
 				setPos(getPos() + 5);
 				m_blobbyBirth.visible = true;
 				m_blobbyBirth.play(m_blobbyBirth.getState());
@@ -287,6 +289,8 @@ package Game.Objects
 					m_blobbyBirth.setState("idle");
 				//ajouter le blobby a la liste
 				m_planet.addBlobby(m_blobbyBirth);
+				//LE RAJOUTER DANS LE RECORD
+				GameParams.record.addBlobby(m_blobbyBirth);
 				//supprimer sa référence
 				m_blobbyBirth = null;
 			}
@@ -301,7 +305,15 @@ package Game.Objects
 		
 		private function validate():void {
 			if (finished) {
-				if(m_blobTarget){
+				if (m_blobTarget) {
+					//le blobby est maintenant un érudit
+					m_scholar = m_idea.getName();
+					//supprimer l'idée du blobby cible(s'il en a une)
+					GameParams.record.removeBlobby(m_blobTarget);
+					m_blobTarget.setScholar(m_scholar);
+					//LES RAJOUTER DANS LE RECORD
+					GameParams.record.addBlobby(this);
+					GameParams.record.addBlobby(m_blobTarget);
 					//remettre les états des deux blobs
 					setState("idle");
 					m_blobTarget.setState("idle");
@@ -314,8 +326,7 @@ package Game.Objects
 					m_blobTarget = null;
 					//vider la variable d'idée
 					m_idea = null;
-					//le blobby est maintenant un érudit
-					m_scholar = true;
+					
 				}
 			}
 		}
@@ -742,7 +753,9 @@ package Game.Objects
 		}
 		
 		public function isScholar():Boolean {
-			return m_scholar;
+			if(m_scholar == null)
+				return false;
+			return true;
 		}
 		
 		public function collideWithBlobby(blobby:Blobby):Boolean 
@@ -778,6 +791,10 @@ package Game.Objects
 			
 				
 		override public function setState(state:String):void {
+			if(state == "comeBack")
+				//L'ENLEVER DU RECORD
+				GameParams.record.removeBlobby(this);
+				
 			if (state == "goPanic" && ( m_state == "pick" || m_state == "search"))
 				m_previousState = m_state;
 				
@@ -797,6 +814,13 @@ package Game.Objects
 			return m_direction;
 		}
 		
+		public function setScholar(s:String):void {
+			m_scholar = s;
+		}
+		
+		public function getScholar():String {
+			return m_scholar;
+		}
 		public function flip(f:Boolean):void {
 			left = f;
 		}

@@ -25,8 +25,7 @@ package Game.Objects
 		protected var m_iterText1:FlxText;
 		protected var m_iterText2:FlxText;
 		protected var m_iterText3:FlxText;
-		protected var m_ideas:Array;
-		protected var nbIdea:int = 0;
+		protected var m_ideas:Object;
 		
 		public function Scroll() 
 		{
@@ -67,12 +66,14 @@ package Game.Objects
 		}
 		
 		public function initIdeas():void {
-			createIdea( -90, 150);
-			createIdea( 0, 150);
-			createIdea( 90, 150);
-			createIdea( -90, 200);
-			createIdea( 0, 200);
-			createIdea( 90, 200);
+			m_ideas = {
+			guerre : createIdea( -90, 150,"guerre"),
+			religion: createIdea( 0, 150,"religion"),
+			maladie : createIdea( 90, 150,"maladie"),
+			paix : createIdea( -90, 200,"paix"),
+			medecine : createIdea( 0, 200,"medecine"),
+			fanatisme :createIdea( 90, 200,"fanatisme")
+			};
 		}
 		
 		public function onClick():Boolean {
@@ -84,13 +85,15 @@ package Game.Objects
 					return true;
 			return false;		
 		}
-		public function createIdea(dX:Number, dY:Number ):void {
-			var idea:FlxSprite = new FlxSprite(m_scroll.x+dX, m_scroll.y+ dY);
+		public function createIdea(dX:Number, dY:Number, ideaName:String ):FlxSprite {
+			var idea:FlxSprite = new FlxSprite(m_scroll.x + dX, m_scroll.y + dY);
+			idea.loadGraphic2(SpriteResources.ImgIdeas, true, false, 300, 300);
+			idea.addAnimation("pop", SpriteResources.arrayIdeas[ideaName], 0, false);
 			idea.scale = new FlxPoint(0.45, 0.45);
 			idea.scrollFactor = new FlxPoint();
 			idea.visible = false;
 			add(idea);
-			m_ideas.push(idea);
+			return idea;
 		}
 		
 		override public function update():void {
@@ -167,11 +170,8 @@ package Game.Objects
 		}
 		
 		public function addIdea(idea:Idea):void {
-			m_ideas[nbIdea].loadGraphic2(SpriteResources.ImgIdeas, true, false, 300, 300);
-			m_ideas[nbIdea].addAnimation("pop", SpriteResources.arrayIdeas[idea.getName()], 0, false);
-			m_ideas[nbIdea].play("pop");
-			m_ideas[nbIdea].visible = true;
-			nbIdea++;
+			m_ideas[idea.getName()].play("pop");
+			m_ideas[idea.getName()].visible = true;
 		}
 		
 		public function removeIdeas():void {
@@ -180,8 +180,12 @@ package Game.Objects
 				remove(m_ideas.pop());
 			}
 			
-			nbIdea = 0;
 			initIdeas();
+		}
+		
+		public function removeIdea(name:String):void {
+			m_ideas[name].visible = false;
+			//trace("REMOVE IDEA", name, m_ideas[name].visible);
 		}
 		public function setIteration(iter:Iteration):void {
 			m_iteration = iter;

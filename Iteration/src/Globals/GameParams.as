@@ -2,6 +2,7 @@ package Globals
 {
 	import flash.media.Camera;
 	import Game.Objects.Scroll;
+	import Game.Record;
 	import Game.States.PlayState;
 	import org.flixel.FlxCamera;
 	import SoundEngine.SoundBank;
@@ -22,6 +23,8 @@ package Globals
 		static public var height:uint = 720;
 		
 		static public var currentTutoSlide:int = 0;
+		
+		static public var record:Record;
 	}
 
 }

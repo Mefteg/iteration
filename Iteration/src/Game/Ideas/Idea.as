@@ -6,6 +6,7 @@ package Game.Ideas
 	import Globals.GameParams;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTimer;
+	import Resources.SoundResources;
 	import Utils.MathUtils;
 	
 	import Resources.SpriteResources;
@@ -28,7 +29,7 @@ package Game.Ideas
 		
 		private var m_soundName:String;
 		
-		public function Idea(pos:Number, distance:Number, name:String, planet:Planet, soundName:String ) 
+		public function Idea(pos:Number, distance:Number, name:String, planet:Planet ) 
 		{
 			super(pos, distance, planet);
 			setDistance(m_planet.radius() + 150);
@@ -46,7 +47,7 @@ package Game.Ideas
 			m_spriteIdea.addAnimation("pop", SpriteResources.arrayIdeas[m_name], 0, false);
 			setState("waiting");
 			
-			m_soundName = soundName;
+			m_soundName = SoundResources.soundIdeas[m_name];
 		}
 		
 		public function setBlobby(blobby:Blobby):void {

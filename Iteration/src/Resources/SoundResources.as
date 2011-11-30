@@ -18,12 +18,14 @@ package Resources
 		public static var windSound:String = "./sfx/wind.mp3";
 		
 		// Ideas sounds
-		public static var ideaFanatismeSound:String = "./sfx/ideas/fanatisme.mp3";
-		public static var ideaWarSound:String = "./sfx/ideas/war.mp3";
-		public static var ideaPeaceSound:String = "./sfx/ideas/peace.mp3";
-		public static var ideaSicknessSound:String = "./sfx/ideas/sickness.mp3";
-		public static var ideaHealthSound:String = "./sfx/ideas/health.mp3";
-		public static var ideaReligionSound:String = "./sfx/ideas/religion.mp3";
+		public static var soundIdeas:Object = {
+										"religion":"./sfx/ideas/religion.mp3",
+										"paix":"./sfx/ideas/peace.mp3",
+										"medecine":"./sfx/ideas/health.mp3",
+										"fanatisme":"./sfx/ideas/fanatisme.mp3",
+										"guerre":"./sfx/ideas/war.mp3",
+										"maladie":"./sfx/ideas/sickness.mp3"
+										};
 	}
 
 }
