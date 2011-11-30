@@ -1,6 +1,8 @@
 package SoundEngine 
 {
 	import flash.utils.Dictionary;
+	import org.flixel.FlxSound;
+	import Resources.SoundResources;
 	import Utils.Debug;
 	/**
 	 * Banks for sound
@@ -42,6 +44,13 @@ package SoundEngine
 		 */
 		public function get(soundID:String):Sound
 		{
+			if ( soundID == SoundResources.rainSound )
+			{
+				var rainSound:FlxSound = new FlxSound();
+				rainSound.loadStream(soundID, false, true);
+				rainSound.play();
+				return m_soundsBank[soundID];
+			}
 			Debug.assert(m_soundsBank[soundID]);
 			return m_soundsBank[soundID];
 		}

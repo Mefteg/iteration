@@ -64,8 +64,9 @@ package SoundEngine
 		 * Fades in (increase volume during time)
 		 * @param	time the length of increase of the volume
 		 */
-		public function fadeIn(time:Number):void
+		public function fadeIn(time:Number,volume:Number):void
 		{
+			m_sound.volume = volume;
 			m_sound.fadeIn(time);
 			m_isPlaying = true;
 		}
