@@ -423,11 +423,17 @@ package Game.Objects
 				return;
 			}
 			if (m_blobTarget.isDying())
+			{
 				searchNearestBlobby();
+				if ( m_blobTarget == null )
+				{
+					return;
+				}
+			}
 			if ( collideWithBlobby(m_blobTarget) ) {
 				//trace("collision", m_pos, m_blobTarget.getPos(), m_blobTarget.isBusy());
 				//si le blobby est occupé on attend
-				if (m_blobTarget.isBusy()) 
+				if (m_blobTarget.isNotSoBusy()) 
 					return;
 				
 				if (!getScholar())
@@ -536,7 +542,8 @@ package Game.Objects
 						if ( m_targetFruit == null )
 						{
 							m_targetFruit = searchNearestElement(m_targetTree.getFruits()) as Fruit;
-							if ( m_targetFruit.getState() == "beingEaten" ) {
+							if ( m_targetFruit && m_targetFruit.getState() == "beingEaten" ) 
+							{
 								m_targetFruit = null;
 							}
 						}

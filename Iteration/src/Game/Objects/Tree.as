@@ -502,6 +502,39 @@ package Game.Objects
 					return;
 				}
 				
+				if ( m_treeGrow != null )
+				{
+					m_treeGrow.destroy();
+				}
+				if ( m_treeDie != null )
+				{
+					m_treeDie.destroy();
+				}
+				
+				m_treeGrow = new FlxSprite();
+				m_treeDie = new FlxSprite();
+				if ( FlxG.random() < 0.5 )
+				{
+					m_treeGrow.loadGraphic2(SpriteResources.ImgTreeGrow, true, false, 405, 376);
+					m_treeDie.loadGraphic2(SpriteResources.ImgTreeDie, true, false, 405, 376);
+					m_model = 0;
+				}
+				else
+				{
+					m_treeGrow.loadGraphic2(SpriteResources.ImgTreeGrow2, true, false, 405, 379);
+					m_treeDie.loadGraphic2(SpriteResources.ImgTreeDie2, true, false, 405, 379);
+					m_model = 1;
+				}
+				m_treeGrow.addAnimation("grow", MathUtils.getArrayofNumbers(0, 62), 20, false);
+				m_treeGrow.scale.x = 1.;
+				m_treeGrow.scale.y = 1.;
+				
+				
+				m_treeDie.addAnimation("goYellow", MathUtils.getArrayofNumbers(0, 11), 0, false);
+				m_treeDie.addAnimation("die", MathUtils.getArrayofNumbers(12, 77), 10, false);
+				m_treeDie.scale.x = 1.;
+				m_treeDie.scale.y = 1.;
+				
 				this.m_pos = randomPos;
 				m_roots.play("grow");
 			}
