@@ -86,11 +86,12 @@ package Game.Objects
 				case "Incoming":
 					//le faire tourner sur lui meme
 					angle--;
-					m_distance-= MathUtils.interpolate(6.0, 0.1, ((m_roamingDistance * 2) - m_distance) / m_roamingDistance);
+					m_distance-= MathUtils.interpolate(8.0, 0.5, ((m_roamingDistance * 2) - m_distance) / m_roamingDistance);
 
 					if ( m_distance <= m_roamingDistance )
 					{
 						m_state = "Roaming";
+						trace("Goes roaming");
 					}
 					/*
 					if (onClick()) 
