@@ -67,12 +67,12 @@ package Game.Objects
 		
 		public function initIdeas():void {
 			m_ideas = {
-			guerre : createIdea( -90, 150,"guerre"),
-			religion: createIdea( 0, 150,"religion"),
-			maladie : createIdea( 90, 150,"maladie"),
-			paix : createIdea( -90, 200,"paix"),
-			medecine : createIdea( 0, 200,"medecine"),
-			fanatisme :createIdea( 90, 200,"fanatisme")
+			guerre : createIdea( -98, 148,"guerre"),
+			religion: createIdea( -38, 148,"religion"),
+			maladie : createIdea( 24, 148,"maladie"),
+			paix : createIdea( -100, 194,"paix"),
+			medecine : createIdea( -39, 194,"medecine"),
+			fanatisme :createIdea( 23, 194,"fanatisme")
 			};
 		}
 		
@@ -89,9 +89,10 @@ package Game.Objects
 			var idea:FlxSprite = new FlxSprite(m_scroll.x + dX, m_scroll.y + dY);
 			idea.loadGraphic2(SpriteResources.ImgIdeas, true, false, 300, 300);
 			idea.addAnimation("pop", SpriteResources.arrayIdeas[ideaName], 0, false);
-			idea.scale = new FlxPoint(0.45, 0.45);
+			idea.scale = new FlxPoint(0.42, 0.42);
 			idea.scrollFactor = new FlxPoint();
-			idea.visible = false;
+			//idea.visible = false;
+			idea.play("pop");
 			add(idea);
 			return idea;
 		}
