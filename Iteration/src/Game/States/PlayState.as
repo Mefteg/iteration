@@ -194,7 +194,7 @@ package  Game.States
 					m_iteration.update();
 					//update le texte
 					updateFPS();
-					m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources() + " resources \n" + planet.getLivingBlobbies() + " blobbies ("+planet.getBlobbies().length+")\n" + m_FPS.toString() + " fps";
+					//m_text.text = m_iteration.getIterations() + " iterations \n" + planet.getResources() + " resources \n" + planet.getLivingBlobbies() + " blobbies ("+planet.getBlobbies().length+")\n" + m_FPS.toString() + " fps";
 					if ( m_iteration.cycleFinished() )	// We must call this function
 					{
 						if ( meteor == null )	// But if we already have a meteor, we will not have two :p
@@ -370,7 +370,6 @@ package  Game.States
 				{
 					if ( Math.abs( trees[i].getPos() - (position-10)) < 20 )
 					{
-						trace("rain");
 						trees[i].raining();
 					}
 				}

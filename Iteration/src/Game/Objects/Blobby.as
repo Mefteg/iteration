@@ -326,10 +326,11 @@ package Game.Objects
 		private function validate():void {
 			if (finished) {
 				if (m_blobTarget) {
-					//le blobby est maintenant un érudit
-					m_scholar = m_idea.getName();
 					//supprimer l'idée du blobby cible(s'il en a une)
 					GameParams.record.removeBlobby(m_blobTarget);
+					GameParams.record.removeBlobby(this);
+					//le blobby est maintenant un érudit
+					m_scholar = m_idea.getName();
 					m_blobTarget.setScholar(m_scholar);
 					//LES RAJOUTER DANS LE RECORD
 					GameParams.record.addBlobby(this);
@@ -727,6 +728,9 @@ package Game.Objects
 				//si c'est le même on passe au suivant
 				if (b == this || b.isDying() || b.isSearching())
 					continue;
+				//si c'est une recherche de conversion on n'autorise pas à convertir un blobby étant dnas la même secte(bim!)
+				if (!m_idea &&  getScholar() == b.getScholar() )
+					continue;
 					
 				dist = MathUtils.calculateDistance(this.m_pos, b.m_pos);
 				if ( dist < distMin )
@@ -820,7 +824,6 @@ package Game.Objects
 		}
 		
 		public function isBusy():Boolean {
-			//if (isConverting()) return false;
 			return ((m_state != "walk") && (m_state != "idle")) || !visible ; 
 		}
 		

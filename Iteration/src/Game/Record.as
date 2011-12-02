@@ -29,19 +29,19 @@ package Game
 			var ind:String = blobby.getScholar();
 			//si le blobby n'est pas un érudit
 			if (!blobby.getScholar()) return;
-			//trace("add",ind);
+			trace("add",ind);
 			if (m_blobbiesIdeas[ind] == -1)
 				m_blobbiesIdeas[ind] = 1;
 			else
 				m_blobbiesIdeas[ind] ++;
-			//trace("added", ind,m_blobbiesIdeas[ind]);
+			trace("added", ind,m_blobbiesIdeas[ind]);
 		}
 		
 		public function removeBlobby(blobby:Blobby):void {
 			var ind:String = blobby.getScholar();
 			if (!ind) return;
 			m_blobbiesIdeas[ind]--;
-			//trace("remove", ind , m_blobbiesIdeas[ind]);			
+			trace("remove", ind , m_blobbiesIdeas[ind]);			
 		}
 				
 		//cherche une idée qui n'est plus représentée par les blobbies et retourne son nom
