@@ -38,6 +38,7 @@ package Game.Objects
 		
 		protected var m_blobTarget:Blobby;
 		protected var m_blobbyBirth:Blobby;
+		protected var m_blobTargetConvert:Boolean=false;
 		public var m_target:Element = null;
 		public var m_targetTree:Tree = null;
 		public var m_targetFruit:Fruit = null;
@@ -294,21 +295,25 @@ package Game.Objects
 				m_blobbyBirth.visible = true;
 				m_blobbyBirth.play(m_blobbyBirth.getState());
 				//si le blobby n'a pas été choisi pour une quelconque action
-				if ( !m_blobbyBirth.isBusy())
-					//le passer en idle
-					m_blobbyBirth.setState("idle");
+				if ( !m_blobbyBirth.isBusy() ){
+					if (m_blobTargetConvert)
+						m_blobbyBirth.setState("search");
+					else
+						m_blobbyBirth.setState("idle");
+				}
 				//ajouter le blobby a la liste
 				m_planet.addBlobby(m_blobbyBirth);
 				//LE RAJOUTER DANS LE RECORD
 				GameParams.record.addBlobby(m_blobbyBirth);
 				//supprimer sa référence
 				m_blobbyBirth = null;
+				m_blobTargetConvert = false;
 			}
 		}
 				
 		protected function discuss() :void {
 			if (m_timerDiscuss.finished && m_blobTarget) {
-				if(!getScholar()){
+				if(m_idea){
 					setState("validate");
 					m_blobTarget.setState("validate");
 				}else {
@@ -331,7 +336,10 @@ package Game.Objects
 					GameParams.record.addBlobby(m_blobTarget);
 					//remettre les états des deux blobs
 					setState("idle");
-					m_blobTarget.setState("idle");
+					if (m_blobTargetConvert)
+						m_blobTarget.setState("search");
+					else
+						m_blobTarget.setState("idle");
 					//l'idée est diffusée
 					m_idea.setState("spread");
 					//changer le sprite
@@ -416,13 +424,12 @@ package Game.Objects
 		}
 		
 		public function search():void {
-			//trace("search",m_blobTarget.isDying());
 			//si le blobby cible est mort , en chercher un autre
 			if (!m_blobTarget ){
 				searchNearestBlobby();
 				return;
 			}
-			if (m_blobTarget.isDying())
+			if (m_blobTarget.isDying() || m_blobTarget.isSearching())
 			{
 				searchNearestBlobby();
 				if ( m_blobTarget == null )
@@ -431,12 +438,11 @@ package Game.Objects
 				}
 			}
 			if ( collideWithBlobby(m_blobTarget) ) {
-				//trace("collision", m_pos, m_blobTarget.getPos(), m_blobTarget.isBusy());
 				//si le blobby est occupé on attend
-				if (m_blobTarget.isNotSoBusy()) 
+				if ( m_blobTarget.isBusy() || (m_idea && m_idea.isPopping()) ) 
 					return;
 				
-				if (!getScholar())
+				if (!m_idea)
 					//démarrer le timer de discussion
 					m_timerDiscuss.start(GameParams.map.m_blobbyDiscussTime);
 				else
@@ -675,8 +681,9 @@ package Game.Objects
 			super.destroy();
 		}
 		
-		public function setIdea(idea:Idea):void 
+		public function setIdea(idea:Idea,conv:Boolean):void 
 		{
+			m_blobTargetConvert = conv;
 			//l'idée referene ce blobby
 			idea.setBlobby(this);
 			//nouvelle idée
@@ -691,7 +698,8 @@ package Game.Objects
 			GameParams.soundBank.get(SoundResources.ideaSound).play();
 		}
 		
-		public function setBlobbyBirth(blobby:Blobby):void {
+		public function setBlobbyBirth(blobby:Blobby, blobbyconv:Boolean):void {
+			m_blobTargetConvert = blobbyconv;
 			m_blobbyBirth = blobby;
 			setState("pick"); 
 		}
@@ -712,7 +720,7 @@ package Game.Objects
 				b = blobbies[i];
 				
 				//si c'est le même on passe au suivant
-				if (b == this || b.isDying() )
+				if (b == this || b.isDying() || b.isSearching())
 					continue;
 					
 				dist = MathUtils.calculateDistance(this.m_pos, b.m_pos);
@@ -826,6 +834,10 @@ package Game.Objects
 			return ( (m_state == "goPanic") || (m_state == "panic"));
 		}
 		
+		public function isSearching():Boolean {
+			return (m_state == "search");
+		}
+		
 		public function isScholar():Boolean {
 			if(m_scholar == null)
 				return false;
@@ -865,9 +877,12 @@ package Game.Objects
 			
 				
 		override public function setState(state:String):void {
-			if(state == "comeBack")
+			if(state == "comeBack"){
 				//L'ENLEVER DU RECORD
 				GameParams.record.removeBlobby(this);
+				//un blobby vivant en moins
+				m_planet.removeLivingBlobbies();
+			}
 				
 			if (state == "goPanic" && ( m_state == "pick" || m_state == "search"))
 				m_previousState = m_state;

@@ -134,7 +134,7 @@ package Game.Objects
 		
 		private function staying():void 
 		{
-			if (onClick()) {
+			if (onClick() || FlxG.keys.TAB) {
 				m_state = "scrollingBack";
 				return;
 			}
@@ -185,7 +185,6 @@ package Game.Objects
 		
 		public function removeIdea(name:String):void {
 			m_ideas[name].visible = false;
-			//trace("REMOVE IDEA", name, m_ideas[name].visible);
 		}
 		public function setIteration(iter:Iteration):void {
 			m_iteration = iter;

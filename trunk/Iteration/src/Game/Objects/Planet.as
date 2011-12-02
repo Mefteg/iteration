@@ -22,6 +22,8 @@ package Game.Objects
 		protected var m_blobbies:Array;
 		protected var m_trees:Array;
 		
+		protected var m_livingBlobbies:int = 0;
+		
 		private var m_elapsedTime:Number = 0;
 		
 		private var m_radius:Number; //son rayon
@@ -346,13 +348,23 @@ package Game.Objects
 			return m_distance;
 		}
 		
+		public function getLivingBlobbies():int {
+			return m_livingBlobbies;
+		}
+		
+		public function removeLivingBlobbies():void {
+			m_livingBlobbies --;
+		}
+		
 		public function setDistance(value:Number):void {
 			m_distance = value;
 		}
 		
 		public function addBlobby(blobby:Blobby):void {
 			m_blobbies.push(blobby);
+			m_livingBlobbies ++;
 		}
+		
 		//supprime un blobby
 		public function removeBlobby(blobby:Blobby):void 
 		{
