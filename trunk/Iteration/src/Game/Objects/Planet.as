@@ -548,12 +548,13 @@ package Game.Objects
 			for (var i:int = 0; i < size; i++) 
 			{
 				blob = m_blobbies[i];
-				//si le blobby n'est pas occupé 
-				if ( !blob.isNotSoBusy() || blob.isPanicking()) {
-					//on calcule l'angle entre la météore et ce blobby
-					var diff:Number = ((m_crackPos + 180) % 360) - ((blob.getPos() + 180) % 360);
-					//si cet angle est suffisament petit on a une collision
-					if (  Math.abs(diff) < GameParams.map.m_crackZone ) {
+				
+				//on calcule l'angle entre la météore et ce blobby
+				var diff:Number = ((m_crackPos + 180) % 360) - ((blob.getPos() + 180) % 360);
+				//si cet angle est suffisament petit on a une collision
+				if (  Math.abs(diff) < GameParams.map.m_crackZone ) {
+					//si le blobby n'est pas occupé 
+					if ( !blob.isNotSoBusy() || blob.isPanicking()) {
 						//donner une direction d'échappatoire selon la position du blobby
 						if (diff > 0) {
 							if(blob.getDirection() != 2){
@@ -570,11 +571,9 @@ package Game.Objects
 								blob.setState("goPanic");
 							}
 						}
-						
 					}
 				}
 			}
 		}
 	}
-
 }

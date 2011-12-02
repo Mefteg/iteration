@@ -91,8 +91,7 @@ package Game.Objects
 			idea.addAnimation("pop", SpriteResources.arrayIdeas[ideaName], 0, false);
 			idea.scale = new FlxPoint(0.42, 0.42);
 			idea.scrollFactor = new FlxPoint();
-			//idea.visible = false;
-			idea.play("pop");
+			idea.visible = false;
 			add(idea);
 			return idea;
 		}
