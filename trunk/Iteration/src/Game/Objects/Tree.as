@@ -255,6 +255,7 @@ package Game.Objects
 					if ( m_treeDie.finished )
 					{
 						m_treeDie.play("goYellow");
+						m_yellowingTimer.stop();
 						m_yellowingTimer.start(GameParams.map.m_treeLifetime / 12.0);
 						m_state = "feed";
 					}
@@ -449,8 +450,19 @@ package Game.Objects
 		public function raining():void
 		{
 			m_state = "revive";
-			m_treeDie.addAnimation("revive", MathUtils.getArrayofNumbers(0, m_treeDie.frame).reverse(), 20, false);	
-			m_treeDie.play("revive");
+			trace ("Raining: " + m_treeDie.frame );
+			if ( m_treeDie.frame != 0 )
+			{								
+				var spritesNumber:Array = MathUtils.getArrayofNumbers(0, m_treeDie.frame).reverse();
+				
+				for ( var i:int = 0 ; i < spritesNumber.length ; i++ )
+				{
+					trace("In: " + spritesNumber[i]);
+				}
+				
+				m_treeDie.addAnimation("revive", spritesNumber, 20, false);	
+				m_treeDie.play("revive");
+			}
 			
 			if ( this.countFruits() == 0 )
 			{

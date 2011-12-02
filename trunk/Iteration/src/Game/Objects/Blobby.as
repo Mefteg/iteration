@@ -425,8 +425,13 @@ package Game.Objects
 		
 		public function search():void {
 			//si le blobby cible est mort , en chercher un autre
-			if (!m_blobTarget ){
+			if (!m_blobTarget )
+			{
 				searchNearestBlobby();
+				if ( m_blobTarget == null )
+				{
+					setState("idle");
+				}
 				return;
 			}
 			if (m_blobTarget.isDying() || m_blobTarget.isSearching())
