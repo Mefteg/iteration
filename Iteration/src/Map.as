@@ -24,6 +24,7 @@ package
 		public var natalite:Number;
 		public var mortalite:Number;
 		public var convertRate:Number;
+		public var convertLimit:Number;
 		
 		public var scrollTime:Number;
 		
@@ -46,7 +47,7 @@ package
 		public var m_blobbyPanicTime:Number;
 		public var m_blobbyRecycledResources:int;
 		public var m_convertTime:Number;
-		
+				
 		public var m_treeNumber:int;
 		public var m_treeBirthTime:int;
 		public var m_treeBirthRandom:int;
@@ -116,6 +117,7 @@ package
 			mortalite = m_xml.iteration.@mortalite;
 			natalite = m_xml.iteration.@natalite;
 			convertRate = m_xml.iteration.@convertRate;
+			convertLimit = m_xml.iteration.@convertLimit;
 			
 			scrollTime = m_xml.scroll.@time;
 			

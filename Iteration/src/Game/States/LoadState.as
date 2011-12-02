@@ -238,7 +238,6 @@ package Game.States
 					break;
 				case "Loaded":
 					if (m_timerMin.finished) {
-						//FlxG.switchState(new PlayState());
 						FlxG.switchState(new MenuState());
 						FlxG.stage.removeChild(movie);
 					}

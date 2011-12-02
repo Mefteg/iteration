@@ -66,6 +66,10 @@ package Game.Ideas
 			return m_name;
 		}
 		
+		public function isPopping():Boolean {
+			return m_state == "popping";
+		}
+		
 		public function animate():void {
 			if (timerAnim.finished) {
 				m_distance += SpriteResources.animateIdea[indexAnim];
