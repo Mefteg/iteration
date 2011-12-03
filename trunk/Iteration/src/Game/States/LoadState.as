@@ -3,6 +3,7 @@ package Game.States
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
+	import flash.display.Scene;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import Game.Objects.*;
@@ -97,7 +98,7 @@ package Game.States
 			m_imagesSize = m_images.length;
 			
 			setState("Bitmap");
-			m_timerMin.start(4);
+			m_timerMin.start(2.7);
 			
 			movie = new Intro();
 			FlxG.stage.addChild(movie);
