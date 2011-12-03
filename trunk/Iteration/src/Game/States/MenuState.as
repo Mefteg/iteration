@@ -3,6 +3,7 @@ package Game.States
 	import Game.Buttons.CreditButton;
 	import Game.Buttons.PlayButton;
 	import Game.Buttons.TutoButton;
+	import Game.LoadObject;
 	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
@@ -18,14 +19,14 @@ package Game.States
 		protected var m_playbutton:PlayButton;
 		protected var m_creditbutton:CreditButton;
 		protected var m_tutobutton:TutoButton;
-		
+
 		
 		public function MenuState() 
 		{
-			
 		}
 		
-		override public function create():void {
+		override public function create():void 
+		{			
 			FlxG.mouse.show();
 			FlxG.mouse.load(SpriteResources.ImgMouseCursor);
 			
@@ -36,7 +37,7 @@ package Game.States
 			m_tutobutton = new TutoButton((1280 / 4 - 186 / 2), ((720 / 5) * 4 - 91 / 2), null, function() { FlxG.switchState(new TutoState()); });
 			add(m_tutobutton);
 			
-			m_playbutton = new PlayButton((1280 / 2 - 232 / 2), ((720 / 6) * 5 - 114 / 2), null, function() { FlxG.switchState(new PlayState()); } );
+			m_playbutton = new PlayButton((1280 / 2 - 232 / 2), ((720 / 6) * 5 - 114 / 2), null, function() { FlxG.switchState(new PlayState(LoadState.m_loadObject)); } );
 			add(m_playbutton);
 			
 			m_creditbutton = new CreditButton(((1280 / 4) * 3 - 194 / 2), ((720 / 5) * 4 - 95 / 2), null, function() { FlxG.switchState(new CreditState()); });

@@ -6,6 +6,7 @@ package Game.States
 	import flash.display.Scene;
 	import flash.events.Event;
 	import flash.geom.Point;
+	import Game.LoadObject;
 	import Game.Objects.*;
 	import Globals.GameParams;
 	import org.flixel.FlxExtBitmap;
@@ -37,11 +38,15 @@ package Game.States
 		protected var m_progress:int = 0;
 		
 		protected var m_timerMin:FlxTimer;
+		protected var m_timerLoad:FlxTimer;
+		
+		public static var m_loadObject:LoadObject = null;
 		
 		public function LoadState() 
 		{
 			m_images = new Array();
 			m_timerMin = new FlxTimer();
+			m_timerLoad = new FlxTimer();
 			GameParams.soundBank = new SoundBank();
 		}
 		
@@ -99,6 +104,7 @@ package Game.States
 			
 			setState("Bitmap");
 			m_timerMin.start(2.7);
+			m_timerLoad.start(2);
 			
 			movie = new Intro();
 			FlxG.stage.addChild(movie);
@@ -238,6 +244,10 @@ package Game.States
 					loadGraphics();
 					break;
 				case "Loaded":
+					if ( m_timerLoad.finished && m_loadObject == null )
+					{
+						m_loadObject = new LoadObject();
+					}
 					if (m_timerMin.finished) {
 						FlxG.switchState(new MenuState());
 						FlxG.stage.removeChild(movie);

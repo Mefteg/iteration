@@ -8,6 +8,7 @@ package  Game.States
 	import Game.Camera;
 	import Game.Background;
 	import Game.DepthBuffer;
+	import Game.LoadObject;
 	import Game.Objects.Blobby;
 	import Game.Objects.CloudGenerator;
 	import Game.Objects.Meteor;
@@ -68,7 +69,7 @@ package  Game.States
 		// Meteor sound timer
 		private var m_meteorTimer:FlxTimer = new FlxTimer();
 		
-		public function PlayState() 
+		public function PlayState(loadObject:LoadObject) 
 		{
 			add(m_zbuffer);
 			
@@ -79,6 +80,14 @@ package  Game.States
 			m_text.scrollFactor = new FlxPoint(0, 0);
 			m_text.size = 50;
 			m_zbuffer.addForeground(m_text);
+			
+			blobbies = loadObject.blobbies;
+			planet = loadObject.planet;
+			m_treeGenerator = loadObject.m_treeGenerator;
+			m_camera = loadObject.m_camera;
+			m_background = loadObject.m_background;
+			m_cloudsGenerator = loadObject.m_cloudsGenerator;
+			meteor = loadObject.meteor;
 			
 			//SON
 			
@@ -95,9 +104,6 @@ package  Game.States
 			FlxG.bgColor =  0xff0a216b ;
 			
 			//------CREER LA PLANETE-----------------
-			planet = new Planet( FlxG.width / 2 , FlxG.height / 2, blobbies);
-			
-			m_treeGenerator = new TreeGenerator(planet);
 			m_zbuffer.addTrees(m_treeGenerator);
 			
 			planet.setTrees(m_treeGenerator.trees());
@@ -106,9 +112,7 @@ package  Game.States
 			m_camera = new Camera(planet.getMidpoint(), 0, 0, FlxG.width * 2, FlxG.height * 2, true);
 			m_camera.setPosPlanet(planet.getMidpoint());
 			
-			//------CREER LE BACKGROUND--------------
 			m_background = new Game.Background(m_camera);
-			
 			
 			m_state = "Creation";
 			
@@ -120,9 +124,7 @@ package  Game.States
 			m_zbuffer.addForeground(planet.getBackHeartSprite());
 			m_zbuffer.addForeground(planet.getHeartSprite());
 			
-			//-------CREER LES BLOBBIES--------------	
-			
-			m_cloudsGenerator = new CloudGenerator(planet);
+			//-------CREER LES BLOBBIES--------------			
 			m_zbuffer.addBackground(m_cloudsGenerator);
 			m_cloudsGenerator.regenerate();
 			
@@ -130,7 +132,6 @@ package  Game.States
 			
 			//----------CREER LE METEOR-------------
 			// poncepermis
-			meteor = new Meteor( planet.radius() * 2, planet, true);
 			meteor.setState("Crashing");
 			m_meteorTimer.start(GameParams.map.m_soundMeteorTimer);
 			
@@ -143,7 +144,6 @@ package  Game.States
 			FlxG.mouse.load(SpriteResources.ImgMouseCursor);
 			
 			//______________SCROLL_____________________
-			GameParams.scroll = new Scroll();
 			add(GameParams.scroll);
 			getDepthBuffer().addScroll(GameParams.scroll);
 			
