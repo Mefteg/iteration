@@ -383,7 +383,7 @@ package
 			//trace(m_timerIdea.finished, m_timerIdea.progress, m_currentIdea);
 			//GESTION DES IDEES
 			//si le timer à idée est terminé et qu'aucune idée n'est encore créée
-			if (m_timerIdea.finished && !m_currentIdea && !m_ideaDone)
+			if (m_timerIdea.finished && !m_currentIdea && !m_ideaDone && m_blobbies.length>1)
 				createIdea();//creer une idée
 				
 			//si une idée est en cours	

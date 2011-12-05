@@ -176,10 +176,10 @@ package Game.Objects
 		
 		public function removeIdeas():void {
 			
-			while (m_ideas.length > 0){
-				remove(m_ideas.pop());
+			for (var i:String in m_ideas) {
+				remove(m_ideas[i]);
 			}
-			
+			m_ideas = null;
 			initIdeas();
 		}
 		
