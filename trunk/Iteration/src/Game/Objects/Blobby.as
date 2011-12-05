@@ -883,19 +883,65 @@ package Game.Objects
 		public function collideWithElement(target:Element):Boolean 
 		{
 			if (!target) return false;
+			var tpos:Number = target.getPos();
+			while ( tpos < 0 )
+			{
+				tpos += 360;
+			}
 			
-			if ( Math.abs(((this.m_pos + 180) % 360) - ((target.getPos() + 180) % 360)) < 7 )
+			if ( Math.abs((this.m_pos % 360) - (tpos % 360)) < 7 )
 			{
 				return true;
 			}
+			else if ( this.m_pos < 90 && tpos > 270 )
+			{
+				if ( Math.abs(this.m_pos - (360 - tpos)) < 7 )
+				{
+					return true;
+				}
+			}
+			else if ( tpos < 90 && this.m_pos > 270 )
+			{
+				if ( Math.abs(tpos - (360 - this.m_pos)) < 7 )
+				{
+					return true;
+				}
+			}
+			
 			return false;
 		}
 		
 		public function isOnElement(target:Element):Boolean 
 		{
-			if ( (getPos() % 360) - (target.getPos() % 360) < 1 && (getPos() % 360) - (target.getPos() % 360) > 0 ) {
+			if (!target) return false;
+			var tpos:Number = target.getPos();
+			while ( tpos < 0 )
+			{
+				tpos += 360;
+			}
+			
+			if ( Math.abs((this.m_pos % 360) - (tpos % 360)) < 1 )
+			{
 				return true;
 			}
+			else if ( this.m_pos < 90 && tpos > 270 )
+			{
+				if ( Math.abs(this.m_pos - (360 - tpos)) < 1 )
+				{
+					return true;
+				}
+			}
+			else if ( tpos < 90 && this.m_pos > 270 )
+			{
+				if ( Math.abs(tpos - (360 - this.m_pos)) < 1 )
+				{
+					return true;
+				}
+			}
+			/*
+			if ( (getPos() % 360) - (target.getPos() % 360) < 1 && (getPos() % 360) - (target.getPos() % 360) > 0 ) {
+				return true;
+			}*/
 			return false;
 		}
 

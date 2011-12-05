@@ -32,9 +32,9 @@ package Game
 			
 			add(m_backGround);
 			add(m_blobbies);
-			add(m_meteors);
 			add(m_trees);
 			add(m_fruits);
+			add(m_meteors);
 			add(m_foreGround);
 			add(m_scroll);
 		}

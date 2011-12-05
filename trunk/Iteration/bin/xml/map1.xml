@@ -4,7 +4,7 @@
 	<zoom min="0.25" max="1" actual="0.25" speed="4" speedUp="4" />
 	<blobby initNb="10" speed="0.15" lifetime="6" recycledResources="80" discussTime="3" convertTime="2" panicTime="6" />
 	<planet size="10" resources="10000" crackTimeOut="4" crackZone="60" shakeForce="0.01" shakeDuration="0.5" />
-	<tree number="1" nbFruitMax="3" birthTime="3" birthRandom="8" lifetime="78" fruitResources="90" /> <!-- nbFruitMax doit etre inférieur ou egal a 6 -->
+	<tree number="3" nbFruitMax="3" birthTime="3" birthRandom="8" lifetime="78" fruitResources="90" /> <!-- nbFruitMax doit etre inférieur ou egal a 6 -->
 	<cloud number="5" scale="1" birthTime="10" birthRandom="3" distance="1150" distanceRandom="50" rainDistance="290" speed="0.02"/>
 	<meteor nbByCycle="1" speed="0.2" zone="6" zonePanic="50" distance="1400" />
 	<idee guerreMort="21" guerreNat="0" 

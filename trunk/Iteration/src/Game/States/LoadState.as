@@ -103,7 +103,7 @@ package Game.States
 			m_imagesSize = m_images.length;
 			
 			setState("Bitmap");
-			m_timerMin.start(2.7);
+			m_timerMin.start(2.5);
 			m_timerLoad.start(2);
 			
 			movie = new Intro();
