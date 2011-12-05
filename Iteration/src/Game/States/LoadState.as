@@ -200,10 +200,16 @@ package Game.States
 			addImage(SpriteResources.ImgCreditBackbutton);
 			
 			//tuto
-			SpriteResources.ImgTuto1 = new FlxExtBitmap("img/tutoscreen1.jpg");
+			SpriteResources.ImgTuto1 = new FlxExtBitmap("img/1tuto.jpg");
 			addImage(SpriteResources.ImgTuto1);
-			SpriteResources.ImgTuto2 = new FlxExtBitmap("img/tutoscreen2.jpg");
+			SpriteResources.ImgTuto2 = new FlxExtBitmap("img/2tuto.jpg");
 			addImage(SpriteResources.ImgTuto2);
+			SpriteResources.ImgTuto3 = new FlxExtBitmap("img/3tuto.jpg");
+			addImage(SpriteResources.ImgTuto3);
+			SpriteResources.ImgTuto4 = new FlxExtBitmap("img/4tuto.jpg");
+			addImage(SpriteResources.ImgTuto4);
+			SpriteResources.ImgTuto5 = new FlxExtBitmap("img/5tuto.jpg");
+			addImage(SpriteResources.ImgTuto5);
 			SpriteResources.ImgMenuTutobutton = new FlxExtBitmap("img/TutoButton.png");
 			addImage(SpriteResources.ImgMenuTutobutton);
 			SpriteResources.ImgTutoLeftArrow = new FlxExtBitmap("img/leftarrow.png");
