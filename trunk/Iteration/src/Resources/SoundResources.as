@@ -16,6 +16,9 @@ package Resources
 		public static var rainSound:String = "./sfx/rain.mp3";
 		public static var ideaSound:String = "./sfx/idea.mp3";
 		public static var windSound:String = "./sfx/wind.mp3";
+		public static var talk1Sound:String = "./sfx/talk1.mp3";
+		public static var talk2Sound:String = "./sfx/talk2.mp3";
+		public static var crackSound:String = "./sfx/crack.mp3";
 		
 		// Ideas sounds
 		public static var soundIdeas:Object = {
