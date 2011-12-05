@@ -71,8 +71,8 @@ package Game.Objects
 			religion: createIdea( -38, 148,"religion"),
 			maladie : createIdea( 24, 148,"maladie"),
 			paix : createIdea( -100, 194,"paix"),
-			medecine : createIdea( -39, 194,"medecine"),
-			fanatisme :createIdea( 23, 194,"fanatisme")
+			medecine : createIdea( -39, 194,"fanatisme"),
+			fanatisme :createIdea( 23, 194,"medecine")
 			};
 		}
 		
