@@ -73,18 +73,15 @@ package  Game.States
 		{
 			add(m_zbuffer);
 			
-			blobbies = new Array();			
-	
 			//FPS
 			m_text = new FlxText(10, 10, 500, FlxG.framerate.toString());
 			m_text.scrollFactor = new FlxPoint(0, 0);
 			m_text.size = 50;
 			m_zbuffer.addForeground(m_text);
-			
+
 			blobbies = loadObject.blobbies;
 			planet = loadObject.planet;
 			m_treeGenerator = loadObject.m_treeGenerator;
-			m_camera = loadObject.m_camera;
 			m_background = loadObject.m_background;
 			m_cloudsGenerator = loadObject.m_cloudsGenerator;
 			meteor = loadObject.meteor;
