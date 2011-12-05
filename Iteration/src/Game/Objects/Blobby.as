@@ -432,6 +432,8 @@ package Game.Objects
 				if ( m_blobTarget == null )
 				{
 					setState("idle");
+					if (m_idea)
+						m_idea.setState("killed");
 				}
 				return;
 			}
