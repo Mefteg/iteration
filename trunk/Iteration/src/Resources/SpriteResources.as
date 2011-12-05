@@ -67,6 +67,9 @@ package Resources
 		// tutorial
 		public static var ImgTuto1:FlxExtBitmap;
 		public static var ImgTuto2:FlxExtBitmap;
+		public static var ImgTuto3:FlxExtBitmap;
+		public static var ImgTuto4:FlxExtBitmap;
+		public static var ImgTuto5:FlxExtBitmap;
 		public static var ImgTutoLeftArrow:FlxExtBitmap;
 		public static var ImgTutoRightArrow:FlxExtBitmap;
 		

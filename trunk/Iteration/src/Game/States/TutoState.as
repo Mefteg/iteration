@@ -41,6 +41,15 @@ package Game.States
 			// slide 2
 			m_slides.push(new FlxSprite());
 			m_slides[m_slides.length - 1].loadGraphic2(SpriteResources.ImgTuto2, false, false, 1280, 720, true);
+			// slide 3
+			m_slides.push(new FlxSprite());
+			m_slides[m_slides.length - 1].loadGraphic2(SpriteResources.ImgTuto3, false, false, 1280, 720, true);
+			// slide 4
+			m_slides.push(new FlxSprite());
+			m_slides[m_slides.length - 1].loadGraphic2(SpriteResources.ImgTuto4, false, false, 1280, 720, true);
+			// slide 5
+			m_slides.push(new FlxSprite());
+			m_slides[m_slides.length - 1].loadGraphic2(SpriteResources.ImgTuto5, false, false, 1280, 720, true);
 			
 			for (var i:int = 0; i < m_slides.length; i++) {
 				add(m_slides[i]);
