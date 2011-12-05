@@ -305,27 +305,37 @@ package Game.Objects
 			super.destroy();
 		}
 		
+		private function restrictPosFruit(pos:Number):Number
+		{
+			if ( pos < 0 )
+			{
+				return pos + 360;
+			}
+			return pos;
+		}
+		
 		private function createFruits():void {
 			m_fruits = new Array();
 			var availables:Array = new Array();
 			var positions:Array = new Array();
 			var distances:Array = new Array();
 			
-			if( m_model == 0 ) {
-				positions.push(m_pos + 8 + m_gap + (Math.random() * 4) - 2); distances.push(m_distance + 50); 	availables.push(1);
-				positions.push(m_pos + 4 + m_gap + (Math.random() * 4) - 2); distances.push(m_distance + 50); 	availables.push(1);
-				positions.push(m_pos - 1 + m_gap + (Math.random() * 4) - 2); 	distances.push(m_distance + 50); 	availables.push(1);
-				positions.push(m_pos - 8 + m_gap + (Math.random() * 4) - 2); distances.push(m_distance + 50); 	availables.push(1);
-				positions.push(m_pos + 2 + m_gap + (Math.random() * 4) - 2); distances.push(m_distance + 135); 	availables.push(1);
-				positions.push(m_pos - 3 + m_gap + (Math.random() * 4) - 2); distances.push(m_distance + 130); 	availables.push(1);
+			if ( m_model == 0 ) 
+			{
+				positions.push(restrictPosFruit(m_pos + 8 + m_gap + (Math.random() * 4) - 2)); distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(restrictPosFruit(m_pos + 4 + m_gap + (Math.random() * 4) - 2)); distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(restrictPosFruit(m_pos - 1 + m_gap + (Math.random() * 4) - 2)); 	distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(restrictPosFruit(m_pos - 8 + m_gap + (Math.random() * 4) - 2)); distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(restrictPosFruit(m_pos + 2 + m_gap + (Math.random() * 4) - 2)); distances.push(m_distance + 135); 	availables.push(1);
+				positions.push(restrictPosFruit(m_pos - 3 + m_gap + (Math.random() * 4) - 2)); distances.push(m_distance + 130); 	availables.push(1);
 			}
 			if( m_model == 1 ) {
-				positions.push(m_pos + 8 + m_gap + (Math.random() * 2) - 1); distances.push(m_distance + 50); 	availables.push(1);
-				positions.push(m_pos + 3 + m_gap + (Math.random() * 2) - 1); distances.push(m_distance + 50); 	availables.push(1);
-				positions.push(m_pos - 4 + m_gap + (Math.random() * 2) - 1); 	distances.push(m_distance + 50); 	availables.push(1);
-				positions.push(m_pos - 6 + m_gap + (Math.random() * 2) - 1); distances.push(m_distance + 50); 	availables.push(1);
-				positions.push(m_pos + 6 + m_gap + (Math.random() * 2) - 1); distances.push(m_distance + 135); 	availables.push(1);
-				positions.push(m_pos + 2 + m_gap + (Math.random() * 2) - 1); distances.push(m_distance + 130); 	availables.push(1);
+				positions.push(restrictPosFruit(m_pos + 8 + m_gap + (Math.random() * 2) - 1)); distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(restrictPosFruit(m_pos + 3 + m_gap + (Math.random() * 2) - 1)); distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(restrictPosFruit(m_pos - 4 + m_gap + (Math.random() * 2) - 1)); 	distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(restrictPosFruit(m_pos - 6 + m_gap + (Math.random() * 2) - 1)); distances.push(m_distance + 50); 	availables.push(1);
+				positions.push(restrictPosFruit(m_pos + 6 + m_gap + (Math.random() * 2) - 1)); distances.push(m_distance + 135); 	availables.push(1);
+				positions.push(restrictPosFruit(m_pos + 2 + m_gap + (Math.random() * 2) - 1)); distances.push(m_distance + 130); 	availables.push(1);
 			}
 			
 			// pour chaque fruit a placer
@@ -423,8 +433,14 @@ package Game.Objects
 			return counter;
 		}
 		
-		override public function getPos():Number {
-			return (m_pos + m_gap );
+		override public function getPos():Number 
+		{
+			var realPos:Number = m_pos + m_gap;
+			if ( realPos < 0 )
+			{
+				return realPos + 360;
+			}
+			return realPos;
 		}
 		
 		public function isVisible():Boolean

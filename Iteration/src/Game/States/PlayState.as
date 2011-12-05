@@ -53,7 +53,6 @@ package  Game.States
 		//itération
 		protected var m_iteration:Iteration;
 		//variables caméra
-		protected var m_text:FlxText;
 		
 		// FPS calculation
 		private var m_lastTime:Number = 0;
@@ -72,12 +71,6 @@ package  Game.States
 		public function PlayState(loadObject:LoadObject) 
 		{
 			add(m_zbuffer);
-			
-			//FPS
-			m_text = new FlxText(10, 10, 500, FlxG.framerate.toString());
-			m_text.scrollFactor = new FlxPoint(0, 0);
-			m_text.size = 50;
-			m_zbuffer.addForeground(m_text);
 
 			blobbies = loadObject.blobbies;
 			planet = loadObject.planet;
