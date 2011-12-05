@@ -219,7 +219,7 @@ package Game.States
 			
 			//parchemin
 			SpriteResources.ImgScroll = new FlxExtBitmap("img/scroll.png");
-			addImage(SpriteResources.ImgScroll);
+			addImage(SpriteResources.ImgScroll);			
 		}
 		
 		private function createSounds():void
@@ -234,6 +234,9 @@ package Game.States
 			GameParams.soundBank.load(SoundResources.rainSound,false);
 			GameParams.soundBank.load(SoundResources.ideaSound,false);
 			GameParams.soundBank.load(SoundResources.windSound, true);
+			GameParams.soundBank.load(SoundResources.talk1Sound, true);
+			GameParams.soundBank.load(SoundResources.talk2Sound, true);
+			GameParams.soundBank.load(SoundResources.crackSound, false);
 			for (var i:String in SoundResources.soundIdeas) {
 				GameParams.soundBank.load(SoundResources.soundIdeas[i], false);
 			}

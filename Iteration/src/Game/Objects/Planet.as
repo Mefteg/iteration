@@ -527,6 +527,8 @@ package Game.Objects
 			m_crackFade = 0;
 			m_crackSprite.alpha = 1;
 			
+			GameParams.soundBank.get(SoundResources.crackSound).play();
+			
 			checkTargetedBlobbies();
 			
 			FlxG.shake(GameParams.map.m_crackShakeForce, GameParams.map.m_crackShakeDuration);

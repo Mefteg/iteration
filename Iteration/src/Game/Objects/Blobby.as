@@ -312,11 +312,17 @@ package Game.Objects
 		}
 				
 		protected function discuss() :void {
-			if (m_timerDiscuss.finished && m_blobTarget) {
-				if(m_idea){
+			if (m_timerDiscuss.finished && m_blobTarget) 
+			{
+				GameParams.soundBank.get(SoundResources.talk1Sound).stop();
+				GameParams.soundBank.get(SoundResources.talk2Sound).stop();
+				if (m_idea)
+				{
 					setState("validate");
 					m_blobTarget.setState("validate");
-				}else {
+				}
+				else 
+				{
 					setState("convert");
 					m_blobTarget.setState("convert");
 				}
@@ -459,6 +465,14 @@ package Game.Objects
 				//changer les états des deux blobby en "discussion"
 				m_blobTarget.setState("discuss");
 				this.setState("discuss");
+				if ( FlxG.random() < 0.5 )
+				{
+					GameParams.soundBank.get(SoundResources.talk1Sound).fadeIn(3,1);
+				}
+				else
+				{
+					GameParams.soundBank.get(SoundResources.talk2Sound).fadeIn(3,1);
+				}
 				//sigifier a l'idée qu'elle est discutée
 				if(m_idea)
 					m_idea.setState("discussed");
@@ -504,7 +518,8 @@ package Game.Objects
 				m_idea.update();
 		}
 		
-		public function goTo(target:Element):void {
+		public function goTo(target:Element):void 
+		{
 			var dist:Number = this.m_pos - target.getPos();
 			if ( this.m_pos > 270 && target.getPos() < 180 )
 			{
@@ -532,7 +547,7 @@ package Game.Objects
 			}
 			else
 			{
-				if ( dist > 0 )
+				if ( dist >= 0 )
 				{
 					this.move(2);
 				}
