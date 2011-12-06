@@ -919,7 +919,7 @@ package Game.Objects
 			{
 				tpos += 360;
 			}
-			
+			/*
 			if ( Math.abs((this.m_pos % 360) - (tpos % 360)) < 1 )
 			{
 				return true;
@@ -937,11 +937,11 @@ package Game.Objects
 				{
 					return true;
 				}
-			}
-			/*
+			}*/
+			
 			if ( (getPos() % 360) - (target.getPos() % 360) < 1 && (getPos() % 360) - (target.getPos() % 360) > 0 ) {
 				return true;
-			}*/
+			}
 			return false;
 		}
 
